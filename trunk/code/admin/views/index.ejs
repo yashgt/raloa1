@@ -29,7 +29,11 @@
          bounds="fleetDetail.bounds"
          pan="true"
         >
+		<!--<markers models="fleetDetail.stops" coords="'{latitude:self.lat, longitude:self.lon}'" icon="'images/bus.png'" click="'onClicked'">-->
+		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
+        </markers>
 	</google-map>	
+	<button ng-click="remove()">Remove</button>
 	
 
   </body>
