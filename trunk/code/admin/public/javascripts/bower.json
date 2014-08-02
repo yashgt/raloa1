@@ -19,7 +19,7 @@
     "jquery": "~2.1.1",
 	"jquery-ui": "~1.11.0",
     "underscore": "~1.6.0" ,
-	"angular-google-maps": "1.1.8",
+	"angular-google-maps": "1.1.10",
     "ng-table": "~0.3.1"
   }
 }
