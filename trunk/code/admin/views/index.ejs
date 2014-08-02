@@ -9,17 +9,17 @@
 	<script src="javascripts/bower_components/angular/angular.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
-		<!-- <script src="javascripts/bower_components/underscore/underscore.js"></script> -->
-
-<script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+	<!-- <script src="javascripts/bower_components/underscore/underscore.js"></script> -->
+	
+	<script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
 	
 	<script src="javascripts/RouteController.js"></script>
 	
     <link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel='stylesheet' href='/stylesheets/map.css' />
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css">
-  </head>
-  <body ng-controller="RouteController">
+    </head>
+    <body ng-controller="RouteController">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
 	<google-map 
@@ -35,6 +35,23 @@
 	</google-map>	
 	<button ng-click="remove()">Remove</button>
 	
+	
+	<div ng-controller="TabsDemoCtrl">
+	<tabset>
+	<tab heading="Routes">
+	<p>Routes tab</p>
+
+    </tab>
+	<tab heading="Schedules">
+	<p>Schedules tab</p>
+
+    </tab>
+	<tab heading="Fare Table">
+	<p>Fare tab</p>
+
+    </tab>
+	</tabset>
+	</div>
 
   </body>
 </html>
