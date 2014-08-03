@@ -6,7 +6,7 @@ function RouteController
 //function
 ($scope) {
 	
-	
+	$scope.test = "HELLO";
 	
 	$scope.routeDetail = {
 		stops : []
@@ -29,11 +29,12 @@ function RouteController
 		$scope.map.infoWindow.show = true ;
 		//TODO
 		$scope.stopDetail = {
-		latitude:latLng.lat(),
-		longitude:latLng.lng(),
-		stopName:"",
-		address:"Reverse geocoded address goes here"
-	};
+		latitude: latLng.lat(),
+		longitude: latLng.lng(),
+		stopName: "stopname",
+		address: "Reverse geocoded address goes here"
+		};
+		$scope.test = "NEWHELLO";
 
 	};
 	$scope.saveStop = function(){
