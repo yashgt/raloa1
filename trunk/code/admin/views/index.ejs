@@ -16,14 +16,13 @@
 
 <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 	
-	<script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
-	
 	<script src="javascripts/RouteController.js"></script>
 	
     <link rel='stylesheet' href='/stylesheets/style.css' />
 	<link rel='stylesheet' href='/stylesheets/map.css' /> 
 	<link rel='stylesheet' href='/stylesheets/context_menu.css' />
 	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css">
+
   </head>
   <body ng-controller="RouteController">
     <h1><%= title %></h1>
@@ -37,7 +36,6 @@
          bounds="fleetDetail.bounds"
          pan="true"
 		 control="map.control"
-		 id="map"
         >
 			<script>
 			$(function(){
@@ -48,38 +46,26 @@
 	
 		<window show="map.infoWindow.show" coords="map.infoWindow.coords" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
             <div >
+				{{test}}
                 <p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
-				<form  ng-controller="StopController" name="stop_form" ng-submit="saveStop()" novalidate>
-					<input type="text" name="stopName" ng-required="true" ng-model="stopDetail.stopName" />
+				<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
+					<input type="text" name="stopName" ng-model="stopDetail.stopName" />
+					<br/>
 					<textarea ng-model="stopDetail.address"></textarea>
+					<br/>
 					<button type="submit" ng-disabled="stop_form.$invalid">Save</button>
-				</form>
+					<!--<button ng-click="saveStop()">Save</button>-->
+				</form>	
+				
             </div>
         </window>
 		<!--<markers models="fleetDetail.stops" coords="'{latitude:self.lat, longitude:self.lon}'" icon="'images/bus.png'" click="'onClicked'">-->
 		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
         </markers>
-	</google-map>	
-
+	</div>	
+	<input type="text" name="stopName1" ng-model="stopDetail.stopName" />
 	<button ng-click="remove()">Remove</button>
 	
-	
-	<div ng-controller="TabsDemoCtrl">
-	<tabset>
-	<tab heading="Routes">
-	<p>Routes tab</p>
-
-    </tab>
-	<tab heading="Schedules">
-	<p>Schedules tab</p>
-
-    </tab>
-	<tab heading="Fare Table">
-	<p>Fare tab</p>
-
-    </tab>
-	</tabset>
-	</div>
 
   </body>
 </html>

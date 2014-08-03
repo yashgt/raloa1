@@ -7,10 +7,10 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
-var mysql = require('mysql');
+//var mysql = require('mysql');
 
 var app = express();
-
+/*
 var db = mysql.createConnection({
     host: nconf.get('database:host'),
     user: nconf.get('database:user'),
@@ -18,6 +18,7 @@ var db = mysql.createConnection({
     database: nconf.get('database:database'),
     multipleStatements: true
 });
+*/
 
 // all environments
 app.set('port', process.env.PORT || 3000);
