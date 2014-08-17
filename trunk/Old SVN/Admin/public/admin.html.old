@@ -1,0 +1,296 @@
+﻿
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]> <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]> <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>Admin</title>
+	<link rel="stylesheet" href="stylesheets/style.css">
+    <link rel="stylesheet" href="stylesheets/spreadsheet.css">
+    <link rel="stylesheet" href="js/third_party/ng-modal/ng-modal.css">
+
+    <script src="js/third_party/underscore.js"></script>
+    <script type="text/javascript" src="js/third_party/date.js"></script>
+
+    <script src="js/third_party/angular.js"></script>
+    <script src="js/third_party/ng-table-master/ng-table.src.js"></script>
+    <script src="js/third_party/ng-modal/ng-modal.js"></script>
+    <link rel="stylesheet" href="js/third_party/ng-table-master/ng-table.css">
+	
+	
+	<link rel="stylesheet" href="js/third_party/angular-ui-tree-master/dist/angular-ui-tree.min.css">
+	<link rel="stylesheet" href="js/third_party/angular-ui-tree-master/demo/css/demo.css">
+	<link rel="stylesheet" type="text/css" href="js/third_party/angular-ui-tree-master/demo/bower_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <script src="js/third_party/ui-bootstrap-tpls-0.10.0.js"></script>
+
+    <link rel="stylesheet" href="js/third_party/jquery-ui-1.10.4/themes/base/jquery.ui.all.css">
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" />
+
+    <script src="js/third_party/jquery-ui-1.10.4/jquery-1.10.2.js"></script>
+    <script src="js/third_party/jquery-ui-1.10.4/ui/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="js/third_party/jqgm/jquery.googlemap.js"></script>
+    <script type="text/javascript" src="js/third_party/gmaps.js"></script>
+
+    <script type="text/javascript" src="js/goatransadmin.js"></script>
+    <!--  Controllers -->
+    <script src="js/RouteController.js"></script>
+
+
+    <!--
+<script type="text/javascript">
+    google.load("maps", "3.4", {
+    	other_params: "sensor=false&language=en"
+    });
+</script>-->
+
+    <script type="text/javascript">
+        $(function() {
+            $("#tabs").tabs();
+        });
+    </script>
+    <style>
+        ul.a {
+            list-style-type: circle;
+        }
+        .center {
+            margin: auto;
+            width: 100%;
+            background-color: #b0e0e6;
+        }
+        table,
+        td,
+        th {} th {
+            background-color: #FFA700;
+            color: black;
+        }
+		
+    </style>
+
+</head>
+
+<body ng-app='adminApp'>
+
+    <div id="tabs" ng-controller="RouteController">
+        <ul>
+
+            <li><a href="#tabs-2">Routes</a>
+            </li>
+            <li><a href="#tabs-3">Schedules</a>
+            </li>
+            <li><a href="#tabs-4">Vehicles</a>
+            </li>
+        </ul>
+
+        <div id="tabs-2">
+            <table border="1">
+
+                <tr>
+                    <td width=20% valign="top">
+
+                        <div class="center">
+                            <center><b>Routes</b>
+                            </center>
+                        </div>
+
+                        <table ng-table="tableParams" show-filter="true" class="table">
+                            <tr ng-repeat="route in $data" ng-click="getRoute(route.routeId)" ng-class="{active_route: route.routeId == routeDetail.routeId}">
+                                <td data-title="'From'" sortable="'from'" filter="{ 'from': 'text' }">
+                                    {{route.from}}
+                                </td>
+                                <td data-title="'To'" sortable="'to'" filter="{ 'to': 'text' }">
+                                    {{route.to}}
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td width=60% valign="top">
+                        <div id="route">
+                            <form>
+                               
+                                <div class="center">
+                                    <center>
+                                        <button type="submit" ng-click="newRoute()">New Route</button>
+                                        <button type="submit" ng-click="saveRoute()" ng-disabled="routeDetail.routeId < 0 ">Save Current Route</button>
+										<button type="submit" ng-click="extendRoute()" ng-disabled="routeDetail.routeId < 0 ">Extend Current Route</button>
+                                        <button type="submit" ng-click="deleteRoute()" ng-disabled="routeDetail.routeId < 0 ">Delete Current Route</button>
+                                        <button type="submit">Define Schedules</button>
+                                    </center>
+                                </div>
+                                <!-- https://developers.google.com/maps/documentation/javascript/examples/places-searchbox -->
+                                <input id="from-place" class="controls" type="text" placeholder="Search start point">
+                                <input id="to-place" class="controls" type="text" placeholder="Search end point">
+
+                                <!-- https://developers.google.com/maps/documentation/javascript/examples/directions-complex -->
+                                <input id="srch-route" class="controls" type="button" value="Show route">
+                                <div id="routemap" style="width: 100%; height: 550px;"></div>
+
+                                <script type="text/javascript">
+                                    //$(document).ready(loadMap) ;
+                                    $(loadMap);
+                                     //$(addSearchBox);
+                                </script>
+
+
+                                <modal-dialog show='myData.modalShown' width='750px' dialog-title='Add a new stop' on-close='logClose()'>
+                                    Stop Name:
+                                    <input ng-model="stopDetail.name" type="text" name="stopname" value="{{stopDetail.name}}" placeholder="Name of the Stop"></input>
+                                    <br>
+                                    <br>Full address:
+                                    <textarea id="InputTextArea" placeholder="placeholder" onkeyup="resizeTextarea('InputTextArea')" ng-model="stopDetail.fullAddress"></textarea>
+                                    <br><br>
+                                    <button ng-click='saveStop()'>Save</button>
+                                </modal-dialog>
+                            </form>
+                        </div>
+                    </td>
+					
+                    <td width=20% valign="top">
+					
+                        <script type="text/javascript">
+                            $(function() {
+                                $("#sortable").sortable({
+                                    update: rearrangeStops
+                                }); //TODO take this to js file
+                                $("#sortable").disableSelection();
+                            });
+                        </script>
+
+                        <div id="route">
+                            <center><b>Stops</b>
+                            </center>
+
+                            <ul id="sortable" class="a">
+                                <li ng-repeat="stp in routeDetail.stops" id={{stp.stopId}}>
+                                    <div>
+                                        {{stp.name}}
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+						
+						
+						
+					
+						        <!-- Nested node template : http://ngmodules.org/modules/angular-ui-tree-->
+								<!--
+        <script type="text/ng-template" id="nodes_renderer.html">
+		
+          <div ui-tree-handle class="tree-node tree-node-content">
+            <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"></a>
+            <input ng-model="stage.title"></input>
+          </div>
+          <ol ui-tree-nodes="" ng-model="stage.stops" ng-class="{hidden: collapsed}">
+            <li ng-repeat="stop in stage.stops" ui-tree-node >
+			<div ui-tree-handle class="tree-node tree-node-content">
+            <a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"></a>
+            <div>{{stop.name}}</div>
+          </div>
+            </li>
+          </ol>
+        </script>
+		        <div ui-tree id="tree-root">
+          <ol ui-tree-nodes="" ng-model="routeDetail.stages">
+            <li ng-repeat="stage in routeDetail.stages" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+          </ol>
+        </div>
+		-->
+		
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+		
+        <div id="tabs-3" data-url="tabs-3">
+            <b> Onward schedules</b>
+            <button ng-click='addTrip()'>Add Trip</button>
+			<button type="submit" ng-click="saveRoute()" ng-disabled="routeDetail.routeId < 0 ">Save this Schedule</button>
+            <!--	<button ng-click='addMultipleTrip()'>Add Multiple Trips</button> -->
+            <div class="spreadsheet">
+                
+                <table>
+				<col width="130">
+                    <!-- TODO <tr class="column-label"> -->
+                    <tr class="column-label1">
+                        <td></td>
+                        <td><center>Trip ID</center></td>
+                        <td width="30px" ng-repeat="stop in routeDetail.stops"><center>{{stop.name}}</center></td>
+                        <td>Operating Bus</td>
+                    </tr>
+                    <!-- http://justinklemm.com/angularjs-filter-ordering-objects-ngrepeat/ -->
+                    <tr ng-repeat="trip in routeDetail.onwardTrips">
+                        <td>
+                            <button ng-click='autoCompleteTrip(trip)'>Autocomplete</button>
+                        </td>
+                        <td class="row-label">{{trip}}</td>
+                        <td ng-repeat="stop in routeDetail.stops">
+                            <div>
+                                <input ng-model="routeDetail.timings[trip][stop.stopId]"></input>
+                                <!-- <div ng-bind="compute(stop.stopId,key)" class="output"></div> -->
+                            </div>
+                        </td>
+                        <td>Assign a Bus</td>
+                    </tr>
+                    <td>
+                        </tr>
+                </table>
+            </div>
+
+            <div class="gridStyle" ng-grid="onwardGridOptions"></div>
+
+            <br>
+            <b>Return schedules</b>
+            <button ng-click='addreturnTrip()'>Add Trip</button>
+			<button type="submit" ng-click="saveRoute()" ng-disabled="routeDetail.routeId < 0 ">Save this Schedule</button>
+            <!--	<button ng-click='addMultipleTrip()'>Add Multiple Trips</button> -->
+            <div class="spreadsheet">
+                
+                <table>
+                    <!-- TODO <tr class="column-label"> -->
+                    <tr class="column-label1">
+                        <td></td>
+                        <td><center>Trip ID</center></td>
+                        <td ng-repeat="stop in routeDetail.stops | reverse"><center>{{stop.name}}</center></td>
+                        <td>Operating Bus</td>
+                    </tr>
+                    <!-- http://justinklemm.com/angularjs-filter-ordering-objects-ngrepeat/ -->
+                    <tr ng-repeat="trip in routeDetail.returnTrips">
+                        <td>
+                            <button ng-click='autoCompletereturnTrip(trip)'>Autocomplete</button>
+                        </td>
+                        <td class="row-label">{{trip}}</td>
+                        <td ng-repeat="stop in routeDetail.stops | reverse">
+                         
+							<div>
+                                <input ng-model="routeDetail.timings[trip][stop.stopId]"></input>
+								
+                            </div>
+                        </td>
+                        <td>Assign a Bus</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        <div id="tabs-4" data-url="tabs-4">
+        </div>
+    </div>
+
+	<script type="text/javascript" src="js/third_party/angular-ui-tree-master/dist/angular-ui-tree.min.js"></script>
+</body>
+
+</html>
