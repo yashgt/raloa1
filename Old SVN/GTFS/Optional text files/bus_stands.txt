@@ -1,0 +1,18 @@
+stop_id,stop_name,stop_lat,stop_lon,location_type,wheelchair_boarding
+1,KTC Panjim,15.4951,73.8372,1,2
+2,KTC Margao,15.2875,73.9562,1,2
+3,KTC Vasco,15.4002,73.821,1,2
+4,KTC Ponda,15.4064,73.997,1,2
+5,KTC Mapusa,15.5892,73.8101,1,2
+6,KTC Sanquelim,15.5615,74.01,1,2
+7,KTC Honda,15.5461,74.0523,1,2
+8,KTC Bicholim,15.5884,73.9497,1,2
+9,KTC Assnora,15.619,73.9014,1,2
+10,KTC Pernem,15.7163,73.7988,1,2
+11,KTC Valpoi,15.5328,74.1414,1,2
+12,KTC Curchorem,15.2613,74.1068,1,2
+13,KTC Cuncolim,15.1824,73.9973,1,2
+14,KTC Canacona,15.0084,74.044,1,2
+15,KTC Sanguem,15.2279,74.1518,1,2
+16,KTC Marcela,15.5159,73.9614,1,2
+17,KTC Shiroda,15.3213,74.0275,1,2
