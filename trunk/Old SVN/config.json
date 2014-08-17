@@ -1,0 +1,21 @@
+{
+	"database" : {
+		"host": "goatrans.chuhe0c4za6c.ap-southeast-1.rds.amazonaws.com:3306",
+		"user": "root",
+		"password": "goatrans",
+		"database": "goatrans"
+	},
+	"gmap" : {
+		"key" : "AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q"
+	},
+	"admin" : {
+		"port" : 3000
+	},
+	"mobapp" : {
+		"port" : 8000
+	},
+	"txtapp" : {
+		"port" : 5000
+	}
+	
+}

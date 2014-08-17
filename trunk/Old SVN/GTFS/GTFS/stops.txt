@@ -1,0 +1,122 @@
+stop_id,stop_name,stop_lat,stop_lon,location_type
+1,KTC Panjim,15.4951,73.8372,0
+2,KTC Margao,15.2875,73.9562,0
+4,KTC Ponda,15.4064,73.997,0
+5,KTC Mapusa,15.5892,73.8101,0
+10,KTC Pernem,15.7163,73.7988,0
+18,Ribandar Patto,15.5042,73.8624,0
+19,Chorao Ferry,15.5058,73.8642,0
+20,Ribandar Badminton Court,15.5028,73.8688,0
+21,Goa Institute of Management,15.5019,73.8747,0
+22,Divar Ferry,15.5003,73.8776,0
+23,Saw Mill,15.4996,73.8928,0
+24,Sao Pedro Church,15.5002,73.8965,0
+25,MIRacle Emporium,15.5004,73.9018,0
+26,Old Goa Church,15.5019,73.9101,0
+27,Old Goa Bus Stop,15.5011,73.915,0
+28,Old Goa Masjid,15.499,73.919,0
+29,Carambolim Station,15.4976,73.9248,0
+30,Corlim Petrol Pump,15.4971,73.9279,0
+31,Corlim IDC,15.4969,73.9296,0
+32,Montfort ITI,15.4949,73.937,0
+33,Syngenta,15.4934,73.9407,0
+34,Dhulapi,15.4931,73.9451,0
+35,Banastarim Junction Bus Stop,15.4899,73.9576,0
+36,Muslim Wada,15.4844,73.9588,0
+37,Bhoma,15.475,73.9639,0
+38,Kundaim Village,15.4617,73.96,0
+39,Kundaim IDC,15.4557,73.9644,0
+40,Balaji Temple,15.4559,73.9668,0
+41,Mangeshi,15.4466,73.9701,0
+42,Mardol,15.4414,73.9743,0
+43,Mardol Masjid,15.4392,73.9758,0
+44,Veling,15.4368,73.9772,0
+45,Konem,15.4337,73.9858,0
+46,PES Pharmacy,15.4156,73.9873,0
+47,Farmagudi Circle,15.4128,73.9888,0
+48,GVMs College,15.4085,73.9925,0
+49,Hotel Sun Inn,15.4049,74.0031,0
+50,Ponda Old Bus Stand,15.4007,74.004,0
+51,Betim Circle,15.5077,73.836,0
+52,Secreteriat,15.5113,73.8349,0
+53,Sai Service,15.5139,73.8352,0
+54,Pundalik Nagar,15.5158,73.8345,0
+55,Porvorim Petrol Pump,15.5184,73.8291,0
+56,Teen Building,15.5204,73.8288,0
+57,Training College,15.5245,73.8274,0
+58,PDA Colony Porvorim,15.5257,73.8266,0
+59,Co-Oqueiro,15.5315,73.8247,0
+60,Porvorim Chapel,15.534,73.8239,0
+61,Porvorim Vadakaden,15.5414,73.8215,0
+62,Damian De Goa,15.5455,73.8197,0
+63,Porvorim Bazaar,15.5526,73.8174,0
+64,Guirim Cross,15.5655,73.8083,0
+65,Green Park,15.5745,73.8065,0
+66,Guirim,15.5791,73.8061,0
+67,Secreteriat Panajim,15.5009,73.8293,0
+68,Ferry Boat,15.5011,73.8257,0
+69,Panaji Market,15.5002,73.8214,0
+70,Kala Academy,15.4943,73.8185,0
+71,Bal Bhavan,15.4896,73.8148,0
+72,Magsons Campal,15.4874,73.8128,0
+73,Miramar Circle,15.4834,73.8093,0
+74,Court Mapusa,15.5937,73.8142,0
+75,Duler Football Ground,15.5985,73.8155,0
+76,St. Anthony High School,15.603,73.8167,0
+77,Char Rastyaar Karaswada,15.6086,73.8237,0
+78,Karaswada Industrial Estate,15.6137,73.8227,0
+79,Colvale Housing Board,15.628,73.8255,0
+80,Colvale IDC,15.6359,73.8302,0
+81,Colvale Village,15.645,73.8347,0
+82,Dhargal,15.6658,73.8385,0
+83,Suke Kuran,15.6825,73.8339,0
+84,Dadachi Vadi,15.6898,73.8401,0
+85,Maruti Devlakade,15.6987,73.8482,0
+86,Nagzar Village,15.7085,73.8534,0
+87,Purvaat Govt Hospital,15.7124,73.8743,0
+88,Kasarvarne,15.7182,73.8883,0
+89,Khutwal Road,15.7217,73.8946,0
+90,Chandel,15.7317,73.8985,0
+91,Hasapur Village,15.7392,73.9031,0
+92,Hankhane Village,15.7318,73.94,0
+93,Ibrampur,15.7065,73.9349,0
+94,Kadamba Porvorim Depot,15.5378,73.8308,0
+95,Maruti Temple Porvorim,15.521,73.8316,0
+96,Porvorim Market,15.5227,73.831,0
+97,Housing Board Porvorim,15.5238,73.8335,0
+98,Britania House,15.5258,73.8355,0
+99,Ram Vadeshwar Temple,15.5276,73.836,0
+100,Water Tank Porvorim,15.5287,73.834,0
+101,All India Radio Quarters,15.5304,73.8304,0
+102,Defence Colony,15.5313,73.8255,0
+103,Sainik Store,15.5349,73.8249,0
+104,Vidya Prabodhini School,15.5266,73.8313,0
+105,Govt. High School Alto Betim,15.5261,73.83,0
+106,Santa Cruz,15.4787,73.8486,0
+107,Goa Medical College,15.4655,73.8583,0
+108,Kendriya Vidyalaya Bambolim,15.4617,73.8671,0
+109,Holy Cross Church,15.4526,73.8645,0
+110,Siridao,15.4445,73.8644,0
+111,Dena Bank Goa Velha,15.4415,73.8812,0
+112,Pilar Road,15.4396,73.8908,0
+113,Agacaim Market,15.4284,73.8984,0
+114,Agacim,15.4224,73.9011,0
+115,Cortalim Circle,15.4026,73.9081,0
+116,Cortalim Sancoale Crossing,15.3978,73.9107,0
+117,Cortalim Chauder,15.391,73.9165,0
+118,Kesarval Gardens,15.3809,73.9258,0
+119,Verna IDC,15.3711,73.9268,0
+120,Lupin Verna IDC,15.3643,73.9262,0
+121,Nagoa Village,15.3584,73.9272,0
+122,Verna Nagoa Junction,15.356,73.9283,0
+123,Verna Panchayat,15.3539,73.9307,0
+124,Verna Church,15.3491,73.9314,0
+125,Senaulim,15.3412,73.9308,0
+126,PCCE College,15.3276,73.9344,0
+127,Carmel College,15.3115,73.9442,0
+128,Nuvem Church,15.3079,73.9469,0
+129,Redkar Hospital Malpe,15.6878,73.8297,0
+130,Government College Pernem,15.7031,73.8195,0
+131,Pernem Railway Station,15.7081,73.8151,0
+132,Pernem Junction,15.7123,73.8108,0
+133,Pernem Village,15.7156,73.8038,0
