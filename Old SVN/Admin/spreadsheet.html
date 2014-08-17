@@ -1,0 +1,882 @@
+<html>
+<body>
+<script type='text/javascript'>
+
+function SpreadsheetTest()
+{
+	this.main = function()
+	{
+		var spreadsheet0 = new Spreadsheet
+		(
+			"Spreadsheet0",
+			new Coords(10, 10) // sizeInCells
+		);
+
+		spreadsheet0.getOrCreateCellAtPosXY(0, 0).value = "Add:";
+		spreadsheet0.getOrCreateCellAtPosXY(0, 6).value = "Result:"
+
+		spreadsheet0.getOrCreateCellAtPosXY(1, 0).value = 1;
+		spreadsheet0.getOrCreateCellAtPosXY(1, 1).value = 2;
+		spreadsheet0.getOrCreateCellAtPosXY(1, 2).value = 3;
+		spreadsheet0.getOrCreateCellAtPosXY(1, 3).value = 4;
+		spreadsheet0.getOrCreateCellAtPosXY(1, 4).value = 5;
+
+		spreadsheet0.getOrCreateCellAtPosXY(1, 6).formula = Formula.parse
+		(
+			"=AddRange x1y0:x1y4"
+		);
+
+		spreadsheet0.getOrCreateCellAtPosXY(2, 0).value = 6;
+		spreadsheet0.getOrCreateCellAtPosXY(2, 1).value = 7;
+		spreadsheet0.getOrCreateCellAtPosXY(2, 2).value = 8;
+		spreadsheet0.getOrCreateCellAtPosXY(2, 3).value = 9;
+		spreadsheet0.getOrCreateCellAtPosXY(2, 4).value = 10;
+
+		spreadsheet0.getOrCreateCellAtPosXY(2, 6).formula = Formula.parse
+		(
+			"=AddRange x2y0:x2y4"
+		);
+
+		spreadsheet0.getOrCreateCellAtPosXY(3, 0).value = 11;
+		spreadsheet0.getOrCreateCellAtPosXY(3, 1).value = 12;
+		spreadsheet0.getOrCreateCellAtPosXY(3, 2).value = 13;
+		spreadsheet0.getOrCreateCellAtPosXY(3, 3).value = 14;
+		spreadsheet0.getOrCreateCellAtPosXY(3, 4).value = 15;
+
+		spreadsheet0.getOrCreateCellAtPosXY(3, 6).formula = Formula.parse
+		(
+			"=AddRange x3y0:x3y4"
+		);
+
+		spreadsheet0.getOrCreateCellAtPosXY(4, 6).value = "Total:";
+
+		spreadsheet0.getOrCreateCellAtPosXY(5, 6).formula = Formula.parse
+		(
+			"=AddRange x1y6:x3y6"
+		);
+
+		var spreadsheet0AsHTMLElement = spreadsheet0.toHTMLElement();
+
+		document.body.appendChild
+		(
+			spreadsheet0AsHTMLElement
+		);
+
+		spreadsheet0.evaluateCellsAll();
+		spreadsheet0.updateHTMLElement();
+	}
+}
+
+// classes
+
+function Cell(value, formula)
+{
+	this.value = value;
+	this.formula = formula;
+}
+
+function CellRange(startPos, endPos)
+{
+	this.startPos = startPos;
+	this.endPos = endPos;
+}
+{
+	CellRange.prototype.cellsInRange = function(spreadsheet)
+	{
+		var returnValues = [];
+
+		var cellPos = new Coords(0, 0);
+		for (var y = this.startPos.y; y <= this.endPos.y; y++)
+		{
+			cellPos.y = y;
+			for (var x = this.startPos.x; x <= this.endPos.x; x++)
+			{
+				cellPos.x = x;
+
+				var cell = spreadsheet.getCellAtPos(cellPos);
+
+				returnValues.push(cell);
+			}
+		}
+
+		return returnValues;
+	}
+
+	CellRange.prototype.toString = function()
+	{
+		var returnValue = this.startPos.toString() + ":" + this.endPos.toString();
+		return returnValue;
+	}
+}
+
+function Coords(x, y)
+{
+	this.x = x;
+	this.y = y;
+}
+{
+	// static methods
+
+	Coords.parseFromString = function(stringToParse)
+	{
+		var tokensForXAndY = stringToParse.substring(1).split("y");
+		var returnValue = new Coords
+		(
+			parseInt(tokensForXAndY[0]),
+			parseInt(tokensForXAndY[1])
+		);				
+
+		return returnValue;	
+	}
+
+	// instance methods
+
+	Coords.prototype.clone = function()
+	{
+		return new Coords(this.x, this.y);
+	}
+
+	Coords.prototype.toString = function()
+	{
+		return "x" + this.x + "y" + this.y;
+	}
+}
+
+function Expression(operator, children)
+{
+	this.operator = operator;
+	this.children = children;
+}
+{
+	Expression.prototype.evaluate = function(spreadsheet, cellPos)
+	{
+		var result = this.operator.evaluate
+		(
+			spreadsheet,
+			cellPos,
+			this
+		);
+
+		spreadsheet.getCellAtPos(cellPos).value = result;
+	}
+
+	Expression.prototype.toString = function()
+	{
+		var returnValue = this.operator.name + " ";
+
+		for (var i = 0; i < this.children.length; i++)
+		{
+			var child = this.children[i];
+
+			var childAsString = child.toString();
+
+			returnValue += childAsString;
+		}
+
+		return returnValue;
+	}
+}
+
+function ExpressionOperator(name, parseFromTokens, evaluate)
+{
+	this.name = name;
+	this.parseFromTokens = parseFromTokens;
+	this.evaluate = evaluate;
+}
+{
+	// instances
+
+	ExpressionOperator.Instances = new ExpressionOperator_Instances();
+
+	function ExpressionOperator_Instances()
+	{
+		this.Add = new ExpressionOperator
+		(
+			"Add",
+			function(tokens) 
+			{
+				var addendPositions = [];
+
+				for (var i = 0; i < 2; i++)
+				{
+					addendPositions[i] = Coords.parseFromString(tokens[i + 1]);
+				}
+
+				var expressionRoot = new Expression
+				(
+					operator,
+					[
+						addendPositions[0],
+						addendPositions[1]
+					]
+				);
+
+				var returnValue = new Formula(expressionRoot);
+
+				return returnValue;	
+			},
+
+			function(spreadsheet, cellPos, expression)
+			{
+				var returnValue = 0;
+
+				var cellRange = expression.children[0];
+				var cellsInRange = cellRange.cellsInRange(spreadsheet);
+
+				for (var i = 0; i < cellsInRange.length; i++)
+				{
+					var cellInRange = cellsInRange[i];
+
+					returnValue += cellInRange.value;
+				}
+
+				return returnValue;
+			}
+		);
+
+		this.AddRange = new ExpressionOperator
+		(
+			"AddRange",
+			function(tokens) 
+			{
+				var tokensForRangeExtremes = tokens[1].split(":");
+
+				var tokenForRangeStart = tokensForRangeExtremes[0];
+				var tokensForRangeStartXY = tokenForRangeStart.substring(1).split("y");
+				var rangeStart = new Coords
+				(
+					parseInt(tokensForRangeStartXY[0]),
+					parseInt(tokensForRangeStartXY[1])
+				);
+
+				var tokenForRangeEnd = tokensForRangeExtremes[1];
+				var tokensForRangeEndXY = tokenForRangeEnd.substring(1).split("y");
+				var rangeEnd = new Coords
+				(
+					parseInt(tokensForRangeEndXY[0]),
+					parseInt(tokensForRangeEndXY[1])
+				);
+
+				var range = new CellRange(rangeStart, rangeEnd);
+
+				var expressionRoot = new Expression
+				(
+					operator,
+					[
+						range
+					]
+				);
+
+				var returnValue = new Formula(expressionRoot);
+
+				return returnValue;	
+			},
+
+			function(spreadsheet, cellPos, expression)
+			{
+				var returnValue = 0;
+
+				var cellRange = expression.children[0];
+				var cellsInRange = cellRange.cellsInRange(spreadsheet);
+
+				for (var i = 0; i < cellsInRange.length; i++)
+				{
+					var cellInRange = cellsInRange[i];
+
+					returnValue += cellInRange.value;
+				}
+
+				return returnValue;
+			}
+		);
+
+		this._All = 
+		[
+			this.Add,
+			this.AddRange,
+		];
+
+		for (var i = 0; i < this._All.length; i++)
+		{
+			var operator = this._All[i];
+			this._All[operator.name] = operator;
+		}
+	}
+}
+
+function Formula(expressionRoot)
+{
+	this.expressionRoot = expressionRoot;
+}
+{
+	// static methods
+
+	Formula.parse = function(textToParse)
+	{
+		textToParse = textToParse.substring("=".length);
+
+		var operators = ExpressionOperator.Instances._All;
+
+		var tokens = textToParse.split(" ");
+
+		var tokenForOperator = tokens[0];
+
+		var operator = operators[tokenForOperator];
+
+		var returnValue = operator.parseFromTokens(tokens);
+
+		return returnValue;
+	}
+
+	// instance methods
+
+	Formula.prototype.evaluate = function(spreadsheet, cellPos)
+	{
+		this.expressionRoot.evaluate
+		(
+			spreadsheet,
+			cellPos
+		);		
+	}
+
+	Formula.prototype.toString = function()
+	{
+		return "=" + this.expressionRoot.toString();
+	}
+}
+
+function Spreadsheet(name, sizeInCells)
+{
+	this.name = name;
+	this.sizeInCells = sizeInCells;
+	this.cells = [];
+}
+{
+	// static methods
+
+	Spreadsheet.handleCellChange = function(event)
+	{
+		var inputChanged = event.target;
+		var parentTable = inputChanged.parentElement.parentElement.parentElement.parentElement;
+		var parentDiv = parentTable.parentElement;
+		var spreadsheet = parentDiv.spreadsheet;
+
+		var cellPosAsString = inputChanged.id;
+		var cellPosXYAsStrings = cellPosAsString.substring(1).split("y");
+		var cellPos = new Coords
+		(
+			parseInt(cellPosXYAsStrings[0]), 
+			parseInt(cellPosXYAsStrings[1])
+		);
+
+		var cell = spreadsheet.getOrCreateCellAtPos(cellPos);
+
+		var inputChangedValue = inputChanged.value;
+
+		if (inputChangedValue.indexOf("=") == 0)
+		{
+			cell.formula = Formula.parse(inputChangedValue);
+		}
+		else 
+		{
+			var inputChangedValueAsInt = parseInt(inputChangedValue);
+
+			if (isNaN(inputChangedValueAsInt) == true)
+			{
+				cell.value = inputChangedValue;
+			}
+			else
+			{
+				cell.value = inputChangedValueAsInt;
+			}
+		}
+
+		spreadsheet.evaluateCellsAll();
+		spreadsheet.updateHTMLElement();
+	}
+
+	Spreadsheet.handleCellFocus = function(event)
+	{
+		var inputChanged = event.target;
+		var parentTable = inputChanged.parentElement.parentElement.parentElement.parentElement;
+		var parentDiv = parentTable.parentElement;
+		var spreadsheet = parentDiv.spreadsheet;
+
+		var cellPosAsString = inputChanged.id;
+		var cellPosXYAsStrings = cellPosAsString.substring(1).split("y");
+		var cellPos = new Coords
+		(
+			parseInt(cellPosXYAsStrings[0]), 
+			parseInt(cellPosXYAsStrings[1])
+		);
+
+		var cell = spreadsheet.getCellAtPos(cellPos);
+
+		if (cell != null)
+		{
+			if (cell.formula == null)
+			{
+				spreadsheet.selectedValue = cell.value;
+			}
+			else
+			{
+				spreadsheet.selectedValue = cell.formula.toString();
+			}
+		}
+
+		spreadsheet.updateHTMLElement();
+	}
+
+	// instance methods
+
+	Spreadsheet.prototype.createCellAtPos = function(cellPos)
+	{
+		var cell = new Cell(null, null);
+		var cellIndex = cellPos.y * this.sizeInCells.x + cellPos.x;
+		this.cells[cellIndex] = cell;
+
+		return cell;
+	}	
+
+	Spreadsheet.prototype.evaluateCellsAll = function()
+	{
+		var cellPositionsWithFormulasSoFar = [];
+
+		var cellPos = new Coords(0, 0);
+
+		for (var y = 0; y < this.sizeInCells.y; y++)
+		{
+			cellPos.y = y;
+
+			for (var x = 0; x < this.sizeInCells.x; x++)
+			{
+				cellPos.x = x;
+
+				cell = this.getCellAtPos(cellPos); 
+
+				if (cell == null)
+				{}
+				else if (cell.formula != null)
+				{
+					// formula
+					cellPositionsWithFormulasSoFar.push
+					(
+						cellPos.clone()
+					);	
+				}
+			}
+		}		
+
+		for (var f = 0; f < cellPositionsWithFormulasSoFar.length; f++)
+		{
+			cellPos = cellPositionsWithFormulasSoFar[f]
+
+			var cell = this.getCellAtPos(cellPos);
+
+			cell.formula.evaluate(this, cellPos);
+		}
+	}
+
+	Spreadsheet.prototype.getCellAtPos = function(cellPos)
+	{
+		var cellIndex = cellPos.y * this.sizeInCells.x + cellPos.x;
+
+		var returnValue = this.cells[cellIndex];
+
+		return returnValue;
+	}
+
+	Spreadsheet.prototype.getOrCreateCellAtPos = function(cellPos)
+	{
+		var cell = this.getCellAtPos(cellPos);
+
+		if (cell == null)
+		{
+			cell = this.createCellAtPos(cellPos);
+		}
+
+		return cell;
+	}	
+
+	Spreadsheet.prototype.getOrCreateCellAtPosXY = function(cellPosX, cellPosY)
+	{
+		return this.getOrCreateCellAtPos(new Coords(cellPosX, cellPosY));
+	}
+
+	// html
+
+	Spreadsheet.prototype.toHTMLElement = function()
+	{
+		var returnValue = document.createElement("div");
+
+		var labelForValueSelected = document.createElement("label");
+		labelForValueSelected.innerHTML = "Value of Last Cell Clicked:"
+
+		var inputForValueSelected = document.createElement("input");
+		inputForValueSelected.id = "inputValueSelected";
+		inputForValueSelected.readonly = "readonly"; // fix?
+
+		returnValue.appendChild(labelForValueSelected);
+		returnValue.appendChild(inputForValueSelected);
+
+		var table = document.createElement("table");
+		table.style.border = "1px solid";
+
+		var thead = document.createElement("thead");
+		var thForColumnHeader = document.createElement("th");
+		thForColumnHeader.innerHTML = "";
+		thead.appendChild(thForColumnHeader);
+
+		for (var x = 0; x < this.sizeInCells.x; x++)
+		{
+			thForColumnHeader = document.createElement("th");
+			thForColumnHeader.innerHTML = x;
+			thead.appendChild(thForColumnHeader);
+		}
+
+		table.appendChild(thead);
+
+		var tBody = document.createElement("tbody");
+
+		var cellPos = new Coords(0, 0);
+
+		for (var y = 0; y < this.sizeInCells.y; y++)
+		{
+			cellPos.y = y;
+			var tr = document.createElement("tr");
+			tr.id = "row" + y;
+
+			var pForRowNumber = document.createElement("p");
+			pForRowNumber.innerHTML = y;
+			tr.appendChild(pForRowNumber);
+
+			for (var x = 0; x < this.sizeInCells.x; x++)
+			{
+				cellPos.x = x;
+
+				var inputForCell = document.createElement("input");
+				inputForCell.id = cellPos.toString();
+				inputForCell.style.border = "1px solid";
+				inputForCell.style.width = "64px";
+				inputForCell.style.height = "32px";
+				inputForCell.style.textAlign = "right";
+
+				var cell = this.getCellAtPos(cellPos);
+
+				var cellValue = null;
+
+				if (cell == null)
+				{
+					// empty
+					cellValue = "";
+				}
+				else if (cell.formula != null)
+				{
+					// formula
+					cellValue = cell.formula.evaluate(this, cellPos);
+				}
+				else
+				{
+					// number or text
+					cellValue = cell.value;
+				}
+
+				inputForCell.value = cellValue;
+				inputForCell.onchange = Spreadsheet.handleCellChange;
+				inputForCell.onfocus = Spreadsheet.handleCellFocus;
+
+				var td = document.createElement("td");
+				td.appendChild(inputForCell);
+
+				tr.appendChild(td);
+			}
+
+			tBody.appendChild(tr);
+		}
+
+		table.appendChild(tBody);
+
+		returnValue.appendChild(table);
+
+		returnValue.spreadsheet = this;
+		this.htmlElement = returnValue;
+
+		return returnValue;
+	}
+
+	Spreadsheet.prototype.updateHTMLElement = function()
+	{
+		var cellPos = new Coords(0, 0);
+
+		var table = this.htmlElement.getElementsByTagName("table")[0];
+		var tBody = table.getElementsByTagName("tbody")[0];
+		var trsForRows = tBody.getElementsByTagName("tr");
+
+		for (var y = 0; y < this.sizeInCells.y; y++)
+		{
+			cellPos.y = y;
+
+			var trForRow = trsForRows[y];
+			var tdsForCells = trForRow.getElementsByTagName("td");
+
+			for (var x = 0; x < this.sizeInCells.x; x++)
+			{
+				cellPos.x = x;
+
+				var cell = this.getCellAtPos(cellPos);
+				if (cell == null)
+				{
+					cellValue = "";
+				}
+				else
+				{
+					cellValue = cell.value;
+				}
+
+				var tdForCell = tdsForCells[x];
+
+				tdForCell.getElementsByTagName("input")[0].value = cellValue;
+			}
+		}
+
+		if (this.selectedValue != null)
+		{
+			var inputForSelectedValue = this.htmlElement.getElementsByTagName("input")[0];
+
+			inputForSelectedValue.value = this.selectedValue;
+		}	
+	}
+
+	// xml
+
+	Spreadsheet.fromXMLElement = function(xmlElement)
+	{
+		var returnValue = new Spreadsheet
+		(			
+			xmlElement.attributes["Name"].value,
+			xmlElement.attributes["SizeInCells"].value
+		);
+
+		for (var i = 0; i < xmlElement.children.length; i++)
+		{
+			var cellAsXmlElement = xmlElement.children[i];
+
+			var cell = new Cell
+			(
+				cellAsXmlElement.attributes["Value"],
+				Formula.parseFromString(cellAsXmlElement.attributes["Formula"])
+			);
+
+			var cellPosAsString = cellAsXmlElement.attributes["cellPos"];
+			var cellPos = Coords.parseFromString(cellPosAsString);
+
+			returnValue.createCellAtPos(cellPos, cell);
+		}
+
+		return returnValue;
+	}
+
+	Spreadsheet.prototype.toXMLElement = function()
+	{
+		var cellPos = new Coords(0, 0);
+
+		for (var y = 0; y < this.sizeInCells.y; y++)
+		{
+			cellPos.y = y;
+
+			for (var x = 0; x < this.sizeInCells.x; x++)
+			{
+				cellPos.x = x;
+
+				var cell = this.getCellAtPos(cellPos);
+
+				if (cell != null)
+				{
+					var cellAsXmlElement = new XmlElement
+					(
+						null, // parent
+						"Cell", // tagName
+						// attributes
+						[
+							new XmlAttribute("Pos", cellPos.toString()),
+							new XmlAttribute("Value", "" + cell.value),
+							new XmlAttribute("Formula", cell.formula.toString())
+						],
+						null // children
+					);
+					cellsAsXmlElements.push(cellAsXmlElement);
+				}
+			}
+		}
+
+		var returnValue = new XMLElement
+		(
+			null, // parent
+			"Spreadsheet", // tagName
+			[ 
+				new XMLAttribute("Name", this.name),
+				new XMLAttribute("SizeInCells", this.sizeInCells.toString()), 
+			],
+			cellsAsXmlElements // children
+		);
+
+		return returnValue;	
+	}
+}
+
+function XMLAttribute(name, value)
+{
+	this.name = name;
+	this.value = value;
+}
+
+function XMLElement(parent, tagName, attributes, children)
+{
+	this.parent = parent;
+	this.tagName = tagName;
+	this.attributes = attributes;
+	this.children = children;
+}
+{
+	XMLElement.parseFromString = function(stringToParse)
+	{
+		var tagsAsStrings = stringToParse.split("<");
+
+		var elementRoot = new XMLElement
+		(
+			null, // parent
+			null, // tagName
+			[], // attributes
+			[] // children
+		);
+
+		var elementCurrent = elementRoot;
+
+		for (var t = 0; t < tagsAsStrings.length; t++)
+		{
+			var tagAsString = tagsAsStrings[t];
+
+			if (tagAsString.length == 0)
+			{
+				// do nothing
+			}
+			else if (tagAsString.indexOf("/") == 0)
+			{
+				elementCurrent = elementCurrent.parent;
+			}
+			else
+			{				
+				if (tagAsString.lastIndexOf("/>") == tagAsString.length - 2)
+				{
+					tagAsString = tagAsString.substring(0, tagAsString.length - 2) + " />";
+				}
+				else if (tagAsString.lastIndexOf(">") == tagAsString.length - 1)
+				{
+					tagAsString = tagAsString.substring(0, tagAsString.length - 1) + " >";
+				}				
+
+				var tokensFromTag = tagAsString.split(" ");
+
+				var tagName = tokensFromTag[0];
+
+				var attributes = [];
+
+				for (var a = 1; a <= tokensFromTag.length - 1; a++)
+				{
+					var attributeAsString = tokensFromTag[a];
+
+					var indexOfEqualsSign = attributeAsString.indexOf("=");
+					if (indexOfEqualsSign >= 0)
+					{	
+						var attributeName = attributeAsString.substring(0, indexOfEqualsSign);
+						var attributeValue = attributeAsString.substring(indexOfEqualsSign + 1);
+
+						if (attributeValue.indexOf("'") == 0)
+						{
+							while (attributeValue.lastIndexOf("'") != attributeValue.length - 1)
+							{
+								a++;
+								attributeValue += " " + tokensFromTag[a];
+							}
+
+							attributeValue = attributeValue.substring
+							(
+								1, attributeValue.length - 1
+							);
+						}
+
+						var attribute = new XMLAttribute
+						(
+							attributeName,
+							attributeValue
+						);
+
+						attributes.push(attribute);
+						attributes[attribute.name] = attribute;
+					}
+				}
+
+				var elementNew = new XMLElement
+				(
+					elementCurrent,
+					tagName,
+					attributes,
+					[] // children
+				);
+
+				elementCurrent.children.push(elementNew);
+
+				elementCurrent = elementNew;
+
+				if (tagAsString.indexOf("/>") == (tagAsString.length - 2))
+				{
+					elementCurrent = elementCurrent.parent;
+				}
+			}
+		}
+
+		var returnValue = elementRoot.children[0];
+
+		return returnValue;
+	}
+
+	// instance methods
+
+	XMLElement.prototype.toString = function()
+	{
+		var returnValue = "<" + this.tagName;
+
+		for (var i = 0; i < this.attributes.length; i++)
+		{
+			var attribute = this.attributes[i];
+
+			returnValue += 
+				" " + attribute.name 
+				+ "='" + attribute.value + "'"
+		}
+
+		if (this.children.length == 0)
+		{
+			returnValue += "/";	
+		}
+
+		returnValue += ">";
+
+		for (var i = 0; i < this.children.length; i++)
+		{
+			var child = this.children[i];
+
+			returnValue += child.toString();
+		}
+
+		return returnValue;
+	}
+}
+
+// run
+
+new SpreadsheetTest().main();
+
+</script>
+</body>
+</html>

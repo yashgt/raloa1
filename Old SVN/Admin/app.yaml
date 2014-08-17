@@ -1,0 +1,12 @@
+application: goatransportation
+version: 1
+runtime: python
+api_version: 1
+default_expiration: "7d"
+#Change default exp later to 7d
+skip_files:
+- .*node_modules.*$
+- .*\.svn.*$
+handlers:
+- url: /
+  static_dir: public

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" id='ng-app' ng-app="adminApp">
+  <head>
+    <title><%= title %></title>
+	
+	<script src="javascripts/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization&sensor=false&language=en&v=3.14"></script>
+	
+	<script src="javascripts/bower_components/angular/angular.min.js"></script>
+	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
+	<!-- <script src="javascripts/bower_components/underscore/underscore.js"></script> -->
+
+	<script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+	
+	<script src="javascripts/RouteController.js"></script>
+	
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+	<link rel='stylesheet' href='/stylesheets/map.css' />
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css">
+    </head>
+    <body ng-controller="RouteController">
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+	<google-map 
+		zoom="fleetDetail.zoom"
+		center="fleetDetail.center"
+         draggable="true"
+         bounds="fleetDetail.bounds"
+         pan="true"
+        >
+		<!--<markers models="fleetDetail.stops" coords="'{latitude:self.lat, longitude:self.lon}'" icon="'images/bus.png'" click="'onClicked'">-->
+		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
+        </markers>
+	</google-map>	
+	<button ng-click="remove()">Remove</button>
+	
+	var TabsDemoCtrl = function ($scope) {
+	$scope.tabs = [
+    { title:'Dynamic Title 1', content:'Dynamic content 1' },
+    { title:'Dynamic Title 2', content:'Dynamic content 2', disabled: true }
+	];
+	};
+	
+	<div ng-controller="TabsDemoCtrl">
+	<tabset>
+	<tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+      {{tab.content}}
+    </tab>
+	</tabset>
+	</div>
+
+  </body>
+</html>

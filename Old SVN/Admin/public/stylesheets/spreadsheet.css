@@ -1,0 +1,36 @@
+/*  body { font-family: sans-serif; } */
+.spreadsheet .output, .spreadsheet input { 
+    font-size: 10pt;
+    position: absolute;
+    height: 1.2em;
+    width: 50pt;
+    height: 16pt;
+    overflow: hidden;
+    padding-left: 4pt;
+  }
+.spreadsheet input { border: none;}
+.spreadsheet .output { 
+    background: white; 
+    pointer-events: none;
+    padding-top: 2pt;
+    height: 14pt;
+  }
+.spreadsheet input:focus + .output { display: none; }
+ 
+.spreadsheet table { border-collapse: collapse; } 
+.spreadsheet td > div {
+    width: 55pt;
+    height: 16pt;
+  } 
+.spreadsheet td { border: 1px solid #EEE; }
+.spreadsheet .column-label  > td, .spreadsheet .row-label {
+    text-align: center;
+    background: #EEE;
+  }
+.spreadsheet .column-label > td{
+-webkit-transform: rotate(292deg);
+-moz-transform: rotate(292deg);
+-o-transform: rotate(292deg);
+writing-mode: rl-bt;
+}  
+.spreadsheet .row-label { width: 2em; }

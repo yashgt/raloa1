@@ -1,0 +1,15 @@
+npm install googlemaps
+npm install vows
+npm install util
+npm install connect-mysql
+npm install ejs
+npm install express
+npm install jade
+npm install jschain
+npm install mysql
+npm install nconf
+npm install node-mysql
+npm install passport
+npm install passport-local
+npm install underscore
+npm install node-inspector
