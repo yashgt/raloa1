@@ -46,9 +46,11 @@
 	
 		<window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
             <div >
-				{{test}}
-                <p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
+				
+                
 				<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
+					<p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
+					<!-- TODO CBM add validations -->
 					<input type="text" name="stopName" ng-model="stopDetail.stopName" />
 					<br/>
 					<textarea ng-model="stopDetail.address"></textarea>
@@ -63,8 +65,6 @@
 		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
         </markers>
 	</div>	
-	<input type="text" name="stopName1" ng-model="stopDetail.stopName" />
-	<button ng-click="remove()">Remove</button>
 	
 
   </body>
