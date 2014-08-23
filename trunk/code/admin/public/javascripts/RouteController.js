@@ -5,7 +5,7 @@ function initializeApp($rootScope){
 tempId = 2; //temporary
 
 function RouteController
-($scope, getthereAdminService, channel) {
+($scope, getthereAdminService, channel, locationChannel) {
 	
 	channel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
 		$scope.stopDetail.stopName = stopDetail.name;
@@ -38,7 +38,7 @@ function RouteController
 		stopName: "stopname",
 		address: "Reverse geocoded address goes here"
 		};
-		$scope.test = "NEWHELLO";
+		locationChannel.publishLocation( {latitude: latLng.lat(),longitude: latLng.lng()});
 		$scope.map.infoWindow.show = true ;
 
 	};
@@ -125,7 +125,14 @@ function RouteController
 	//$scope.configMap();
 };
 
-function StopController($scope, channel){
+//This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
+//TODO: CBM to do rev geocoding
+function StopController($scope, channel, locationChannel){
+	
+	
+	locationChannel.add( function(latLng){
+		$scope.stopDetail = { latitude: latLng.latitude, longitude : latLng.latitude};
+	});
 	
 	$scope.saveStop = function(){
 		channel.publishStop({name: 'New Stop'});
@@ -149,7 +156,7 @@ GetThereAdminService = function($http){
 		}
 	};
 };
-ChannelService = function(){
+StopChannelService = function(){
 
         var callbacks = [];
         this.add = function (cb) {
@@ -163,13 +170,28 @@ ChannelService = function(){
         };
         return this;
 };
+//This service is used for conveying to other components that a location on the map has been chosen
+LocationChannelService = function(){
+		var callbacks = [];
+        this.add = function (cb) {
+          callbacks.push(cb);
+        };
+        this.publishLocation = function (latLng) {
+          //var args = arguments;
+          callbacks.forEach(function (cb) {
+            cb.call(this,latLng);
+          });
+        };
+        return this;
+};
 
 (function () {
 	var adminApp = angular.module('adminApp', ["google-maps"]);
 	adminApp.run(initializeApp);
 	adminApp.controller('RouteController', RouteController);
 	adminApp.controller('StopController', StopController);
-	adminApp.service('channel', ChannelService);
+	adminApp.service('channel', StopChannelService);
+	adminApp.service('locationChannel', LocationChannelService);
 	adminApp.factory('getthereAdminService', GetThereAdminService);
 }());
 
