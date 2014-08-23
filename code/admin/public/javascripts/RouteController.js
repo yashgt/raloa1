@@ -109,7 +109,12 @@ function RouteController
 		getthereAdminService.saveStop($scope.stopDetail, function(id){
 			$scope.stopDetail.id= id;
 			
-			$scope.fleetDetail.stops.push({id:$scope.stopDetail.id, latitude:$scope.stopDetail.latitude, longitude:$scope.stopDetail.longitude});
+			$scope.fleetDetail.stops.push({
+				id:$scope.stopDetail.id
+				, latitude:$scope.stopDetail.latitude
+				, longitude:$scope.stopDetail.longitude
+				, icon:'/images/bus.png'
+				});
 			$scope.map.infoWindow.show = false ;	
 		});		
 	};
