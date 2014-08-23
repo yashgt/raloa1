@@ -2,11 +2,15 @@ function initializeApp($rootScope){
 	//Initialize the app
 }
 
+tempId = 2; //temporary
+
 function RouteController
-//function
-($scope) {
+($scope, getthereAdminService, channel) {
 	
-	$scope.test = "HELLO";
+	channel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
+		$scope.stopDetail.stopName = stopDetail.name;
+		$scope.saveStop();		
+	});	
 	
 	$scope.routeDetail = {
 		stops : []
@@ -25,8 +29,8 @@ function RouteController
 	};
 	addStopWindow = function(latLng){
 		
-		$scope.map.infoWindow.coords = {latitude:latLng.lat(), longitude:latLng.lng()};
-		$scope.map.infoWindow.show = true ;
+		//$scope.map.infoWindow.coords = {latitude:latLng.lat(), longitude:latLng.lng()};
+		
 		//TODO
 		$scope.stopDetail = {
 		latitude: latLng.lat(),
@@ -35,13 +39,10 @@ function RouteController
 		address: "Reverse geocoded address goes here"
 		};
 		$scope.test = "NEWHELLO";
+		$scope.map.infoWindow.show = true ;
 
 	};
-	$scope.saveStop = function(){
-		$scope.fleetDetail.stops.push({id:2, latitude:$scope.stopDetail.latitude, longitude:$scope.stopDetail.longitude});
-		$scope.map.infoWindow.show = false ;
-	};
-
+	
 	$scope.configMap = function(){
 	$scope.gmap = $scope.map.control.getGMap() ;
 		
@@ -73,10 +74,10 @@ function RouteController
 	$scope.map ={
 		control: {}
 		,infoWindow: {
-        coords: {
+        /*coords: {
           latitude: 36.270850,
           longitude: -44.296875
-        },
+        },*/
         options: {
           disableAutoPan: true
         },
@@ -85,13 +86,15 @@ function RouteController
     };
 
 
-	
+	//Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
 	$scope.getRouteDetail = function(routeId){
+		$scope.routeDetail = getthereAdminService.getRoute(routeId);
 		//TODO get from web service
-		$scope.routeDetail.stops = [];
+		//$scope.routeDetail.stops = [];
 	};
 	
 	//Get the details of the selected fleet
+	//TODO: CBM fit this function in the pattern that we have defined
 	$scope.getFleetDetail = function(fleetId){
 		//TODO get from web service(node.js)
 		$scope.fleetDetail = {
@@ -102,31 +105,72 @@ function RouteController
 		};
 	};	
 	
+	$scope.saveStop = function(){
+		getthereAdminService.saveStop($scope.stopDetail, function(id){
+			$scope.stopDetail.id= id;
+			
+			$scope.fleetDetail.stops.push({id:$scope.stopDetail.id, latitude:$scope.stopDetail.latitude, longitude:$scope.stopDetail.longitude});
+			$scope.map.infoWindow.show = false ;	
+		});		
+	};
 
 	
 	$scope.remove = function(){
 		$scope.fleetDetail.stops = [];
 	};
+	//Region ends
 	
 	//TODO Do this based on the user's fleet
 	$scope.getFleetDetail(1);
 	//$scope.configMap();
 };
 
-function StopController($scope){
-	$scope.stopName = "";
+function StopController($scope, channel){
+	
 	$scope.saveStop = function(){
-		//alert('hi');
-		$scope.fleetDetail.stops.push({id:2, latitude:$scope.stopDetail.latitude, longitude:$scope.stopDetail.longitude});
-		$scope.map.infoWindow.show = false ;
+		channel.publishStop({name: 'New Stop'});
 	};
 }
+
+//Service that communicates with the server. All communication with server should happen through functions defined in this service.
+GetThereAdminService = function($http){
+	return {
+		getRoute:function(routeId){
+			//TODO fetch this from server
+			return { routeId:1, stops:[]};
+		},
+		getRoutes: function(){
+		},
+		saveRoute: function(routeDetail){
+		},
+		saveStop: function(stopDetail, callback){
+			//TODO Save to server, fetch the ID
+			callback(tempId++);
+		}
+	};
+};
+ChannelService = function(){
+
+        var callbacks = [];
+        this.add = function (cb) {
+          callbacks.push(cb);
+        };
+        this.publishStop = function () {
+          var args = arguments;
+          callbacks.forEach(function (cb) {
+            cb.apply(this,args);
+          });
+        };
+        return this;
+};
 
 (function () {
 	var adminApp = angular.module('adminApp', ["google-maps"]);
 	adminApp.run(initializeApp);
 	adminApp.controller('RouteController', RouteController);
 	adminApp.controller('StopController', StopController);
+	adminApp.service('channel', ChannelService);
+	adminApp.factory('getthereAdminService', GetThereAdminService);
 }());
 
 

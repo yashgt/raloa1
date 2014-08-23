@@ -44,7 +44,7 @@
 	});
 	</script>
 	
-		<window show="map.infoWindow.show" coords="map.infoWindow.coords" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
+		<window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
             <div >
 				{{test}}
                 <p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
@@ -54,12 +54,12 @@
 					<textarea ng-model="stopDetail.address"></textarea>
 					<br/>
 					<button type="submit" ng-disabled="stop_form.$invalid">Save</button>
-					<!--<button ng-click="saveStop()">Save</button>-->
+					
 				</form>	
 				
             </div>
         </window>
-		<!--<markers models="fleetDetail.stops" coords="'{latitude:self.lat, longitude:self.lon}'" icon="'images/bus.png'" click="'onClicked'">-->
+		
 		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
         </markers>
 	</div>	
