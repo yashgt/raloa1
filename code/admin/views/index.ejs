@@ -27,7 +27,9 @@
   <body ng-controller="RouteController">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-	
+	<div ng-controller="TabsDemoCtrl">
+	 <tabset>
+    <tab heading="Routes">Routes
 	<div id="map" class="google-map"
 		events="map.events"
 		zoom="fleetDetail.zoom"
@@ -65,7 +67,9 @@
 		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
         </markers>
 	</div>	
-	
-
+	</tab>
+	<tab heading="Schedule">Schedule</tab>
+	<tab heading="Fare">Fare</tab>
+</tabset>
   </body>
 </html>
