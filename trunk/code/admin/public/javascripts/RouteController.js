@@ -101,7 +101,7 @@ function RouteController
 		center : {latitude:15.855126, longitude:74.421425} ,
 		zoom : 10,
 		bounds : {northeast:{latitude:15.855126, longitude:74.421425} , southwest:{latitude:14.867264, longitude:73.622169}},
-		stops : [{id:1, latitude:15.855126, longitude:74.421425}]
+		stops : [{id:1, latitude:15.855126, longitude:74.421425, icon:'/images/bus_stop.png'}]
 		};
 	};	
 	
@@ -113,7 +113,7 @@ function RouteController
 				id:$scope.stopDetail.id
 				, latitude:$scope.stopDetail.latitude
 				, longitude:$scope.stopDetail.longitude
-				, icon:'/images/bus.png'
+				, icon: function() { return '/images/bus_stop.png'; }
 				});
 			$scope.map.infoWindow.show = false ;	
 		});		
@@ -191,7 +191,7 @@ LocationChannelService = function(){
 };
 
 (function () {
-	var adminApp = angular.module('adminApp', ["google-maps"]);
+	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps"]);
 	adminApp.run(initializeApp);
 	adminApp.controller('RouteController', RouteController);
 	adminApp.controller('StopController', StopController);

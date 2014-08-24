@@ -12,6 +12,7 @@
 	<script src="javascripts/bower_components/angular/angular.min.js"></script>
 	<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
+	<script src="javascripts/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
 		<!-- <script src="javascripts/bower_components/underscore/underscore.js"></script> -->
 
 <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
@@ -27,7 +28,7 @@
   <body ng-controller="RouteController">
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
-	<div ng-controller="TabsDemoCtrl">
+	<div >
 	 <tabset>
     <tab heading="Routes">Routes
 	<div id="map" class="google-map"
@@ -64,7 +65,7 @@
             </div>
         </window>
 		
-		<markers models="fleetDetail.stops" coords="'self'" icon="'/images/bus.png'" click="'onClicked'">
+		<markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'">
         </markers>
 	</div>	
 	</tab>
