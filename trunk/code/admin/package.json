@@ -8,6 +8,12 @@
   "dependencies": {
     "express": "3.4.8",
     "ejs": "*",
-	"bower": "*"
+	"bower": "*",
+	"mysql": "*",
+    "nconf": "^0.6.9",
+    "passport": "^0.2.0",
+    "passport-local": "^1.0.0",
+	    "connect-mysql": "^2.0.5",
+	"log4js":"0.6.20"
   }
 }

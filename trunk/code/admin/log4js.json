@@ -1,0 +1,27 @@
+{
+  "appenders": [
+    {
+      "type": "file",
+      "filename": "app.log",
+      "maxLogSize": 20480,
+      "backups": 3,
+      "category": "relative-logger",
+	  "layout": {
+                "type": "pattern",
+                "pattern": "%d %p %c - %m"
+            }
+    },
+	{
+            "type": "console",
+            "layout": {
+                "type": "pattern",
+                "pattern": "%d %p %c - %m"
+            }
+        }
+  ],
+   "levels": {
+        "[all]": "INFO",
+        "category1": "ERROR",
+        "category2": "DEBUG"
+    }
+}
