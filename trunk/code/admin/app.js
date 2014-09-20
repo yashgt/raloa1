@@ -84,9 +84,23 @@ http.createServer(app).listen(app.get('port'), function(){
   //console.log('Express server listening on port ' + app.get('port'));
 });
 
+
+app.get('/api/fleets/:fleetgroup_id', function(req, res) {
+    db.query("CALL list_fleets();", function(err, results) {
+        res.json(results[0].map(
+            function(fleet) {
+                return {
+						id: fleet.id,
+						name: fleet.name
+						};
+            }));
+    });
+});
+
 //AUTH REGION
 passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);
+
 
 app.get('/', authentication.ensureLogin, function(req, res){
 	console.log("%j", req.session);
