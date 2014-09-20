@@ -7,6 +7,8 @@ tempId = 2; //temporary
 function RouteController
 ($scope, getthereAdminService, channel, locationChannel) {
 	
+	$scope.fleets = [ 'KTC', 'Private', 'River Navigation'];
+	
 	channel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
 		$scope.stopDetail.stopName = stopDetail.name;
 		$scope.saveStop();		
@@ -98,10 +100,10 @@ function RouteController
 	$scope.getFleetDetail = function(fleetId){
 		//TODO get from web service(node.js)
 		$scope.fleetDetail = {
-		center : {latitude:15.855126, longitude:74.421425} ,
-		zoom : 10,
+		center : {latitude:15.4989, longitude:73.8278} ,
+		zoom : 11,
 		bounds : {northeast:{latitude:15.855126, longitude:74.421425} , southwest:{latitude:14.867264, longitude:73.622169}},
-		stops : [{id:1, latitude:15.855126, longitude:74.421425, icon:'/images/bus_stop.png'}]
+		stops : [{id:1, latitude:15.4989, longitude:73.8278, icon:'/images/bus_stop.png'}]
 		};
 	};	
 	
@@ -136,7 +138,7 @@ function StopController($scope, channel, locationChannel){
 	
 	
 	locationChannel.add( function(latLng){
-		$scope.stopDetail = { latitude: latLng.latitude, longitude : latLng.latitude};
+		$scope.stopDetail = { latitude: latLng.latitude, longitude : latLng.longitude};
 	});
 	
 	$scope.saveStop = function(){

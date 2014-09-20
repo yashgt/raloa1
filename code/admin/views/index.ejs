@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" id='ng-app' ng-app="adminApp">
   <head>
+
     <title>Fleet Manager</title>
 	
 	<script src="javascripts/bower_components/jquery/dist/jquery.min.js"></script>
@@ -26,49 +27,91 @@
 
   </head>
   <body ng-controller="RouteController">
-	<div >
-	 <tabset>
-    <tab heading="Routes">Routes
-	<div id="map" class="google-map"
-		events="map.events"
-		zoom="fleetDetail.zoom"
-		center="fleetDetail.center"
-         draggable="true"
-         bounds="fleetDetail.bounds"
-         pan="true"
-		 control="map.control"
-        >
+   <!-- <h4><%= title %></h4>
+    <p>Welcome to <%= title %></p> -->
+	<div>
+	<h4><center>GoaTrans</center></h4>
+	<p>Fleet : {{selectedFleet}}</p>
+      <select ng-model="selectedFleet">
+        <option ng-repeat="fleet in fleets" value="{{fleet}}">{{fleet}}</option>
+      </select>
+	<tabset>
+    <tab heading="Routes">
+	<table border="1" width=100% height=100%>
+                <tr>
+                <td width=15% valign="top">
+                    <div class="center">
+                      <center><b>Routes</b></center>
+                    </div>
+				</td>
+				<td width=70% valign="top">
+                        <div id="route">
+                            <form>
+                             <div class="center">
+                               <center>
+                                <button type="submit" ng-click="newRoute()">New Route</button>
+                                <button type="submit" ng-click="saveRoute()" ng-disabled="routeDetail.stops.length < 4">Save Current Route</button>
+								<button type="submit" ng-click="extendRoute()" ng-disabled="routeDetail.routeId < 0 ">Extend Current Route</button>
+                                <button type="submit" ng-click="deQueue()">Deque Route Stops</button>
+                               </center>
+                             </div>
+							</form>
+						</div>	
+			<tabset>
+			<tab heading="Map">
+			<div id="map" class="google-map"
+				events="map.events"
+				zoom="fleetDetail.zoom"
+				center="fleetDetail.center"
+				 draggable="true"
+				 bounds="fleetDetail.bounds"
+				 pan="true"
+				 control="map.control">
+				 
 			<script>
-			$(function(){
-	var scope = angular.element($('#map')).scope();
-	scope.configMap();
-	});
-	</script>
-	
-		<window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
-            <div >
-				
-                
-				<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
-					<p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
-					<!-- TODO CBM add validations -->
-					<input type="text" name="stopName" ng-model="stopDetail.stopName" />
-					<br/>
-					<textarea ng-model="stopDetail.address"></textarea>
-					<br/>
-					<button type="submit" ng-disabled="stop_form.$invalid">Save</button>
-					
-				</form>	
-				
-            </div>
-        </window>
+				$(function(){
+				var scope = angular.element($('#map')).scope();
+				scope.configMap();
+				});
 		
-		<markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'">
-        </markers>
-	</div>	
+			</script>
+		
+			<window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
+				<div >
+					
+					
+					<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
+						<p>Adding stop at {{ stopDetail.latitude | number:4 }}°N, {{ stopDetail.longitude | number:4 }}°E</p>
+						
+						<!-- TODO CBM add validations -->
+						<input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.stopName" />
+						<br/>
+						<textarea ng-model="stopDetail.address" placeholder="Stop Address" ></textarea>
+						<br/>
+						<button type="submit" ng-disabled="stop_form.$invalid">Save</button>
+						
+					</form>	
+					
+				</div>
+			</window>
+			
+			<markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'">
+			</markers>
+						
+		</div>
+		</tab>
+		<tab heading="Schedule"></tab>
+		</td>
+				
+				<td width=15% valign="top">
+				 <div id="route">
+				<tabset>
+                         <tab heading="Onward Stops"></tab>
+						 <tab heading="Return Stops"></tab>
+				</tabset>
+				</td>		
 	</tab>
-	<tab heading="Schedule">Schedule</tab>
-	<tab heading="Fare">Fare</tab>
-</tabset>
+	<!--<tab heading="Fare"></tab>-->
+	</tabset>
   </body>
 </html>
