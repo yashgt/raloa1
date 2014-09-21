@@ -115,7 +115,7 @@ function RouteController
 				id:$scope.stopDetail.id
 				, latitude:$scope.stopDetail.latitude
 				, longitude:$scope.stopDetail.longitude
-				, icon: function() { return '/images/bus_stop.png'; }
+				, icon:  '/images/bus_stop.png'
 				});
 			$scope.map.infoWindow.show = false ;	
 		});		
