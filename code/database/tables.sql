@@ -15,14 +15,19 @@ PRIMARY KEY (fleetgroup_id)
 
 CREATE TABLE fleet
 (
-fleet_name varchar(255),
+fleet_name varchar(255) comment 'Agency name to be used in GTFS',
 fleet_id int,
 parent_fleet_id int,
 fleetgroup_id int,
+gtfs_agency_id varchar(255) comment 'Agency ID to be used in generated GTFS',
+fleet_type int comment '3=Bus',
+avg_speed int comment 'Average speed of a bus in the fleet',
 PRIMARY KEY (fleet_id),
 FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id),
 FOREIGN KEY (parent_fleet_id) REFERENCES fleet(fleet_id)
-);
+)
+comment 'Every Agency is listed here'
+;
 
 CREATE TABLE user
 (
@@ -30,6 +35,7 @@ username varchar(255),
 password varchar(255),
 user_id int AUTO_INCREMENT,
 fleet_id int,
+role_type int comment '1=Admin, 2=Super Admin',
 PRIMARY KEY (user_id),
 FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
@@ -54,27 +60,29 @@ PRIMARY KEY (route_id),
 FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id)
 );
 
-CREATE TABLE stop_loc
-(
-stop_loc_id int AUTO_INCREMENT,
-name varchar(255),
-alias_name1 varchar(255),
-alias_name2 varchar(255),
-PRIMARY KEY (stop_loc_id),
-,SPATIAL INDEX(location)
-) ENGINE = MyISAM;
 
 CREATE TABLE stop
 (
 stop_id int AUTO_INCREMENT,
-fleetgroup_id int,
+fleet_id int comment 'Fleet to which the stop belongs. This is always the Root Fleet',
 latitude float(10),
 longitude float(10),
+name varchar(255),
+alias_name1 varchar(255),
+alias_name2 varchar(255),
 stop_loc_id int,
 PRIMARY KEY (stop_id),
-FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id)
-FOREIGN KEY (stop_loc_id) REFERENCES stop_loc(stop_loc_id)
+FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
+
+CREATE TABLE stop_loc
+(
+stop_id int,
+location point not null,
+loc_text varchar(255),
+FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
+,SPATIAL INDEX(location)
+) ENGINE = MyISAM;
 
 delimiter //
 CREATE TRIGGER ins_stop AFTER INSERT ON stop
@@ -123,27 +131,48 @@ FOREIGN KEY (route_id) REFERENCES route(route_id),
 FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 );
 
-CREATE TABLE trip
+CREATE TABLE calendar 
+(
+	calendar_id int AUTO_INCREMENT,
+	fleet_id int,
+	calendar_name varchar(255),
+	start_date date,
+	end_date date,
+	mon boolean, tue boolean, wed boolean, thu boolean, fri boolean, sat boolean, sun boolean,
+	PRIMARY KEY (calendar_id)
+) comment 'Calendar followed by trips';
+
+CREATE TABLE calendar_exceptions 
+(
+	fleet_id int,
+	calendar_id int,
+	exception_date date,
+	include_exclude boolean
+);
+
+CREATE TABLE trip 
 (
 trip_id int AUTO_INCREMENT,
-trip_name varchar(255),
+trip_name varchar(255) comment 'trip_id in GTFS',
 fleet_id int,
+calendar_id int comment 'Calendar followed by this trip',
 direction boolean,
 route_id int,
-frequency_trip boolean,
-frequency_start_time time,
+frequency_trip boolean default false comment 'True if this entry represents multiple trips spread at a given frequency',
+frequency_start_time time comment 'Time at which the trips operate on a frequency',
 frequency_end_time time,
+frequency_gap time comment 'Time difference between 2 trips of this frequency trip',
 last_upd_by int,
 last_upd_on datetime, 
 PRIMARY KEY (trip_id),
 FOREIGN KEY (route_id) REFERENCES route(route_id),
-FOREIGN KEY (fleet_id) REFERENCES fleetgroup(fleet_id),
+FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id),
 FOREIGN KEY (last_upd_by) REFERENCES user(user_id)
-);
+) comment 'Used for trips.txt and frequencies.txt';
 
 CREATE TABLE trip_history
 (
-trip_id int AUTO_INCREMENT,
+trip_id int ,
 trip_name varchar(255),
 fleet_id int,
 direction boolean,
@@ -151,7 +180,8 @@ frequency_trip boolean,
 frequency_start_time time,
 frequency_end_time time,
 last_upd_by int,
-last_upd_on datetime
+last_upd_on datetime,
+FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
 
@@ -186,31 +216,19 @@ CALL populate_numbers(1000);
 create or replace view vw_stop_trips
 as
 select
-	T.trip_id
-	, RS.stop_id
-	, RST.time
+	T.trip_id as trip_id
+	, RS.stop_id as stop_id
+	, case T.frequency_trip 
+		when 1 then addtime(RST.time, sec_to_time(N.num*time_to_sec(T.frequency_gap)))
+		else RST.time 
+	end as time
 from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
 	inner join routestop as RS on (R.route_id=RS.route_id)
-	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id);
+	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id)	
+	left outer join numbers as N on 
+		(T.frequency_trip=1 and time_to_sec(timediff(T.frequency_end_time, T.frequency_start_time) )  / time_to_sec(T.frequency_gap) + 1 )
+	;
 
-CREATE TABLE location
-(
-bus_id int,
-latitude float,
-longitude float,
-PRIMARY KEY (bus_id)
-);
-
-
-CREATE TABLE bus
-(
-bus_id int,
-curr_trip_id int,
-fleet_id int,
-FOREIGN KEY (bus_id) REFERENCES location(bus_id),
-FOREIGN KEY (curr_trip_id) REFERENCES trip(trip_id),
-FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
-);
 

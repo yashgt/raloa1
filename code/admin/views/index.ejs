@@ -33,6 +33,8 @@
       <select ng-model="selectedFleet">
         <option ng-repeat="fleet in fleets" value="{{fleet}}">{{fleet}}</option>
       </select>
+	  Logged in as <%= user.name %>, <% if(user.role == 'FLEETADMIN') { %> Fleet Administrator <% } %>
+	  <a href='/logout'>Logout</a>
 	<tabset vertical="false" justified="false">
     <tab heading="Routes">
 	<table border="1" width=100% height=100%>
@@ -100,14 +102,15 @@
 
 		</div>
 		</tab> <!--Map tab ends -->
-		<tab heading="Schedule"></tab>
+		<tab heading="Schedule-CM"></tab>
+		<tab heading="Fares-CM"></tab>
 		</tabset>
 		</td>
 				
 				<td width=15% valign="top">
 				 <div id="route">
 				<tabset>
-                         <tab heading="Onward"></tab>
+                         <tab heading="Onward-YG"></tab>
 						 <tab heading="Return"></tab>
 				</tabset>
 				</td>		
@@ -115,7 +118,8 @@
 	</table>
 
 	</tab>
-	<tab heading="Fare"></tab>
+	<tab heading="Calendars-AN"></tab>
 	</tabset>
+	</div>
   </body>
 </html>
