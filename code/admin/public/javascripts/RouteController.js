@@ -13,10 +13,17 @@ function RouteController
 		$scope.stopDetail.stopName = stopDetail.name;
 		$scope.saveStop();		
 	});	
-	
+
+				
+				
+				
 	$scope.routeDetail = {
-		stops : []
+		//stops : [],
+		stages : []
 	};	
+	$scope.routeDetail.stages.push({title: 'Stage1', stops: [{id:1, name:'S1'},{id:2, name:'S2'}]});
+	$scope.routeDetail.stages.push({title: 'Stage2', stops: [{id:3, name:'S3'},{id:4, name:'S4'}]});
+	
 	$scope.stopDetail = {
 		latitude:0,
 		longitude:0,
@@ -193,7 +200,7 @@ LocationChannelService = function(){
 };
 
 (function () {
-	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps"]);
+	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps", "ui.tree"]);
 	adminApp.run(initializeApp);
 	adminApp.controller('RouteController', RouteController);
 	adminApp.controller('StopController', StopController);

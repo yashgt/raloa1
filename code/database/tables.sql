@@ -16,7 +16,7 @@ PRIMARY KEY (fleetgroup_id)
 CREATE TABLE fleet
 (
 fleet_name varchar(255) comment 'Agency name to be used in GTFS',
-fleet_id int,
+fleet_id int auto_increment,
 parent_fleet_id int,
 fleetgroup_id int,
 gtfs_agency_id varchar(255) comment 'Agency ID to be used in generated GTFS',
@@ -53,6 +53,7 @@ FOREIGN KEY (user_id) REFERENCES user(user_id)
 CREATE TABLE route
 (
 route_id INT AUTO_INCREMENT,
+gtfs_route_id int,
 fleetgroup_id int,
 is_deleted boolean,
 route_name varchar(255),

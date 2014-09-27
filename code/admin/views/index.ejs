@@ -17,6 +17,9 @@
 
 
 <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+
+  <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
+  <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
 	
 	<script src="javascripts/RouteController.js"></script>
 	
@@ -110,7 +113,35 @@
 				<td width=15% valign="top">
 				 <div id="route">
 				<tabset>
-                         <tab heading="Onward-YG"></tab>
+                         <tab heading="Onward-YG">
+						 <!-- Nested node template : http://ngmodules.org/modules/angular-ui-tree-->
+								
+				<script type="text/ng-template" id="nodes_renderer.html">
+		
+				  <div ui-tree-handle class="tree-node tree-node-content">
+					<div data-nodrag ng-click="toggle(this)">
+					<input ng-model="stage.title"></input>
+					</div>
+				  </div>
+				  <ol ui-tree-nodes="" ng-model="stage.stops" ng-class="{hidden: collapsed}">
+					<li ng-repeat="stop in stage.stops" ui-tree-node >
+					<div ui-tree-handle class="tree-node tree-node-content">
+					<div data-nodrag ng-click="toggle(this)">
+					<a class="btn btn-success btn-xs" data-nodrag ng-click="toggle(this)"></a>
+					<div>{{stop.name}}</div>
+					</div>
+				  </div>
+					</li>
+				  </ol>
+				</script>
+						<div ui-tree id="tree-root">
+				  <ol ui-tree-nodes="" ng-model="routeDetail.stages">
+					<li ng-repeat="stage in routeDetail.stages" ui-tree-node ng-include="'nodes_renderer.html'"></li>
+				  </ol>
+				</div>
+				
+		
+						 </tab>
 						 <tab heading="Return"></tab>
 				</tabset>
 				</td>		
