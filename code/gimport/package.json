@@ -1,0 +1,16 @@
+{
+  "name": "gimport",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node gimport.js"
+  },
+  "dependencies": {
+	"common": "0.0.1",
+    "csvtojson": "0.3.8",
+	"mysql": "*",
+    "nconf": "^0.6.9",
+	"log4js":"0.6.20"
+	
+  }
+}
