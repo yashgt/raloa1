@@ -16,7 +16,7 @@ module.exports = {
   //console.log("Looking for %j %j", username, password);
 	db.connect( function(conn){
 		
-		conn.query("select id, username from users where username = ? and password=?", [ username, password ]
+		conn.query("select user_id, username from user where username = ? and password=?", [ username, password ]
 			, function (err, results){
 				if(!err){
 					if(results[0]){
@@ -32,7 +32,7 @@ module.exports = {
 					}
 				}
 				else{
-					console.log("%j", err);
+					logger.error(err);
 				}
 				return done(null, false, {message: 'Incorrect credentials'});
 			});
