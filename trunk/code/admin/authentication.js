@@ -20,15 +20,15 @@ module.exports = {
 			, function (err, results){
 				if(!err){
 					if(results[0]){
-						return done(null, 
-		//This object is saved to the session
-		{id: results[0].id			//User ID
-		, name: 'Mr. Sanjay Ghate & Mr.Jeorge Fernandes'	//For display on the Admin page
-		, fleetId: 1	//KTCL
-		, fleetGroupId: 1	//Goa Public Transport
-		, role: 'FLEETADMIN'
-		} //This object will be stored in the session
-		);
+						var user = //This object is saved to the session
+							{id: results[0].id			//User ID
+							, name: 'Yash Ganthe'	//For display on the Admin page
+							, fleetId: 1	//KTCL
+							, fleetGroupId: 1	//Goa Public Transport
+							, role: 'FLEETADMIN'
+							}; //This object will be stored in the session
+						console.log("User %j",user);
+						return done(null, user);
 					}
 				}
 				else{
