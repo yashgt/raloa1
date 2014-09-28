@@ -15,14 +15,14 @@ function RouteController
 	});	
 
 				
-				
+	$scope.newStage = { title: ""};			
 				
 	$scope.routeDetail = {
 		//stops : [],
 		stages : []
 	};	
-	$scope.routeDetail.stages.push({title: 'Stage1', stops: [{id:1, name:'S1'},{id:2, name:'S2'}]});
-	$scope.routeDetail.stages.push({title: 'Stage2', stops: [{id:3, name:'S3'},{id:4, name:'S4'}]});
+	$scope.routeDetail.stages.push({title: 'Stage1', editing:false, stops: [{id:1, name:'S1'},{id:2, name:'S2'}]});
+	$scope.routeDetail.stages.push({title: 'Stage2', editing:false, stops: [{id:3, name:'S3'},{id:4, name:'S4'}]});
 	
 	$scope.stopDetail = {
 		latitude:0,
@@ -54,7 +54,36 @@ function RouteController
 	
 	$scope.configMap = function(){
 	$scope.gmap = $scope.map.control.getGMap() ;
+	
+	   $scope.stageTreeOptions = {
+      accept: function(sourceNode, destNodes, destIndex) {
+        var srcType = sourceNode.$element;
+        var destType = destNodes.$element.attr('data-type');
+		//console.log("Source %j Dest %j", srcType, destType);
+        return true; // only accept the same type
+      },
+      dropped: function(event) {
+        console.log(event);
+		/* The data model has already been changed
+        var sourceNode = event.source.nodeScope;
+        var destNodes = event.dest.nodesScope;
+        // update changes to server
+        if (destNodes.isParent(sourceNode)
+          && destNodes.$element.attr('data-type') == 'category') { // If it moves in the same group, then only update group
+          var group = destNodes.$nodeScope.$modelValue;
+          //group.save();
+        } else { // save all
+          $scope.saveGroups();
+        }
+		*/
+      }
+    };
 		
+	$scope.addNewStage =function(){
+		var newObject = jQuery.extend({}, $scope.newStage);
+		$scope.routeDetail.stages.push(newObject);
+		$scope.newStage.title = "New Stage";
+	};
 	var contextMenuOptions={};
 	contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'};
 	
