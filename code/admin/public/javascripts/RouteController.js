@@ -23,6 +23,11 @@ function RouteController
 	};	
 	$scope.routeDetail.stages.push({title: 'Stage1', editing:false, stops: [{id:1, name:'S1'},{id:2, name:'S2'}]});
 	$scope.routeDetail.stages.push({title: 'Stage2', editing:false, stops: [{id:3, name:'S3'},{id:4, name:'S4'}]});
+	$scope.routeSegments = [];
+	$scope.routeSegments.push( {distFromStart:0} );
+	$scope.routeSegments.push( {distFromStart:1} );
+	$scope.routeSegments.push( {distFromStart:2} );
+	$scope.routeSegments.push( {distFromStart:3} );
 	
 	$scope.stopDetail = {
 		latitude:0,
@@ -34,7 +39,8 @@ function RouteController
 		center : {latitude:0, longitude:0} ,
 		zoom : 10,
 		bounds : {northeast:{latitude:0, longitude:0} , southwest:{latitude:0, longitude:0}},
-		stops : [{id:1, latitude:0, longitude:0}]
+		stops : [{id:1, latitude:0, longitude:0}],
+		routes : [1]
 	};
 	addStopWindow = function(latLng){
 		
@@ -139,7 +145,9 @@ function RouteController
 		center : {latitude:15.4989, longitude:73.8278} ,
 		zoom : 11,
 		bounds : {northeast:{latitude:15.855126, longitude:74.421425} , southwest:{latitude:14.867264, longitude:73.622169}},
-		stops : [{id:1, latitude:15.4989, longitude:73.8278, icon:'/images/bus_stop.png'}]
+		stops : [{id:1, latitude:15.4989, longitude:73.8278, icon:'/images/bus_stop.png'}],
+		routes : []
+		
 		};
 	};	
 	
