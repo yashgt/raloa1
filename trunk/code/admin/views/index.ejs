@@ -38,6 +38,9 @@
       </select>
 	  Logged in as <%= user.name %>, <% if(user.role == 'FLEETADMIN') { %> Fleet Administrator <% } %>
 	  <a href='/logout'>Logout</a>
+	  # Routes: {{fleetDetail.routes.length}}
+	  # Stops: {{fleetDetail.stops.length}}
+	  # Unnamed stops: {{fleetDetail.stops.length}}
 	<tabset vertical="false" justified="false">
     <tab heading="Routes">
 	<table border="1" width=100% height=100%>
@@ -118,12 +121,12 @@
 				<tabset>
                          <tab heading="Onward-YG">
 
-<div ui-tree="stageTreeOptions">
-				<!-- for existing stages -->
+<div ui-tree="stageTreeOptions" >
+				<!-- for existing stages -->				
 				       <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
           <li ng-repeat="stage in routeDetail.stages" ui-tree-node>
             <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
-              <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)"><i class="glyphicon glyphicon-remove"></i></a>
+              <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
               <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
               <div>{{stage.title}}</div>
             </div>
@@ -134,15 +137,15 @@
                   <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title">
                 </div>
                 <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
-                <button type="submit" class="btn btn-default" ng-click="cancelEditingGroup(stage)">Cancel</button>
+                <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
               </form>
             </div>
-            <ol ui-tree-nodes ng-model="stage.stops" data-type="category">
-              <li ng-repeat="stop in stage.stops" ui-tree-node>
-                <div class="category-title angular-ui-tree-handle">
+            <ol ui-tree-nodes ng-model="stage.stops" data-type="category" >
+			    <li ng-repeat="stop in stage.stops" ui-tree-node>
+                <div class="category-title angular-ui-tree-handle" >
                   <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
                   <div>
-                    {{stop.name}}
+                    {{stop.name}} 
                   </div>
                 </div>
               </li>
