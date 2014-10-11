@@ -25,9 +25,11 @@ avg_speed int comment 'Average speed of a bus in the fleet',
 PRIMARY KEY (fleet_id),
 FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id),
 FOREIGN KEY (parent_fleet_id) REFERENCES fleet(fleet_id)
-)
+) 
 comment 'Every Agency is listed here'
 ;
+
+
 
 CREATE TABLE user
 (
