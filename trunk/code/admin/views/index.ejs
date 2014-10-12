@@ -11,9 +11,11 @@
 	<script src="javascripts/ContextMenu.js"></script>
 	
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>
 	<!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>-->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
 	<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
+	<script src="javascripts/bower_components/angular-ui-select/dist/select.js"></script>
 
 
 <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
@@ -27,16 +29,19 @@
 	<link rel='stylesheet' href='/stylesheets/map.css' /> 
 	<link rel='stylesheet' href='/stylesheets/context_menu.css' />
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	
+	 <!-- Select2 theme -->
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">
 
   </head>
   <body ng-controller="RouteController">
 
 	<div>
-	<p>Fleet : {{selectedFleet}}</p>
-      <select ng-model="selectedFleet">
-        <option ng-repeat="fleet in fleets" value="{{fleet}}">{{fleet}}</option>
-      </select>
-	  Logged in as <%= user.name %>, <% if(user.role == 'FLEETADMIN') { %> Fleet Administrator <% } %>
+		<ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
+
+	  Logged in as <%= user.username %>, <% if(user.role == 1) { %> Fleet Administrator <% } %>
 	  <a href='/logout'>Logout</a>
 	  # Routes: {{fleetDetail.routes.length}}
 	  # Stops: {{fleetDetail.stops.length}}
@@ -89,10 +94,10 @@
 					
 					
 					<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
-						<p>Adding stop at {{ stopDetail.latitude | number:4 }}°N, {{ stopDetail.longitude | number:4 }}°E</p>
-						
-						TODO CBM add validations
-						<input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.stopName" />
+						<p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
+						Stop is now {{stopDetail | json }}
+						<br/>
+						<input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.stopName" ng-required="true" />
 						<br/>
 						<textarea ng-model="stopDetail.address" placeholder="Stop Address" ></textarea>
 						<br/>

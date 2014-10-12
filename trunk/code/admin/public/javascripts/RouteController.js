@@ -5,13 +5,16 @@ function initializeApp($rootScope){
 tempId = 2; //temporary
 
 function RouteController
-($scope, getthereAdminService, channel, locationChannel) {
+($scope, getthereAdminService, stopChannel, locationChannel) {
 	
-	$scope.fleets = [ 'KTC', 'Private', 'River Navigation'];
+	$scope.fleets = [ {fleet_name:'KTC', fleet_id:3, level:2}];
+	$scope.fleet = { selected: undefined};
 	
-	channel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
-		$scope.stopDetail.stopName = stopDetail.name;
-		$scope.saveStop();		
+	stopChannel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
+		//$scope.stopDetail.stopName = stopDetail.name;
+		$scope.stopDetail.stopName = stopDetail.stopName ;
+		console.log("Saving stop %j", $scope.stopDetail);
+		$scope.saveStop($scope.stopDetail);		
 	});	
 
 				
@@ -29,12 +32,13 @@ function RouteController
 	$scope.routeSegments.push( {distFromStart:2} );
 	$scope.routeSegments.push( {distFromStart:3} );
 	
+	/*
 	$scope.stopDetail = {
 		latitude:0,
 		longitude:0,
 		stopName:"",
 		address:""
-	};
+	};*/
 	$scope.fleetDetail = {
 		center : {latitude:0, longitude:0} ,
 		zoom : 10,
@@ -48,6 +52,7 @@ function RouteController
 		
 		//TODO
 		$scope.stopDetail = {
+		id: 0,
 		latitude: latLng.lat(),
 		longitude: latLng.lng(),
 		stopName: "stopname",
@@ -84,7 +89,13 @@ function RouteController
 		*/
       }
     };
+	$scope.fleetChosen = function(fleet){
+		getthereAdminService.setCurrentFleet(fleet, function(fleet){
+			console.log("Setting fleet "+ fleet);
+			$scope.getFleetDetail(fleet.fleet_id);
+		});
 		
+	};	
 	$scope.addNewStage =function(){
 		var newObject = jQuery.extend({}, $scope.newStage);
 		$scope.routeDetail.stages.push(newObject);
@@ -151,20 +162,31 @@ function RouteController
 		};
 	};	
 	
-	$scope.saveStop = function(){
-		getthereAdminService.saveStop($scope.stopDetail, function(id){
-			$scope.stopDetail.id= id;
-			
+	$scope.loadFleets = function(){
+		getthereAdminService.loadFleets( function(fleets) {
+			$scope.fleets = fleets ;
+		});
+	};
+	
+	$scope.saveStop = function(stopDetail){
+		getthereAdminService.saveStop(stopDetail, function(id){			
 			$scope.fleetDetail.stops.push({
-				id:$scope.stopDetail.id
+				id:id
 				, latitude:$scope.stopDetail.latitude
 				, longitude:$scope.stopDetail.longitude
 				, icon:  '/images/bus_stop.png'
 				});
+			
+			if($scope.routeDetail <= 0 )
+			{
+				$scope.addStopToRoute();
+			}	
 			$scope.map.infoWindow.show = false ;	
 		});		
 	};
 
+	$scopeaddStopToRoute = function() {
+	};
 	
 	$scope.remove = function(){
 		$scope.fleetDetail.stops = [];
@@ -172,21 +194,24 @@ function RouteController
 	//Region ends
 	
 	//TODO Do this based on the user's fleet
+	$scope.loadFleets();
 	$scope.getFleetDetail(1);
 	//$scope.configMap();
 };
 
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
-function StopController($scope, channel, locationChannel){
+function StopController($scope, stopChannel, locationChannel){
 	
-	
-	locationChannel.add( function(latLng){
-		$scope.stopDetail = { latitude: latLng.latitude, longitude : latLng.longitude};
+	console.log("Creating SC");
+	locationChannel.add( function(latLng){	
+		$scope.stopDetail = { latitude: latLng.latitude, longitude : latLng.longitude, stopName: ""};
+		console.log("Stop detail is %j", $scope.stopDetail);
 	});
 	
 	$scope.saveStop = function(){
-		channel.publishStop({name: 'New Stop'});
+		//TODO Suprisingly only the new name remains. lat and long have vanished 
+		stopChannel.publishStop($scope.stopDetail);
 	};
 }
 
@@ -202,9 +227,35 @@ GetThereAdminService = function($http){
 		saveRoute: function(routeDetail){
 		},
 		saveStop: function(stopDetail, callback){
-			//TODO Save to server, fetch the ID
-			callback(tempId++);
+			console.log("Servicing %j", stopDetail);
+			$http.post('/api/stop', stopDetail)
+			.success(function(data){
+				console.log("Received ID %j for the stop", data.id);
+				callback(data.id);
+			})
+			.error(function(data){});
+		},
+		setCurrentFleet: function(fleet, callback){
+			$http.post('/api/currentFleet', fleet)
+			.success(function(data){
+				callback(fleet);
+			})
+			.error(function(data){
+			});
+		},
+		loadFleets: function(callback){
+			$http.get('/api/fleets')
+			.success(function(data) {
+				callback(data);
+				//console.log(data);
+			})
+			.error(function(data) {
+				alert(data);
+			});
+
+			
 		}
+		
 	};
 };
 StopChannelService = function(){
@@ -236,13 +287,37 @@ LocationChannelService = function(){
         return this;
 };
 
+
+NYFleetChoiceDirective = function() {
+	return {
+		restrict: 'E',
+		replace: false,
+		scope: {
+			nyFleets :'=',
+			nyFleet : '=',
+			nyChanged : '='
+		},
+		template: '<select ng-model="nyFleet" ng-options="fleet.fleet_name for fleet in nyFleets" ng-change="nyChanged(nyFleet)"></select>'
+		/*
+		template: '<ui-select ng-model="nyFleet.selected" theme="selectize" ng-disabled="disabled" style="width: 300px;">\
+    <ui-select-match placeholder="Select or search fleet">{{$select.selected.fleet_name}}</ui-select-match>\
+    <ui-select-choices repeat="fleet in nyFleets | filter: $select.search" >\
+      <span ng-bind-html="fleet.fleet_name | highlight: $select.search" ng-class="fleet.level"></span>\
+    </ui-select-choices>\
+</ui-select>'
+*/
+		//templateURL: 'ny-fleet-choice.html'
+	};
+};
+
 (function () {
-	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps", "ui.tree"]);
+	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps", "ui.tree", "ui.select"]);
 	adminApp.run(initializeApp);
 	adminApp.controller('RouteController', RouteController);
 	adminApp.controller('StopController', StopController);
-	adminApp.service('channel', StopChannelService);
+	adminApp.service('stopChannel', StopChannelService);
 	adminApp.service('locationChannel', LocationChannelService);
+	adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
 	adminApp.factory('getthereAdminService', GetThereAdminService);
 }());
 

@@ -38,6 +38,10 @@ var db = mysql.createConnection({
 });
 */
 db.createPool(dbConfig);
+var dbConn;
+db.connect( function(conn){
+	dbConn = conn;
+	});
 
 var MySQLStore = require('connect-mysql')(express);
 var options = { 
@@ -84,6 +88,45 @@ http.createServer(app).listen(app.get('port'), function(){
   //console.log('Express server listening on port ' + app.get('port'));
 });
 
+app.get('/api/fleets', function(req, res) {
+	var user_id = req.session.passport.user.userId;
+	dbConn.query("call list_user_fleets(?);", [user_id], function(err, results) {
+		res.json(results[0].map(
+            function(fleet) {
+                return {
+						fleet_id: fleet.fleet_id,
+						fleet_name: fleet.fleet_name,
+						level: fleet.level
+						};
+			}));
+	});
+});
+
+app.post('/api/stop', function(req, res) {
+	var stopDetail = req.body ;
+	stopDetail.fleetId = req.session.passport.user.rootFleetId ;
+	console.log("Saving stop %j", stopDetail );
+	dbConn.query("set @id := ? ; call save_stop(@id,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.stopName, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId], function(err, results) {
+		if(err==undefined){
+        console.log("Results %j " , results);
+        var id = results[2][0]["@id"];
+        console.log("Stop created with ID : %j", id);
+        logger.info("Name of the stop : ", stopDetail.stopName);
+		res.json({id: id});
+		}
+		else{
+			console.log("Error %j", err);
+		}
+    });
+
+
+	
+});
+app.post('/api/currentFleet', function(req, res) {
+	var fleet = req.body;
+	req.session.passport.user.fleetId = fleet.fleetId;
+	res.json({});
+});
 
 app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     db.query("CALL list_fleets();", function(err, results) {
