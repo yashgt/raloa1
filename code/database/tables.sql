@@ -1,10 +1,8 @@
-DROP DATABASE goatrans;
-
-CREATE DATABASE goatrans;
+CREATE DATABASE if not exists goatrans;
 
 USE goatrans;
 
-CREATE TABLE fleetgroup
+CREATE TABLE if not exists fleetgroup
 (
 fleetgroup_name varchar(255),
 fleetgroup_id int,
@@ -13,7 +11,7 @@ password varchar(255),
 PRIMARY KEY (fleetgroup_id)
 );
 
-CREATE TABLE fleet
+CREATE TABLE if not exists fleet
 (
 fleet_name varchar(255) comment 'Agency name to be used in GTFS',
 fleet_id int auto_increment,
@@ -31,7 +29,7 @@ comment 'Every Agency is listed here'
 
 
 
-CREATE TABLE user
+CREATE TABLE if not exists user
 (
 username varchar(255),
 password varchar(255),
@@ -42,7 +40,7 @@ PRIMARY KEY (user_id),
 FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
-CREATE TABLE session
+CREATE TABLE if not exists session
 (
 date DATE,
 time TIME,
@@ -52,7 +50,7 @@ PRIMARY KEY (session_id),
 FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
-CREATE TABLE route
+CREATE TABLE if not exists route
 (
 route_id INT AUTO_INCREMENT,
 gtfs_route_id int,
@@ -64,7 +62,7 @@ FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id)
 );
 
 
-CREATE TABLE stop
+CREATE TABLE if not exists stop
 (
 stop_id int AUTO_INCREMENT,
 fleet_id int comment 'Fleet to which the stop belongs. This is always the Root Fleet',
@@ -78,7 +76,7 @@ PRIMARY KEY (stop_id),
 FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
-CREATE TABLE stop_loc
+CREATE TABLE if not exists stop_loc
 (
 stop_id int,
 location point not null,
@@ -88,6 +86,7 @@ FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 ) ENGINE = MyISAM;
 
 delimiter //
+drop trigger if exists ins_stop//
 CREATE TRIGGER ins_stop AFTER INSERT ON stop
 for each row 
 begin
@@ -113,7 +112,7 @@ select S.stop_id, latitude, longitude, name, location
 from stop S
 inner join stop_loc L on (S.stop_id=L.stop_id);
 
-CREATE TABLE segment
+CREATE TABLE if not exists segment
 (
 stop1_id int,
 stop2_id int,
@@ -123,7 +122,7 @@ FOREIGN KEY (stop1_id) REFERENCES stop(stop_id),
 FOREIGN KEY (stop2_id) REFERENCES stop(stop_id)
 );
 
-CREATE TABLE routestop
+CREATE TABLE if not exists routestop
 (
 stop_id int,
 route_id int,
@@ -134,7 +133,7 @@ FOREIGN KEY (route_id) REFERENCES route(route_id),
 FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 );
 
-CREATE TABLE calendar 
+CREATE TABLE if not exists calendar 
 (
 	calendar_id int AUTO_INCREMENT,
 	fleet_id int,
@@ -145,7 +144,7 @@ CREATE TABLE calendar
 	PRIMARY KEY (calendar_id)
 ) comment 'Calendar followed by trips';
 
-CREATE TABLE calendar_exceptions 
+CREATE TABLE if not exists calendar_exceptions 
 (
 	fleet_id int,
 	calendar_id int,
@@ -153,7 +152,7 @@ CREATE TABLE calendar_exceptions
 	include_exclude boolean
 );
 
-CREATE TABLE trip 
+CREATE TABLE if not exists trip 
 (
 trip_id int AUTO_INCREMENT,
 trip_name varchar(255) comment 'trip_id in GTFS',
@@ -173,7 +172,7 @@ FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id),
 FOREIGN KEY (last_upd_by) REFERENCES user(user_id)
 ) comment 'Used for trips.txt and frequencies.txt';
 
-CREATE TABLE trip_history
+CREATE TABLE if not exists trip_history
 (
 trip_id int ,
 trip_name varchar(255),
@@ -188,7 +187,7 @@ FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
 
-CREATE TABLE routestoptrip
+CREATE TABLE if not exists routestoptrip
 (
 route_stop_id int,
 trip_id int,
@@ -197,15 +196,17 @@ FOREIGN KEY (route_stop_id) REFERENCES routestop(route_stop_id),
 FOREIGN KEY (trip_id) REFERENCES trip(trip_id)
 );
 
-create table numbers
+create table if not exists numbers
 (
 	num int,
 	primary key (num)
 );
 
 delimiter //
+drop procedure if exists populate_numbers//
 CREATE PROCEDURE populate_numbers(maxval INT)
 BEGIN
+
 DECLARE v1 INT DEFAULT 1;
 WHILE v1 <= maxval DO
 	insert into numbers(num) values (v1);
@@ -214,6 +215,7 @@ END WHILE;
 END//
 delimiter ;
 
+delete from numbers;
 CALL populate_numbers(1000);
 
 create or replace view vw_stop_trips

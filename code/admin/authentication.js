@@ -16,16 +16,16 @@ module.exports = {
   //console.log("Looking for %j %j", username, password);
 	db.connect( function(conn){
 		
-		conn.query("select user_id, username from user where username = ? and password=?", [ username, password ]
+		conn.query("select user_id, username, fleet_id, role_type  from user where username = ? and password=?", [ username, password ]
 			, function (err, results){
 				if(!err){
 					if(results[0]){
 						var user = //This object is saved to the session
-							{id: results[0].id			//User ID
-							, name: 'Yash Ganthe'	//For display on the Admin page
-							, fleetId: 1	//KTCL
-							, fleetGroupId: 1	//Goa Public Transport
-							, role: 'FLEETADMIN'
+							{userId: results[0].user_id			//User ID
+							, username: results[0].username	//For display on the Admin page
+							, rootFleetId: results[0].fleet_id
+							, fleetId: results[0].fleet_id	//KTCL							
+							, role: results[0].role_type
 							}; //This object will be stored in the session
 						console.log("User %j",user);
 						return done(null, user);
