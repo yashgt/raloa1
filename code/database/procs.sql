@@ -99,8 +99,10 @@ begin
 	end if;
 end//
 
-drop procedure if exists list_stops//
-create procedure list_stops(in fleet_id int)
+drop procedure if exists get_fleet_detail//
+create procedure get_fleet_detail(in in_fleet_id int)
 begin
-	select * from stop where fleet_id=fleet_id;
+	select fleet_id,fleet_name,avg_speed,cen_lat,cen_lon,zoom,ne_lat,ne_lon,sw_lat,sw_lon from fleet where fleet_id=in_fleet_id;
+	select stop_id,name,alias_name1,alias_name2,latitude,longitude from stop;
+	
 end//
