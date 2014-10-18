@@ -38,7 +38,7 @@
   </head>
   <body ng-controller="RouteController">
 
-	<div>
+	<div >
 		<ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
 
 	  Logged in as <%= user.username %>, <% if(user.role == 1) { %> Fleet Administrator <% } %>
@@ -71,31 +71,24 @@
 			<tabset vertical="false" justified="false">
 			<tab heading="Map">
 
-			<div id="map" 
-			google-map="exp" class="span7"
-				events="map.events"
+			<!--<div id="map" google-map="exp" class="span7"-->
+			<ui-gmap-google-map class="span7"
+				events="mapEvents"
 				zoom="fleetDetail.zoom"
 				center="fleetDetail.center"
 				 draggable="true"
 				 bounds="fleetDetail.bounds"
 				 pan="true"
-				 control="map.control">
+				 control="map.control"
 				 
-			<script>
-				$(function(){
-				var scope = angular.element($('#map')).scope();
-				scope.configMap();
-				});
+ >
 		
-			</script>
-		
-			<window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" options="map.infoWindow.options"  ng-cloak>
+			<ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
 				<div >
 					
 					
 					<form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
-						<p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
-						Stop is now {{stopDetail | json }}
+						<p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>						
 						<br/>
 						<input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.stopName" ng-required="true" />
 						<br/>
@@ -106,12 +99,12 @@
 					</form>	
 					
 				</div>
-			</window>
+			</ui-gmap-window>
 			
-			<markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'">
-			</markers>
-
-		</div>
+			<ui-gmap-markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'" options="'options'" events="stopEvents" labelContent="'name'">
+			</ui-gmap-markers>
+		</ui-gmap-google-map>
+		<!--</div>-->
 		</tab> <!--Map tab ends -->
 		<tab heading="Schedule-CM"></tab>
 		<tab heading="Fares-CM"></tab>

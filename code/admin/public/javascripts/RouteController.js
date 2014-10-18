@@ -4,17 +4,20 @@ function initializeApp($rootScope){
 
 tempId = 2; //temporary
 
-function RouteController
-($scope, getthereAdminService, stopChannel, locationChannel) {
+function RouteController 
+($scope, getthereAdminService, stopChannel, locationChannel ) {
 	
 	$scope.fleets = [ {fleet_name:'KTC', fleet_id:3, level:2}];
 	$scope.fleet = { selected: undefined};
 	
 	stopChannel.add(function(stopDetail){ //Invoked by DI when a Stop is defined
 		//$scope.stopDetail.stopName = stopDetail.name;
+
 		$scope.stopDetail.stopName = stopDetail.stopName ;
+		$scope.stopDetail.id = -1 ;
 		console.log("Saving stop %j", $scope.stopDetail);
 		$scope.saveStop($scope.stopDetail);		
+
 	});	
 
 				
@@ -39,9 +42,10 @@ function RouteController
 		stopName:"",
 		address:""
 	};*/
+	
 	$scope.fleetDetail = {
 		center : {latitude:0, longitude:0} ,
-		zoom : 10,
+		zoom : 12,
 		bounds : {northeast:{latitude:0, longitude:0} , southwest:{latitude:0, longitude:0}},
 		stops : [{id:1, latitude:0, longitude:0}],
 		routes : [1]
@@ -62,9 +66,88 @@ function RouteController
 		$scope.map.infoWindow.show = true ;
 
 	};
+	deleteStop = function(stop){
+		console.log("Deleting stop " + JSON.stringify(stop));
+	};
 	
+
+	$scope.getContextMenu = function(menuList){
+		
+		var contextMenuOptions={};
+	contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'};
+	
+	
+	//	create an array of ContextMenuItem objects
+	//	an 'id' is defined for each of the four directions related items
+	var menuItems=[];
+	_.each(menuList, function(menuItem) {menuItems.push(menuItem);});
+	
+	contextMenuOptions.menuItems=menuItems;
+
+	var contextMenu=new ContextMenu($scope.gmap, contextMenuOptions);
+	
+	console.log("Created context menu");
+	//	listen for the ContextMenu 'menu_item_selected' event
+	google.maps.event.addListener(contextMenu, 'menu_item_selected', function(latLng, eventName, model){
+		var item = _.find(menuItems, function(item){ return item.eventName==eventName; });
+		$scope.$apply(function() {
+			if(model==undefined){
+			item.handler(latLng);
+			}
+			else{
+				item.handler(model);
+			}
+		});
+		});
+		
+	return contextMenu;
+	}; //getContextMenu
+	$scope.setContextMenu = function(){
+			//All map-level menu items should be put here
+				$scope.contextMenu = $scope.getContextMenu([
+					{className:'context_menu_item', eventName:'add_stop', label:'Add stop', handler: addStopWindow	}
+					]);
+					
+			//All marker-level menu items should be put here		
+				$scope.stopContextMenu = $scope.getContextMenu([
+					{className:'context_menu_item', eventName:'delete_stop', label:'Delete stop', handler: deleteStop	}
+					]);	
+		
+	};
+	
+	$scope.mapEvents = {
+		rightclick: function (gMap, eventName, model) {
+		if(model.$id){
+			model = model.coords;//use scope portion then
+		}
+		$scope.contextMenu.show( model["0"].latLng);
+		//alert("Model: event:" + eventName + " " + JSON.stringify(model));
+		},
+		tilesloaded: function (gMap, eventName, model) {
+			if($scope.gmap==undefined){
+				$scope.gmap = $scope.map.control.getGMap() ;
+			}	
+			console.log("Tiles loaded");
+			$scope.setContextMenu();			
+		}
+	};
+	$scope.markerOptions = {
+		draggable : true	
+	};
+	$scope.stopEvents = {
+		rightclick: function (marker, eventName, model) {
+		console.log("Event:" + eventName + " Marker:" + marker );
+		$scope.stopContextMenu.showOnMarker(marker.position, model);
+		console.log("Event:" + eventName + " Model:" + JSON.stringify(model));
+		},
+		dragend: function(marker, eventName, model){
+			console.log("Stop is now " + JSON.stringify(model));
+			$scope.saveStop(model);
+		}
+		
+	};
 	$scope.configMap = function(){
-	$scope.gmap = $scope.map.control.getGMap() ;
+	//$scope.gmap = $scope.map.control.getGMap() ;
 	
 	   $scope.stageTreeOptions = {
       accept: function(sourceNode, destNodes, destIndex) {
@@ -101,31 +184,12 @@ function RouteController
 		$scope.routeDetail.stages.push(newObject);
 		$scope.newStage.title = "New Stage";
 	};
-	var contextMenuOptions={};
-	contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'};
 	
-	//	create an array of ContextMenuItem objects
-	//	an 'id' is defined for each of the four directions related items
-	var menuItems=[];
-	menuItems.push({className:'context_menu_item', eventName:'add_stop', label:'Add stop', handler: addStopWindow	});
-	contextMenuOptions.menuItems=menuItems;
 
-	
-	var contextMenu=new ContextMenu($scope.gmap, contextMenuOptions);
-	//	listen for the ContextMenu 'menu_item_selected' event
-	google.maps.event.addListener(contextMenu, 'menu_item_selected', function(latLng, eventName){
-		var item = _.find(menuItems, function(item){ return item.eventName==eventName; });
-		$scope.$apply(function() {
-			item.handler(latLng);
-		});
-		});
 
 	
 
-	google.maps.event.addListener($scope.gmap, 'rightclick', function(mouseEvent){
-		contextMenu.show(mouseEvent.latLng);
-	});
-	}
+	}; //end configMap
 	$scope.map ={
 		control: {}
 		,infoWindow: {
@@ -152,14 +216,25 @@ function RouteController
 	//TODO: CBM fit this function in the pattern that we have defined
 	$scope.getFleetDetail = function(fleetId){
 		//TODO get from web service(node.js)
+		
+		getthereAdminService.getFleetDetail(fleetId, function(fleetDetail){
+			fleetDetail.stops.forEach(function(stop){ 
+			stop.icon = '/images/bus_stop.png';
+			stop.options = {draggable:true};
+			});			
+			//alert(JSON.stringify(fleetDetail));
+			$scope.fleetDetail = fleetDetail ;
+		});
+		
+		/*
 		$scope.fleetDetail = {
 		center : {latitude:15.4989, longitude:73.8278} ,
 		zoom : 11,
 		bounds : {northeast:{latitude:15.855126, longitude:74.421425} , southwest:{latitude:14.867264, longitude:73.622169}},
 		stops : [{id:1, latitude:15.4989, longitude:73.8278, icon:'/images/bus_stop.png'}],
-		routes : []
-		
+		routes : []		
 		};
+		*/
 	};	
 	
 	$scope.loadFleets = function(){
@@ -169,13 +244,16 @@ function RouteController
 	};
 	
 	$scope.saveStop = function(stopDetail){
-		getthereAdminService.saveStop(stopDetail, function(id){			
+		getthereAdminService.saveStop(stopDetail, function(id){	
+			if(stopDetail.id<=0){
 			$scope.fleetDetail.stops.push({
 				id:id
 				, latitude:$scope.stopDetail.latitude
 				, longitude:$scope.stopDetail.longitude
 				, icon:  '/images/bus_stop.png'
+				, options : {draggable:true}
 				});
+			}
 			
 			if($scope.routeDetail <= 0 )
 			{
@@ -185,7 +263,7 @@ function RouteController
 		});		
 	};
 
-	$scopeaddStopToRoute = function() {
+	$scope.addStopToRoute = function() {
 	};
 	
 	$scope.remove = function(){
@@ -195,8 +273,8 @@ function RouteController
 	
 	//TODO Do this based on the user's fleet
 	$scope.loadFleets();
-	$scope.getFleetDetail(1);
-	//$scope.configMap();
+	$scope.getFleetDetail(2);
+	$scope.configMap();
 };
 
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
@@ -216,6 +294,7 @@ function StopController($scope, stopChannel, locationChannel){
 }
 
 //Service that communicates with the server. All communication with server should happen through functions defined in this service.
+//TODO: Most of this looks repetitive. Simplify it.
 GetThereAdminService = function($http){
 	return {
 		getRoute:function(routeId){
@@ -250,10 +329,20 @@ GetThereAdminService = function($http){
 				//console.log(data);
 			})
 			.error(function(data) {
-				alert(data);
+				alert("ERROR"+data);
 			});
 
 			
+		},
+		getFleetDetail: function(fleetId, callback){
+			$http.get('/api/fleet/'+fleetId)
+			.success(function(data){
+				console.log(JSON.stringify(data));
+				callback(data);
+			})
+			.error(function(data){
+				alert("ERROR"+data);
+			});
 		}
 		
 	};
@@ -311,9 +400,16 @@ NYFleetChoiceDirective = function() {
 };
 
 (function () {
-	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps", "ui.tree", "ui.select"]);
+	var adminApp = angular.module('adminApp', [ 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select"]);
+	adminApp.config(['GoogleMapApiProvider'.ns(), function (GoogleMapApi) {
+  GoogleMapApi.configure({
+//    key: 'your api key',
+    v: '3.16',
+    libraries: 'weather,geometry,visualization'
+  });
+}]);
 	adminApp.run(initializeApp);
-	adminApp.controller('RouteController', RouteController);
+	adminApp.controller('RouteController',  RouteController);
 	adminApp.controller('StopController', StopController);
 	adminApp.service('stopChannel', StopChannelService);
 	adminApp.service('locationChannel', LocationChannelService);

@@ -64,6 +64,7 @@ ContextMenu.prototype.hide=function(){
 	if(this.isVisible_){
 		this.menu_.style.display='none';
 		this.isVisible_=false;
+		this.model = undefined;
 	}
 };
 
@@ -79,7 +80,12 @@ ContextMenu.prototype.onAdd=function(){
 		}
 		menuItem.style.cssText='cursor:pointer; white-space:nowrap';
 		menuItem.onclick=function(){
-			google.maps.event.trigger($this, 'menu_item_selected', $this.position_, values.eventName);
+			if($this.model==undefined){
+				google.maps.event.trigger($this, 'menu_item_selected', $this.position_, values.eventName);
+			}
+			else{
+				google.maps.event.trigger($this, 'menu_item_selected', $this.position_, values.eventName, $this.model);
+			}
 		};
 		return menuItem;
 	}
@@ -133,5 +139,15 @@ ContextMenu.prototype.show=function(latLng){
 		this.isVisible_=true;
 	}
 	this.position_=latLng;
+	this.draw();
+};
+
+ContextMenu.prototype.showOnMarker=function(latLng, model){
+	if(!this.isVisible_){
+		this.menu_.style.display='block';
+		this.isVisible_=true;
+	}
+	this.position_=latLng;
+	this.model = model;
 	this.draw();
 };
