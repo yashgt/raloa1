@@ -91,6 +91,7 @@ http.createServer(app).listen(app.get('port'), function(){
 app.get('/api/fleets', function(req, res) {
 	var user_id = req.session.passport.user.userId;
 	dbConn.query("call list_user_fleets(?);", [user_id], function(err, results) {
+		if(err==undefined){
 		res.json(results[0].map(
             function(fleet) {
                 return {
@@ -99,6 +100,11 @@ app.get('/api/fleets', function(req, res) {
 						level: fleet.level
 						};
 			}));
+		}
+		else {
+			console.log("Error %j", err);
+		}
+			
 	});
 });
 
@@ -128,8 +134,27 @@ app.post('/api/currentFleet', function(req, res) {
 	res.json({});
 });
 
+app.get('/api/fleet/:fleet_id', function(req,res){
+	var fleetId = req.params.fleet_id ;
+	dbConn.query("call get_fleet_detail(?);", [fleetId], function(err, results){
+		if(err==undefined){
+			console.log("Results %j " , results);
+			var fleetDetail = {
+		center : {latitude:results[0][0].cen_lat, longitude:results[0][0].cen_lon} ,
+		zoom : results[0][0].zoom,
+		bounds : {northeast:{latitude:results[0][0].ne_lat, longitude:results[0][0].ne_lon} , southwest:{latitude:results[0][0].sw_lat, longitude:results[0][0].sw_lon}},
+		stops : results[1].map(function(stop){ return {id:stop.stop_id, latitude:stop.latitude, longitude:stop.longitude, name:stop.name}; }),
+		routes : []//TODO
+		};
+		res.json(fleetDetail);
+		}
+		else{
+			console.log("Error %j", err);
+		}
+	});
+});
 app.get('/api/fleets/:fleetgroup_id', function(req, res) {
-    db.query("CALL list_fleets();", function(err, results) {
+    dbConn.query("CALL list_fleets();", function(err, results) {
         res.json(results[0].map(
             function(fleet) {
                 return {
