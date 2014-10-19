@@ -1,6 +1,9 @@
 var mysql = require('mysql');
 
 var pool;
+var dbConn;
+
+var logger = require('logger').getLogger();
 
 /*
 var connection;
@@ -34,8 +37,14 @@ exports.createConnection = function createConnection(dbConfig)
 
 exports.createPool = function createPool(dbConfig)
 {
-	console.log('Creating pool');
+	logger.debug('Creating pool');
 	pool = mysql.createPool(dbConfig);
+	pool.getConnection(	function(err, conn){
+		if(!err)
+		{
+			dbConn = conn ;
+		}
+	});
 };
 
 exports.connect = function connect(command)
@@ -46,6 +55,44 @@ exports.connect = function connect(command)
 			command(conn);
 		}
 	});
+};
+
+exports.query = function query( qryStr, arg2, arg3, arg4)
+{
+	var args;
+	var cbSuccess, cbFailure;
+	if(Array.isArray(arg2)) {
+		args = arg2 ;
+		if(typeof(arg3) == "function"){
+		cbSuccess = arg3;
+		cbFailure = arg4;
+		}
+	} 
+	else {
+		args = [];
+		if(typeof(arg2) == "function"){
+		cbSuccess = arg2;
+		cbFailure = arg3;
+		}
+	}
+	
+	logger.debug("Executing {0} with {1}", qryStr, args);
+	dbConn.query(qryStr, args, 
+		function(err, results) {
+			if(!err)
+			{
+				logger.debug("Results are : {0}", results);
+				cbSuccess(results);
+			}
+			else
+			{
+				logger.error("Error : {0}", err);
+				if(cbFailure!=undefined){
+				cbFailure();
+				}
+			}
+		}
+	)
 }
 
 

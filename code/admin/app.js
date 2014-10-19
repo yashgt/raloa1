@@ -10,19 +10,8 @@ var path = require('path');
 //var mysql = require('mysql');
 var db = require('db');
 var admin = require('admin');
-//var logger = require('logger').getLogger();
+var logger = require('logger').getLogger();
 
-var slf4j = require('binford-slf4j');
-var binfordLogger = require('binford-logger');
-slf4j.setLoggerFactory(binfordLogger.loggerFactory);
-slf4j.loadConfig({
-    level: 5,
-    appenders:
-        [{
-            appender: binfordLogger.getDefaultAppender()
-        }]
-});
-var logger = require('binford-slf4j').getLogger('app.js');
 
 var app = express();
 
@@ -101,8 +90,7 @@ http.createServer(app).listen(app.get('port'), function() {
 
 app.get('/api/fleets', function(req, res) {
     var user_id = req.session.passport.user.userId;
-    dbConn.query("call list_user_fleets(?);", [user_id], function(err, results) {
-        if (err == undefined) {
+    db.query("call list_user_fleets(?);", [user_id], function(results) {
             res.json(results[0].map(
                 function(fleet) {
                     return {
@@ -111,34 +99,23 @@ app.get('/api/fleets', function(req, res) {
                         level: fleet.level
                     };
                 }));
-        } else {
-            console.log("Error %j", err);
-        }
-
-    });
+				});
 });
 
 app.post('/api/stop', function(req, res) {
     var stopDetail = req.body;
     stopDetail.fleetId = req.session.passport.user.rootFleetId;
     logger.debug("Saving stop {0}", stopDetail);
-    dbConn.query("set @id := ? ; call save_stop(@id,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.stopName, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId], function(err, results) {
-        if (err == undefined) {
-            console.log("Results %j ", results);
+    db.query("set @id := ? ; call save_stop(@id,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.name, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId], function( results) {
             var id = results[2][0]["@id"];
             console.log("Stop created with ID : %j", id);
-            logger.info("Name of the stop : ", stopDetail.stopName);
+            logger.info("Name of the stop : ", stopDetail.name);
             res.json({
                 id: id
             });
-        } else {
-            console.log("Error %j", err);
-        }
     });
-
-
-
 });
+
 app.post('/api/currentFleet', function(req, res) {
     var fleet = req.body;
     req.session.passport.user.fleetId = fleet.fleetId;
@@ -147,6 +124,36 @@ app.post('/api/currentFleet', function(req, res) {
 
 app.get('/api/fleet/:fleet_id', function(req, res) {
     var fleetId = req.params.fleet_id;
+	db.query("call get_fleet_detail(?);", [fleetId], function(results){
+		var fleetDetail = {
+                center: {
+                    latitude: results[0][0].cen_lat,
+                    longitude: results[0][0].cen_lon
+                },
+                zoom: results[0][0].zoom,
+                bounds: {
+                    northeast: {
+                        latitude: results[0][0].ne_lat,
+                        longitude: results[0][0].ne_lon
+                    },
+                    southwest: {
+                        latitude: results[0][0].sw_lat,
+                        longitude: results[0][0].sw_lon
+                    }
+                },
+                stops: results[1].map(function(stop) {
+                    return {
+                        id: stop.stop_id,
+                        latitude: stop.latitude,
+                        longitude: stop.longitude,
+                        name: stop.name
+                    };
+                }),
+                routes: [] //TODO
+            };
+            res.json(fleetDetail);
+	});
+	/*
     dbConn.query("call get_fleet_detail(?);", [fleetId], function(err, results) {
         if (err == undefined) {
             console.log("Results %j ", results);
@@ -181,9 +188,10 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
             console.log("Error %j", err);
         }
     });
+	*/
 });
 app.get('/api/fleets/:fleetgroup_id', function(req, res) {
-    dbConn.query("CALL list_fleets();", function(err, results) {
+    db.query("call list_fleets();", function(results) {
         res.json(results[0].map(
             function(fleet) {
                 return {

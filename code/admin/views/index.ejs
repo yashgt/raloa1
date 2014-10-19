@@ -86,7 +86,7 @@
                                                             <form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
                                                                 <p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
                                                                 <br/>
-                                                                <input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.stopName" ng-required="true" />
+                                                                <input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.name" ng-required="true" />
                                                                 <br/>
                                                                 <textarea ng-model="stopDetail.address" placeholder="Stop Address"></textarea>
                                                                 <br/>
