@@ -18,7 +18,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     stopChannel.add(function(stopDetail) { //Invoked by DI when a Stop is defined
         //$scope.stopDetail.stopName = stopDetail.name;
 
-        $scope.stopDetail.stopName = stopDetail.stopName;
+        $scope.stopDetail.name = stopDetail.name;
         $scope.stopDetail.id = -1;
         console.log("Saving stop %j", $scope.stopDetail);
         $scope.saveStop($scope.stopDetail);
@@ -110,7 +110,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             id: 0,
             latitude: latLng.lat(),
             longitude: latLng.lng(),
-            stopName: "stopname",
+            name: "stopname",
             address: "Reverse geocoded address goes here"
         };
         locationChannel.publishLocation({
@@ -198,7 +198,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         }
     };
     $scope.markerOptions = {
-        draggable: true
+        draggable: true,
+		title: 'Label1'
     };
     $scope.stopEvents = {
         rightclick: function(marker, eventName, model) {
@@ -287,7 +288,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             fleetDetail.stops.forEach(function(stop) {
                 stop.icon = '/images/bus_stop.png';
                 stop.options = {
-                    draggable: true
+                    draggable: true,
+					title:stop.name
                 };
             });
             //alert(JSON.stringify(fleetDetail));
@@ -314,7 +316,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.saveStop = function(stopDetail) {
         getthereAdminService.saveStop(stopDetail, function(id) {
 			//flash("Stop " + stopDetail.name + " has been saved.");
-			messageCenterService.add('success', 'Bye bye in 3s!');
+			messageCenterService.add('success', 'Stop added successfully');
             if (stopDetail.id <= 0) {
                 $scope.fleetDetail.stops.push({
                     id: id,
@@ -322,7 +324,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     longitude: $scope.stopDetail.longitude,
                     icon: '/images/bus_stop.png',
                     options: {
-                        draggable: true
+                        draggable: true,
+						title:$scope.stopDetail.name
                     }
                 });
             }
@@ -356,7 +359,7 @@ function StopController($scope, stopChannel, locationChannel) {
         $scope.stopDetail = {
             latitude: latLng.latitude,
             longitude: latLng.longitude,
-            stopName: ""
+            name: ""
         };
         console.log("Stop detail is %j", $scope.stopDetail);
     });
