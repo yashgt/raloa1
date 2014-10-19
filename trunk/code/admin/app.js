@@ -10,7 +10,19 @@ var path = require('path');
 //var mysql = require('mysql');
 var db = require('db');
 var admin = require('admin');
-var logger = require('logger').getLogger();
+//var logger = require('logger').getLogger();
+
+var slf4j = require('binford-slf4j');
+var binfordLogger = require('binford-logger');
+slf4j.setLoggerFactory(binfordLogger.loggerFactory);
+slf4j.loadConfig({
+    level: 5,
+    appenders:
+        [{
+            appender: binfordLogger.getDefaultAppender()
+        }]
+});
+var logger = require('binford-slf4j').getLogger('app.js');
 
 var app = express();
 
@@ -83,7 +95,7 @@ if ('development' == app.get('env')) {
 //app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function() {
-    logger.info('Express server listening on port ' + app.get('port'));
+    logger.info('Express server listening on port {0}', app.get('port'));
     //console.log('Express server listening on port ' + app.get('port'));
 });
 
@@ -109,7 +121,7 @@ app.get('/api/fleets', function(req, res) {
 app.post('/api/stop', function(req, res) {
     var stopDetail = req.body;
     stopDetail.fleetId = req.session.passport.user.rootFleetId;
-    console.log("Saving stop %j", stopDetail);
+    logger.debug("Saving stop {0}", stopDetail);
     dbConn.query("set @id := ? ; call save_stop(@id,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.stopName, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId], function(err, results) {
         if (err == undefined) {
             console.log("Results %j ", results);
