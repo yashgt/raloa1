@@ -4,7 +4,7 @@ function initializeApp($rootScope) {
 
 tempId = 2; //temporary
 
-function RouteController($scope, getthereAdminService, stopChannel, locationChannel) {
+function RouteController($scope, getthereAdminService, stopChannel, locationChannel, messageCenterService) {
 
     $scope.fleets = [{
         fleet_name: 'KTC',
@@ -313,6 +313,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     $scope.saveStop = function(stopDetail) {
         getthereAdminService.saveStop(stopDetail, function(id) {
+			//flash("Stop " + stopDetail.name + " has been saved.");
+			messageCenterService.add('success', 'Bye bye in 3s!');
             if (stopDetail.id <= 0) {
                 $scope.fleetDetail.stops.push({
                     id: id,
@@ -472,7 +474,7 @@ NYFleetChoiceDirective = function() {
 };
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select"]);
+    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'MessageCenterModule']);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
             GoogleMapApi.configure({
