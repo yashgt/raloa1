@@ -1,0 +1,20 @@
+bower angular#*                 cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#*               validate 1.3.0 against git://github.com/angular/bower-angular.git#*
+bower angular#~1.2.17           cached git://github.com/angular/bower-angular.git#1.2.26
+bower angular#~1.2.17         validate 1.2.26 against git://github.com/angular/bower-angular.git#~1.2.17
+bower angular#>=1.2.0           cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#>=1.2.0         validate 1.3.0 against git://github.com/angular/bower-angular.git#>=1.2.0
+bower angular#~1                cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#~1              validate 1.3.0 against git://github.com/angular/bower-angular.git#~1
+bower angular#>=1               cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#>=1             validate 1.3.0 against git://github.com/angular/bower-angular.git#>=1
+bower angular#>=1.2.18          cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#>=1.2.18        validate 1.3.0 against git://github.com/angular/bower-angular.git#>=1.2.18
+bower angular#~1.2.0            cached git://github.com/angular/bower-angular.git#1.2.26
+bower angular#~1.2.0          validate 1.2.26 against git://github.com/angular/bower-angular.git#~1.2.0
+bower angular#1.2.26            cached git://github.com/angular/bower-angular.git#1.2.26
+bower angular#1.2.26          validate 1.2.26 against git://github.com/angular/bower-angular.git#1.2.26
+bower angular#1.0 - 1.2         cached git://github.com/angular/bower-angular.git#1.2.26
+bower angular#1.0 - 1.2       validate 1.2.26 against git://github.com/angular/bower-angular.git#1.0 - 1.2
+bower angular#>= 1.2.0          cached git://github.com/angular/bower-angular.git#1.3.0
+bower angular#>= 1.2.0        validate 1.3.0 against git://github.com/angular/bower-angular.git#>= 1.2.0

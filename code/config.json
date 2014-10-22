@@ -3,7 +3,7 @@
 		"host": "localhost",
 		"user": "root",
 		"password": "goatrans",
-		"database": "goatrans"
+		"database": "avishkar"
 	},
 	"gmap" : {
 		"key" : "AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q"
