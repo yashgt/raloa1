@@ -350,6 +350,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.configMap();
 };
 
+
+function RouteHelpController($scope) {
+}
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
 function StopController($scope, stopChannel, locationChannel) {
@@ -489,6 +492,7 @@ NYFleetChoiceDirective = function() {
     ]);
     adminApp.run(initializeApp);
     adminApp.controller('RouteController', RouteController);
+	adminApp.controller('RouteHelpController', RouteHelpController);
     adminApp.controller('StopController', StopController);
     adminApp.service('stopChannel', StopChannelService);
     adminApp.service('locationChannel', LocationChannelService);

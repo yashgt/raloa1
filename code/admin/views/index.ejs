@@ -43,7 +43,7 @@
 </head>
 
 <body ng-controller="RouteController">
-
+<script type="text/ng-template" id="control.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input><input id="to-place" class="controls" type="text" placeholder="Search end point"></input><button class="btn btn-sm btn-primary" ng-class="{'btn-warning': danger}" >TEST</button><button class="btn btn-sm btn-primary" >TEST1</button></script>
     <div>
         <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
 
@@ -62,22 +62,22 @@
                                     </td>
                                     <td width=70% valign="top">
                                         <div id="route">
-                                            <form>
-                                                <div class="center">
-                                                    <center>
-                                                        <button type="submit" ng-click="newRoute()">New Route</button>
-                                                        <button type="submit" ng-click="saveRoute()" ng-disabled="routeDetail.stops.length < 4">Save Current Route</button>
-                                                        <button type="submit" ng-click="extendRoute()" ng-disabled="routeDetail.routeId < 0 ">Extend Current Route</button>
-                                                        <button type="submit" ng-click="deQueue()">Deque Route Stops</button>
-                                                    </center>
-                                                </div>
-                                            </form>
+
+                                                    Route options:
+                                                        <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" >New</button>
+                                                        <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
+														<button type="submit" ng-click="saveRoute()" class="btn btn-danger btn-xs" ng-disabled="!routeDetail.isDirty">Cancel</button>
+                                                        <button type="submit" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Extend</button>
+                                                        
+                                                    
+
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
 
                                                 <!--<div id="map" google-map="exp" class="span7"-->
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
+												<ui-gmap-map-control template="control.tpl.html" controller="RouteHelpController" position="top-right" index="-1" position="TOP_LEFT"></ui-gmap-map-control>
 
                                                     <ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
                                                         <div>
@@ -99,6 +99,7 @@
 
                                                     <ui-gmap-markers models="fleetDetail.stops" coords="'self'" icon="'icon'" click="'onClicked'" options="'options'" events="stopEvents" labelContent="'name'">
                                                     </ui-gmap-markers>
+													
                                                 </ui-gmap-google-map>
                                                 <!--</div>-->
                                             </tab>
