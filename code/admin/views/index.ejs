@@ -8,7 +8,7 @@
     <script src="javascripts/bower_components/jquery/dist/jquery.min.js"></script>
 
 
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization&sensor=false&language=en&v=3.14"></script>
+    <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.14"></script>
     <script src="javascripts/ContextMenu.js"></script>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
@@ -22,7 +22,7 @@
 
 	<!-- <script src="javascripts/bower_components/angular-flash-messages/angular-flash.js"></script>-->
 	<script src="javascripts/bower_components/message-center/message-center.js"></script>
-
+	<script src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
     <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
@@ -43,13 +43,19 @@
 </head>
 
 <body ng-controller="RouteController">
-<script type="text/ng-template" id="control.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input><input id="to-place" class="controls" type="text" placeholder="Search end point"></input><button class="btn btn-sm btn-primary" ng-class="{'btn-warning': danger}" >TEST</button><button class="btn btn-sm btn-primary" >TEST1</button></script>
+<script type="text/ng-template" id="routefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>
+<script type="text/ng-template" id="routeto.tpl.html"><input id="to-place" class="controls" type="text" placeholder="Search end point"></input></script>
+<script type="text/ng-template" id="routesrch.tpl.html"><button id="to-place" class="controls" ng-click="searchRoute()" >Search</button></script>
     <div>
         <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
 
         Logged in as <%= user.username %>, <% if(user.role==1 ) { %> Fleet Administrator <% } %> <a href='/logout'>Logout</a># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Unnamed stops: {{fleetDetail.stops.length}}
 		<!-- <flash:messages class="slide-down" ng:show="messages"></flash:messages> -->
 		<mc-messages></mc-messages>
+		<!-- Subscribe to all flash messages. -->
+<div flash-alert active-class="in alert" class="alert fade" align="right">
+    <span class="alert-message">{{flash.message}}</span>
+</div>
                     <tabset vertical="false" justified="false">
                         <tab heading="Routes">
                             <table border="1" width=100% height=100%>
@@ -68,6 +74,7 @@
                                                         <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
 														<button type="submit" ng-click="saveRoute()" class="btn btn-danger btn-xs" ng-disabled="!routeDetail.isDirty">Cancel</button>
                                                         <button type="submit" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Extend</button>
+														<button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Close</button>
                                                         
                                                     
 
@@ -77,7 +84,10 @@
 
                                                 <!--<div id="map" google-map="exp" class="span7"-->
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
-												<ui-gmap-map-control template="control.tpl.html" controller="RouteHelpController" position="top-right" index="-1" position="TOP_LEFT"></ui-gmap-map-control>
+												<ui-gmap-map-control template="routefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
+												<ui-gmap-map-control template="routeto.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
+												<ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
+												
 
                                                     <ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
                                                         <div>
