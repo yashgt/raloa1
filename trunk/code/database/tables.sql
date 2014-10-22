@@ -1,6 +1,6 @@
-CREATE DATABASE if not exists goatrans;
+CREATE DATABASE if not exists avishkar;
 
-USE goatrans;
+USE avishkar;
 
 CREATE TABLE if not exists fleetgroup
 (
