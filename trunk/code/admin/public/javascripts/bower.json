@@ -15,16 +15,17 @@
   "dependencies": {
     "angular": "~1.2.17",
     "bootstrap": "~3.0.0",
-	"ngModal": "~1.2.0",	
+    "ngModal": "~1.2.0",
     "jquery": "~2.1.1",
-	"jquery-ui": "~1.11.0",
-    "underscore": "~1.6.0" ,
-	"angular-google-maps": "2.0.1",
+    "jquery-ui": "~1.11.0",
+    "underscore": "~1.6.0",
+    "angular-google-maps": "2.0.1",
     "ng-table": "~0.3.1",
-	"angular-bootstrap": "~0.11.0",
-	"angular-ui-select": "~0.8.2",
-	"selectize": "~0.8.5",
-	"angular-flash-messages": "*",
-	"message-center": "*"
+    "angular-bootstrap": "~0.11.0",
+    "angular-ui-select": "~0.8.2",
+    "selectize": "~0.8.5",
+    "angular-flash-messages": "*",
+    "message-center": "*",
+    "angular-flash": "~0.1.13"
   }
 }

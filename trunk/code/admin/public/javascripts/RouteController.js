@@ -3,8 +3,17 @@ function initializeApp($rootScope) {
 }
 
 tempId = 2; //temporary
+var STOP_ICON = "/images/bus_stop.png";
+var ACTIVE_STOP_ICON = "/images/bus_stop.png";
+var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
-function RouteController($scope, getthereAdminService, stopChannel, locationChannel, messageCenterService) {
+function RouteController($scope
+	, getthereAdminService
+	, stopChannel
+	, locationChannel
+	//, messageCenterService
+	, flash
+	,GoogleMapApi) {
 
     $scope.fleets = [{
         fleet_name: 'KTC',
@@ -123,6 +132,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     deleteStop = function(stop) {
         console.log("Deleting stop " + JSON.stringify(stop));
     };
+	linkStop = function(stop) {
+		//All user to click on a stop on the opposite side of the road
+		
+		//Let the stop show a different icon
+		//Allow user to click another stop. Once done, the two stops are brothers of each other.
+	};
+	replaceStop = function(stop) {
+		//In the current route, replace the stop with its sibling
+	};
 
 
     $scope.getContextMenu = function(menuList) {
@@ -138,7 +156,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         //	an 'id' is defined for each of the four directions related items
         var menuItems = [];
         _.each(menuList, function(menuItem) {
-            menuItems.push(menuItem);
+			if(menuItem.condition==true || menuItem.condition==undefined ){
+				menuItems.push(menuItem);
+			}
         });
 
         contextMenuOptions.menuItems = menuItems;
@@ -177,7 +197,21 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             eventName: 'delete_stop',
             label: 'Delete stop',
             handler: deleteStop
-        }]);
+        },
+		{
+            className: 'context_menu_item',
+            eventName: 'link_stop',
+            label: 'Link stop',
+            handler: linkStop
+        },
+		{
+            className: 'context_menu_item',
+            eventName: 'replace_stop',
+            label: 'Replace stop',
+            handler: replaceStop,
+			condition: $scope.routeDetail.routeId >=0
+        }
+		]);
 
     };
 
@@ -195,6 +229,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
             console.log("Tiles loaded");
             $scope.setContextMenu();
+			$scope.setRouteHelperBounds();
         }
     };
     $scope.markerOptions = {
@@ -254,9 +289,63 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
 
-
-
     }; //end configMap
+	$scope.searchRoute = function(){
+	};
+	$scope.clearRoute = function(){
+	};
+	$scope.placeMarkers = [];
+	$scope.setRouteHelperBounds = function(){
+			var bounds = new google.maps.LatLngBounds( 
+			new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude,$scope.fleetDetail.bounds.southwest.longitude) 
+			, new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude,$scope.fleetDetail.bounds.northeast.longitude) );
+			
+		['from-place', 'to-place']
+			.forEach(function(eltId){
+				var input = /** @type {HTMLInputElement} */ (
+        document.getElementById(eltId));
+		var searchBox = new google.maps.places.SearchBox(
+        /** @type {HTMLInputElement} */
+        (input));
+		
+
+		searchBox.setBounds(bounds);
+		
+		        // Listen for the event fired when the user selects an item from the
+        // pick list. Retrieve the matching places for that item.
+        google.maps.event.addListener(searchBox, 'places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            //remove previous place markers. Not stop markers
+            for (var i = 0, marker; marker = $scope.placeMarkers[i]; i++) {
+                marker.setMap(null);
+            }
+
+            // For each place, get the icon, place name, and location.
+            markers = [];
+            //var bounds = new google.maps.LatLngBounds();
+            var bounds = $scope.gmap.getBounds();
+            for (var i = 0, place; place = places[i]; i++) {
+                //var image = 'bus.png';
+
+                // Create a marker for each place.
+                var marker = new google.maps.Marker({
+                    map: $scope.gmap,
+                    //icon: image,
+                    title: place.name,
+                    position: place.geometry.location
+                });
+
+                $scope.placeMarkers.push(marker);
+
+                bounds.extend(place.geometry.location);
+            }
+
+            $scope.gmap.fitBounds(bounds);
+        });//listener
+
+		});
+	};
     $scope.map = {
         control: {},
         infoWindow: {
@@ -286,7 +375,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
             fleetDetail.stops.forEach(function(stop) {
-                stop.icon = '/images/bus_stop.png';
+                stop.icon = STOP_ICON;
                 stop.options = {
                     draggable: true,
 					title:stop.name
@@ -294,6 +383,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
             //alert(JSON.stringify(fleetDetail));
             $scope.fleetDetail = fleetDetail;
+			$scope.setRouteHelperBounds();
         });
 
         /*
@@ -316,13 +406,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.saveStop = function(stopDetail) {
         getthereAdminService.saveStop(stopDetail, function(id) {
 			//flash("Stop " + stopDetail.name + " has been saved.");
-			messageCenterService.add('success', 'Stop added successfully');
+			//messageCenterService.add('success', 'Stop added successfully');
+			flash.success = 'Stop added successfully';
             if (stopDetail.id <= 0) {
                 $scope.fleetDetail.stops.push({
                     id: id,
                     latitude: $scope.stopDetail.latitude,
                     longitude: $scope.stopDetail.longitude,
-                    icon: '/images/bus_stop.png',
+                    icon: STOP_ICON,
                     options: {
                         draggable: true,
 						title:$scope.stopDetail.name
@@ -346,8 +437,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     //TODO Do this based on the user's fleet
     $scope.loadFleets();
+	GoogleMapApi.then(function(maps){
     $scope.getFleetDetail(2);
     $scope.configMap();
+	});
 };
 
 
@@ -456,6 +549,16 @@ LocationChannelService = function() {
     return this;
 };
 
+NYUIGmapMapControlDirective = function(){
+	return {
+		restrict: 'E',
+        replace: false,
+        scope: {
+            id: '@'
+        },
+        template: '<ui-gmap-map-control template="{{id}}.tpl.html" controller="RouteHelpController" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>'
+	}
+};
 
 NYFleetChoiceDirective = function() {
     return {
@@ -480,22 +583,32 @@ NYFleetChoiceDirective = function() {
 };
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'MessageCenterModule']);
+    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate'
+		//, 'MessageCenterModule'
+		, 'angular-flash.service'
+		, 'angular-flash.flash-alert-directive']);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
             GoogleMapApi.configure({
                 //    key: 'your api key',
                 v: '3.16',
-                libraries: 'weather,geometry,visualization'
+                libraries: 'weather,geometry,visualization,places'
             });
         }
     ]);
     adminApp.run(initializeApp);
-    adminApp.controller('RouteController', RouteController);
+    adminApp.controller('RouteController', ['$scope'
+	, 'getthereAdminService'
+	, 'stopChannel'
+	, 'locationChannel'
+	//, messageCenterService
+	, 'flash'
+	, 'GoogleMapApi'.ns() ,RouteController]);
 	adminApp.controller('RouteHelpController', RouteHelpController);
     adminApp.controller('StopController', StopController);
     adminApp.service('stopChannel', StopChannelService);
     adminApp.service('locationChannel', LocationChannelService);
     adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
+	//adminApp.directive('nyUiGmapMapControl', NYUIGmapMapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);
 }());
