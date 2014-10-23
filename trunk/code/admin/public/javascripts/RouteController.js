@@ -236,6 +236,23 @@ function RouteController($scope
         draggable: true,
 		title: 'Label1'
     };
+	
+	$scope.calendarOptions = { 
+		 enableSorting: false,
+		 enableCellEdit: true,
+    columnDefs: [
+          { name:'Name', field: 'serviceName' },
+          { name:'Monday', field: 'mon', type:'boolean'},
+		  { name:'Tuesday', field: 'tue', type:'boolean'},
+		  { name:'Wednesday', field: 'wed', type:'boolean'},
+		  { name:'Thursday', field: 'thu', type:'boolean'},
+		  { name:'Friday', field: 'fri', type:'boolean'},
+		  { name:'Saturday', field: 'sat', type:'boolean'},
+		  { name:'Sunday', field: 'sun', type:'boolean'},
+		  { name:'From', field: 'startDate', type:'date'},
+		  { name:'To', field: 'endDate', type:'date'}
+    ]
+	};
     $scope.stopEvents = {
         rightclick: function(marker, eventName, model) {
             console.log("Event:" + eventName + " Marker:" + marker);
@@ -293,6 +310,23 @@ function RouteController($scope
 	$scope.searchRoute = function(){
 	};
 	$scope.clearRoute = function(){
+	};
+	
+	$scope.addCalendar = function(){
+		$scope.fleetDetail.calendars.push( {
+					serviceName : ''
+					, mon : true
+					, tue : true
+					, wed : true
+					, thu : true
+					, fri : true
+					, sat : true
+					, sun : true
+					, startDate: '2014-10-1'
+					, endDate: '2100-10-1'
+					});
+	};
+	$scope.saveCalendars = function(){
 	};
 	$scope.placeMarkers = [];
 	$scope.setRouteHelperBounds = function(){
@@ -381,8 +415,12 @@ function RouteController($scope
 					title:stop.name
                 };
             });
+			
+			
             //alert(JSON.stringify(fleetDetail));
             $scope.fleetDetail = fleetDetail;
+			$scope.calendarOptions.data = $scope.fleetDetail.calendars;
+			
 			$scope.setRouteHelperBounds();
         });
 
@@ -584,6 +622,8 @@ NYFleetChoiceDirective = function() {
 
 (function() {
     var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate'
+		, 'ui.grid'
+		, 'ui.grid.edit'
 		//, 'MessageCenterModule'
 		, 'angular-flash.service'
 		, 'angular-flash.flash-alert-directive']);

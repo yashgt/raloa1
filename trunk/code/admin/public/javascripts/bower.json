@@ -27,5 +27,8 @@
     "angular-flash-messages": "*",
     "message-center": "*",
     "angular-flash": "~0.1.13"
+  },
+  "devDependencies": {
+    "angular-ui-grid": "~3.0.0-rc.12"
   }
 }
