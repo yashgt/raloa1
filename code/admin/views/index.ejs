@@ -15,6 +15,9 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-animate.js"></script>
 	
+	<link rel="styleSheet" href="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.min.css"/>
+	<script src="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.js"></script>
+	
     <!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
@@ -43,9 +46,7 @@
 </head>
 
 <body ng-controller="RouteController">
-<script type="text/ng-template" id="routefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>
-<script type="text/ng-template" id="routeto.tpl.html"><input id="to-place" class="controls" type="text" placeholder="Search end point"></input></script>
-<script type="text/ng-template" id="routesrch.tpl.html"><button id="to-place" class="controls" ng-click="searchRoute()" >Search</button></script>
+
     <div>
         <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
 
@@ -63,6 +64,7 @@
                                     <td width=15% valign="top">
                                         <div class="center">
                                             <center><b>Routes</b>
+											Use http://ui-grid.info/
                                             </center>
                                         </div>
                                     </td>
@@ -81,11 +83,12 @@
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
-
+											<script type="text/ng-template" id="routefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>
+<script type="text/ng-template" id="routesrch.tpl.html"><button id="to-place" class="controls" ng-click="searchRoute()" >Search</button></script>
                                                 <!--<div id="map" google-map="exp" class="span7"-->
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
 												<ui-gmap-map-control template="routefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
-												<ui-gmap-map-control template="routeto.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
+												<ui-gmap-map-control template="routefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
 												<ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
 												
 
@@ -182,7 +185,11 @@
                             </table>
 
                         </tab>
-                        <tab heading="Calendars-AN"></tab>
+                        <tab heading="Calendars-AN">
+						<button ng-click="addCalendar()" class="btn btn-default">Add</button>
+						<button ng-click="saveCalendars()" class="btn btn-default">Save</button>
+							<div ui-grid="calendarOptions" ui-grid-edit class="myGrid"></div>
+						</tab>
                     </tabset>
                     </div>
 </body>

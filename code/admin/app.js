@@ -149,6 +149,19 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                         name: stop.name
                     };
                 }),
+				calendars: [
+					{serviceName : 'All days'
+					, mon : true
+					, tue : true
+					, wed : true
+					, thu : true
+					, fri : true
+					, sat : true
+					, sun : true
+					, startDate: '2014-10-1'
+					, endDate: '2100-10-1'
+					}					
+				],
                 routes: [] //TODO
             };
             res.json(fleetDetail);
