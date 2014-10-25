@@ -237,12 +237,41 @@ function RouteController($scope
 		title: 'Label1'
     };
 	
-	$scope.saveCalendar  = function( rowEntity ) {
+
+  
+  //SCHEDULE REGION
+  $scope.getRoute = function(routeId){
+	getthereAdminService.getRoute(routeId, function(routeDetail){
+		$scope.scheduleOptions.columnDefs.splice(4, 10);
+		routeDetail.stops.forEach(function(stop){
+			$scope.scheduleOptions.columnDefs.push({ name:stop.name, displayName: stop.name, field:""+stop.id+""});
+		});
+		$scope.scheduleOptions.data = routeDetail.timings ;
+		
+	});
+  };
+  
+  $scope.scheduleOptions = { 
+		 enableSorting: false,
+		 enableCellEdit: true,
+		 enableColumnMenus: false,
+    columnDefs: [
+          { name:'ID', field: 'tripId' },
+		  
+          { name:'isFrequency', displayName: 'Frequency?' , field: 'frequency_trip', type:'boolean'},
+		  { name:'frequencyStart', displayName: 'Frequency St.', field: 'frequency_start_time'},
+		  { name:'frequencyEnd', displayName: 'Frequency En.', field: 'frequency_end_time'}
+    ]
+	};
+  
+  //SCHEDULE REGION ENDS
+  
+  //CALENDAR REGION
+  	$scope.saveCalendar  = function( rowEntity ) {
     
     $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, getthereAdminService.saveCalendar(rowEntity) );
    
   };
-  
 	$scope.calendarOptions = { 
 		 enableSorting: false,
 		 enableCellEdit: true,
@@ -266,6 +295,9 @@ function RouteController($scope
     gridApi.rowEdit.on.saveRow($scope, $scope.saveCalendar);
   }
 	};
+	
+	//CALENDAR REGION ENDS
+	
     $scope.stopEvents = {
         rightclick: function(marker, eventName, model) {
             console.log("Event:" + eventName + " Marker:" + marker);
@@ -471,12 +503,17 @@ function StopController($scope, stopChannel, locationChannel) {
 //TODO: Most of this looks repetitive. Simplify it.
 GetThereAdminService = function($http) {
     return {
-        getRoute: function(routeId) {
+        getRoute: function(routeId, callback) {
             //TODO fetch this from server
-            return {
-                routeId: 1,
-                stops: []
-            };
+			$http.get('/api/route/'+routeId)
+				.success(function(data){
+					console.log("ROUTE %j", data);
+					callback(data);
+				})
+				.error(function(data){
+					console.log("ROUTE ERROR %j", data);
+				});
+            
         },
 		
 		saveCalendar: function(calendar){
