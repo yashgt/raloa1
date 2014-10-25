@@ -125,7 +125,10 @@
                                              
                                             </tab>
                                             <!--Map tab ends -->
-                                            <tab heading="Schedule-CM"></tab>
+                                            <tab heading="Schedule-CM">
+												<button ng-click="getRoute(1)">ROUTE 1</button><button ng-click="getRoute(2)">ROUTE 2</button>
+												<div ui-grid="scheduleOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ></div>
+											</tab>
                                             <tab heading="Fares-CM"></tab>
                                             <tab heading="Object">
                                                 <pre class="code">{{ routeDetail | json }}</pre>

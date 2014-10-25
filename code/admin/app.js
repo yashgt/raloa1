@@ -223,6 +223,36 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     });
 });
 
+app.get('/api/route/:route_id' , function(req, res) {
+	//TODO get from DB
+	res.json({
+		routeId: 1
+		,stops: [ {id:100, name:'Panjim'}, {id:101, name:'Porvorim'}, {id:102, name:'Mapusa'}]
+		,timings: [
+			{
+				tripId: 1
+				,direction : 0
+				,frequency_trip: true
+				,frequency_start_time: '09:00'
+				,frequency_end_time: '10:00'
+				,'100' : '09:00'
+				,'101' : '09:10'
+				,'102' : '09:20'
+			}
+			,{
+				tripId: 2
+				,direction : 0
+				,frequency_trip: true
+				,frequency_start_time: '09:00'
+				,frequency_end_time: '10:00'
+				,'100' : '09:00'
+				,'101' : '09:10'
+				,'102' : '09:20'
+			}
+			]		
+	});
+});
+
 //AUTH REGION
 passport.serializeUser(authentication.serializeUser);
 passport.deserializeUser(authentication.deserializeUser);
