@@ -95,12 +95,12 @@ function RouteController($scope
         zoom: 12,
         bounds: {
             northeast: {
-                latitude: 0,
-                longitude: 0
+                latitude: 15.855126,
+                longitude: 74.421425
             },
             southwest: {
-                latitude: 0,
-                longitude: 0
+                latitude: 14.867264,
+                longitude: 73.622169
             }
         },
         stops: [{
@@ -229,7 +229,7 @@ function RouteController($scope
             }
             console.log("Tiles loaded");
             $scope.setContextMenu();
-			$scope.setRouteHelperBounds();
+			//$scope.setRouteHelperBounds();
         }
     };
     $scope.markerOptions = {
@@ -237,9 +237,16 @@ function RouteController($scope
 		title: 'Label1'
     };
 	
+	$scope.saveCalendar  = function( rowEntity ) {
+    
+    $scope.gridApi.rowEdit.setSavePromise( $scope.gridApi.grid, rowEntity, getthereAdminService.saveCalendar(rowEntity) );
+   
+  };
+  
 	$scope.calendarOptions = { 
 		 enableSorting: false,
 		 enableCellEdit: true,
+		 enableColumnMenus: false,
     columnDefs: [
           { name:'Name', field: 'serviceName' },
           { name:'Monday', field: 'mon', type:'boolean'},
@@ -249,9 +256,15 @@ function RouteController($scope
 		  { name:'Friday', field: 'fri', type:'boolean'},
 		  { name:'Saturday', field: 'sat', type:'boolean'},
 		  { name:'Sunday', field: 'sun', type:'boolean'},
-		  { name:'From', field: 'startDate', type:'date'},
-		  { name:'To', field: 'endDate', type:'date'}
+		  { name:'From', field: 'startDate', type:'date', cellFilter: 'date:"yyyy-MM-dd"'},
+		  { name:'To', field: 'endDate', type:'date', cellFilter: 'date:"yyyy-MM-dd"'}
     ]
+	
+	,onRegisterApi: function(gridApi){
+    //set gridApi on scope
+    $scope.gridApi = gridApi;
+    gridApi.rowEdit.on.saveRow($scope, $scope.saveCalendar);
+  }
 	};
     $scope.stopEvents = {
         rightclick: function(marker, eventName, model) {
@@ -329,57 +342,7 @@ function RouteController($scope
 	$scope.saveCalendars = function(){
 	};
 	$scope.placeMarkers = [];
-	$scope.setRouteHelperBounds = function(){
-			var bounds = new google.maps.LatLngBounds( 
-			new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude,$scope.fleetDetail.bounds.southwest.longitude) 
-			, new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude,$scope.fleetDetail.bounds.northeast.longitude) );
-			
-		['from-place', 'to-place']
-			.forEach(function(eltId){
-				var input = /** @type {HTMLInputElement} */ (
-        document.getElementById(eltId));
-		var searchBox = new google.maps.places.SearchBox(
-        /** @type {HTMLInputElement} */
-        (input));
-		
-
-		searchBox.setBounds(bounds);
-		
-		        // Listen for the event fired when the user selects an item from the
-        // pick list. Retrieve the matching places for that item.
-        google.maps.event.addListener(searchBox, 'places_changed', function() {
-            var places = searchBox.getPlaces();
-
-            //remove previous place markers. Not stop markers
-            for (var i = 0, marker; marker = $scope.placeMarkers[i]; i++) {
-                marker.setMap(null);
-            }
-
-            // For each place, get the icon, place name, and location.
-            markers = [];
-            //var bounds = new google.maps.LatLngBounds();
-            var bounds = $scope.gmap.getBounds();
-            for (var i = 0, place; place = places[i]; i++) {
-                //var image = 'bus.png';
-
-                // Create a marker for each place.
-                var marker = new google.maps.Marker({
-                    map: $scope.gmap,
-                    //icon: image,
-                    title: place.name,
-                    position: place.geometry.location
-                });
-
-                $scope.placeMarkers.push(marker);
-
-                bounds.extend(place.geometry.location);
-            }
-
-            $scope.gmap.fitBounds(bounds);
-        });//listener
-
-		});
-	};
+	
     $scope.map = {
         control: {},
         infoWindow: {
@@ -421,7 +384,7 @@ function RouteController($scope
             $scope.fleetDetail = fleetDetail;
 			$scope.calendarOptions.data = $scope.fleetDetail.calendars;
 			
-			$scope.setRouteHelperBounds();
+			//$scope.setRouteHelperBounds();
         });
 
         /*
@@ -515,6 +478,10 @@ GetThereAdminService = function($http) {
                 stops: []
             };
         },
+		
+		saveCalendar: function(calendar){
+			return $http.post('/api/calendar', calendar);
+		},
         getRoutes: function() {},
         saveRoute: function(routeDetail) {},
         saveStop: function(stopDetail, callback) {
@@ -587,14 +554,129 @@ LocationChannelService = function() {
     return this;
 };
 
-NYUIGmapMapControlDirective = function(){
+s = function(map, element, bounds, markers)
+{
+
+var boxbounds = new google.maps.LatLngBounds( 
+			new google.maps.LatLng(bounds.southwest.latitude,bounds.southwest.longitude) 
+			, new google.maps.LatLng(bounds.northeast.latitude,bounds.northeast.longitude) );
+			
+			['from-place', 'to-place']
+			.forEach(function(eltId){
+				//var input = (document.getElementById(eltId));
+				var input = element.find("#from-place");
+				console.log(element.html());
+				map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+				
+		var searchBox = new google.maps.places.SearchBox((input));
+		
+
+		searchBox.setBounds(boxbounds);
+		/*
+		        // Listen for the event fired when the user selects an item from the
+        // pick list. Retrieve the matching places for that item.
+        google.maps.event.addListener(searchBox, 'places_changed', function() {
+            var places = searchBox.getPlaces();
+
+            //remove previous place markers. Not stop markers
+            for (var i = 0, marker; marker = markers[i]; i++) {
+                marker.setMap(null);
+            }
+
+            // For each place, get the icon, place name, and location.
+            markers = [];
+            //var bounds = new google.maps.LatLngBounds();
+            var bounds = map.getBounds();
+            for (var i = 0, place; place = places[i]; i++) {
+                //var image = 'bus.png';
+
+                // Create a marker for each place.
+                var marker = new google.maps.Marker({
+                    map: map,
+                    //icon: image,
+                    title: place.name,
+                    position: place.geometry.location
+                });
+
+                markers.push(marker);
+
+                bounds.extend(place.geometry.location);
+            }
+
+            map.fitBounds(bounds);
+        });//listener
+		*/
+
+		});
+		
+};
+
+NYUIGmapControlDirective = function(){
+	this.link = function(scope, element, attrs){
+			scope.markers = [];
+			
+			//TODO s(scope.map, element, scope.bounds, scope.markers);
+			
+			/*
+			scope.$watch('bounds', function(bounds){
+				console.log("Bounds %j", bounds);
+				
+				if(!(bounds==undefined)){
+					s(scope.map, element, bounds, scope.markers);
+				}
+			});
+			*/
+			
+			return {
+pre: function(tElement, tAttrs, transclude) {
+},
+post: function(scope, iElement, iAttrs, controller) {
+}
+};
+
+		};
 	return {
 		restrict: 'E',
         replace: false,
         scope: {
-            id: '@'
+            map: '='
+			,bounds: '='
         },
-        template: '<ui-gmap-map-control template="{{id}}.tpl.html" controller="RouteHelpController" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>'
+		compile: function(tEle, tAttrs, transcludeFn) {
+			console.log(tEle.html());
+			return this.link;
+		},
+		//link: this.link ,
+		/*
+		controller: function($scope, $element, $attrs, $transclude){
+			
+			
+			
+			//this.resetBounds();
+			$scope.$watch('bounds', function(bounds){
+				console.log("Bounds %j", bounds);
+				
+				if(!(bounds==undefined)){
+					this.resetBounds();
+				}
+			});
+		
+			
+		
+		},*///end controller
+		
+        template: '\
+				<script type="text/ng-template" id="placefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>\
+				<script type="text/ng-template" id="placeto.tpl.html"><input id="to-place" class="controls" type="text" placeholder="Search end point"></input></script>\
+				<script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button></script>\
+				<ui-gmap-map-control template="placefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>\
+				<ui-gmap-map-control template="placeto.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>\
+				<ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>'
+		/*		
+		template: '\<input id="from-place" class="controls" type="text" placeholder="Search start point"></input>\
+				<input id="to-place" class="controls" type="text" placeholder="Search end point"></input>\
+				<button class="controls" ng-click="searchRoute()" >Search</button>'		
+				*/
 	}
 };
 
@@ -624,6 +706,9 @@ NYFleetChoiceDirective = function() {
     var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate'
 		, 'ui.grid'
 		, 'ui.grid.edit'
+		, 'ui.grid.rowEdit'
+		, 'ui.grid.cellNav'
+		, 'ui.grid.autoResize'
 		//, 'MessageCenterModule'
 		, 'angular-flash.service'
 		, 'angular-flash.flash-alert-directive']);
@@ -649,6 +734,6 @@ NYFleetChoiceDirective = function() {
     adminApp.service('stopChannel', StopChannelService);
     adminApp.service('locationChannel', LocationChannelService);
     adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
-	//adminApp.directive('nyUiGmapMapControl', NYUIGmapMapControlDirective);
+	adminApp.directive('nyUiGmapControl', NYUIGmapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);
 }());

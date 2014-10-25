@@ -122,6 +122,14 @@ app.post('/api/currentFleet', function(req, res) {
     res.json({});
 });
 
+app.post('/api/calendar', function(req, res) {
+    var calendar = req.body;
+	logger.debug("Saving calendar: ", calendar);
+	//db.query
+    
+    res.json({calendarId:1});
+});
+
 app.get('/api/fleet/:fleet_id', function(req, res) {
     var fleetId = req.params.fleet_id;
 	db.query("call get_fleet_detail(?);", [fleetId], function(results){

@@ -12,15 +12,23 @@
     <script src="javascripts/ContextMenu.js"></script>
 
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>
+	<!--<script src="javascripts/bower_components/angular/angular.min.js"></script>-->
+    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-sanitize.js"></script>-->
+	<script src="javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular-animate.js"></script>
+	<!--<script src="javascripts/bower_components/angular-animate.js"></script>-->
+	
+	
+    
 	
 	<link rel="styleSheet" href="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.min.css"/>
 	<script src="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.js"></script>
 	
     <!--<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>-->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>-->
+	<script src="javascripts/bower_components/lodash/dist/lodash.min.js" type="text/javascript"></script>
+    <!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js" type="text/javascript"></script>-->
+	<script src="javascripts/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
     <script src="javascripts/bower_components/angular-ui-select/dist/select.js"></script>
 
 	<!-- <script src="javascripts/bower_components/angular-flash-messages/angular-flash.js"></script>-->
@@ -36,11 +44,14 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/map.css' />
     <link rel='stylesheet' href='/stylesheets/context_menu.css' />
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
+	<link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
     <!-- Select2 theme -->
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	<!--<link rel="stylesheet" href="javascripts/bower_components/select2.css">-->
+    <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">-->
+	<link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">
 
 </head>
@@ -83,13 +94,10 @@
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
-											<script type="text/ng-template" id="routefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>
-<script type="text/ng-template" id="routesrch.tpl.html"><button id="to-place" class="controls" ng-click="searchRoute()" >Search</button></script>
-                                                <!--<div id="map" google-map="exp" class="span7"-->
+
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
-												<ui-gmap-map-control template="routefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
-												<ui-gmap-map-control template="routefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
-												<ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
+												
+												<ny-ui-gmap-control map="map" bounds="fleetDetail.bounds"></ny-ui-gmap-control>
 												
 
                                                     <ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
@@ -114,7 +122,7 @@
                                                     </ui-gmap-markers>
 													
                                                 </ui-gmap-google-map>
-                                                <!--</div>-->
+                                             
                                             </tab>
                                             <!--Map tab ends -->
                                             <tab heading="Schedule-CM"></tab>
@@ -126,7 +134,7 @@
                                     </td>
 
                                     <td width=15% valign="top">
-                                        <div id="route">
+                                        
                                             <tabset>
                                                 <tab heading="Onward-YG">
 
@@ -178,7 +186,7 @@
                                                     </div>
 
                                                 </tab>
-                                                <tab heading="Return"></tab>
+                                                <tab heading="Return">RR</tab>
                                             </tabset>
                                     </td>
                                 </tr>
@@ -188,7 +196,7 @@
                         <tab heading="Calendars-AN">
 						<button ng-click="addCalendar()" class="btn btn-default">Add</button>
 						<button ng-click="saveCalendars()" class="btn btn-default">Save</button>
-							<div ui-grid="calendarOptions" ui-grid-edit class="myGrid"></div>
+							<div ui-grid="calendarOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize class="myGrid"></div>
 						</tab>
                     </tabset>
                     </div>
