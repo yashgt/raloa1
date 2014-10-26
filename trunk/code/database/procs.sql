@@ -99,6 +99,18 @@ begin
 	end if;
 end//
 
+drop procedure if exists cstodb//
+create procedure csvtodb(
+	  IN stop_id int
+	, IN lat float
+	, IN lon float
+	, IN stop_name varchar(200)
+)
+begin
+		insert into stop(stop_id, latitude, longitude, name) 
+		values ( stop_id, lat, lon, stop_name) ;
+end//
+
 drop procedure if exists get_fleet_detail//
 create procedure get_fleet_detail(in in_fleet_id int)
 begin
