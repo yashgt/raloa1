@@ -6,11 +6,11 @@
     "start": "node gim.js"
   },
   "dependencies": {
-        "common": "0.0.1",
+    "common": "0.0.1",
     "csvtojson": "1.0.0",
-        "mysql": "*",
+    "mysql": "*",
     "nconf": "^0.6.9",
-        "log4js":"0.6.20"
-        
+    "log4js": "0.6.20",
+    "jsonfile": "~2.0.0"
   }
 }
