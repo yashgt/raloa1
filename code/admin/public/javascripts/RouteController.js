@@ -4,6 +4,7 @@ function initializeApp($rootScope) {
 
 tempId = 2; //temporary
 var STOP_ICON = "/images/bus_stop.png";
+var ROUTE_STOP_ICON = "/images/busred.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
@@ -35,45 +36,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         title: ""
     };
 
-    $scope.routeDetail = {
-        //stops : [],
-        stages: []
-    };
-    $scope.routeDetail.stages.push({
-        title: 'Stage1',
-        editing: false,
-        stops: [{
-            id: 1,
-            name: 'S1'
-        }, {
-            id: 2,
-            name: 'S2'
-        }]
-    });
-    $scope.routeDetail.stages.push({
-        title: 'Stage2',
-        editing: false,
-        stops: [{
-            id: 3,
-            name: 'S3'
-        }, {
-            id: 4,
-            name: 'S4'
-        }]
-    });
-    $scope.routeSegments = [];
-    $scope.routeSegments.push({
-        distFromStart: 0
-    });
-    $scope.routeSegments.push({
-        distFromStart: 1
-    });
-    $scope.routeSegments.push({
-        distFromStart: 2
-    });
-    $scope.routeSegments.push({
-        distFromStart: 3
-    });
+    
 
     /*
 	$scope.stopDetail = {
@@ -203,7 +166,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             eventName: 'replace_stop',
             label: 'Replace stop',
             handler: replaceStop,
-            condition: $scope.routeDetail.routeId >= 0
+            condition: $scope.routeDetail!=undefined && $scope.routeDetail.routeId >= 0
         }]);
 
     };
@@ -231,26 +194,48 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         title: 'Label1'
     };
 
-    //ROUTE SEARCH REGION
-	
-
-
-
-    
-    //ROUTE SEARCH REGION ENDS
 
     //SCHEDULE REGION
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
             $scope.scheduleOptions.columnDefs.splice(4, 10);
-            routeDetail.stops.forEach(function(stop) {
+			/*
+			routeDetail.stages.forEach( function(stage){				
+				stage.stops.forEach(function(stop) {
                 $scope.scheduleOptions.columnDefs.push({
                     name: stop.name,
                     displayName: stop.name,
-                    field: "" + stop.id + ""
+                    field: stop.name
                 });
-            });
-            $scope.scheduleOptions.data = routeDetail.timings;
+				});
+			});*/
+            
+
+			
+			$scope.routeDetail = { stages:[] }; 
+			routeDetail.stages.forEach( function(stage){
+				var routestage = {title:stage.title, stageId: stage.stageId, stops: []} ;
+					
+				stage.stops.forEach(function(stop) {
+					
+				
+					var fleetstop = _.find($scope.fleetDetail.stops, function(fleetstop) { return fleetstop.id==stop.id ; });
+					if(fleetstop!=undefined){
+						fleetstop.icon = ROUTE_STOP_ICON ;
+						
+						$scope.scheduleOptions.columnDefs.push({
+                    name: fleetstop.name,
+                    displayName: fleetstop.name,
+                    field: ""+ fleetstop.id + ""
+                });
+					}
+					routestage.stops.push(fleetstop);
+				});
+				
+				$scope.routeDetail.stages.push( routestage );
+			});
+			
+			$scope.scheduleOptions.data = routeDetail.timings;
 
         });
     };
@@ -288,6 +273,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         enableSorting: true,
         enableCellEdit: false,
         enableColumnMenus: false,
+		enableFiltering: true,
+		enableRowHeaderSelection: false,
+		multiSelect: false,
         columnDefs: [{
             name: 'No.',
             field: 'routeNum'
@@ -300,7 +288,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			name: 'To',
             field: 'en'
         }
-		]
+		],
+		onRegisterApi: function(gridApi) {
+			gridApi.selection.on.rowSelectionChanged($scope,function(row){
+			console.log(row);
+			$scope.getRoute(row.entity.routeId);
+      });
+		}
 		};
 		
 	
@@ -459,17 +453,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
-    $scope.getRouteDetail = function(routeId) {
-        $scope.routeDetail = getthereAdminService.getRoute(routeId);
-        //TODO get from web service
-        //$scope.routeDetail.stops = [];
-    };
-
     //Get the details of the selected fleet
     //TODO: CBM fit this function in the pattern that we have defined
     $scope.getFleetDetail = function(fleetId) {
-        //TODO get from web service(node.js)
-
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
             fleetDetail.stops.forEach(function(stop) {
                 stop.icon = STOP_ICON;
@@ -479,16 +465,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 };
             });
 
-
-            //alert(JSON.stringify(fleetDetail));
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
 			$scope.routeListOptions.data = $scope.fleetDetail.routes;
-
-
         });
-
-
     };
 
     $scope.loadFleets = function() {
@@ -598,7 +578,6 @@ GetThereAdminService = function($http) {
         saveCalendar: function(calendar) {
             return $http.post('/api/calendar', calendar);
         },
-        getRoutes: function() {},
         saveRoute: function(routeDetail) {},
         saveStop: function(stopDetail, callback) {
             console.log("Servicing %j", stopDetail);
@@ -787,7 +766,7 @@ NYFleetChoiceDirective = function() {
 };
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize'
+    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
         , 'angular-flash.service', 'angular-flash.flash-alert-directive'
     ]);
