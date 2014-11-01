@@ -288,11 +288,15 @@ app.post('/api/segments', function(req, res) {
 });
 
 app.post('/api/routes', function(req, res) {
-
+	
 });
 
 app.get('/api/routes', function(req, res) {
-
+	//TODO get from DB
+	res.json([
+		{ routeId: 1, fromStop: 'Panaji', toStop: 'Mapusa', routeNo: 101 }
+		, { routeId: 2, fromStop: 'Panaji', toStop: 'Margao', routeNo: 102 }
+	]);
 });
 
 app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add this to all api routes

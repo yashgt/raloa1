@@ -100,12 +100,17 @@
 
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
 
-                                                    <script type="text/ng-template" id="placefrom.tpl.html"><input id = "from-place" class = "controls" type = "text" placeholder="Search start point"> </input></script>
+                                                    <script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button>
+                                                    </script>
+                                                    <ui-gmap-map-control template="routesrch.tpl.html" controller="RouteHelpController"></ui-gmap-map-control>
+													 <script type="text/ng-template" id="placefrom.tpl.html">
+                                                        <input id = "from-place" class = "controls" type = "text" placeholder = "Search start point"> </input>
+                                                    </script>
                                                     <ui-gmap-search-box template="'placefrom.tpl.html'" position="'top-right'" options="placeFromOptions" events="placeFromOptions.events"></ui-gmap-search-box>
-													<script type="text/ng-template" id="placeto.tpl.html"><input id = "to-place" class = "controls" type = "text" placeholder="Search end point"> </input></script>
+                                                    <script type="text/ng-template" id="placeto.tpl.html">
+                                                        <input id = "to-place" class = "controls" type = "text" placeholder = "Search end point" > </input>
+                                                    </script>
                                                     <ui-gmap-search-box template="'placeto.tpl.html'" position="'top-right'" options="placeToOptions" events="placeToOptions.events"></ui-gmap-search-box>
-                                                    <script type="text/ng-template" id="routesrch.tpl.html"><button class = "controls" ng-click = "searchRoute()" ng-disabled = "placeFromOptions.selected && placeToOptions.selected">Search</button></script>
-                                                    <ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>
 
 
                                                     <ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
