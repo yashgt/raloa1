@@ -284,6 +284,25 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //SCHEDULE REGION ENDS
 	
 	//ROUTELIST REGION
+	$scope.routeListOptions = {
+        enableSorting: true,
+        enableCellEdit: false,
+        enableColumnMenus: false,
+        columnDefs: [{
+            name: 'No.',
+            field: 'routeNum'
+        }, 
+		{   
+			name: 'From',
+            field: 'st'
+        },
+		{   
+			name: 'To',
+            field: 'en'
+        }
+		]
+		};
+		
 	
 	//ROUTELIST REGION ENDS
 
@@ -464,19 +483,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             //alert(JSON.stringify(fleetDetail));
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
+			$scope.routeListOptions.data = $scope.fleetDetail.routes;
 
-            //$scope.setRouteHelperBounds();
+
         });
 
-        /*
-		$scope.fleetDetail = {
-		center : {latitude:15.4989, longitude:73.8278} ,
-		zoom : 11,
-		bounds : {northeast:{latitude:15.855126, longitude:74.421425} , southwest:{latitude:14.867264, longitude:73.622169}},
-		stops : [{id:1, latitude:15.4989, longitude:73.8278, icon:'/images/bus_stop.png'}],
-		routes : []		
-		};
-		*/
+
     };
 
     $scope.loadFleets = function() {
