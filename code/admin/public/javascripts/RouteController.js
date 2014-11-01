@@ -7,7 +7,7 @@ var STOP_ICON = "/images/bus_stop.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
-function RouteController($scope, getthereAdminService, stopChannel, locationChannel
+function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi) {
 
@@ -219,6 +219,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         tilesloaded: function(gMap, eventName, model) {
             if ($scope.gmap == undefined) {
                 $scope.gmap = $scope.map.control.getGMap();
+				routeHelpChannel.gmap = $scope.gmap ; 
             }
             console.log("Tiles loaded");
             $scope.setContextMenu();
@@ -231,58 +232,22 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     //ROUTE SEARCH REGION
-    $scope.searchRoute = function() {
-        var from = $scope.placeFromOptions.markers[0].position;
-    };
+	
 
-/*
-$scope.placeFromOptions = {
-bounds : new google.maps.LatLngBounds(
-        new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude, $scope.fleetDetail.bounds.southwest.longitude), new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude, $scope.fleetDetail.bounds.northeast.longitude)),
-        markers : [],
-        selected : false,
-        events : {
-            places_changed: function() {
-                var places = searchBox.getPlaces();
 
-                //remove previous place markers. Not stop markers
-                _.each(this.markers, function(marker) {
-                    marker.setMap(null);
-                });
 
-                // For each place, get the icon, place name, and location.
-                this.markers = [];
-
-                var bounds = $scope.map.getBounds();
-                _.each(places, function(place) {
-                    // Create a marker for each place.
-                    var marker = new google.maps.Marker({
-                        map: $scope.map,
-                        title: place.name,
-                        position: place.geometry.location
-                    });
-
-                    this.markers.push(marker);
-                    this.selected = true;
-
-                    bounds.extend(place.geometry.location);
-                });
-
-                $scope.map.fitBounds(bounds);
-            }
-        }
-};
-*/
-
-    function RouteSearchOptions() {
+    function RouteSearchOptions(key) {
         //$scope.placeFromOptions = {
         this.bounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude, $scope.fleetDetail.bounds.southwest.longitude), new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude, $scope.fleetDetail.bounds.northeast.longitude));
+            new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude, $scope.fleetDetail.bounds.southwest.longitude), new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude, $scope.fleetDetail.bounds.northeast.longitude));
         this.markers = [];
-        this.selected = false;
+
+		this.location = undefined ;
         this.events = {
-            places_changed: function() {
+            places_changed: function(searchBox) {
                 var places = searchBox.getPlaces();
+				this.location = undefined;
+				routeHelpChannel[key] = undefined ; 
 
                 //remove previous place markers. Not stop markers
                 _.each(this.markers, function(marker) {
@@ -292,29 +257,35 @@ bounds : new google.maps.LatLngBounds(
                 // For each place, get the icon, place name, and location.
                 this.markers = [];
 
-                var bounds = $scope.map.getBounds();
-                _.each(places, function(place) {
+                var bounds = $scope.gmap.getBounds();
+				for (var i = 0, place; place = places[i]; i++) {
+				
+                //_.each(places, function(place) {
                     // Create a marker for each place.
                     var marker = new google.maps.Marker({
-                        map: $scope.map,
+                        map: $scope.gmap,
                         title: place.name,
                         position: place.geometry.location
                     });
 
                     this.markers.push(marker);
-                    this.selected = true;
 
                     bounds.extend(place.geometry.location);
-                });
+									this.location= place.geometry.location ;
+					routeHelpChannel[key] = place.geometry.location ;				
+                //});
+				}
 
-                $scope.map.fitBounds(bounds);
+                $scope.gmap.fitBounds(bounds);
+				
+
             }
         };
     }
-    $scope.placeFromOptions = new RouteSearchOptions();
-	$scope.placeToOptions = new RouteSearchOptions();
-	//ROUTE SEARCH REGION ENDS
-	
+    $scope.placeFromOptions = new RouteSearchOptions('From');
+    $scope.placeToOptions = new RouteSearchOptions('To');
+    //ROUTE SEARCH REGION ENDS
+
     //SCHEDULE REGION
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
@@ -358,6 +329,10 @@ bounds : new google.maps.LatLngBounds(
     };
 
     //SCHEDULE REGION ENDS
+	
+	//ROUTELIST REGION
+	
+	//ROUTELIST REGION ENDS
 
     //CALENDAR REGION
     $scope.saveCalendar = function(rowEntity) {
@@ -598,7 +573,26 @@ bounds : new google.maps.LatLngBounds(
 };
 
 
-function RouteHelpController($scope) {}
+function RouteHelpController($scope, routeHelpChannel) {
+	this.directionsDisplay = new google.maps.DirectionsRenderer();
+	this.directionsService = new google.maps.DirectionsService();
+    $scope.searchRoute = function() {		
+		directionsDisplay.setMap(routeHelpChannel.gmap);
+		
+		var request = {
+    origin:routeHelpChannel.From,
+    destination:routeHelpChannel.To,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+  
+
+  directionsService.route(request, function(result, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(result);
+    }
+  });
+    };
+}
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
 function StopController($scope, stopChannel, locationChannel) {
@@ -696,6 +690,12 @@ StopChannelService = function() {
     };
     return this;
 };
+
+RouteHelpChannelService = function(){
+	this['From'] = undefined ;
+	this['To'] = undefined;
+};
+
 //This service is used for conveying to other components that a location on the map has been chosen
 LocationChannelService = function() {
     var callbacks = [];
@@ -711,60 +711,6 @@ LocationChannelService = function() {
     return this;
 };
 
-s = function(map, element, bounds, markers) {
-
-    var boxbounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(bounds.southwest.latitude, bounds.southwest.longitude), new google.maps.LatLng(bounds.northeast.latitude, bounds.northeast.longitude));
-
-    ['from-place', 'to-place']
-        .forEach(function(eltId) {
-            //var input = (document.getElementById(eltId));
-            var input = element.find("#from-place");
-            console.log(element.html());
-            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-            var searchBox = new google.maps.places.SearchBox((input));
-
-
-            searchBox.setBounds(boxbounds);
-            /*
-		        // Listen for the event fired when the user selects an item from the
-        // pick list. Retrieve the matching places for that item.
-        google.maps.event.addListener(searchBox, 'places_changed', function() {
-            var places = searchBox.getPlaces();
-
-            //remove previous place markers. Not stop markers
-            for (var i = 0, marker; marker = markers[i]; i++) {
-                marker.setMap(null);
-            }
-
-            // For each place, get the icon, place name, and location.
-            markers = [];
-            //var bounds = new google.maps.LatLngBounds();
-            var bounds = map.getBounds();
-            for (var i = 0, place; place = places[i]; i++) {
-                //var image = 'bus.png';
-
-                // Create a marker for each place.
-                var marker = new google.maps.Marker({
-                    map: map,
-                    //icon: image,
-                    title: place.name,
-                    position: place.geometry.location
-                });
-
-                markers.push(marker);
-
-                bounds.extend(place.geometry.location);
-            }
-
-            map.fitBounds(bounds);
-        });//listener
-		*/
-
-        });
-
-};
 
 NYUIGmapControlDirective = function() {
     this.link = function(scope, element, attrs) {
@@ -870,7 +816,7 @@ NYFleetChoiceDirective = function() {
         }
     ]);
     adminApp.run(initializeApp);
-    adminApp.controller('RouteController', ['$scope', 'getthereAdminService', 'stopChannel', 'locationChannel'
+    adminApp.controller('RouteController', ['$scope', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
         , 'flash', 'GoogleMapApi'.ns(), RouteController
     ]);
@@ -878,6 +824,7 @@ NYFleetChoiceDirective = function() {
     adminApp.controller('StopController', StopController);
     adminApp.service('stopChannel', StopChannelService);
     adminApp.service('locationChannel', LocationChannelService);
+	adminApp.service('routeHelpChannel', RouteHelpChannelService);
     adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
     adminApp.directive('nyUiGmapControl', NYUIGmapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);
