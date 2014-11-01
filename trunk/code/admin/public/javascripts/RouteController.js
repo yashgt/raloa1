@@ -236,54 +236,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
 
-    function RouteSearchOptions(key) {
-        //$scope.placeFromOptions = {
-        this.bounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng($scope.fleetDetail.bounds.southwest.latitude, $scope.fleetDetail.bounds.southwest.longitude), new google.maps.LatLng($scope.fleetDetail.bounds.northeast.latitude, $scope.fleetDetail.bounds.northeast.longitude));
-        this.markers = [];
-
-		this.location = undefined ;
-        this.events = {
-            places_changed: function(searchBox) {
-                var places = searchBox.getPlaces();
-				this.location = undefined;
-				routeHelpChannel[key] = undefined ; 
-
-                //remove previous place markers. Not stop markers
-                _.each(this.markers, function(marker) {
-                    marker.setMap(null);
-                });
-
-                // For each place, get the icon, place name, and location.
-                this.markers = [];
-
-                var bounds = $scope.gmap.getBounds();
-				for (var i = 0, place; place = places[i]; i++) {
-				
-                //_.each(places, function(place) {
-                    // Create a marker for each place.
-                    var marker = new google.maps.Marker({
-                        map: $scope.gmap,
-                        title: place.name,
-                        position: place.geometry.location
-                    });
-
-                    this.markers.push(marker);
-
-                    bounds.extend(place.geometry.location);
-									this.location= place.geometry.location ;
-					routeHelpChannel[key] = place.geometry.location ;				
-                //});
-				}
-
-                $scope.gmap.fitBounds(bounds);
-				
-
-            }
-        };
-    }
-    $scope.placeFromOptions = new RouteSearchOptions('From');
-    $scope.placeToOptions = new RouteSearchOptions('To');
+    
     //ROUTE SEARCH REGION ENDS
 
     //SCHEDULE REGION
@@ -574,10 +527,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
 function RouteHelpController($scope, routeHelpChannel) {
-	this.directionsDisplay = new google.maps.DirectionsRenderer();
-	this.directionsService = new google.maps.DirectionsService();
+	$scope.directionsDisplay = new google.maps.DirectionsRenderer();
+	$scope.directionsService = new google.maps.DirectionsService();
     $scope.searchRoute = function() {		
-		directionsDisplay.setMap(routeHelpChannel.gmap);
+		$scope.directionsDisplay.setMap(routeHelpChannel.gmap);
 		
 		var request = {
     origin:routeHelpChannel.From,
@@ -586,9 +539,9 @@ function RouteHelpController($scope, routeHelpChannel) {
   };
   
 
-  directionsService.route(request, function(result, status) {
+  $scope.directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
-      directionsDisplay.setDirections(result);
+      $scope.directionsDisplay.setDirections(result);
     }
   });
     };
@@ -713,69 +666,89 @@ LocationChannelService = function() {
 
 
 NYUIGmapControlDirective = function() {
-    this.link = function(scope, element, attrs) {
-        scope.markers = [];
-
-        //TODO s(scope.map, element, scope.bounds, scope.markers);
-
-        /*
-			scope.$watch('bounds', function(bounds){
-				console.log("Bounds %j", bounds);
-				
-				if(!(bounds==undefined)){
-					s(scope.map, element, bounds, scope.markers);
-				}
-			});
-			*/
-
-        return {
-            pre: function(tElement, tAttrs, transclude) {},
-            post: function(scope, iElement, iAttrs, controller) {}
-        };
-
-    };
     return {
         restrict: 'E',
         replace: false,
         scope: {
-            map: '=',
+            gmap: '=',
             bounds: '='
         },
-        compile: function(tEle, tAttrs, transcludeFn) {
-            console.log(tEle.html());
-            return this.link;
-        },
-        //link: this.link ,
-        /*
-		controller: function($scope, $element, $attrs, $transclude){
+		controller: function($scope, $element, $attrs, $transclude, routeHelpChannel){			
+			RouteSearchOptions = function(key) {
 			
+			this.resetBounds = function(){
+			        this.bounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude), new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
+			};
+
+		this.resetBounds();
+        this.markers = [];
+
+		this.location = undefined ;
+        this.events = {
+            places_changed: function(searchBox) {
+                var places = searchBox.getPlaces();
+				this.location = undefined;
+				routeHelpChannel[key] = undefined ; 
+
+                //remove previous place markers. Not stop markers
+                _.each(this.markers, function(marker) {
+                    marker.setMap(null);
+                });
+
+                // For each place, get the icon, place name, and location.
+                this.markers = [];
+
+                var bounds = $scope.gmap.getBounds();
+				for (var i = 0, place; place = places[i]; i++) {
+				
+
+                    // Create a marker for each place.
+                    var marker = new google.maps.Marker({
+                        map: $scope.gmap,
+                        title: place.name,
+                        position: place.geometry.location
+                    });
+
+                    this.markers.push(marker);
+
+                    bounds.extend(place.geometry.location);
+									this.location= place.geometry.location ;
+					routeHelpChannel[key] = place.geometry.location ;				
+
+				}
+
+                $scope.gmap.fitBounds(bounds);
+				
+
+            }
+        };
+    };
+
 			
+			    $scope.placeFromOptions = new RouteSearchOptions('From');
+    $scope.placeToOptions = new RouteSearchOptions('To');
 			
 			//this.resetBounds();
 			$scope.$watch('bounds', function(bounds){
-				console.log("Bounds %j", bounds);
-				
 				if(!(bounds==undefined)){
-					this.resetBounds();
+					$scope.placeFromOptions.resetBounds();
+					$scope.placeToOptions.resetBounds();
 				}
 			});
 		
 			
 		
-		},*/ //end controller
+		}, //end controller
 
         template: '\
-				<script type="text/ng-template" id="placefrom.tpl.html"><input id="from-place" class="controls" type="text" placeholder="Search start point"></input></script>\
-				<script type="text/ng-template" id="placeto.tpl.html"><input id="to-place" class="controls" type="text" placeholder="Search end point"></input></script>\
 				<script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button></script>\
-				<ui-gmap-map-control template="placefrom.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>\
-				<ui-gmap-map-control template="placeto.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>\
-				<ui-gmap-map-control template="routesrch.tpl.html" position="top-right" position="TOP_LEFT"></ui-gmap-map-control>'
-        /*		
-		template: '\<input id="from-place" class="controls" type="text" placeholder="Search start point"></input>\
-				<input id="to-place" class="controls" type="text" placeholder="Search end point"></input>\
-				<button class="controls" ng-click="searchRoute()" >Search</button>'		
-				*/
+                                                    <ui-gmap-map-control template="routesrch.tpl.html" controller="RouteHelpController"></ui-gmap-map-control>\
+													 <script type="text/ng-template" id="placefrom.tpl.html"><input id = "from-place" class = "controls" type = "text" placeholder = "Search start point"> </input></script>\
+                                                    <ui-gmap-search-box template="\'placefrom.tpl.html\'" position="\'top-right\'" options="placeFromOptions" events="placeFromOptions.events"></ui-gmap-search-box>\
+                                                    <script type="text/ng-template" id="placeto.tpl.html"><input id = "to-place" class = "controls" type = "text" placeholder = "Search end point" > </input></script>\
+                                                    <ui-gmap-search-box template="\'placeto.tpl.html\'" position="\'top-right\'" options="placeToOptions" events="placeToOptions.events"></ui-gmap-search-box>'
+
     }
 };
 
