@@ -159,7 +159,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     name: stop.name
                 };
             }),
-            calendars: [{
+            calendars: [{ //TODO
                 serviceName: 'All days',
                 mon: true,
                 tue: true,
@@ -171,7 +171,26 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                 startDate: '2014-10-1',
                 endDate: '2100-10-1'
             }],
-            routes: [] //TODO
+            routes: [
+				{
+					routeId: 1
+					, routeNum : 100
+					, st : 'Panaji'
+					, en : 'Mapusa'					
+				}
+				,{
+					routeId: 2
+					, routeNum : 101
+					, st : 'Panaji'
+					, en : 'Margao'					
+				}
+				,{
+					routeId: 3
+					, routeNum : 102
+					, st : 'Panaji'
+					, en : 'Ponda'					
+				}
+			] //TODO
         };
         res.json(fleetDetail);
     });
