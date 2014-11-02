@@ -57,3 +57,11 @@ input.ng-valid {
     width: 500px;
     height: 250px;
   }
+
+.stop_name {
+	-ms-transform:rotate(270deg); /* IE 9 */
+  -moz-transform:rotate(270deg); /* Firefox */
+  -webkit-transform:rotate(270deg); /* Safari and Chrome */
+  -o-transform:rotate(270deg); /* Opera */
+  padding: 10px;
+}

@@ -77,7 +77,7 @@
                                 <tr>
                                     <td width=15% valign="top">
 									<b>Routes</b>
-									<div ui-grid="routeListOptions"></div>
+									<div ui-grid="routeListOptions" ui-grid-selection ui-grid-auto-resize></div>
                                     </td>
                                     <td width=70% valign="top">
                                         <div id="route">
@@ -88,9 +88,6 @@
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-danger btn-xs" ng-disabled="!routeDetail.isDirty">Cancel</button>
                                             <button type="submit" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Extend</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Close</button>
-
-
-
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
@@ -125,13 +122,11 @@
                                             </tab>
                                             <!--Map tab ends -->
                                             <tab heading="Schedule-CM">
-                                                <button ng-click="getRoute(1)">ROUTE 1</button>
-                                                <button ng-click="getRoute(2)">ROUTE 2</button>
                                                 <div ui-grid="scheduleOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Fares-CM"></tab>
                                             <tab heading="Object">
-                                                <pre class="code">{{ routeDetail | json }}</pre>
+                                                <pre class="code">{{ fleetDetail | json }}</pre>
                                             </tab>
                                         </tabset>
                                     </td>
