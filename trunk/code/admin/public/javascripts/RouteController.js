@@ -198,19 +198,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //SCHEDULE REGION
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
-            $scope.scheduleOptions.columnDefs.splice(4, 10);
-			/*
-			routeDetail.stages.forEach( function(stage){				
-				stage.stops.forEach(function(stop) {
-                $scope.scheduleOptions.columnDefs.push({
-                    name: stop.name,
-                    displayName: stop.name,
-                    field: stop.name
-                });
-				});
-			});*/
-            
-
+            $scope.scheduleOptions.columnDefs.splice(5, 10);
 			
 			$scope.routeDetail = { stages:[] }; 
 			routeDetail.stages.forEach( function(stage){
@@ -227,6 +215,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     name: fleetstop.name,
                     displayName: fleetstop.name,
                     field: ""+ fleetstop.id + ""
+					//,headerCellClass: 'stop_name'
                 });
 					}
 					routestage.stops.push(fleetstop);
@@ -247,21 +236,30 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         columnDefs: [{
                 name: 'ID',
                 field: 'tripId'
+				, enableCellEdit: false
             },
-
-            {
+			{
+				editableCellTemplate : 'ui-grid/dropdownEditor'
+				, name: 'Service'
+				, field: 'serviceId'				
+				, cellFilter: 'service'
+				, editDropdownIdLabel : 'serviceId'
+				, editDropdownValueLabel : 'serviceName'
+				, editDropdownOptionsArray : []
+			}
+            ,{
                 name: 'isFrequency',
                 displayName: 'Frequency?',
                 field: 'frequency_trip',
-                type: 'boolean'
+                type: 'boolean'				
             }, {
                 name: 'frequencyStart',
                 displayName: 'Frequency St.',
-                field: 'frequency_start_time'
+                field: 'frequency_start_time'				
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
-                field: 'frequency_end_time'
+                field: 'frequency_end_time'				
             }
         ]
     };
@@ -352,7 +350,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             type: 'date',
             cellFilter: 'date:"yyyy-MM-dd"'
         }]
-
         ,
         onRegisterApi: function(gridApi) {
             //set gridApi on scope
@@ -422,6 +419,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     $scope.addCalendar = function() {
         $scope.fleetDetail.calendars.push({
+			serviceId : 0,
             serviceName: '',
             mon: true,
             tue: true,
@@ -467,6 +465,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
+			$scope.scheduleOptions.columnDefs[1].editDropdownOptionsArray = $scope.fleetDetail.calendars;
+			calendars = $scope.fleetDetail.calendars ;
 			$scope.routeListOptions.data = $scope.fleetDetail.routes;
         });
     };
@@ -604,8 +604,6 @@ GetThereAdminService = function($http) {
                 .error(function(data) {
                     alert("ERROR" + data);
                 });
-
-
         },
         getFleetDetail: function(fleetId, callback) {
             $http.get('/api/fleet/' + fleetId)
@@ -692,8 +690,6 @@ NYUIGmapControlDirective = function() {
 
                 var bounds = $scope.gmap.getBounds();
 				for (var i = 0, place; place = places[i]; i++) {
-				
-
                     // Create a marker for each place.
                     var marker = new google.maps.Marker({
                         map: $scope.gmap,
@@ -765,6 +761,19 @@ NYFleetChoiceDirective = function() {
     };
 };
 
+var calendars = [] ;
+function ServiceFilter() {
+  
+  return function(input) {
+    if (!input){
+      return '';
+    } else {
+		var svc = _.find(calendars, function(calendar){ return calendar.serviceId==input; }); 
+		return svc.serviceName ;
+    }
+  };
+}
+
 (function() {
     var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
@@ -784,6 +793,8 @@ NYFleetChoiceDirective = function() {
         //, messageCenterService
         , 'flash', 'GoogleMapApi'.ns(), RouteController
     ]);
+	
+	adminApp.filter('service', ServiceFilter);
     adminApp.controller('RouteHelpController', RouteHelpController);
     adminApp.controller('StopController', StopController);
     adminApp.service('stopChannel', StopChannelService);

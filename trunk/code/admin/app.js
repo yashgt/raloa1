@@ -160,6 +160,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                 };
             }),
             calendars: [{ //TODO
+				serviceId: 1,
                 serviceName: 'All days',
                 mon: true,
                 tue: true,
@@ -246,35 +247,34 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
 app.get('/api/route/:route_id', function(req, res) {
     //TODO get from DB
     res.json({
-        routeId: 1,
-        stops: [{
-            id: 100,
-            name: 'Panjim'
-        }, {
-            id: 101,
-            name: 'Porvorim'
-        }, {
-            id: 102,
-            name: 'Mapusa'
-        }],
-        timings: [{
+        routeId: 1,        
+		stages: [
+			{ title: 'Stage1', direction:0, stops: [{id: 1}, {id: 2}] }
+			,{ title: 'Stage2', direction:0, stops: [{id: 3}, {id: 4}] }
+		]
+		
+        ,timings: [{
             tripId: 1,
             direction: 0,
+			serviceId: 1,
             frequency_trip: true,
             frequency_start_time: '09:00',
             frequency_end_time: '10:00',
-            '100': '09:00',
-            '101': '09:10',
-            '102': '09:20'
+            '1': '09:00',
+            '2': '09:10',
+            '3': '09:20',
+			'4': '09:25',
         }, {
             tripId: 2,
             direction: 0,
+			serviceId: 1,
             frequency_trip: true,
             frequency_start_time: '09:00',
             frequency_end_time: '10:00',
-            '100': '09:00',
-            '101': '09:10',
-            '102': '09:20'
+            '1': '09:00',
+            '2': '09:10',
+            '3': '09:20',
+			'4': '09:25'
         }]
     });
 });
@@ -327,6 +327,3 @@ app.get('/api/stops', function(req, res) {
 
 });
 
-app.get('/api/routes/:route_id', function(req, res) {
-
-});
