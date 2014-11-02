@@ -56,12 +56,11 @@
 <body ng-controller="RouteController">
 
     <div>
-        <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice>
-
+        <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Unnamed stops: {{fleetDetail.stops.length}}
         Logged in as
         <%= user.username %>,
             <% if(user.role==1 ) { %>Fleet Administrator
-                <% } %> <a href='/logout'>Logout</a># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Unnamed stops: {{fleetDetail.stops.length}}
+                <% } %> <a href='/logout'>Logout</a>
                     <!-- <flash:messages class="slide-down" ng:show="messages"></flash:messages> -->
                     <mc-messages></mc-messages>
                     <!-- Subscribe to all flash messages. -->
