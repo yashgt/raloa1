@@ -57,6 +57,23 @@ input.ng-valid {
     width: 500px;
     height: 250px;
   }
+  
+.fleet_level_0 {
+  background:#bbb;
+  color:red;
+}
+
+.fleet_level_1 {
+  background:#ddd;
+  color:blue;
+  margin-left:5px;
+}
+
+.fleet_level_2 {
+  background:#fff;
+  color:green;
+  margin-left:10px;
+}
 
 .stop_name {
 	-ms-transform:rotate(270deg); /* IE 9 */
