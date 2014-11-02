@@ -11,14 +11,30 @@ var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi) {
-
-    $scope.fleets = [{
-        fleet_name: 'KTC',
-        fleet_id: 3,
-        level: 2
-    }];
+/*
+    $scope.fleets = [
+  {
+    "fleet_id": 2,
+    "fleet_name": "Goa",
+    "level": 0
+  },
+  {
+    "fleet_id": 3,
+    "fleet_name": "KTCL",
+    "level": 1
+  },
+  {
+    "fleet_id": 4,
+    "fleet_name": "KTCL Shuttles",
+    "level": 2
+  },
+  {
+    "fleet_id": 6,
+    "fleet_name": "Private Buses",
+    "level": 1
+  }
+];*/
     $scope.fleet = {
-        selected: undefined
     };
 
     stopChannel.add(function(stopDetail) { //Invoked by DI when a Stop is defined
@@ -748,15 +764,15 @@ NYFleetChoiceDirective = function() {
             nyFleet: '=',
             nyChanged: '='
         },
-        template: '<select ng-model="nyFleet" ng-options="fleet.fleet_name for fleet in nyFleets" ng-change="nyChanged(nyFleet)"></select>'
-        /*
+        //template: '<select ng-model="nyFleet" ng-options="fleet.fleet_name for fleet in nyFleets" ng-change="nyChanged(nyFleet)"></select>'
+        
 		template: '<ui-select ng-model="nyFleet.selected" theme="selectize" ng-disabled="disabled" style="width: 300px;">\
     <ui-select-match placeholder="Select or search fleet">{{$select.selected.fleet_name}}</ui-select-match>\
     <ui-select-choices repeat="fleet in nyFleets | filter: $select.search" >\
-      <span ng-bind-html="fleet.fleet_name | highlight: $select.search" ng-class="fleet.level"></span>\
+      <span ng-bind-html="fleet.fleet_name | highlight: $select.search" ng-class="\'fleet_level_\'+fleet.level"></span>\
     </ui-select-choices>\
 </ui-select>'
-*/
+
         //templateURL: 'ny-fleet-choice.html'
     };
 };
@@ -775,7 +791,7 @@ function ServiceFilter() {
 }
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
+    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
         , 'angular-flash.service', 'angular-flash.flash-alert-directive'
     ]);
