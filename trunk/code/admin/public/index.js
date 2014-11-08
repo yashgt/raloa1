@@ -54,7 +54,7 @@
 </head>
 
 <body ng-controller="RouteController">
-
+OLD
     <div>
         <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Unnamed stops: {{fleetDetail.stops.length}}
         Logged in as
@@ -63,7 +63,7 @@
                 <% } %> <a href='/logout'>Logout</a>
                     <!-- <flash:messages class="slide-down" ng:show="messages"></flash:messages> -->
                     <mc-messages></mc-messages>
-                    <!-- Subscribe to all flash messages. -->
+                    <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
                     <div flash-alert active-class="in alert" class="alert fade" align="right">
                         <span class="alert-message">{{flash.message}}</span>
                     </div>

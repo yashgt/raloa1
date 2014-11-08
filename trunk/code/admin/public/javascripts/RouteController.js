@@ -11,29 +11,7 @@ var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi) {
-/*
-    $scope.fleets = [
-  {
-    "fleet_id": 2,
-    "fleet_name": "Goa",
-    "level": 0
-  },
-  {
-    "fleet_id": 3,
-    "fleet_name": "KTCL",
-    "level": 1
-  },
-  {
-    "fleet_id": 4,
-    "fleet_name": "KTCL Shuttles",
-    "level": 2
-  },
-  {
-    "fleet_id": 6,
-    "fleet_name": "Private Buses",
-    "level": 1
-  }
-];*/
+
     $scope.fleet = {
     };
 
@@ -54,15 +32,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     
 
-    /*
-	$scope.stopDetail = {
-		latitude:0,
-		longitude:0,
-		stopName:"",
-		address:""
-	};*/
-
-    $scope.fleetDetail = {
+     $scope.fleetDetail = {
         center: {
             latitude: 0,
             longitude: 0
@@ -117,6 +87,35 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         //In the current route, replace the stop with its sibling
     };
 
+    $scope.clearRoute = function(){
+    	if($scope.routeDetail !=undefined){
+        	if ($scope.routeDetail.stages !=undefined ){
+        		$scope.routeDetail.stages.forEach( function(stage){
+        			if(stage.stops != undefined){
+        			stage.stops.forEach(function(stop) {					
+        				stop.icon = STOP_ICON ;
+        			});
+        			}    		
+        		});
+        	}	
+        	}
+
+    		$scope.routeDetail = { routeId:-1, stages:[] };
+    };
+    
+    //Route creation region
+    $scope.closeRoute = function(){
+
+		$scope.clearRoute();
+		$scope.gridRoutesApi.selection.clearSelectedRows();
+		
+    };
+    $scope.newRoute = function(){
+    	$scope.closeRoute();
+		
+    	$scope.routeDetail.routeId = 0 ; 
+    };
+    //Route creation region ends
 
     $scope.getContextMenu = function(menuList) {
 
@@ -210,31 +209,37 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         title: 'Label1'
     };
 
+    $scope.addStopToStage = function(fleetstop, routestage) {
+    	if(fleetstop!=undefined){
+			fleetstop.icon = ROUTE_STOP_ICON ;
+			
+			$scope.scheduleOptions.columnDefs.push({
+        name: fleetstop.name,
+        displayName: fleetstop.name,
+        field: ""+ fleetstop.id + ""
+		//,headerCellClass: 'stop_name'
+    });
+		}
+		routestage.stops.push(fleetstop);
+		
+    	
+    };
 
     //SCHEDULE REGION
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
+        	$scope.routeDetail.routeId = routeId ;
+        	
             $scope.scheduleOptions.columnDefs.splice(5, 10);
 			
-			$scope.routeDetail = { stages:[] }; 
+			
 			routeDetail.stages.forEach( function(stage){
 				var routestage = {title:stage.title, stageId: stage.stageId, stops: []} ;
 					
-				stage.stops.forEach(function(stop) {
-					
-				
+				stage.stops.forEach(function(stop) {					
 					var fleetstop = _.find($scope.fleetDetail.stops, function(fleetstop) { return fleetstop.id==stop.id ; });
-					if(fleetstop!=undefined){
-						fleetstop.icon = ROUTE_STOP_ICON ;
-						
-						$scope.scheduleOptions.columnDefs.push({
-                    name: fleetstop.name,
-                    displayName: fleetstop.name,
-                    field: ""+ fleetstop.id + ""
-					//,headerCellClass: 'stop_name'
-                });
-					}
-					routestage.stops.push(fleetstop);
+					
+					$scope.addStopToStage(fleetstop, routestage);
 				});
 				
 				$scope.routeDetail.stages.push( routestage );
@@ -304,9 +309,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         }
 		],
 		onRegisterApi: function(gridApi) {
+			$scope.gridRoutesApi = gridApi;
+			
 			gridApi.selection.on.rowSelectionChanged($scope,function(row){
 			console.log(row);
-			$scope.getRoute(row.entity.routeId);
+			$scope.clearRoute();
+			if(row.isSelected){
+				$scope.getRoute(row.entity.routeId);
+			}
+
       });
 		}
 		};
@@ -317,7 +328,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //CALENDAR REGION
     $scope.saveCalendar = function(rowEntity) {
 
-        $scope.gridApi.rowEdit.setSavePromise($scope.gridApi.grid, rowEntity, getthereAdminService.saveCalendar(rowEntity));
+        $scope.gridCalendarApi.rowEdit.setSavePromise($scope.gridCalendarApi.grid, rowEntity, getthereAdminService.saveCalendar(rowEntity));
 
     };
     $scope.calendarOptions = {
@@ -369,14 +380,26 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         ,
         onRegisterApi: function(gridApi) {
             //set gridApi on scope
-            $scope.gridApi = gridApi;
+            $scope.gridCalendarApi = gridApi;
             gridApi.rowEdit.on.saveRow($scope, $scope.saveCalendar);
         }
     };
 
     //CALENDAR REGION ENDS
-
+    $scope.addStopToRoute = function(stop){
+    	if($scope.routeDetail.routeId>=0){
+			if ( $scope.routeDetail.stages.length == 0 ){
+				$scope.addNewStage();
+			}
+			
+			var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1] ;
+			$scope.addStopToStage(stop, lastStage);
+    }
+    };
     $scope.stopEvents = {
+    		click: function(marker, eventName, model){
+    				$scope.addStopToRoute(model);
+    		},
         rightclick: function(marker, eventName, model) {
             console.log("Event:" + eventName + " Marker:" + marker);
             $scope.stopContextMenu.showOnMarker(marker.position, model);
@@ -423,6 +446,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         };
         $scope.addNewStage = function() {
             var newObject = jQuery.extend({}, $scope.newStage);
+            newObject.stops = [];
             $scope.routeDetail.stages.push(newObject);
             $scope.newStage.title = "New Stage";
         };
@@ -430,8 +454,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
     }; //end configMap
-    $scope.searchRoute = function() {};
-    $scope.clearRoute = function() {};
+
 
     $scope.addCalendar = function() {
         $scope.fleetDetail.calendars.push({
@@ -479,6 +502,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 };
             });
 
+            $scope.closeRoute();
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
 			$scope.scheduleOptions.columnDefs[1].editDropdownOptionsArray = $scope.fleetDetail.calendars;
@@ -512,13 +536,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
 
             if ($scope.routeDetail <= 0) {
-                $scope.addStopToRoute();
+                $scope.addStopToRoute($scope.stopDetail);
             }
             $scope.map.infoWindow.show = false;
         });
     };
 
-    $scope.addStopToRoute = function() {};
+    
 
     $scope.remove = function() {
         $scope.fleetDetail.stops = [];
