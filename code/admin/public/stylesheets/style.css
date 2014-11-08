@@ -82,3 +82,7 @@ input.ng-valid {
   -o-transform:rotate(270deg); /* Opera */
   padding: 10px;
 }
+
+.alert .alert-message {
+position: fixed; width: 400px;
+}
