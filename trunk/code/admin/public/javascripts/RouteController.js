@@ -124,6 +124,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     		if($scope.routeDetail.routeId==0){
     			$scope.routeDetail.routeId = route.routeId ;
     			$scope.fleetDetail.routes.push(route);
+    			$scope.gridRoutesApi.selection.selectRow(route);
     		}
     		
     	});
