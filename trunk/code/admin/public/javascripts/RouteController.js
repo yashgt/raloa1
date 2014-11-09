@@ -87,6 +87,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         //In the current route, replace the stop with its sibling
     };
 
+    
     $scope.clearRoute = function(){
     	if($scope.routeDetail !=undefined){
         	if ($scope.routeDetail.stages !=undefined ){
@@ -114,6 +115,18 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     	$scope.closeRoute();
 		
     	$scope.routeDetail.routeId = 0 ; 
+    };
+    
+    $scope.saveRoute = function(){
+    	getthereAdminService.saveRoute($scope.routeDetail, function(route){
+    		
+    		
+    		if($scope.routeDetail.routeId==0){
+    			$scope.routeDetail.routeId = route.routeId ;
+    			$scope.fleetDetail.routes.push(route);
+    		}
+    		
+    	});
     };
     //Route creation region ends
 
@@ -394,11 +407,35 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			
 			var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1] ;
 			$scope.addStopToStage(stop, lastStage);
+			$scope.routeDetail.isDirty = true;
     }
     };
+    $scope.delStopFromRoute = function(stop){
+    	if($scope.routeDetail.routeId>=0){
+			var stg = _.find($scope.routeDetail.stages, function(stage){
+				return _.contains(stage.stops, stop);
+			});
+			
+			stg.stops.splice(_.indexOf(stg.stops,stop), 1); 
+			
+			stop.icon = STOP_ICON ;
+
+			$scope.routeDetail.isDirty = true;
+    	}
+    };
+    
+    
     $scope.stopEvents = {
     		click: function(marker, eventName, model){
-    				$scope.addStopToRoute(model);
+    				var stg = _.find($scope.routeDetail.stages, function(stage){
+    					return _.contains(stage.stops, model);
+    				});
+    				if(stg==undefined){ //The stop does not already exist in the route
+    					$scope.addStopToRoute(model);
+    				}
+    				else{
+    					$scope.delStopFromRoute(model);
+    				}
     		},
         rightclick: function(marker, eventName, model) {
             console.log("Event:" + eventName + " Marker:" + marker);
@@ -444,11 +481,16 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
 
         };
-        $scope.addNewStage = function() {
+        $scope.addNewStage = function() {        	
             var newObject = jQuery.extend({}, $scope.newStage);
             newObject.stops = [];
+            if(newObject.title == ""){
+            	newObject.title = "New Stage";
+            }            
+            
             $scope.routeDetail.stages.push(newObject);
-            $scope.newStage.title = "New Stage";
+            $scope.routeDetail.isDirty = true;
+            $scope.newStage.title = "";
         };
 
 
@@ -523,20 +565,22 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             //messageCenterService.add('success', 'Stop added successfully');
             flash.success = 'Stop added successfully';
             if (stopDetail.id <= 0) {
-                $scope.fleetDetail.stops.push({
-                    id: id,
-                    latitude: $scope.stopDetail.latitude,
-                    longitude: $scope.stopDetail.longitude,
-                    icon: STOP_ICON,
-                    options: {
-                        draggable: true,
-                        title: $scope.stopDetail.name
-                    }
-                });
+            	var newStop = {
+                        id: id,
+                        name: stopDetail.name,
+                        latitude: $scope.stopDetail.latitude,
+                        longitude: $scope.stopDetail.longitude,
+                        icon: STOP_ICON,
+                        options: {
+                            draggable: true,
+                            title: $scope.stopDetail.name
+                        }
+                    };
+                $scope.fleetDetail.stops.push(newStop);
             }
 
-            if ($scope.routeDetail <= 0) {
-                $scope.addStopToRoute($scope.stopDetail);
+            if ($scope.routeDetail.routeId >= 0) {
+                $scope.addStopToRoute(newStop);
             }
             $scope.map.infoWindow.show = false;
         });
@@ -598,10 +642,15 @@ function StopController($scope, stopChannel, locationChannel) {
     };
 }
 
+
 //Service that communicates with the server. All communication with server should happen through functions defined in this service.
 //TODO: Most of this looks repetitive. Simplify it.
 GetThereAdminService = function($http) {
-    return {
+	var services = [
+	                { name: 'saveRoute', path: '/api/route/', method: 'post' }
+	                ];
+	
+    var service = {
         getRoute: function(routeId, callback) {
             //TODO fetch this from server
             $http.get('/api/route/' + routeId)
@@ -618,7 +667,7 @@ GetThereAdminService = function($http) {
         saveCalendar: function(calendar) {
             return $http.post('/api/calendar', calendar);
         },
-        saveRoute: function(routeDetail) {},
+        
         saveStop: function(stopDetail, callback) {
             console.log("Servicing %j", stopDetail);
             $http.post('/api/stop', stopDetail)
@@ -657,6 +706,32 @@ GetThereAdminService = function($http) {
         }
 
     };
+    
+    
+    var getSuccess = function(data, callback){    	
+    	return ( function(data){ 
+    		console.log(JSON.stringify(data));
+			callback(data);
+    	} );
+    };
+    var getError = function(data){
+    		console.log("ERROR " + JSON.stringify(data));
+    };
+    services.forEach( function(svc){
+    	switch(svc.method){
+    	case "post":
+    		service[svc.name] = function(data, callback){
+    			$http.post(svc.path, data)
+    			.success(getSuccess(data, callback))
+    			.error(getError);
+    		};
+    		break;
+    	
+    	default:
+    		break;
+    	}    	 
+    });
+    return service ;
 };
 StopChannelService = function() {
 
