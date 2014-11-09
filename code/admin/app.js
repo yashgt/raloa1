@@ -244,6 +244,15 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     });
 });
 
+//Gives out the object to be added to routelist
+app.post('/api/route/', function(req, res){
+	var route = req.body;
+	
+	console.log("Saving route %j", route);
+	res.json({routeId:1, routeNum:"", st:"S1", en: "S2"});
+	
+});
+
 app.get('/api/route/:route_id', function(req, res) {
     //TODO get from DB
     res.json({
