@@ -11,6 +11,8 @@ var path = require('path');
 var db = require('db');
 var admin = require('admin');
 var logger = require('logger').getLogger();
+var async = require('async');
+var _ = require('underscore');
 
 
 var app = express();
@@ -249,9 +251,200 @@ app.post('/api/route/', function(req, res){
 	var route = req.body;
 	
 	console.log("Saving route %j", route);
-	res.json({routeId:1, routeNum:"", st:"S1", en: "S2"});
+	
+	db.getTransaction( function(tran){
+	var uow = {
+	sr : [ {
+		//Save Route
+		task: function(scb, fcb){
+			saveRouteEntity(tran, route, function(routeId){
+			route.routeId = routeId; 
+			route.stages.forEach(function(stage){ stage.routeId = routeId; });	
+			scb();
+			});
+		}
+	} 
+	, {
+		//Save Stages
+		sr : function(route){ return route.stages; }
+		, srfn : function(stage){
+		
+			var uow = {
+				sr : [
+					{
+						task: function(scb, fcb){
+							saveStageEntity(tran, stage, function(stageId){
+								stage.stageId = stageId;
+							});
+						}
+					}
+					, {
+						sr: function(stage){return stage.stops; }
+						,srfn: function(stop){
+							saveStopEntity(tran, stop, function(stopId){
+								stop.id = stopId ;
+							});
+						}						
+					}					
+				]				
+			};
+			
+			execute(uow);
+		}
+	}
+	]
+	
+};
+
+execute(uow);
+});
+
+/*
+		var routesWF = [
+		function(callback){
+			db.getTransaction( function(tran){
+				callback(null, tran);
+			} );
+		}
+		, getSaveRouteTask(route)
+		, getSaveStagesTask(route)
+		];
+
+	async.waterfall(routesWF, function (err, tran) {
+		if(!err){
+			tran.commit();
+			res.json({routeId:1, routeNum:"", st:"S1", en: "S2"});
+		}
+	});
+
+*/
 	
 });
+
+
+getSaveRouteTask = function(route){
+	return function(tran, callback){ //Task function
+		saveRouteEntity(tran, route, function(routeId){
+			console.log("Callback routeId %j", routeId);
+			route.savedStageCount = 0;
+			callback(null, tran, routeId);
+		});
+	};
+};
+
+getSaveStagesTask = function(route){
+	return function(tran, routeId, callback){ //Task function
+		logger.info("Saving stages for route {0}", routeId);
+		//TODO build and perform a task
+		var stageSeries = [];
+		
+		route.stages.forEach( function(stage){
+			stageSeries.push(getSaveStageTask(tran, route, stage));
+		});
+		
+		async.series(stageSeries);	
+
+		callback(null, tran);
+	};
+};
+
+getSaveStageTask = function(tran, route, stage){
+	return function(callback){
+		logger.debug("Saving stage {0} in route {1}", stage, route);
+		
+		var stageWF = [
+			function(callback){
+				stage.routeId = route.routeId ;
+				
+				saveStageEntity(tran, stage, function(stageId){
+					callback(null);
+				});
+
+			}
+			, function(stageId, callback){ //Task to save stops
+				var stopSeries = [];
+				
+				stage.stops.forEach( function(stop){
+					stopSeries.push( function(callback){
+						saveStopEntity(tran, stop, function(stopId){
+							callback(null);
+						});
+					});
+				});
+				
+				async.series(stopSeries);
+				
+			}
+		];
+		
+		async.waterfall(stageWF);
+
+		callback(null);
+		
+	};
+};
+
+function execute(uow)
+{
+	console.log("Executing %j", uow);
+	if(uow.sr != undefined){
+		var list;
+		if(_.isArray(uow.sr)){
+			console.log("Array");
+			list = uow.sr ;
+		}
+		else if(_.isFunction(uow.sr)){
+			console.log("Function");
+			list = uow.srfn();
+		}
+		var series = [];
+		
+		list.forEach(function(task){
+			if(_.isFunction(task.task)){
+				series.push( function(callback){
+					task.task(function(){ callback(null); }, function(){callback('error');});
+				}
+				);
+			}
+			else {
+				series.push(function(callback){
+					execute(task);
+				});
+			}
+			
+		});
+		
+		async.series(series);
+	}
+};
+
+
+
+
+saveRouteEntity = function(tran, route, cb){
+	setTimeout( function(){
+			var routeId = 5;
+			logger.debug('Saved route record. ID is {0}', routeId);
+			cb(routeId);
+		}
+	, 1000);
+};
+saveStageEntity = function(tran, stage, cb){
+	setTimeout( function(){
+			var stopId = 1;
+			logger.debug('Saved stage record. ID is {0}', stageId);
+			cb(stageId);
+		}
+	, 1000);
+};
+saveStopEntity = function(tran, stop, cb){
+	setTimeout( function(){
+			var stopId = 100;
+			logger.debug('Saved stop record. ID is {0}', stopId);
+			cb(stopId);
+		}
+	, 1000);
+};
 
 app.get('/api/route/:route_id', function(req, res) {
     //TODO get from DB
@@ -313,10 +506,6 @@ app.get('/logout', authentication.logout);
 
 app.post('/api/segments', function(req, res) {
 
-});
-
-app.post('/api/routes', function(req, res) {
-	
 });
 
 app.get('/api/routes', function(req, res) {
