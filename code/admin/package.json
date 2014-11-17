@@ -6,16 +6,18 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.4.8",
+    "async": "^0.9.0",
+    "binford-logger": "*",
+    "binford-slf4j": "*",
+    "bower": "*",
+    "connect-mysql": "^2.0.5",
     "ejs": "*",
-	"bower": "*",
-	"mysql": "*",
+    "express": "3.4.8",
+    "log4js": "0.6.20",
+    "mysql": "*",
     "nconf": "^0.6.9",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
-	    "connect-mysql": "^2.0.5",
-	"log4js":"0.6.20",
-	"binford-logger": "*",
-	"binford-slf4j": "*"
+    "underscore": "^1.7.0"
   }
 }

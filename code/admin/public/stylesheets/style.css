@@ -83,6 +83,3 @@ input.ng-valid {
   padding: 10px;
 }
 
-.alert .alert-message {
-position: fixed; width: 400px;
-}
