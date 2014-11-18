@@ -18,35 +18,39 @@ exports.search = function(srchTxt, callback){
 // Query the DB based on the srchTxt and return a list of trips
 	
 
-db.query("CALL Source(? );",[srchTxt.from ] , 
+db.query("CALL get_location(? );",[srchTxt.from ] , 
 	function(err, results){
 			if(err) {
 					console.log("DB error %j", err);
 					throw err;
-					}
-         var start = results[0].map(
-				  function(trip){
-				  	if(lat.length === 0)
+					} 
+				  	if(results[0].length === 0)
 				  		{
 					console.log("source error %j", err);
 					throw err;
-					}	 
-                             });
+					}
 
-db.query("CALL Destination(? );",[srchTxt.to ] , 
+	var start = results[0];
+  console.log("start location = %j", start);
+});
+
+db.query("CALL get_location(? );",[srchTxt.to ] , 
 	function(err, results){
 			if(err) {
 					console.log("DB error %j", err);
 					throw err;
-					}
-         var end = results[0 ].map(
-				  function(trip){
-				  	 if(log.length === 0)
+					} 
+				  	if(results[0].length === 0)
 				  		{
-					console.log("Destination error %j", err);
+					console.log("destination error %j", err);
 					throw err;
-					}	 
-                             });
+					}
+
+	var end = results[0];
+  console.log("end location = %j", end);
+});
+
+
 
          callback();
        });
