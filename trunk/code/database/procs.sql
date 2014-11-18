@@ -1,27 +1,16 @@
 delimiter //
 
 
-drop procedure if exists Source//
-create procedure Source(
-	IN source_stop varchar(200)
+drop procedure if exists get_location//
+create procedure get_location(
+	IN stop_name varchar(200)
 	)
 begin
 	select latitude,longitude 
 	from stop 
-	where stop.name like source_stop ;
+	where stop.name like stop_name ;
 end//
 
-
-
-drop procedure if exists Destination //
-create procedure Destination(
-	IN destination_stop varchar(200)
-	)
-begin
-	select latitude,longitude 
-	from stop 
-	where stop.name like destination_stop ;
-end//
 
 drop function if exists hierarchy_connect_by_parent_eq_prior_id //
 CREATE FUNCTION hierarchy_connect_by_parent_eq_prior_id(value INT) RETURNS INT
