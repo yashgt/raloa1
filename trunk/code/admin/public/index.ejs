@@ -16,7 +16,6 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
 
-
     <link rel="styleSheet" href="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.min.css" />
     <script src="javascripts/bower_components/angular-ui-grid/ui-grid-unstable.js"></script>
 
@@ -56,17 +55,16 @@
 <body ng-controller="RouteController">
 
     <div>
+	                    <div flash-alert active-class="in alert" class="alert fade" align="right">
+                        <span class="alert-message">{{flash.message}}</span>
+                    </div>
         <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets" ny-changed="fleetChosen"></ny-fleet-choice># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Unnamed stops: {{fleetDetail.stops.length}}
         Logged in as
         <%= user.username %>,
             <% if(user.role==1 ) { %>Fleet Administrator
                 <% } %> <a href='/logout'>Logout</a>
-                    <!-- <flash:messages class="slide-down" ng:show="messages"></flash:messages> -->
-                    <mc-messages></mc-messages>
                     <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
-                    <div flash-alert active-class="in alert" class="alert fade" align="right">
-                        <span class="alert-message">{{flash.message}}</span>
-                    </div>
+
                     <tabset vertical="false" justified="false">
                         <tab heading="Routes">
                             <table border="1" width=100% height=100%>
@@ -118,7 +116,7 @@
                                             </tab>
                                             <!--Map tab ends -->
                                             <tab heading="Schedule">
-                                                <div ui-grid="scheduleOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
+                                                <div ui-grid="scheduleOptions" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Fares"></tab>
                                             <tab heading="Object">
