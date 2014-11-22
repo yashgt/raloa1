@@ -228,9 +228,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			fleetstop.icon = ROUTE_STOP_ICON ;
 			
 			$scope.scheduleOptions.columnDefs.push({
-        name: fleetstop.name,
-        displayName: fleetstop.name,
-        field: ""+ fleetstop.id + ""
+        name: fleetstop.name
+        , displayName: fleetstop.name
+        , field: ""+ fleetstop.id + ""
+
 		//,headerCellClass: 'stop_name'
     });
 		}
@@ -244,7 +245,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         getthereAdminService.getRoute(routeId, function(routeDetail) {
         	$scope.routeDetail.routeId = routeId ;
         	
-            $scope.scheduleOptions.columnDefs.splice(5, 10);
+            $scope.scheduleOptions.columnDefs.splice(6, 100);
 			
 			
 			routeDetail.stages.forEach( function(stage){
@@ -258,17 +259,32 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 				
 				$scope.routeDetail.stages.push( routestage );
 			});
-			
-			$scope.scheduleOptions.data = routeDetail.timings;
+			$scope.routeDetail.timings = routeDetail.timings;
+			$scope.scheduleOptions.data = $scope.routeDetail.timings;
 
         });
     };
+	
+	$scope.scheduleActions = {
+		deleteTrip : function(trip){
+			console.log(trip);
+			var idx = _.findIndex($scope.routeDetail.timings, {tripId: trip.tripId});
+			$scope.routeDetail.timings.splice(idx,1);
+			$scope.routeDetail.isDirty = true;
+			
+		}
+	};
 
     $scope.scheduleOptions = {
         enableSorting: false,
         enableCellEdit: true,
         enableColumnMenus: false,
-        columnDefs: [{
+        columnDefs: [
+			{
+				name:'Delete',
+				cellTemplate:'<button class="btn primary" ng-click="getExternalScopes().deleteTrip(row.entity)">Delete</button>'
+			},
+			{
                 name: 'ID',
                 field: 'tripId'
 				, enableCellEdit: false
@@ -294,7 +310,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
-                field: 'frequency_end_time'				
+                field: 'frequency_end_time'	
+				, pinnedLeft:true			
             }
         ]
     };
@@ -548,7 +565,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.closeRoute();
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
-			$scope.scheduleOptions.columnDefs[1].editDropdownOptionsArray = $scope.fleetDetail.calendars;
+			var svcCol = _.find($scope.scheduleOptions.columnDefs, function(col){ return col.name == "Service"; });
+			svcCol.editDropdownOptionsArray = $scope.fleetDetail.calendars;
 			calendars = $scope.fleetDetail.calendars ;
 			$scope.routeListOptions.data = $scope.fleetDetail.routes;
         });
@@ -842,16 +860,15 @@ NYUIGmapControlDirective = function() {
 		
 			
 		
-		}, //end controller
+		}//end controller
 
-        template: '\
-				<script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button></script>\
-                                                    <ui-gmap-map-control template="routesrch.tpl.html" controller="RouteHelpController"></ui-gmap-map-control>\
-													 <script type="text/ng-template" id="placefrom.tpl.html"><input id = "from-place" class = "controls" type = "text" placeholder = "Search start point"> </input></script>\
-                                                    <ui-gmap-search-box template="\'placefrom.tpl.html\'" position="\'top-right\'" options="placeFromOptions" events="placeFromOptions.events"></ui-gmap-search-box>\
-                                                    <script type="text/ng-template" id="placeto.tpl.html"><input id = "to-place" class = "controls" type = "text" placeholder = "Search end point" > </input></script>\
-                                                    <ui-gmap-search-box template="\'placeto.tpl.html\'" position="\'top-right\'" options="placeToOptions" events="placeToOptions.events"></ui-gmap-search-box>'
-
+        ,templateUrl: 'ny-gmap-search.html'
+		/*, template: '<script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button></script>\
+<ui-gmap-map-control template="routesrch.tpl.html" controller="RouteHelpController"></ui-gmap-map-control>\
+<script type="text/ng-template" id="placefrom.tpl.html"><input id = "from-place" class = "controls" type = "text" placeholder = "Search start point"> </input></script>\
+<ui-gmap-search-box template="placefrom.tpl.html" position="top-right" options="placeFromOptions" events="placeFromOptions.events"></ui-gmap-search-box>\
+<script type="text/ng-template" id="placeto.tpl.html"><input id = "to-place" class = "controls" type = "text" placeholder = "Search end point" > </input></script>\
+<ui-gmap-search-box template="placeto.tpl.html" position="top-right" options="placeToOptions" events="placeToOptions.events"></ui-gmap-search-box>'*/
     }
 };
 
@@ -863,17 +880,8 @@ NYFleetChoiceDirective = function() {
             nyFleets: '=',
             nyFleet: '=',
             nyChanged: '='
-        },
-        //template: '<select ng-model="nyFleet" ng-options="fleet.fleet_name for fleet in nyFleets" ng-change="nyChanged(nyFleet)"></select>'
-        
-		template: '<ui-select ng-model="nyFleet.selected" theme="selectize" ng-disabled="disabled" style="width: 300px;">\
-    <ui-select-match placeholder="Select or search fleet">{{$select.selected.fleet_name}}</ui-select-match>\
-    <ui-select-choices repeat="fleet in nyFleets | filter: $select.search" >\
-      <span ng-bind-html="fleet.fleet_name | highlight: $select.search" ng-class="\'fleet_level_\'+fleet.level"></span>\
-    </ui-select-choices>\
-</ui-select>'
-
-        //templateURL: 'ny-fleet-choice.html'
+        },		
+        templateUrl: 'ny-fleet-choice.html'
     };
 };
 

@@ -83,3 +83,9 @@ input.ng-valid {
   padding: 10px;
 }
 
+.alert-success {
+	background-color: #f9f9f9 !important;
+	float: right;
+	padding: 8px;
+}
+
