@@ -1,0 +1,16 @@
+{
+  "name": "jsontodb",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node jsontodb.js"
+  },
+  "dependencies": {
+    "common": "0.0.1",
+	"connect-mysql": "^2.0.5",
+    "mysql": "*",
+	"db": "1.2.0",
+    "nconf": "^0.6.9",
+    "jsonfile": "~2.0.0"
+  }
+}
