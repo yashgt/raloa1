@@ -602,6 +602,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 $scope.addStopToRoute(newStop);
             }
             $scope.map.infoWindow.show = false;
+			$scope.$apply();
         });
     };
 
