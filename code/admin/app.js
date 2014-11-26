@@ -246,144 +246,6 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     });
 });
 
-//Gives out the object to be added to routelist
-app.post('/api/route/', function(req, res){
-	var route = req.body;
-	
-	console.log("Saving route %j", route);
-	
-	db.getTransaction( function(tran){
-	var uow = {
-	sr : [ {
-		//Save Route
-		task: function(scb, fcb){
-			saveRouteEntity(tran, route, function(routeId){
-			route.routeId = routeId; 
-			route.stages.forEach(function(stage){ stage.routeId = routeId; });	
-			scb();
-			});
-		}
-	} 
-	, {
-		//Save Stages
-		sr : function(route){ return route.stages; }
-		, srfn : function(stage){
-		
-			var uow = {
-				sr : [
-					{
-						task: function(scb, fcb){
-							saveStageEntity(tran, stage, function(stageId){
-								stage.stageId = stageId;
-							});
-						}
-					}
-					, {
-						sr: function(stage){return stage.stops; }
-						,srfn: function(stop){
-							saveStopEntity(tran, stop, function(stopId){
-								stop.id = stopId ;
-							});
-						}						
-					}					
-				]				
-			};
-			
-			execute(uow);
-		}
-	}
-	]
-	
-};
-
-execute(uow);
-});
-
-/*
-		var routesWF = [
-		function(callback){
-			db.getTransaction( function(tran){
-				callback(null, tran);
-			} );
-		}
-		, getSaveRouteTask(route)
-		, getSaveStagesTask(route)
-		];
-
-	async.waterfall(routesWF, function (err, tran) {
-		if(!err){
-			tran.commit();
-			res.json({routeId:1, routeNum:"", st:"S1", en: "S2"});
-		}
-	});
-
-*/
-	
-});
-
-
-getSaveRouteTask = function(route){
-	return function(tran, callback){ //Task function
-		saveRouteEntity(tran, route, function(routeId){
-			console.log("Callback routeId %j", routeId);
-			route.savedStageCount = 0;
-			callback(null, tran, routeId);
-		});
-	};
-};
-
-getSaveStagesTask = function(route){
-	return function(tran, routeId, callback){ //Task function
-		logger.info("Saving stages for route {0}", routeId);
-		//TODO build and perform a task
-		var stageSeries = [];
-		
-		route.stages.forEach( function(stage){
-			stageSeries.push(getSaveStageTask(tran, route, stage));
-		});
-		
-		async.series(stageSeries);	
-
-		callback(null, tran);
-	};
-};
-
-getSaveStageTask = function(tran, route, stage){
-	return function(callback){
-		logger.debug("Saving stage {0} in route {1}", stage, route);
-		
-		var stageWF = [
-			function(callback){
-				stage.routeId = route.routeId ;
-				
-				saveStageEntity(tran, stage, function(stageId){
-					callback(null);
-				});
-
-			}
-			, function(stageId, callback){ //Task to save stops
-				var stopSeries = [];
-				
-				stage.stops.forEach( function(stop){
-					stopSeries.push( function(callback){
-						saveStopEntity(tran, stop, function(stopId){
-							callback(null);
-						});
-					});
-				});
-				
-				async.series(stopSeries);
-				
-			}
-		];
-		
-		async.waterfall(stageWF);
-
-		callback(null);
-		
-	};
-};
-
 function execute(uow)
 {
 	console.log("Executing %j", uow);
@@ -395,7 +257,7 @@ function execute(uow)
 		}
 		else if(_.isFunction(uow.sr)){
 			console.log("Function");
-			list = uow.srfn();
+			list = uow.sr();
 		}
 		var series = [];
 		
@@ -406,9 +268,14 @@ function execute(uow)
 				}
 				);
 			}
-			else {
+			else if(task.sr!=undefined){
 				series.push(function(callback){
 					execute(task);
+				});
+			}
+			else{
+				series.push( function(callback){
+					uow.srfn(task,function(){ callback(null); }, function(){callback('error');});
 				});
 			}
 			
@@ -418,12 +285,87 @@ function execute(uow)
 	}
 };
 
+//Gives out the object to be added to routelist
+app.post('/api/route/', function(req, res){
+	var route = req.body;
+	
+	db.getTransaction( 
+		//(function(route) {
+			//return 
+			function(tran){
+				var routesWF = [
+					function(callback){
+						saveRouteEntity(tran, route, function(routeId){
+							route.routeId = routeId; 
+							route.stages.forEach(function(stage){ stage.routeId = routeId; });
+							callback(null, tran, route);
+						});
+					}
+					, function(	tran, route, callback){
+						console.log("Saving stages for route %j", route);
+						
+						var stageSeries = [];
+						route.stages.forEach( function(stage){
+							stageSeries.push(
+								function(callback){
+									var stageWF = [
+										function(callback){
+											saveStageEntity(tran, stage, function(stageId){
+												stage.stageId = stageId ;
+												stage.stops.forEach(function(stop){ stop.stageId = stageId;});
+												callback(null, stageId);
+											});
+										}
+										,
+										function(stageId, callback){
+											var stopSeries = [] ;
+											stage.stops.forEach(function(stop){
+												stopSeries.push(
+													function(callback){
+														saveStopEntity(tran, stop, function(stopId){
+															callback(null, stopId);
+														});													
+													}
+												);
+											});
+											
+											async.series(stopSeries, function(err, results){
+												callback(null, stage);
+											});
+										}
+									];	
+									async.waterfall(stageWF, function(err, result){
+										callback(null, stage);
+									});								
+									
+								}
+							);							
+						});
+						
+						async.series(stageSeries, function(err,results){
+							callback(null, route);
+						});
+					}
+				];	
+				async.waterfall(routesWF, function(err, result){
+					console.log("Sending data");
+					res.json({routeId: route.routeId, st: 'Panaji', en: 'Mapusa', routeNum: 101 });
+				});
+			} 
+			//;		
+		//})(route);
+	
+		);
+	
+});
 
 
+//CBM TO ADD STORED PROCS
 
 saveRouteEntity = function(tran, route, cb){
 	setTimeout( function(){
 			var routeId = 5;
+			console.log("Route %j", route);
 			logger.debug('Saved route record. ID is {0}', routeId);
 			cb(routeId);
 		}
@@ -431,8 +373,8 @@ saveRouteEntity = function(tran, route, cb){
 };
 saveStageEntity = function(tran, stage, cb){
 	setTimeout( function(){
-			var stopId = 1;
-			logger.debug('Saved stage record. ID is {0}', stageId);
+			var stageId = 1;
+			logger.debug('Saved stage record {0}', stage);
 			cb(stageId);
 		}
 	, 1000);
