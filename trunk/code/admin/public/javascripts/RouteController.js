@@ -123,6 +123,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     		
     		if($scope.routeDetail.routeId==0){
     			$scope.routeDetail.routeId = route.routeId ;
+				$scope.routeDetail.isDirty = false ;
     			$scope.fleetDetail.routes.push(route);
     			$scope.gridRoutesApi.selection.selectRow(route);
     		}
