@@ -129,16 +129,30 @@ FOREIGN KEY (stop1_id) REFERENCES stop(stop_id),
 FOREIGN KEY (stop2_id) REFERENCES stop(stop_id)
 );
 
+CREATE TABLE if not exists stage
+(
+stage_id int,
+stage_name varchar(255),
+route_id int,
+PRIMARY KEY (stage_id),
+FOREIGN KEY (route_id) REFERENCES route(route_id)
+);
+
 CREATE TABLE if not exists routestop
 (
 stop_id int,
 route_id int,
+stage_id int,
 sequence int,
 route_stop_id int AUTO_INCREMENT,
 PRIMARY KEY (route_stop_id),
 FOREIGN KEY (route_id) REFERENCES route(route_id),
+FOREIGN KEY (stage_id) REFERENCES stage(stage_id),
 FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 );
+
+
+
 
 CREATE TABLE if not exists calendar 
 (
