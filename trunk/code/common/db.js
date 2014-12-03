@@ -57,8 +57,55 @@ exports.connect = function connect(command)
 	});
 };
 
+function execute(connection, qryStr, arg2, arg3, arg4){
+	var args;
+	var cbSuccess, cbFailure;
+	if(Array.isArray(arg2)) {
+		args = arg2 ;
+		if(typeof(arg3) == "function"){
+		cbSuccess = arg3;
+		cbFailure = arg4;
+		}
+	} 
+	else {
+		args = [];
+		if(typeof(arg2) == "function"){
+		cbSuccess = arg2;
+		cbFailure = arg3;
+		}
+	}
+	
+	logger.debug("Executing {0} with {1}", qryStr, args);
+	connection.query(qryStr, args, 
+		function(err, results) {
+			if(!err)
+			{
+				logger.debug("Results are : {0}", results);
+				cbSuccess(results);
+			}
+			else
+			{
+				logger.error("Error : {0}", err);
+				if(cbFailure!=undefined){
+				cbFailure();
+				}
+			}
+		}
+	)
+}
+
 exports.query = function query( qryStr, arg2, arg3, arg4)
 {
+	pool.getConnection(	function(err, conn){
+		if(!err)
+		{
+			execute(conn, qryStr, arg2, arg3, arg4 );
+			conn.release();
+		}
+	});
+	
+	/*
+	
 	var args;
 	var cbSuccess, cbFailure;
 	if(Array.isArray(arg2)) {
@@ -93,6 +140,59 @@ exports.query = function query( qryStr, arg2, arg3, arg4)
 			}
 		}
 	)
-}
+	*/
+};
+
+function Transaction(callback){
+
+	var getConn = function(tran){
+	
+		pool.getConnection(	function(err, conn){
+		if(!err)
+		{
+			console.log("Got connection");
+			tran.conn = conn ;
+
+			conn.beginTransaction(			
+			function(err) {
+				if (err) { throw err; };
+				callback(tran);
+			}
+			);
+		}
+	});
+	
+	tran.commit = function(scb, fcb){		
+		logger.debug("Commiting transaction");
+		tran.conn.commit(function(err) {
+        if (err) { 
+          tran.conn.rollback(function() {
+            fcb();
+          });
+        }
+        console.log('Transaction committed successfully!');
+		scb();
+      });
+	};
+	
+	};
+	
+	getConn(this);
+
+	
+	this.query = function(qryStr, arg2, arg3, arg4){
+		
+		execute(this.conn, qryStr, arg2, arg3, arg4 );
+	};
+	
+
+	
+};
+
+exports.getTransaction = function(callback){
+
+	return new Transaction(callback);	
+	
+};
 
 

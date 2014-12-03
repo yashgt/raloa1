@@ -246,44 +246,6 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     });
 });
 
-function execute(uow)
-{
-	console.log("Executing %j", uow);
-	if(uow.sr != undefined){
-		var list;
-		if(_.isArray(uow.sr)){
-			console.log("Array");
-			list = uow.sr ;
-		}
-		else if(_.isFunction(uow.sr)){
-			console.log("Function");
-			list = uow.sr();
-		}
-		var series = [];
-		
-		list.forEach(function(task){
-			if(_.isFunction(task.task)){
-				series.push( function(callback){
-					task.task(function(){ callback(null); }, function(){callback('error');});
-				}
-				);
-			}
-			else if(task.sr!=undefined){
-				series.push(function(callback){
-					execute(task);
-				});
-			}
-			else{
-				series.push( function(callback){
-					uow.srfn(task,function(){ callback(null); }, function(){callback('error');});
-				});
-			}
-			
-		});
-		
-		async.series(series);
-	}
-};
 
 //Gives out the object to be added to routelist
 app.post('/api/route/', function(req, res){
@@ -348,8 +310,14 @@ app.post('/api/route/', function(req, res){
 					}
 				];	
 				async.waterfall(routesWF, function(err, result){
-					console.log("Sending data");
-					res.json({routeId: route.routeId, st: 'Panaji', en: 'Mapusa', routeNum: 101 });
+					tran.commit(function(){
+						console.log("Sending data");
+						res.json({routeId: route.routeId, st: 'Panaji', en: 'Mapusa', routeNum: 101 });
+					}
+					,function(){
+						res.send(500, 'Failed to create route');
+					});
+					
 				});
 			} 
 			//;		

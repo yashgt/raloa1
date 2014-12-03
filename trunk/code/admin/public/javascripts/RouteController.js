@@ -4,6 +4,7 @@ function initializeApp($rootScope) {
 
 tempId = 2; //temporary
 var STOP_ICON = "/images/bus_stop.png";
+var PEER_STOP_ICON = "/images/busred.png";
 var ROUTE_STOP_ICON = "/images/busred.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
@@ -78,8 +79,22 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         console.log("Deleting stop " + JSON.stringify(stop));
     };
     linkStop = function(stop) {
-        //All user to click on a stop on the opposite side of the road
 
+			console.log("Linking stop %j", stop);
+
+        //User to click on a stop on the opposite side of the road
+		//$scope.$apply(function(){
+		var peerStop = {
+				id:5
+				,name: stop.name
+				,icon: PEER_STOP_ICON
+				,latitude: stop.latitude 
+				,longitude: stop.longitude 
+				,peer_stop_id: stop.id
+			};
+			console.log("Peer stop %j", peerStop);
+		$scope.fleetDetail.stops.push( peerStop	);
+		//});
         //Let the stop show a different icon
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
     };
@@ -282,8 +297,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         enableColumnMenus: false,
         columnDefs: [
 			{
-				name:'Delete',
-				cellTemplate:'<button class="btn primary" ng-click="getExternalScopes().deleteTrip(row.entity)">Delete</button>'
+				name:'Delete'
+				, displayName : ''
+				, cellTemplate:'<button class="btn btn-danger" ng-click="getExternalScopes().deleteTrip(row.entity)">Delete</button>'
 			},
 			{
                 name: 'ID',
@@ -422,6 +438,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     	if($scope.routeDetail.routeId>=0){
 			if ( $scope.routeDetail.stages.length == 0 ){
 				$scope.addNewStage();
+				//$scope.routeDetail.stages[$scope.routeDetail.stages.length -1].title = stop.name ; //TODO capture the village name
 			}
 			
 			var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1] ;
@@ -457,12 +474,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     				}
     		},
         rightclick: function(marker, eventName, model) {
-            console.log("Event:" + eventName + " Marker:" + marker);
+            console.log("Event:" + eventName + " Marker:" + marker, model);
             $scope.stopContextMenu.showOnMarker(marker.position, model);
             console.log("Event:" + eventName + " Model:" + JSON.stringify(model));
         },
         dragend: function(marker, eventName, model) {
             console.log("Stop is now " + JSON.stringify(model));
+			
             $scope.saveStop(model);
         }
 
@@ -472,25 +490,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         $scope.stageTreeOptions = {
             accept: function(sourceNode, destNodes, destIndex) {
-                var srcType = sourceNode.$element;
+                var srcType = sourceNode.$element.attr('data-type');
                 var destType = destNodes.$element.attr('data-type');
-                //console.log("Source %j Dest %j", srcType, destType);
-                return true; // only accept the same type
+                return srcType=="stop" && destType=="stage"; // only accept stop in stage 
             },
             dropped: function(event) {
                 console.log(event);
-                /* The data model has already been changed
-        var sourceNode = event.source.nodeScope;
-        var destNodes = event.dest.nodesScope;
-        // update changes to server
-        if (destNodes.isParent(sourceNode)
-          && destNodes.$element.attr('data-type') == 'category') { // If it moves in the same group, then only update group
-          var group = destNodes.$nodeScope.$modelValue;
-          //group.save();
-        } else { // save all
-          $scope.saveGroups();
-        }
-		*/
+				$scope.routeDetail.isDirty = true ;
             }
         };
         $scope.fleetChosen = function(fleet) {
@@ -552,7 +558,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
     //Get the details of the selected fleet
-    //TODO: CBM fit this function in the pattern that we have defined
     $scope.getFleetDetail = function(fleetId) {
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
             fleetDetail.stops.forEach(function(stop) {
@@ -596,22 +601,24 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                             title: $scope.stopDetail.name
                         }
                     };
-                $scope.fleetDetail.stops.push(newStop);
+				if(stopDetail.peer_stop_id != undefined)
+				{
+					stopDetail.icon = STOP_ICON ;
+				}
+				else{
+					$scope.fleetDetail.stops.push(newStop);
+				}
             }
 
             if ($scope.routeDetail.routeId >= 0) {
                 $scope.addStopToRoute(newStop);
             }
             $scope.map.infoWindow.show = false;
-			$scope.$apply();
+			//$scope.$apply(); // Causes error in Javascript console: $digest already in progress
         });
     };
 
     
-
-    $scope.remove = function() {
-        $scope.fleetDetail.stops = [];
-    };
     //Region ends
 
     //TODO Do this based on the user's fleet
@@ -669,9 +676,16 @@ function StopController($scope, stopChannel, locationChannel) {
 GetThereAdminService = function($http) {
 	var services = [
 	                { name: 'saveRoute', path: '/api/route/', method: 'post' }
+					, { name: 'setCurrentFleet', path: '/api/currentFleet/', method: 'post' }
+					, { name: 'saveStop', path: '/api/stop/', method: 'post' }
+					, { name: 'saveCalendar', path: '/api/calendar/', method: 'post' }
+					, { name: 'getRoute', path: '/api/route/:routeId', method: 'get' }
+					, { name: 'loadFleets', path: '/api/fleets/', method: 'get' }
+					, { name: 'getFleetDetail', path: '/api/fleet/:fleetId', method: 'get' }
 	                ];
 	
     var service = {
+	/*
         getRoute: function(routeId, callback) {
             //TODO fetch this from server
             $http.get('/api/route/' + routeId)
@@ -683,27 +697,6 @@ GetThereAdminService = function($http) {
                     console.log("ROUTE ERROR %j", data);
                 });
 
-        },
-
-        saveCalendar: function(calendar) {
-            return $http.post('/api/calendar', calendar);
-        },
-        
-        saveStop: function(stopDetail, callback) {
-            console.log("Servicing %j", stopDetail);
-            $http.post('/api/stop', stopDetail)
-                .success(function(data) {
-                    console.log("Received ID %j for the stop", data.id);
-                    callback(data.id);
-                })
-                .error(function(data) {});
-        },
-        setCurrentFleet: function(fleet, callback) {
-            $http.post('/api/currentFleet', fleet)
-                .success(function(data) {
-                    callback(fleet);
-                })
-                .error(function(data) {});
         },
         loadFleets: function(callback) {
             $http.get('/api/fleets')
@@ -725,11 +718,12 @@ GetThereAdminService = function($http) {
                     alert("ERROR" + data);
                 });
         }
+		*/
 
     };
     
     
-    var getSuccess = function(data, callback){    	
+    var getSuccess = function(callback){    	
     	return ( function(data){ 
     		console.log(JSON.stringify(data));
 			callback(data);
@@ -743,11 +737,32 @@ GetThereAdminService = function($http) {
     	case "post":
     		service[svc.name] = function(data, callback){
     			$http.post(svc.path, data)
-    			.success(getSuccess(data, callback))
+    			.success(getSuccess( callback))
     			.error(getError);
     		};
     		break;
-    	
+    	case "get":
+			service[svc.name] = (function(){
+				var invoke = function(path, args, callback){
+					var url = path ;
+					args.forEach(function(arg){
+						console.log(url);
+						url = url.replace(/:\w+/, arg);
+					});
+					console.log("Hitting URL %j", url);
+					$http.get(url)
+					.success(getSuccess(callback))
+					.error(getError);
+				};				
+				var f;				
+				switch((svc.path.match(/:/g) || []).length ){
+					case 1:
+						f = function(a1,callback){ invoke(svc.path, [a1], callback); }; break;
+					default:
+						f = function(callback){ invoke(svc.path, [], callback); }; break;
+				}				
+				return f;
+			})();
     	default:
     		break;
     	}    	 
@@ -803,7 +818,7 @@ NYUIGmapControlDirective = function() {
 			
 			this.resetBounds = function(){
 			        this.bounds = new google.maps.LatLngBounds(
-            new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude), new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
+					new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude), new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
 			};
 
 		this.resetBounds();
