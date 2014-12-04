@@ -6,6 +6,7 @@ tempId = 2; //temporary
 var STOP_ICON = "/images/bus_stop.png";
 var PEER_STOP_ICON = "/images/busred.png";
 var ROUTE_STOP_ICON = "/images/busred.png";
+var ROUTE_STOP_REV_ICON = "/images/busred.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
@@ -22,6 +23,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.stopDetail.name = stopDetail.name;
         $scope.stopDetail.id = -1;
         console.log("Saving stop %j", $scope.stopDetail);
+		
+
         $scope.saveStop($scope.stopDetail);
 
     });
@@ -84,15 +87,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         //User to click on a stop on the opposite side of the road
 		//$scope.$apply(function(){
-		var peerStop = {
-				id:5
-				,name: stop.name
-				,icon: PEER_STOP_ICON
-				,latitude: stop.latitude 
-				,longitude: stop.longitude 
-				,peer_stop_id: stop.id
-			};
-			console.log("Peer stop %j", peerStop);
+		var peerStop = jQuery.extend({}, stop);
+		peerStop.id = -peerStop.id;
+		peerStop.icon = PEER_STOP_ICON ;
+		peerStop.peerStopId = peerStop.id;
+		
+		console.log("Peer stop %j", peerStop);
 		$scope.fleetDetail.stops.push( peerStop	);
 		//});
         //Let the stop show a different icon
@@ -593,15 +593,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             	var newStop = {
                         id: id,
                         name: stopDetail.name,
-                        latitude: $scope.stopDetail.latitude,
-                        longitude: $scope.stopDetail.longitude,
+                        latitude: stopDetail.latitude,
+                        longitude: stopDetail.longitude,
                         icon: STOP_ICON,
                         options: {
                             draggable: true,
-                            title: $scope.stopDetail.name
+                            title: stopDetail.name
                         }
                     };
-				if(stopDetail.peer_stop_id != undefined)
+				if(stopDetail.peerStopId != undefined)
 				{
 					stopDetail.icon = STOP_ICON ;
 				}
@@ -613,8 +613,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             if ($scope.routeDetail.routeId >= 0) {
                 $scope.addStopToRoute(newStop);
             }
+			
             $scope.map.infoWindow.show = false;
-			//$scope.$apply(); // Causes error in Javascript console: $digest already in progress
+			$scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null
         });
     };
 
@@ -627,6 +628,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.getFleetDetail(2);
         $scope.configMap();
     });
+	
+	console.log("RouteController created");
 };
 
 
@@ -781,6 +784,7 @@ StopChannelService = function() {
             cb.apply(this, args);
         });
     };
+	console.log("Created Stop Channel");
     return this;
 };
 
@@ -880,12 +884,6 @@ NYUIGmapControlDirective = function() {
 		}//end controller
 
         ,templateUrl: 'ny-gmap-search.html'
-		/*, template: '<script type="text/ng-template" id="routesrch.tpl.html"><button class="controls" ng-click="searchRoute()" >Search</button></script>\
-<ui-gmap-map-control template="routesrch.tpl.html" controller="RouteHelpController"></ui-gmap-map-control>\
-<script type="text/ng-template" id="placefrom.tpl.html"><input id = "from-place" class = "controls" type = "text" placeholder = "Search start point"> </input></script>\
-<ui-gmap-search-box template="placefrom.tpl.html" position="top-right" options="placeFromOptions" events="placeFromOptions.events"></ui-gmap-search-box>\
-<script type="text/ng-template" id="placeto.tpl.html"><input id = "to-place" class = "controls" type = "text" placeholder = "Search end point" > </input></script>\
-<ui-gmap-search-box template="placeto.tpl.html" position="top-right" options="placeToOptions" events="placeToOptions.events"></ui-gmap-search-box>'*/
     }
 };
 
@@ -912,6 +910,13 @@ function ServiceFilter() {
 		var svc = _.find(calendars, function(calendar){ return calendar.serviceId==input; }); 
 		return svc.serviceName ;
     }
+  };
+}
+
+function ReverseFilter() {
+  return function(items) {
+	if (!angular.isArray(items)) return false;
+    return items ? items.slice().reverse() : [];
   };
 }
 
@@ -944,4 +949,5 @@ function ServiceFilter() {
     adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
     adminApp.directive('nyUiGmapControl', NYUIGmapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);
+	adminApp.filter('reverse', ReverseFilter );
 }());
