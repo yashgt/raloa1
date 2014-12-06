@@ -4,9 +4,9 @@ function initializeApp($rootScope) {
 
 tempId = 2; //temporary
 var STOP_ICON = "/images/bus_stop.png";
-var PEER_STOP_ICON = "/images/busred.png";
-var ROUTE_STOP_ICON = "/images/busred.png";
-var ROUTE_STOP_REV_ICON = "/images/busred.png";
+var PEER_STOP_ICON = "/images/peer_bus_stop.png";
+var ROUTE_STOP_ICON = "/images/route_bus_stop.png";
+var ROUTE_STOP_REV_ICON = "/images/route_bus_stop.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
@@ -15,7 +15,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     , flash, GoogleMapApi) {
 
     $scope.fleet = {
+		selected : undefined
     };
+	
+	$scope.$watch('fleet.selected', function(newValue, oldValue) {
+        if ((newValue !== oldValue)  ) {
+            //$( "input[name='stopName']" ).focus();
+			$scope.fleetChosen(newValue);
+        }
+    });
 
     stopChannel.add(function(stopDetail) { //Invoked by DI when a Stop is defined
         //$scope.stopDetail.stopName = stopDetail.name;
@@ -52,11 +60,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 longitude: 73.622169
             }
         },
-        stops: [{
-            id: 1,
-            latitude: 0,
-            longitude: 0
-        }],
+        stops: [],
+        stops: [],
         routes: [1]
     };
     addStopWindow = function(latLng) {
@@ -88,9 +93,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         //User to click on a stop on the opposite side of the road
 		//$scope.$apply(function(){
 		var peerStop = jQuery.extend({}, stop);
-		peerStop.id = -peerStop.id;
+		peerStop.id = -stop.id;
 		peerStop.icon = PEER_STOP_ICON ;
-		peerStop.peerStopId = peerStop.id;
+		peerStop.peerStopId = stop.id;
 		
 		console.log("Peer stop %j", peerStop);
 		$scope.fleetDetail.stops.push( peerStop	);
@@ -98,10 +103,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         //Let the stop show a different icon
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
     };
-    replaceStop = function(stop) {
-        //In the current route, replace the stop with its sibling
-    };
-
     
     $scope.clearRoute = function(){
     	if($scope.routeDetail !=undefined){
@@ -119,19 +120,27 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     		$scope.routeDetail = { routeId:-1, stages:[] };
     };
     
+	var enableStopDragging = function(){
+		$scope.fleetDetail.stops.forEach( function(stop){ stop.options.draggable = true; });
+	};
+    var disableStopDragging = function(){
+		$scope.fleetDetail.stops.forEach( function(stop){ stop.options.draggable = false; });
+	};
+
     //Route creation region
     $scope.closeRoute = function(){
 
 		$scope.clearRoute();
-		$scope.gridRoutesApi.selection.clearSelectedRows();
+		enableStopDragging();
 		
     };
     $scope.newRoute = function(){
-    	$scope.closeRoute();
-		
+    	$scope.clearRoute();
+		$scope.gridRoutesApi.selection.clearSelectedRows();
     	$scope.routeDetail.routeId = 0 ; 
+		disableStopDragging();
     };
-    
+
     $scope.saveRoute = function(){
     	getthereAdminService.saveRoute($scope.routeDetail, function(route){
     		
@@ -143,7 +152,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     			$scope.gridRoutesApi.selection.selectRow(route);
     		}
     		
-    	});
+    	}
+		,function(error){ flash.error = 'Route could not be saved';}
+		);
     };
     //Route creation region ends
 
@@ -206,12 +217,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             eventName: 'link_stop',
             label: 'Link stop',
             handler: linkStop
-        }, {
-            className: 'context_menu_item',
-            eventName: 'replace_stop',
-            label: 'Replace stop',
-            handler: replaceStop,
-            condition: $scope.routeDetail!=undefined && $scope.routeDetail.routeId >= 0
         }]);
 
     };
@@ -483,6 +488,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			
             $scope.saveStop(model);
         }
+		/*,mouseover: function(marker, eventName, model) {
+            console.log("Hover on stop" + JSON.stringify(model));
+			$scope.currentStop = model;	
+        }
+		,mouseout: function(marker, eventName, model) {
+            console.log("Out of stop" + JSON.stringify(model));
+			$scope.currentStop = null;
+        }
+		*/
 
     };
     $scope.configMap = function() {
@@ -500,9 +514,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
         };
         $scope.fleetChosen = function(fleet) {
+			console.log('FleetChosen');
             getthereAdminService.setCurrentFleet(fleet, function(fleet) {
-                console.log("Setting fleet " + fleet);
-                $scope.getFleetDetail(fleet.fleet_id);
+                console.log("Setting fleet ", fleet);
+                $scope.getFleetDetail(fleet.fleetId);
             });
 
         };
@@ -554,17 +569,32 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             show: false
         }
     };
+	
+	$scope.$watch('map.infoWindow.show', function(newValue, oldValue) {
+        if ((newValue !== oldValue) && (newValue==true) ) {
+            //$( "input[name='stopName']" ).focus();
+			document.stop_form.stopName.focus();
+        }
+    });
 
+	/*var stopOptions = {
+		draggable: true
+	};
+	*/
 
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
     //Get the details of the selected fleet
     $scope.getFleetDetail = function(fleetId) {
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
             fleetDetail.stops.forEach(function(stop) {
-                stop.icon = STOP_ICON;
+				
+                stop.icon = stop.peerStopId >0 ? PEER_STOP_ICON : STOP_ICON;
+				//stop.options = stopOptions; 
+				
                 stop.options = {
-                    draggable: true,
-                    title: stop.name
+                    draggable: true
+                    ,title: stop.name
+					//zIndex: 1000
                 };
             });
 
@@ -585,38 +615,52 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     $scope.saveStop = function(stopDetail) {
-        getthereAdminService.saveStop(stopDetail, function(id) {
+        getthereAdminService.saveStop(stopDetail, function(stop) {
             //flash("Stop " + stopDetail.name + " has been saved.");
             //messageCenterService.add('success', 'Stop added successfully');
-            flash.success = 'Stop added successfully';
-            if (stopDetail.id <= 0) {
-            	var newStop = {
-                        id: id,
+			var icon = STOP_ICON;
+			var message = 'Stop saved successfully. Create the peer stop';
+			if(stopDetail.peerStopId > 0)
+			{
+				icon = PEER_STOP_ICON;
+				message = 'Peer stop saved successfully';
+			}
+
+            flash.success = message;
+            if (stopDetail.id <= 0) { //New stop
+				if(stopDetail.peerStopId > 0 ) //Peer stop
+				{
+					stopDetail.icon = icon ;
+				}
+				else{ //Fresh stop
+					var newStop = {
+                        id: stop.id,
                         name: stopDetail.name,
                         latitude: stopDetail.latitude,
                         longitude: stopDetail.longitude,
-                        icon: STOP_ICON,
+                        icon: icon,
                         options: {
                             draggable: true,
                             title: stopDetail.name
                         }
                     };
-				if(stopDetail.peerStopId != undefined)
-				{
-					stopDetail.icon = STOP_ICON ;
-				}
-				else{
 					$scope.fleetDetail.stops.push(newStop);
+					
+					if ($scope.routeDetail.routeId >= 0) {
+						$scope.addStopToRoute(newStop);
+					}
+			
+					$scope.map.infoWindow.show = false;
+					$scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null			
 				}
             }
-
-            if ($scope.routeDetail.routeId >= 0) {
-                $scope.addStopToRoute(newStop);
-            }
-			
-            $scope.map.infoWindow.show = false;
-			$scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null
-        });
+        }
+		,function(error){ 
+			flash.error = 'Stop could not be saved'; 
+			var idx = _.findIndex($scope.fleetDetail.stops, {id: stopDetail.id});
+			$scope.fleetDetail.stops.splice(idx,1);
+		}
+		);
     };
 
     
@@ -633,7 +677,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 };
 
 
-function RouteHelpController($scope, routeHelpChannel) {
+function RouteHelpController($scope, routeHelpChannel, flash) {
 	$scope.directionsDisplay = new google.maps.DirectionsRenderer();
 	$scope.directionsService = new google.maps.DirectionsService();
     $scope.searchRoute = function() {		
@@ -649,6 +693,7 @@ function RouteHelpController($scope, routeHelpChannel) {
   $scope.directionsService.route(request, function(result, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       $scope.directionsDisplay.setDirections(result);
+	  flash.success = "Mark the stops of the onward trip along the plotted path";
     }
   });
     };
@@ -656,14 +701,24 @@ function RouteHelpController($scope, routeHelpChannel) {
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
 function StopController($scope, stopChannel, locationChannel) {
-
+	var geocoder = new google.maps.Geocoder();
     console.log("Creating SC");
+	
     locationChannel.add(function(latLng) {
+		var loc = new google.maps.LatLng(latLng.latitude, latLng.longitude);
         $scope.stopDetail = {
             latitude: latLng.latitude,
             longitude: latLng.longitude,
-            name: ""
+            name: "TEST",
+			address: "Rev addr"
         };
+		geocoder.geocode({'latLng': loc}, function(results, status) {
+			if (status == google.maps.GeocoderStatus.OK) {
+				console.log(results);
+				$scope.stopDetail.address = results[0].formatted_address;
+			}
+		});
+	
         console.log("Stop detail is %j", $scope.stopDetail);
     });
 
@@ -687,43 +742,7 @@ GetThereAdminService = function($http) {
 					, { name: 'getFleetDetail', path: '/api/fleet/:fleetId', method: 'get' }
 	                ];
 	
-    var service = {
-	/*
-        getRoute: function(routeId, callback) {
-            //TODO fetch this from server
-            $http.get('/api/route/' + routeId)
-                .success(function(data) {
-                    console.log("ROUTE %j", data);
-                    callback(data);
-                })
-                .error(function(data) {
-                    console.log("ROUTE ERROR %j", data);
-                });
-
-        },
-        loadFleets: function(callback) {
-            $http.get('/api/fleets')
-                .success(function(data) {
-                    callback(data);
-                    //console.log(data);
-                })
-                .error(function(data) {
-                    alert("ERROR" + data);
-                });
-        },
-        getFleetDetail: function(fleetId, callback) {
-            $http.get('/api/fleet/' + fleetId)
-                .success(function(data) {
-                    console.log(JSON.stringify(data));
-                    callback(data);
-                })
-                .error(function(data) {
-                    alert("ERROR" + data);
-                });
-        }
-		*/
-
-    };
+    var service = {};
     
     
     var getSuccess = function(callback){    	
@@ -732,21 +751,28 @@ GetThereAdminService = function($http) {
 			callback(data);
     	} );
     };
-    var getError = function(data){
+    var getError = function(callback)
+	{
+		return function(data){
     		console.log("ERROR " + JSON.stringify(data));
-    };
+			if(_.isFunction(callback)){
+				callback(data);
+			}			
+		};
+	};
     services.forEach( function(svc){
     	switch(svc.method){
     	case "post":
-    		service[svc.name] = function(data, callback){
+    		service[svc.name] = function(data, callback, errorCallback){
+				console.log("Hitting URL %j", svc.path);
     			$http.post(svc.path, data)
     			.success(getSuccess( callback))
-    			.error(getError);
+    			.error(getError(errorCallback));
     		};
     		break;
     	case "get":
 			service[svc.name] = (function(){
-				var invoke = function(path, args, callback){
+				var invoke = function(path, args, callback, errorCallback){
 					var url = path ;
 					args.forEach(function(arg){
 						console.log(url);
@@ -755,14 +781,14 @@ GetThereAdminService = function($http) {
 					console.log("Hitting URL %j", url);
 					$http.get(url)
 					.success(getSuccess(callback))
-					.error(getError);
+					.error(getError(errorCallback));
 				};				
 				var f;				
 				switch((svc.path.match(/:/g) || []).length ){
 					case 1:
-						f = function(a1,callback){ invoke(svc.path, [a1], callback); }; break;
+						f = function(a1,callback, errorCallback){ invoke(svc.path, [a1], callback, errorCallback); }; break;
 					default:
-						f = function(callback){ invoke(svc.path, [], callback); }; break;
+						f = function(callback, errorCallback){ invoke(svc.path, [], callback, errorCallback); }; break;
 				}				
 				return f;
 			})();
@@ -797,7 +823,7 @@ RouteHelpChannelService = function(){
 LocationChannelService = function() {
     var callbacks = [];
     this.add = function(cb) {
-        callbacks.push(cb);
+        callbacks[0] = cb;
     };
     this.publishLocation = function(latLng) {
         //var args = arguments;
@@ -853,14 +879,17 @@ NYUIGmapControlDirective = function() {
                     });
 
                     this.markers.push(marker);
-
-                    bounds.extend(place.geometry.location);
-									this.location= place.geometry.location ;
+					
+					if(!(bounds.contains(place.geometry.location))){
+						bounds.extend(place.geometry.location);
+						$scope.gmap.fitBounds(bounds);
+					}
+					this.location= place.geometry.location ;
 					routeHelpChannel[key] = place.geometry.location ;				
 
 				}
 
-                $scope.gmap.fitBounds(bounds);
+                
 				
 
             }
@@ -893,8 +922,7 @@ NYFleetChoiceDirective = function() {
         replace: false,
         scope: {
             nyFleets: '=',
-            nyFleet: '=',
-            nyChanged: '='
+            nyFleet: '='
         },		
         templateUrl: 'ny-fleet-choice.html'
     };
@@ -917,6 +945,16 @@ function ReverseFilter() {
   return function(items) {
 	if (!angular.isArray(items)) return false;
     return items ? items.slice().reverse() : [];
+  };
+}
+
+function UnpairedStopsFilter() {
+  return function(stops) {
+	if (!angular.isArray(stops)) return false;
+    var x = _.countBy(stops, function(stop){ 
+		return stop.peerStopId > 0 ? 'paired': 'unpaired' ;
+	});	
+	return x.unpaired ;
   };
 }
 
@@ -950,4 +988,5 @@ function ReverseFilter() {
     adminApp.directive('nyUiGmapControl', NYUIGmapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);
 	adminApp.filter('reverse', ReverseFilter );
+	adminApp.filter('unpaired', UnpairedStopsFilter );
 }());

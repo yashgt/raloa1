@@ -75,20 +75,33 @@ create procedure save_stop(
 	, IN lat float
 	, IN lon float
 	, IN fleet_id int
+	, IN in_peer_stop_id int
 )
 begin
-	if id > 0 then
+	if id > 0 then /*Existing stop is being modified*/
 		update stop
 		set latitude=lat, longitude=lon, name=stop_name
 		where stop_id=id;
-	else
-		insert into stop(fleet_id, latitude, longitude, name) 
-		values ( fleet_id, lat, lon, stop_name) ;
+		
+		update stop
+		set latitude=lat, longitude=lon, name=stop_name
+		where peer_stop_id=id;		
+
+	else /*New or peer stop is being created*/
+		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id) 
+		values ( fleet_id, lat, lon, stop_name, in_peer_stop_id) ;
 		set id = LAST_INSERT_ID() ;
+		
+		if in_peer_stop_id > 0 then
+			update stop
+			set peer_stop_id=id
+			where stop_id=in_peer_stop_id;		
+		
+		end if;
 	end if;
 end//
 
-drop procedure if exists cstodb//
+drop procedure if exists csvtodb//
 create procedure csvtodb(
 	  IN stop_id int
 	, IN lat float
@@ -104,6 +117,6 @@ drop procedure if exists get_fleet_detail//
 create procedure get_fleet_detail(in in_fleet_id int)
 begin
 	select fleet_id,fleet_name,avg_speed,cen_lat,cen_lon,zoom,ne_lat,ne_lon,sw_lat,sw_lon from fleet where fleet_id=in_fleet_id;
-	select stop_id,name,alias_name1,alias_name2,latitude,longitude from stop;
+	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=1;
 	
 end//

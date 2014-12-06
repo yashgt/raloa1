@@ -58,6 +58,7 @@ exports.connect = function connect(command)
 };
 
 function execute(connection, qryStr, arg2, arg3, arg4){
+	console.log("%j %j %j %j", qryStr, arg2, typeof(arg3), typeof(arg4));
 	var args;
 	var cbSuccess, cbFailure;
 	if(Array.isArray(arg2)) {
@@ -86,8 +87,8 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 			else
 			{
 				logger.error("Error : {0}", err);
-				if(cbFailure!=undefined){
-				cbFailure();
+				if(typeof(cbFailure) == "function"){
+					cbFailure();
 				}
 			}
 		}
@@ -96,6 +97,7 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 
 exports.query = function query( qryStr, arg2, arg3, arg4)
 {
+	console.log("%j %j %j %j", qryStr, arg2, typeof(arg3), typeof(arg4));
 	pool.getConnection(	function(err, conn){
 		if(!err)
 		{

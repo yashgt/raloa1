@@ -1,6 +1,6 @@
 <ui-select ng-model="nyFleet.selected" theme="selectize" ng-disabled="disabled" style="width: 300px;">
-    <ui-select-match placeholder="Select or search fleet">{{$select.selected.fleet_name}}</ui-select-match>
+    <ui-select-match placeholder="Select or search fleet">{{$select.selected.fleetName}}</ui-select-match>
     <ui-select-choices repeat="fleet in nyFleets | filter: $select.search" >
-      <span ng-bind-html="fleet.fleet_name | highlight: $select.search" ng-class="'fleet_level_'+fleet.level"></span>
+      <span ng-bind-html="fleet.fleetName | highlight: $select.search" ng-class="'fleet_level_'+fleet.level"></span>
     </ui-select-choices>
 </ui-select>

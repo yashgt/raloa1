@@ -83,9 +83,20 @@ input.ng-valid {
   padding: 10px;
 }
 
+.route_num {
+	align: right;
+}
+
 .alert-success {
-	background-color: #f9f9f9 !important;
+	background-color: #99FF66 !important;
 	float: right;
 	padding: 8px;
 }
+
+.alert-error {
+	background-color: #FF3300 !important;
+	float: right;
+	padding: 8px;
+}
+
 
