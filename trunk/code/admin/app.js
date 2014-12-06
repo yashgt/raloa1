@@ -96,8 +96,8 @@ app.get('/api/fleets', function(req, res) {
         res.json(results[0].map(
             function(fleet) {
                 return {
-                    fleet_id: fleet.fleet_id,
-                    fleet_name: fleet.fleet_name,
+                    fleetId: fleet.fleet_id,
+                    fleetName: fleet.fleet_name,
                     level: fleet.level
                 };
             }));
@@ -108,19 +108,23 @@ app.post('/api/stop', function(req, res) {
     var stopDetail = req.body;
     stopDetail.fleetId = req.session.passport.user.rootFleetId;
     logger.info("Saving stop {0}", stopDetail);
-    db.query("set @id := ? ; call save_stop(@id,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.name, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId], function(results) {
+    db.query("set @id := ? ; call save_stop(@id,?,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.name, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId, stopDetail.peerStopId], function(results) {
         var id = results[2][0]["@id"];
         logger.info("Stop {0} created with ID {1}", stopDetail.name, id);
         res.json({
             id: id
         });
-    });
+    }
+	, function(error){
+			res.send(500, 'Failed to create stop: ' + error);
+	});
 });
 
 app.post('/api/currentFleet', function(req, res) {
     var fleet = req.body;
+	logger.debug("Current fleet is {0}", fleet.fleetId); 
     req.session.passport.user.fleetId = fleet.fleetId;
-    res.json({});
+    res.json(fleet);
 });
 
 app.post('/api/calendar', function(req, res) {
@@ -157,7 +161,8 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     id: stop.stop_id,
                     latitude: stop.latitude,
                     longitude: stop.longitude,
-                    name: stop.name
+                    name: stop.name,
+					peerStopId: stop.peer_stop_id
                 };
             }),
             calendars: [{ //TODO
