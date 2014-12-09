@@ -48,17 +48,19 @@ BEGIN
 END//
 
 drop procedure if exists list_user_fleets//
-create procedure list_user_fleets(in user_id int)
+create procedure list_user_fleets(in in_user_id int)
 begin
+declare user_fleet_id int;
+select fleet_id into user_fleet_id from user where user_id=in_user_id;
 
-SELECT  fleet_id as fleet_id, 'Goa' as fleet_name, parent_fleet_id as parent_fleet_id, 0 as level
-from fleet where fleet_id=2
+SELECT  fleet_id as fleet_id, fleet_name, parent_fleet_id as parent_fleet_id, 0 as level
+from fleet where fleet_id=user_fleet_id
 union all
 SELECT  hi.fleet_id as fleet_id, hi.fleet_name as fleet_name, hi.parent_fleet_id as parent_fleet_id, level
 FROM    (
         SELECT  hierarchy_connect_by_parent_eq_prior_id(fleet_id) AS fleet_id, @level AS level
         FROM    (
-                SELECT  @start_with := 2, 
+                SELECT  @start_with := user_fleet_id, 
                         @id := @start_with ,
                         @level := 0
                 ) vars	, fleet
@@ -67,6 +69,34 @@ FROM    (
 JOIN    fleet hi
 ON      hi.fleet_id = ho.fleet_id;
 end//
+
+call list_user_fleets(1);
+
+drop function if exists get_root_fleet //
+create function get_root_fleet(in_fleet_id INT) RETURNS INT
+begin
+	DECLARE par_fleet_id INT;
+	DECLARE cur_fleet_id INT;
+	SET cur_fleet_id := in_fleet_id;
+	SET par_fleet_id := in_fleet_id;
+	
+	LOOP
+		select parent_fleet_id, fleet_id into par_fleet_id, cur_fleet_id
+		from fleet
+		where fleet_id=cur_fleet_id
+		and parent_fleet_id<>1;
+		
+		if par_fleet_id = cur_fleet_id then
+			return par_fleet_id;
+		end if;
+		set cur_fleet_id := par_fleet_id ;
+	END LOOP;
+	
+end//
+select get_root_fleet(3);
+select get_root_fleet(4);
+select get_root_fleet(2);
+select get_root_fleet(1);
 
 drop procedure if exists save_stop//
 create procedure save_stop(
@@ -116,7 +146,10 @@ end//
 drop procedure if exists get_fleet_detail//
 create procedure get_fleet_detail(in in_fleet_id int)
 begin
+	declare root_fleet_id int;
+	select get_root_fleet(in_fleet_id) into root_fleet_id;
+	
 	select fleet_id,fleet_name,avg_speed,cen_lat,cen_lon,zoom,ne_lat,ne_lon,sw_lat,sw_lon from fleet where fleet_id=in_fleet_id;
-	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=1;
+	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=root_fleet_id;
 	
 end//
