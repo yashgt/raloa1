@@ -249,6 +249,7 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
 //Gives out the object to be added to routelist
 app.post('/api/route/', function(req, res) {
     var route = req.body;
+	route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
 
     db.getTransaction(
         //(function(route) {
@@ -279,6 +280,7 @@ app.post('/api/route/', function(req, res) {
                                             stage.stageId = stageId;
                                             stage.stops.forEach(function(stop) {
                                                 stop.stageId = stageId;
+												stop.routeId = stage.routeId;
                                             });
                                             callback(null, stageId);
                                         });
@@ -288,7 +290,7 @@ app.post('/api/route/', function(req, res) {
                                         stage.stops.forEach(function(stop) {
                                             stopSeries.push(
                                                 function(callback) {
-                                                    saveStopEntity(tran, stop, function(stopId) {
+                                                    saveRouteStopEntity(tran, stop, function(stopId) {
                                                         callback(null, stopId);
                                                     });
                                                 }
@@ -353,7 +355,7 @@ saveStageEntity = function(tran, stage, cb) {
         cb(stageId);
     }, 1000);
 };
-saveStopEntity = function(tran, stop, cb) {
+saveRouteStopEntity = function(tran, stop, cb) {
     setTimeout(function() {
         var stopId = 100;
         logger.debug('Saved stop record. ID is {0}', stopId);
@@ -367,34 +369,46 @@ app.get('/api/route/:route_id', function(req, res) {
         routeId: 1,
         stages: [{
             title: 'Stage1',
+			stageId: 1,
             direction: 0,
             stops: [{
                 id: 1
             }, {
                 id: 2
-            }]
+            }],
+			stages: {
+				'1' : 5.0
+				, '2' : 10.0
+			}
         }, {
             title: 'Stage2',
+			stageId: 2,
             direction: 0,
             stops: [{
                 id: 3
             }, {
                 id: 4
             }]
+			,stages: {
+				'1' : 10.0
+				, '2' : 5.0
+			}
         }]
 
         ,
-        timings: [{
+        trips: [{
             tripId: 1,
             direction: 0,
             serviceId: 1,
             frequency_trip: true,
             frequency_start_time: '09:00',
             frequency_end_time: '10:00',
+			stops: {
             '1': '09:00',
             '2': '09:10',
             '3': '09:20',
-            '4': '09:25',
+            '4': '09:25'
+			}
         }, {
             tripId: 2,
             direction: 0,
@@ -402,11 +416,14 @@ app.get('/api/route/:route_id', function(req, res) {
             frequency_trip: true,
             frequency_start_time: '09:00',
             frequency_end_time: '10:00',
+			stops: {
             '1': '09:00',
             '2': '09:10',
             '3': '09:20',
             '4': '09:25'
+			}
         }]
+		, fares: []
     });
 });
 

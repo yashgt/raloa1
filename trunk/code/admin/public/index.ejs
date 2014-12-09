@@ -84,7 +84,7 @@
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
-
+												Zoom: {{fleetDetail.zoom}}  Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}}  Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
 
                                                     <ny-ui-gmap-control gmap="gmap" bounds="fleetDetail.bounds"></ny-ui-gmap-control>
@@ -119,23 +119,22 @@
 
                                             </tab>
                                             <!--Map tab ends -->
-                                            <tab heading="Schedule">
+                                            <tab heading="Schedule" disabled="routeDetail.routeId<0">
+												<button ng-click="addTrip()">Add Trip</button>
                                                 <div ui-grid="scheduleOptions" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
-                                            <tab heading="Fares">
-                                                Triangular chart goes here
+                                            <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">												
+                                                <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Object">
-                                                <pre class="code">{{ fleetDetail | json }}</pre>
+                                                <pre class="code">{{ routeDetail | json }}</pre>
                                             </tab>
                                         </tabset>
                                     </td>
 
-                                    <td width=15% valign="top">
-
-                                        <tabset>
+                                    <td width=15% valign="top" >
+                                        <tabset >
                                             <tab heading="Onward">
-
                                                 <div ui-tree="stageTreeOptions">
                                                     <!-- for existing stages -->
                                                     <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
@@ -146,10 +145,10 @@
                                                                 <div>{{stage.title}}</div>
                                                             </div>
                                                             <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
-                                                                <form class="form-inline" role="form">
+                                                                <form class="form-inline" role="form" name="stage_{{stage.stageId}}">
                                                                     <div class="form-group">
                                                                         <label class="sr-only" for="title">Stage name</label>
-                                                                        <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title">
+                                                                        <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title" ng-required="true">
                                                                     </div>
                                                                     <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
                                                                     <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
@@ -165,24 +164,22 @@
                                                                     </div>
                                                                 </li>
                                                             </ol>
-
                                                         </li>
                                                     </ol>
                                                     <ol class="angular-ui-tree-nodes">
                                                         <li class="angular-ui-tree-node">
                                                             <div class="group-title angular-ui-tree-handle">
-                                                                <form class="form-inline" role="form">
+                                                                <form class="form-inline" role="form" name="newstage_form" >
                                                                     <div class="form-group">
                                                                         <label class="sr-only" for="title">Stage name</label>
                                                                         <input type="text" class="form-control" id="stageName" ng-model="newStage.title" placeholder="Stage name">
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-default" ng-click="addNewStage()">Add Stage</button>
+                                                                    <button type="submit" class="btn btn-default" ng-click="addNewStage()" ng-disabled="newstage_form.$invalid">Add Stage</button>
                                                                 </form>
                                                             </div>
                                                         </li>
                                                     </ol>
                                                 </div>
-
                                             </tab>
                                             <tab heading="Return">
                                                 <div ui-tree="stageTreeOptions">
@@ -214,7 +211,6 @@
                                                                     </div>
                                                                 </li>
                                                             </ol>
-
                                                         </li>
                                                     </ol>
                                                     <ol class="angular-ui-tree-nodes">
@@ -231,13 +227,11 @@
                                                         </li>
                                                     </ol>
                                                 </div>
-
                                             </tab>
                                         </tabset>
                                     </td>
                                 </tr>
                             </table>
-
                         </tab>
                         <tab heading="Calendars">
                             <button ng-click="addCalendar()" class="btn btn-default">Add</button>

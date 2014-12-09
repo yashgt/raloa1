@@ -119,7 +119,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         $scope.routeDetail = {
             routeId: -1,
-            stages: []
+            stages: [],
+			trips: []
         };
     };
 
@@ -145,6 +146,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.clearRoute();
         $scope.gridRoutesApi.selection.clearSelectedRows();
         $scope.routeDetail.routeId = 0;
+		$scope.scheduleOptions.data = $scope.routeDetail.trips;
         disableStopDragging();
     };
 
@@ -258,7 +260,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.scheduleOptions.columnDefs.push({
                 name: fleetstop.name,
                 displayName: fleetstop.name,
-                field: "" + fleetstop.id + ""
+                field: "stops." + fleetstop.id 
 
                 //,headerCellClass: 'stop_name'
             });
@@ -293,22 +295,42 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
                 $scope.routeDetail.stages.push(routestage);
             });
-            $scope.routeDetail.timings = routeDetail.timings;
-            $scope.scheduleOptions.data = $scope.routeDetail.timings;
+            $scope.routeDetail.trips = routeDetail.trips;
+            $scope.scheduleOptions.data = $scope.routeDetail.trips;
 
         });
     };
 
+	$scope.addTrip = function(){
+		var newTrip = {
+            tripId: 0,
+            direction: 0,
+            serviceId: 1,
+            frequency_trip: false,
+            frequency_start_time: '08:00',
+            frequency_end_time: '08:00',
+			stops: {}
+        };
+		
+		$scope.routeDetail.stages.forEach(function(stage) {
+                stage.stops.forEach(function(stop) {
+					newTrip.stops[''+stop.id+''] = '08:00';
+                });
+        });
+			
+	
+		$scope.routeDetail.trips.push(newTrip);
+	};
+	
     $scope.scheduleActions = {
         deleteTrip: function(trip) {
             console.log(trip);
-            var idx = _.findIndex($scope.routeDetail.timings, {
+            var idx = _.findIndex($scope.routeDetail.trips, {
                 tripId: trip.tripId
             });
-            $scope.routeDetail.timings.splice(idx, 1);
+            $scope.routeDetail.trips.splice(idx, 1);
             $scope.routeDetail.isDirty = true;
-
-        }
+        } 
     };
 
     $scope.scheduleOptions = {
@@ -349,6 +371,33 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     //SCHEDULE REGION ENDS
+	
+	//FARE REGION
+	$scope.showFares = function(){
+		$scope.fareGridOptions.columnDefs.splice(1, 100);
+		$scope.routeDetail.stages.forEach(function(stage){
+			var stageCol = {
+				name: ''+stage.stageId,
+				displayName: stage.title,
+				field: 'stages.'+stage.stageId
+			};
+			$scope.fareGridOptions.columnDefs.push(stageCol);
+		});
+		$scope.fareGridOptions.data = $scope.routeDetail.stages;
+	};
+	$scope.fareGridOptions = {
+        enableSorting: false,
+        enableCellEdit: true,
+        enableColumnMenus: false,
+        columnDefs: [
+			{
+				name: 'title'
+				, displayName: 'Source'
+				, field: 'title'
+			}
+		]
+	}	
+	//FARE REGION ENDS
 
     //ROUTELIST REGION
     $scope.routeListOptions = {
@@ -532,10 +581,38 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             if (newObject.title == "") {
                 newObject.title = "New Stage";
             }
+			var latestStage = _.min($scope.routeDetail.stages, function(stage){ return stage.stageId;});
+			var stageId = -1;
+			if(latestStage.stageId < 0){
+				stageId = latestStage.stageId - 1;
+			}
+			newObject.stageId = stageId;
+			var stages = {};
 
+			newObject.stages = stages;
+			
+			//Add the new stage to all existing stages
+			$scope.routeDetail.stages.forEach(function(stage){
+				stage.stages[''+newObject.stageId] = 0;
+			});
+			
+			//Add the new stage to the route
             $scope.routeDetail.stages.push(newObject);
+			$scope.routeDetail.stages.forEach(function(stage){
+				stages[''+stage.stageId] = 0;
+			});
             $scope.routeDetail.isDirty = true;
             $scope.newStage.title = "";
+			
+			var stageCol = {
+				name: ''+newObject.stageId,
+				displayName: newObject.title,
+				field: 'stages.'+newObject.stageId
+			};
+			$scope.fareGridOptions.columnDefs.push(stageCol);
+			
+			
+			
         };
 
 
@@ -618,6 +695,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.loadFleets = function() {
         getthereAdminService.loadFleets(function(fleets) {
             $scope.fleets = fleets;
+			$scope.fleet.selected = _.find(fleets, function(fleet){ return fleet.level==0; });
+			$scope.getFleetDetail($scope.fleet.selected.fleetId);
         });
     };
 
@@ -674,7 +753,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //TODO Do this based on the user's fleet
     $scope.loadFleets();
     GoogleMapApi.then(function(maps) {
-        $scope.getFleetDetail(2);
+        //$scope.getFleetDetail(2);
         $scope.configMap();
     });
 
