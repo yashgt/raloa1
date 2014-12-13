@@ -1,4 +1,3 @@
---drop database avishkar;
 CREATE DATABASE if not exists avishkar;
 
 USE avishkar;
@@ -79,6 +78,7 @@ longitude float(10),
 name varchar(255),
 alias_name1 varchar(255),
 alias_name2 varchar(255),
+locality varchar(500),
 stop_loc_id int,
 peer_stop_id int,
 PRIMARY KEY (stop_id)
