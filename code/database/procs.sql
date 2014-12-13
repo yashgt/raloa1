@@ -164,5 +164,54 @@ begin
 	
 	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=root_fleet_id;
+	--select route_id, route_name, start_stop, end_stop from route where fleetgroup_id = 
 	
+end//
+
+drop procedure if exists save_route//
+create procedure save_route(
+	  IN in_route_id int
+	, IN gtfsId int
+	, IN fleetgroupId int
+	, IN routeName varchar(255)
+	, OUT route_id int
+)
+begin
+if in_route_id = 0 then
+INSERT INTO route(gtfs_route_id, fleetgroup_id, is_deleted, route_name) VALUES (gtfsId, fleetgroupId, 0, routeName);
+set route_id = LAST_INSERT_ID() ;
+else
+set route_id= in_route_id;
+end if;
+end//
+
+drop procedure if exists save_stage//
+create procedure save_stage(
+	  IN in_stageId int
+	, IN routeId int
+	, IN stageName varchar(255)
+	, OUT stage_id int
+)
+begin
+if in_stageId < (Select max from stage_id) then
+set stage_id= in_stageId;
+else
+INSERT INTO stage(stage_name, route_id) VALUES (stageName, routeId);
+set stage_id = LAST_INSERT_ID() ;
+end if;
+end//
+
+drop procedure if exists save_routeStop//
+create procedure save_routeStop(
+	  IN route_stopId
+	, IN stopId int
+	, IN routeId int
+	, IN stageId int
+	, IN sequence int
+	, OUT route_stop_id int
+)
+begin
+INSERT INTO stage(stage_id, route_id, stage_id, sequence) VALUES (stopId, routeId, stageId, sequence);
+set route_stop_id = LAST_INSERT_ID() ;
+end if;
 end//

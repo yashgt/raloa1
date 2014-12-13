@@ -34,8 +34,6 @@ FOREIGN KEY (parent_fleet_id) REFERENCES fleet(fleet_id)
 comment 'Every Agency is listed here'
 ;
 
-
-
 CREATE TABLE if not exists user
 (
 username varchar(255),
@@ -134,7 +132,7 @@ FOREIGN KEY (stop2_id) REFERENCES stop(stop_id)
 
 CREATE TABLE if not exists stage
 (
-stage_id int,
+stage_id int AUTO_INCREMENT,
 stage_name varchar(255),
 route_id int,
 PRIMARY KEY (stage_id),
@@ -153,9 +151,6 @@ FOREIGN KEY (route_id) REFERENCES route(route_id),
 FOREIGN KEY (stage_id) REFERENCES stage(stage_id),
 FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 );
-
-
-
 
 CREATE TABLE if not exists calendar 
 (
