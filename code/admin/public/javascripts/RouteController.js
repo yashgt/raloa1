@@ -24,6 +24,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.fleetChosen(newValue);
         }
     });
+	
+	$scope.hangOn = {promise:null,message:"Please wait",backdrop:true,delay:0,minDuration:0}
 
     stopChannel.add(function(stopDetail) { //Invoked by DI when a Stop is defined
         //$scope.stopDetail.stopName = stopDetail.name;
@@ -151,7 +153,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     $scope.saveRoute = function() {
-        getthereAdminService.saveRoute($scope.routeDetail, function(route) {
+        $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
 			flash.success = 'Route saved successully' ;
             if ($scope.routeDetail.routeId == 0) {
@@ -289,8 +291,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     var fleetstop = _.find($scope.fleetDetail.stops, function(fleetstop) {
                         return fleetstop.id == stop.id;
                     });
-
-                    $scope.addStopToStage(fleetstop, routestage);
+					if(fleetstop!=undefined) $scope.addStopToStage(fleetstop, routestage);
                 });
 
                 $scope.routeDetail.stages.push(routestage);
@@ -870,7 +871,7 @@ GetThereAdminService = function($http) {
             case "post":
                 service[svc.name] = function(data, callback, errorCallback) {
                     console.log("Hitting URL %j", svc.path);
-                    $http.post(svc.path, data)
+                    return $http.post(svc.path, data)
                         .success(getSuccess(callback))
                         .error(getError(errorCallback));
                 };
@@ -884,7 +885,7 @@ GetThereAdminService = function($http) {
                             url = url.replace(/:\w+/, arg);
                         });
                         console.log("Hitting URL %j", url);
-                        $http.get(url)
+                        return $http.get(url)
                             .success(getSuccess(callback))
                             .error(getError(errorCallback));
                     };
@@ -892,12 +893,12 @@ GetThereAdminService = function($http) {
                     switch ((svc.path.match(/:/g) || []).length) {
                         case 1:
                             f = function(a1, callback, errorCallback) {
-                                invoke(svc.path, [a1], callback, errorCallback);
+                                return invoke(svc.path, [a1], callback, errorCallback);
                             };
                             break;
                         default:
                             f = function(callback, errorCallback) {
-                                invoke(svc.path, [], callback, errorCallback);
+                                return invoke(svc.path, [], callback, errorCallback);
                             };
                             break;
                     }
@@ -1077,6 +1078,7 @@ function UnpairedStopsFilter() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
         , 'angular-flash.service', 'angular-flash.flash-alert-directive'
+		,'cgBusy'
     ]);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
