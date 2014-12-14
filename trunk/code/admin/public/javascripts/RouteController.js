@@ -1088,6 +1088,7 @@ function UnpairedStopsFilter() {
 (function() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
+		,'ui.layout'
         , 'angular-flash.service', 'angular-flash.flash-alert-directive'
 		,'cgBusy'
     ]);
