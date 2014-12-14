@@ -169,49 +169,56 @@ end//
 
 drop procedure if exists save_route//
 create procedure save_route(
-	  IN in_route_id int
-	, IN gtfsId int
-	, IN fleetgroupId int
-	, IN routeName varchar(255)
-	, OUT route_id int
+	  INOUT id int
+	, IN in_fleet_id int
+	, IN in_route_name varchar(255)
+	, IN in_start_stop int
+	, IN in_end_stop int
+	, IN in_gtfs_id int
 )
 begin
-if in_route_id = 0 then
-INSERT INTO route(gtfs_route_id, fleetgroup_id, is_deleted, route_name) VALUES (gtfsId, fleetgroupId, 0, routeName);
-set route_id = LAST_INSERT_ID() ;
+if id = 0 then
+INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
+set id = LAST_INSERT_ID() ;
 else
-set route_id= in_route_id;
+update route
+set route_name=in_route_name
+where route_id=id;
 end if;
 end//
 
 drop procedure if exists save_stage//
 create procedure save_stage(
-	  IN in_stageId int
-	, IN routeId int
-	, IN stageName varchar(255)
-	, OUT stage_id int
+	INOUT id int
+	, IN in_route_id int
+	, IN in_stage_name varchar(255)
 )
 begin
-if in_stageId < (Select max from stage_id) then
-set stage_id= in_stageId;
+if id > 0 then
+update stage
+set stage_name=in_stage_name
+where stage_id-id;
 else
-INSERT INTO stage(stage_name, route_id) VALUES (stageName, routeId);
-set stage_id = LAST_INSERT_ID() ;
+INSERT INTO stage(stage_name, route_id) VALUES (in_stage_name, in_route_id);
+set id = LAST_INSERT_ID() ;
 end if;
 end//
 
-drop procedure if exists save_routeStop//
-create procedure save_routeStop(
-	  IN route_stopId int
-	, IN stopId int
-	, IN routeId int
-	, IN stageId int
-	, IN sequence int
-	, OUT route_stop_id int
+drop procedure if exists save_route_stop//
+create procedure save_route_stop(
+	  IN in_stop_id int
+	, IN in_route_id int
+	, IN in_stage_id int
+	, IN in_sequence int
 )
 begin
-INSERT INTO stage(stage_id, route_id, stage_id, sequence) VALUES (stopId, routeId, stageId, sequence);
-set route_stop_id = LAST_INSERT_ID() ;
+if exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id) then
+update routestop
+set stage_id=in_stage_id, sequence=in_sequence
+where stop_id = in_stop_id AND route_id=in_route_id;
+else
+INSERT INTO routestop(stop_id, route_id, stage_id, sequence) VALUES (in_stop_id, in_route_id, in_stage_id, in_sequence);
+end if;
 end//
 
 drop procedure if exists get_route_detail//

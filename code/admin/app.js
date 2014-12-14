@@ -258,11 +258,20 @@ app.get('/api/fleets/:fleetgroup_id', function(req, res) {
 //Gives out the object to be added to routelist
 app.post('/api/route/', function(req, res) {
     var route = req.body;
+	
 	logger.info("Saving route {0}", route);
 	logger.info("Route:", route);
 	route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
-
+	
+	route.startStopId = route.stages[0].stops[0].id;
+	var stageLength = route.stages.length-1
+	var stopLength = route.stages[stageLength].stops.length-1
+	route.endStopId = route.stages[stageLength].stops[stopLength].id;
+	
+	var stop_sequence=1;
+	
     db.getTransaction(
+	
         //(function(route) {
         //return 
         function(tran) {
@@ -292,6 +301,7 @@ app.post('/api/route/', function(req, res) {
                                             stage.stops.forEach(function(stop) {
                                                 stop.stageId = stageId;
 												stop.routeId = stage.routeId;
+												stop.sequence = 1;
                                             });
                                             callback(null, stageId);
                                         });
@@ -301,9 +311,11 @@ app.post('/api/route/', function(req, res) {
                                         stage.stops.forEach(function(stop) {
                                             stopSeries.push(
                                                 function(callback) {
-                                                    saveRouteStopEntity(tran, stop, function(stopId) {
-                                                        callback(null, stopId);
+                                                    saveRouteStopEntity(tran, stop, function() {
+												
+                                                        callback(null, 1);
                                                     });
+
                                                 }
                                             );
                                         });
@@ -390,39 +402,33 @@ app.post('/api/route/', function(req, res) {
 
 
 //CBM TO ADD STORED PROCS
-/*
+
 saveRouteEntity = function(tran, route, cb) {
-        db.query("CALL save_route(?,?,?,?,@id) ; select @id; ", [route.routeId,0,0,'route']
-		, function(err, results) {
-			var stops = req.body.stops;
-			routeId = results[1][0]["@id"];
-			logger.debug('Saved route record. ID is {0}', routeId);
-			cb(routeId);
+		db.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId,route.fleetId,'ABC',route.startStopId,route.endStopId,0]
+		, function(results) {
+			//console.log(results);
+			route_id = results[2][0]["@id"];
+			logger.debug('Saved route record. ID is {0}', route_id);
+			cb(route_id);
 		});
 
 };
 saveStageEntity = function(tran, stage, cb) {
-    setTimeout(function() {
-        var stageId = 1;
-		db.query("CALL save_stage(?,?,?,@id) ; select @id; ", [0,0,0,0], function(err, results) {
-        stageId = results[1][0]["@id"];
+    	db.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId,stage.routeId,stage.title], function(results) {
+        stage_id = results[2][0]["@id"];
+		logger.debug('Saved stage record {0}', stage_id);
+        cb(stage_id);
 		});
-        logger.debug('Saved stage record {0}', stageId);
-        cb(stageId);
-    }, 1000);
+        
 };
-saveRouteStopEntity = function(tran, stop, cb) {
-    setTimeout(function() {
-        var stopId = 100;
-		db.query("CALL save_routeStop(?,?,?,?,?,@id) ; select @id; ", [0,0,0,0,0], function(err, results) {
-        //var stops = req.body.stops;
-        routestopId = results[1][0]["@id"];
-		});
-        logger.debug('Saved stop record. ID is {0}', stopId);
-        cb(stopId);
-    }, 1000);
+saveRouteStopEntity = function(tran, routeStop, cb) {
+        db.query("CALL save_route_stop(?,?,?,?);", [routeStop.id,routeStop.routeId,routeStop.stageId,routeStop.sequence], function(results) {
+		logger.debug('Saved route_stop record');
+		cb();
+        });
 };
-*/
+
+/*
 
 saveRouteEntity = function(tran, route, cb) {
 	setTimeout(function() {        
@@ -460,7 +466,7 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb){
     }, 1000);
 };
 
-
+*/
 app.get('/api/route/:route_id', function(req, res) {
     //TODO get from DB
     res.json({
