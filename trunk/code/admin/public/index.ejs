@@ -124,7 +124,7 @@
                                             </tab>
                                             <!--Map tab ends -->
                                             <tab heading="Schedule" disabled="routeDetail.routeId<0">
-												<button ng-click="addTrip()">Add Trip</button>
+												<button ng-click="addTrip(0)">Add Onward Trip</button><button ng-click="addTrip(1)">Add Return Trip</button>
                                                 <div ui-grid="scheduleOptions" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">												
