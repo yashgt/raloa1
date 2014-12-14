@@ -124,6 +124,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             stages: [],
 			trips: []
         };
+		
+		$scope.clearScheduleGrid();
     };
 
     var enableStopDragging = function() {
@@ -258,14 +260,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.addStopToStage = function(fleetstop, routestage) {
         if (fleetstop != undefined) {
             fleetstop.icon = ROUTE_STOP_ICON;
+			$scope.addStopToScheduleGrid(fleetstop);	
 
-            $scope.scheduleOptions.columnDefs.push({
-                name: fleetstop.name,
-                displayName: fleetstop.name,
-                field: "stops." + fleetstop.id 
-
-                //,headerCellClass: 'stop_name'
-            });
         }
         routestage.stops.push(fleetstop);
 
@@ -273,11 +269,31 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     //SCHEDULE REGION
+	$scope.clearScheduleGrid = function(){
+		$scope.scheduleOptions.columnDefs.splice(6, 100);
+	};
+	$scope.addStopToScheduleGrid = function(fleetstop){
+	    $scope.scheduleOptions.columnDefs.push({
+                name: fleetstop.name,
+                displayName: fleetstop.name,
+                field: "stops." + fleetstop.id 
+
+                //,headerCellClass: 'stop_name'
+        });
+	};
+	$scope.delStopFromScheduleGrid = function(stop)
+	{
+		var idx = _.findIndex($scope.scheduleOptions.columnDefs, {
+                field: "stops." + stop.id
+            });
+        $scope.scheduleOptions.columnDefs.splice(idx, 1);
+	};
+	
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
             $scope.routeDetail.routeId = routeId;
 
-            $scope.scheduleOptions.columnDefs.splice(6, 100);
+            $scope.clearScheduleGrid();
 
 
             routeDetail.stages.forEach(function(stage) {
@@ -302,22 +318,35 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         });
     };
 
-	$scope.addTrip = function(){
+	$scope.forAllStops = function(cb){
+		$scope.routeDetail.stages.forEach(function(stage) {
+                stage.stops.forEach(cb);
+        });
+	};
+	$scope.addTrip = function(dir){	
+		var latestTrip = _.min($scope.routeDetail.trips, function(trip){ return trip.tripId;});
+		
 		var newTrip = {
-            tripId: 0,
-            direction: 0,
-            serviceId: 1,
+            tripId: (latestTrip.tripId<0)? latestTrip.tripId-1 : -1,
+            direction: dir,
+            serviceId: $scope.fleetDetail.defaultServiceId,
             frequency_trip: false,
-            frequency_start_time: '08:00',
-            frequency_end_time: '08:00',
+            frequency_start_time: '00:00',
+            frequency_end_time: '00:00',
 			stops: {}
         };
 		
+		$scope.forAllStops(function(stop){
+			newTrip.stops[''+stop.id+''] = '00:00';
+		});
+
+		/*
 		$scope.routeDetail.stages.forEach(function(stage) {
                 stage.stops.forEach(function(stop) {
 					newTrip.stops[''+stop.id+''] = '08:00';
                 });
         });
+		*/
 			
 	
 		$scope.routeDetail.trips.push(newTrip);
@@ -345,7 +374,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         }, {
             name: 'ID',
             field: 'tripId',
-            enableCellEdit: false
+            enableCellEdit: false,
+			cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
         }, {
             editableCellTemplate: 'ui-grid/dropdownEditor',
             name: 'Service',
@@ -514,6 +544,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
 
             stg.stops.splice(_.indexOf(stg.stops, stop), 1);
+			
+			$scope.delStopFromScheduleGrid(stop);
 
             stop.icon = STOP_ICON;
 
