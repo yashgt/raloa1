@@ -1041,6 +1041,17 @@ NYFleetChoiceDirective = function() {
     };
 };
 
+autofocus = function($timeout) {
+	return {
+		restrict: 'A',
+		link : function($scope, element) {
+			$timeout(function() {
+			element[0].focus();
+			},100);
+		}
+	};
+};
+
 var calendars = [];
 
 function ServiceFilter() {
@@ -1106,4 +1117,5 @@ function UnpairedStopsFilter() {
     adminApp.factory('getthereAdminService', GetThereAdminService);
     adminApp.filter('reverse', ReverseFilter);
     adminApp.filter('unpaired', UnpairedStopsFilter);
+	adminApp.directive('autofocus', autofocus); 
 }());
