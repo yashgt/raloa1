@@ -59,11 +59,13 @@ CREATE TABLE if not exists route
 (
 route_id INT AUTO_INCREMENT,
 gtfs_route_id int,
-fleetgroup_id int,
+fleet_id int,
 is_deleted boolean,
 route_name varchar(255),
+start_stop_id int,
+end_stop_id int,
 PRIMARY KEY (route_id),
-FOREIGN KEY (fleetgroup_id) REFERENCES fleetgroup(fleetgroup_id)
+FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
 
