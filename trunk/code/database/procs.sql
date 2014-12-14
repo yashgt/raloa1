@@ -164,7 +164,6 @@ begin
 	
 	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=root_fleet_id;
-	--select route_id, route_name, start_stop, end_stop from route where fleetgroup_id = 
 	
 end//
 
@@ -203,7 +202,7 @@ end//
 
 drop procedure if exists save_routeStop//
 create procedure save_routeStop(
-	  IN route_stopId
+	  IN route_stopId int
 	, IN stopId int
 	, IN routeId int
 	, IN stageId int
@@ -213,5 +212,35 @@ create procedure save_routeStop(
 begin
 INSERT INTO stage(stage_id, route_id, stage_id, sequence) VALUES (stopId, routeId, stageId, sequence);
 set route_stop_id = LAST_INSERT_ID() ;
-end if;
+end//
+
+drop procedure if exists get_route_detail//
+create procedure get_route_detail(
+	IN in_route_id int
+)
+begin
+	select SG.stage_id, SG.stage_name, S.stop_id, S.name, PS.stop_id, PS.stop_name
+	from route R
+	inner join routestop RS on (RS.route_id=R.route_id)
+	inner join stop S on (RS.stop_id=S.stop_id)
+	inner join stage SG on (SG.route_id=R.route_id)
+	left outer join stop PS on (PS.peer_stop_id=S.stop_id)
+	where R.route_id=in_route_id
+	order by RS.sequence;
+	
+	select T.trip_id, T.direction, T.frequency_trip
+	from 
+	route as R
+	inner join trip as T on (R.route_id = T.route_id)
+	order by T.trip_id;
+	
+	select T.trip_id, RS.stop_id, RST.time
+	from 
+	route as R
+	inner join trip as T on (R.route_id = T.route_id)
+	inner join routestop as RS on (R.route_id=RS.route_id)
+	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id)	
+	where R.route_id=in_route_id
+	order by RS.sequence;
+	
 end//
