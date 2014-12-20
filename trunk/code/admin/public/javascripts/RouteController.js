@@ -159,8 +159,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 			flash.success = 'Route saved successully' ;
             if ($scope.routeDetail.routeId == 0) {
-                $scope.routeDetail.routeId = route.routeId;
+                $scope.routeDetail = route;
                 $scope.routeDetail.isDirty = false;
+				
                 $scope.fleetDetail.routes.push(route);
                 $scope.gridRoutesApi.selection.selectRow(route);
             }
@@ -263,10 +264,32 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			$scope.addStopToScheduleGrid(fleetstop);	
 
         }
-        routestage.stops.push(fleetstop);
-
-
+		
+		var returnstop ;
+		
+		if(fleetstop.peerStopId){
+			returnstop = _.find($scope.fleetDetail.stops, function(returnstop) {
+                        return returnstop.id == fleetstop.peerStopId;
+                    });
+			if(returnstop==undefined){
+				returnStop = fleetstop;
+			}		
+		}
+		else
+		{
+			returnstop = fleetstop;
+		}
+		
+		$scope.addStopsToStage(fleetstop, returnstop, routestage);
+        
     };
+	
+	$scope.addStopsToStage = function(onwardStop, returnStop,stage){
+		var routeStop = {};
+		routeStop.onwardStop = onwardStop;
+		routeStop.returnStop = returnStop;
+		stage.stops.push(routeStop);
+	};
 
     //SCHEDULE REGION
 	$scope.clearScheduleGrid = function(){
@@ -307,6 +330,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     var fleetstop = _.find($scope.fleetDetail.stops, function(fleetstop) {
                         return fleetstop.id == stop.id;
                     });
+					
 					if(fleetstop!=undefined) $scope.addStopToStage(fleetstop, routestage);
                 });
 
@@ -540,10 +564,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.delStopFromRoute = function(stop) {
         if ($scope.routeDetail.routeId >= 0) {
             var stg = _.find($scope.routeDetail.stages, function(stage) {
-                return _.contains(stage.stops, stop);
+				
+				var rs = _.find(stage.stops, function(rs){ return rs.onwardStop.id==stop.id || rs.returnStop.id==stop.id; });
+				if(rs!=undefined){
+					stage.stops.splice(_.indexOf(stage.stops, rs),1);
+					return true;
+				}
+				return false;
+				
             });
-
-            stg.stops.splice(_.indexOf(stg.stops, stop), 1);
 			
 			$scope.delStopFromScheduleGrid(stop);
 
@@ -555,25 +584,28 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
     $scope.stopEvents = {
-        click: function(marker, eventName, model) {
+        click: function(marker, eventName, stop) {
             var stg = _.find($scope.routeDetail.stages, function(stage) {
-                return _.contains(stage.stops, model);
+				//TODO need to rework for onward and return Stop
+				var rs = _.find(stage.stops, function(rs){ return rs.onwardStop.id==stop.id || rs.returnStop.id==stop.id; });
+				return (rs!=undefined) ;
+                //return _.contains(stage.stops, model);
             });
             if (stg == undefined) { //The stop does not already exist in the route
-                $scope.addStopToRoute(model);
+                $scope.addStopToRoute(stop);
             } else {
-                $scope.delStopFromRoute(model);
+                $scope.delStopFromRoute(stop);
             }
         },
-        rightclick: function(marker, eventName, model) {
-            console.log("Event:" + eventName + " Marker:" + marker, model);
-            $scope.stopContextMenu.showOnMarker(marker.position, model);
-            console.log("Event:" + eventName + " Model:" + JSON.stringify(model));
+        rightclick: function(marker, eventName, stop) {
+            console.log("Event:" + eventName + " Marker:" + marker, stop);
+            $scope.stopContextMenu.showOnMarker(marker.position, stop);
+            console.log("Event:" + eventName + " Model:" + JSON.stringify(stop));
         },
-        dragend: function(marker, eventName, model) {
-            console.log("Stop is now " + JSON.stringify(model));
+        dragend: function(marker, eventName, stop) {
+            console.log("Stop is now " + JSON.stringify(stop));
 
-            $scope.saveStop(model);
+            $scope.saveStop(stop);
         }
         /*,mouseover: function(marker, eventName, model) {
             console.log("Hover on stop" + JSON.stringify(model));

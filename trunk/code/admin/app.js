@@ -178,14 +178,17 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                 startDate: '2014-10-1',
                 endDate: '2100-10-1'
             }],
-			/*
-			results[2].map(function(route) {
+			
+			routes: results[2].map(function(route) {
                 return {
 				id: route.route_id,
-				name: route_name
+				routeNum: route.route_name,
+				st: route.start_stop_name,
+				en: route.end_stop_name
 				
+				};
 				})
-			*/
+			/*
             routes: [{
                 routeId: 1,
                 routeNum: 100,
@@ -202,45 +205,11 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                 st: 'Panaji',
                 en: 'Ponda'
             }] //TODO
+			*/
         };
         res.json(fleetDetail);
     });
-    /*
-    dbConn.query("call get_fleet_detail(?);", [fleetId], function(err, results) {
-        if (err == undefined) {
-            console.log("Results %j ", results);
-            var fleetDetail = {
-                center: {
-                    latitude: results[0][0].cen_lat,
-                    longitude: results[0][0].cen_lon
-                },
-                zoom: results[0][0].zoom,
-                bounds: {
-                    northeast: {
-                        latitude: results[0][0].ne_lat,
-                        longitude: results[0][0].ne_lon
-                    },
-                    southwest: {
-                        latitude: results[0][0].sw_lat,
-                        longitude: results[0][0].sw_lon
-                    }
-                },
-                stops: results[1].map(function(stop) {
-                    return {
-                        id: stop.stop_id,
-                        latitude: stop.latitude,
-                        longitude: stop.longitude,
-                        name: stop.name
-                    };
-                }),
-                routes: [] //TODO
-            };
-            res.json(fleetDetail);
-        } else {
-            console.log("Error %j", err);
-        }
-    });
-	*/
+   
 });
 app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     db.query("call list_fleets();", function(results) {
@@ -263,12 +232,17 @@ app.post('/api/route/', function(req, res) {
 	logger.info("Route:", route);
 	route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
 	
-	route.startStopId = route.stages[0].stops[0].id;
+	route.startStopId = route.stages[0].stops[0].onwardStop.id;
 	var stageLength = route.stages.length-1
 	var stopLength = route.stages[stageLength].stops.length-1
-	route.endStopId = route.stages[stageLength].stops[stopLength].id;
+	route.endStopId = route.stages[stageLength].stops[stopLength].onwardStop.id;
 	
 	var stop_sequence=1;
+	route.stages.forEach(function(stage) {
+		stage.stops.forEach(function(stop) {
+			stop.sequence = stop_sequence++;
+		});
+	});
 	
     db.getTransaction(
 	
@@ -298,10 +272,10 @@ app.post('/api/route/', function(req, res) {
                                     function(callback) {
                                         saveStageEntity(tran, stage, function(stageId) {
                                             stage.stageId = stageId;
-                                            stage.stops.forEach(function(stop) {
+                                            stage.stops.forEach(function(stop) { //This is a routestop
                                                 stop.stageId = stageId;
 												stop.routeId = stage.routeId;
-												stop.sequence = 1;
+												
                                             });
                                             callback(null, stageId);
                                         });
@@ -381,12 +355,10 @@ app.post('/api/route/', function(req, res) {
             async.waterfall(routesWF, function(err, result) {
                 tran.commit(function() {
                     console.log("Sending data");
-                    res.json({
-                        routeId: route.routeId,
-                        st: 'Panaji',
-                        en: 'Mapusa',
-                        routeNum: 101
-                    });
+					route.routeNum = "";
+					route.st = route.stages[0].stops[0].onwardStop.name;
+					route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
+                    res.json(route);
                 }, function() {
                     res.send(500, 'Failed to create route');
                 });
@@ -404,7 +376,7 @@ app.post('/api/route/', function(req, res) {
 //CBM TO ADD STORED PROCS
 
 saveRouteEntity = function(tran, route, cb) {
-		db.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId,route.fleetId,'ABC',route.startStopId,route.endStopId,0]
+		tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId,route.fleetId,'ABC',route.startStopId,route.endStopId,0]
 		, function(results) {
 			//console.log(results);
 			route_id = results[2][0]["@id"];
@@ -414,7 +386,7 @@ saveRouteEntity = function(tran, route, cb) {
 
 };
 saveStageEntity = function(tran, stage, cb) {
-    	db.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId,stage.routeId,stage.title], function(results) {
+    	tran.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId,stage.routeId,stage.title], function(results) {
         stage_id = results[2][0]["@id"];
 		logger.debug('Saved stage record {0}', stage_id);
         cb(stage_id);
@@ -422,7 +394,7 @@ saveStageEntity = function(tran, stage, cb) {
         
 };
 saveRouteStopEntity = function(tran, routeStop, cb) {
-        db.query("CALL save_route_stop(?,?,?,?);", [routeStop.id,routeStop.routeId,routeStop.stageId,routeStop.sequence], function(results) {
+        tran.query("CALL save_route_stop(?,?,?,?,?);", [routeStop.onwardStop.id, routeStop.returnStop.id,routeStop.routeId,routeStop.stageId,routeStop.sequence], function(results) {
 		logger.debug('Saved route_stop record');
 		cb();
         });
@@ -468,6 +440,29 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb){
 
 */
 app.get('/api/route/:route_id', function(req, res) {
+	var route_id = req.route_id;
+	db.query("call get_route_detail(?);", [route_id], function(results) {
+		var routeDetail = { routeId: route_id, stages:[], trips: [] };
+		
+        results[0].forEach(
+            function(routeStop) {
+				//Find the stage
+				var stage = _.find(routeDetail.stages, function(stage){ return stage.stageId==routeStop.stage_id;});
+				if(stage==undefined){
+				//If not exists, add the stage
+					stage = {title: routeStop.stage_name, stageId: routeStop.stage_id, stops: []};
+					routeDetail.stages.push(stage);
+				}
+				
+				var rs = { onwardStop: { id: routeStop.onward_stop_id}, returnStop: { id: routeStop.return_stop_id}  };
+				stage.stops.push(rs);
+				
+            });
+		
+		res.json(routeDetail);
+    });
+	
+	/*
     //TODO get from DB
     res.json({
         routeId: 1,
@@ -529,6 +524,7 @@ app.get('/api/route/:route_id', function(req, res) {
         }]
 		, fares: []
     });
+	*/
 });
 
 //AUTH REGION

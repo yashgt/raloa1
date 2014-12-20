@@ -113,10 +113,6 @@ begin
 		set latitude=lat, longitude=lon, name=stop_name
 		where stop_id=id;
 		
-		update stop
-		set latitude=lat, longitude=lon, name=stop_name
-		where peer_stop_id=id;		
-
 	else /*New or peer stop is being created*/
 		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id) 
 		values ( fleet_id, lat, lon, stop_name, in_peer_stop_id) ;
@@ -165,6 +161,13 @@ begin
 	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=root_fleet_id;
 	
+	select R.route_id as route_id, R.route_name as route_name, S1.name as start_stop_name, S2.name as end_stop_name
+	from route R
+	inner join stop S1 on (R.start_stop_id= S1.stop_id)
+	inner join stop S2 on (R.end_stop_id=S2.stop_id)
+	where R.fleet_id = root_fleet_id
+	and R.is_deleted=0;
+	
 end//
 
 drop procedure if exists save_route//
@@ -207,6 +210,7 @@ end//
 drop procedure if exists save_route_stop//
 create procedure save_route_stop(
 	  IN in_stop_id int
+	, IN in_return_stop_id int  
 	, IN in_route_id int
 	, IN in_stage_id int
 	, IN in_sequence int
@@ -217,7 +221,8 @@ update routestop
 set stage_id=in_stage_id, sequence=in_sequence
 where stop_id = in_stop_id AND route_id=in_route_id;
 else
-INSERT INTO routestop(stop_id, route_id, stage_id, sequence) VALUES (in_stop_id, in_route_id, in_stage_id, in_sequence);
+INSERT INTO routestop(stop_id, peer_stop_id, route_id, stage_id, sequence) 
+VALUES (in_stop_id, in_return_stop_id, in_route_id, in_stage_id, in_sequence);
 end if;
 end//
 
@@ -226,11 +231,11 @@ create procedure get_route_detail(
 	IN in_route_id int
 )
 begin
-	select SG.stage_id, SG.stage_name, S.stop_id, S.name, PS.stop_id, PS.stop_name
+	select SG.stage_id as stage_id, SG.stage_name as stage_name, S.stop_id as onward_stop_id, S.name as onward_stop_name, coalesce(PS.stop_id, S.stop_id) as return_stop_id, coalesce(PS.name, S.name) as return_stop_name
 	from route R
-	inner join routestop RS on (RS.route_id=R.route_id)
+	inner join routestop RS on (RS.route_id=R.route_id )
 	inner join stop S on (RS.stop_id=S.stop_id)
-	inner join stage SG on (SG.route_id=R.route_id)
+	inner join stage SG on (SG.route_id=R.route_id and RS.stage_id=SG.stage_id)
 	left outer join stop PS on (PS.peer_stop_id=S.stop_id)
 	where R.route_id=in_route_id
 	order by RS.sequence;
@@ -251,3 +256,23 @@ begin
 	order by RS.sequence;
 	
 end//
+
+drop procedure if exists get_missing_segments//
+create procedure get_missing_segments()
+begin
+select RS1.stop_id as from_stop_id, RS2.stop_id as to_stop_id
+from routestop RS1
+inner join routestop RS2 on (RS1.route_id=RS2.route_id and RS1.sequence+1 = RS2.sequence)
+left outer join segment SegOn on (RS1.stop_id=SegOn.from_stop_id and RS2.stop_id=SegOn.to_stop_id)
+where SegOn.from_stop_id is null
+
+union all 
+
+select RS2.stop_id, RS1.stop_id
+from routestop RS1
+inner join routestop RS2 on (RS1.route_id=RS2.route_id and RS1.sequence+1 = RS2.sequence)
+left outer join segment SegOn on (coalesce(RS2.peer_stop_id,RS2.stop_id)=SegOn.from_stop_id and coalesce(RS1.peer_stop_id,RS1.stop_id)=SegOn.to_stop_id)
+where SegOn.from_stop_id is null
+;
+end//
+
