@@ -131,7 +131,7 @@
                                                 <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Object">
-                                                <pre class="code">{{ routeDetail | json }}</pre>
+                                                <pre class="code">{{ fleetDetail | json }}</pre>
                                             </tab>
                                         </tabset>
                                     </td>
@@ -164,7 +164,7 @@
                                                                     <div class="category-title angular-ui-tree-handle">
                                                                         <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
                                                                         <div>
-                                                                            {{stop.name}}
+                                                                            {{stop.onwardStop.name}}
                                                                         </div>
                                                                     </div>
                                                                 </li>
@@ -211,7 +211,7 @@
                                                                     <div class="category-title angular-ui-tree-handle">
                                                                         <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
                                                                         <div>
-                                                                            {{stop.name}}
+                                                                            {{stop.returnStop.name}}
                                                                         </div>
                                                                     </div>
                                                                 </li>
