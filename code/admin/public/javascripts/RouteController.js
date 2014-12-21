@@ -111,8 +111,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             if ($scope.routeDetail.stages != undefined) {
                 $scope.routeDetail.stages.forEach(function(stage) {
                     if (stage.stops != undefined) {
-                        stage.stops.forEach(function(stop) {
-                            stop.icon = STOP_ICON;
+                        stage.stops.forEach(function(routestop) {
+							if(routestop.onwardStop) routestop.onwardStop.icon = STOP_ICON;
+							if(routestop.returnStop) routestop.returnStop.icon = STOP_ICON;
+                            //stop.icon = STOP_ICON;
                         });
                     }
                 });
@@ -259,12 +261,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     $scope.addStopToStage = function(fleetstop, routestage) {
-        if (fleetstop != undefined) {
-            fleetstop.icon = ROUTE_STOP_ICON;
-			$scope.addStopToScheduleGrid(fleetstop);	
-
-        }
-		
 		var returnstop ;
 		
 		if(fleetstop.peerStopId){
@@ -285,9 +281,18 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 	
 	$scope.addStopsToStage = function(onwardStop, returnStop,stage){
+		if (onwardStop != undefined) {
+            onwardStop.icon = ROUTE_STOP_ICON;
+			$scope.addStopToScheduleGrid(onwardStop);	
+
+        }
+		
 		var routeStop = {};
+		onwardStop.icon = ROUTE_STOP_ICON; 
+		returnStop.icon = ROUTE_STOP_ICON; 
 		routeStop.onwardStop = onwardStop;
 		routeStop.returnStop = returnStop;
+		console.log("Adding %j %j to stage %j", onwardStop, returnStop,stage);
 		stage.stops.push(routeStop);
 	};
 
@@ -320,6 +325,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
             routeDetail.stages.forEach(function(stage) {
+			/*
                 var routestage = {
                     title: stage.title,
                     stageId: stage.stageId,
@@ -335,6 +341,28 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 });
 
                 $scope.routeDetail.stages.push(routestage);
+				*/
+				var routestage = {
+                    title: stage.title,
+                    stageId: stage.stageId,
+                    stops: []
+                };
+				$scope.routeDetail.stages.push(routestage);
+				
+				stage.stops.forEach(function(routestop) {
+					var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
+							return fleetstop.id == routestop.onwardStop.id;
+						});
+					//if(onwardStop) routestop.onwardStop = onwardStop;	
+					var returnStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
+							return fleetstop.id == routestop.returnStop.id;
+						});
+					//if(returnStop) routestop.returnStop = returnStop;
+					
+					$scope.addStopsToStage(onwardStop, returnStop, routestage);
+				});
+				
+				
             });
             $scope.routeDetail.trips = routeDetail.trips;
             $scope.scheduleOptions.data = $scope.routeDetail.trips;
@@ -778,9 +806,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             flash.success = message;
             if (stopDetail.id <= 0) { //New stop
-                if (stopDetail.peerStopId > 0) //Peer stop
+                if (stopDetail.peerStopId > 0) //It has a peer stop
                 {
                     stopDetail.icon = icon;
+					stopDetail.id = stop.id;
                 } else { //Fresh stop
                     var newStop = {
                         id: stop.id,

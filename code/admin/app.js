@@ -181,7 +181,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
 			
 			routes: results[2].map(function(route) {
                 return {
-				id: route.route_id,
+				routeId: route.route_id,
 				routeNum: route.route_name,
 				st: route.start_stop_name,
 				en: route.end_stop_name
@@ -440,13 +440,14 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb){
 
 */
 app.get('/api/route/:route_id', function(req, res) {
-	var route_id = req.route_id;
+	var route_id = req.params.route_id;
 	db.query("call get_route_detail(?);", [route_id], function(results) {
 		var routeDetail = { routeId: route_id, stages:[], trips: [] };
 		
         results[0].forEach(
             function(routeStop) {
 				//Find the stage
+				console.log("Route stop %j", routeStop);
 				var stage = _.find(routeDetail.stages, function(stage){ return stage.stageId==routeStop.stage_id;});
 				if(stage==undefined){
 				//If not exists, add the stage
@@ -554,6 +555,7 @@ app.post('/api/segments', function(req, res) {
 
 });
 
+/*
 app.get('/api/routes', function(req, res) {
     //TODO get from DB
     res.json([{
@@ -568,7 +570,7 @@ app.get('/api/routes', function(req, res) {
         routeNo: 102
     }]);
 });
-
+*/
 app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add this to all api routes
     , function(req, res) {
         admin.saveStops([]);
