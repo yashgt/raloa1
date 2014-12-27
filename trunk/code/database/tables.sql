@@ -238,7 +238,7 @@ CREATE TABLE if not exists segment
 (
 from_stop_id int,
 to_stop_id int,
-distance float,
+distance float comment 'Distance in meters or feet',
 time int,
 FOREIGN KEY (from_stop_id) REFERENCES stop(stop_id),
 FOREIGN KEY (to_stop_id) REFERENCES stop(stop_id)

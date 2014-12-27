@@ -13,6 +13,7 @@ var admin = require('admin');
 var logger = require('logger').getLogger();
 var async = require('async');
 var _ = require('underscore');
+var gm = require('googlemaps');
 
 
 var app = express();
@@ -89,6 +90,11 @@ http.createServer(app).listen(app.get('port'), function() {
     logger.info('Express server listening on port {0}', app.get('port'));
     //console.log('Express server listening on port ' + app.get('port'));
 });
+
+setInterval(function(){
+	admin.generateSegments();
+}
+, 5000);
 
 app.get('/api/fleets', function(req, res) {
     var user_id = req.session.passport.user.userId;
@@ -455,11 +461,28 @@ app.get('/api/route/:route_id', function(req, res) {
 					routeDetail.stages.push(stage);
 				}
 				
-				var rs = { onwardStop: { id: routeStop.onward_stop_id}, returnStop: { id: routeStop.return_stop_id}  };
+				var rs = { onwardStop: { id: routeStop.onward_stop_id, distance:routeStop.onward_distance}, returnStop: { id: routeStop.return_stop_id, distance:return_distance}  };
 				stage.stops.push(rs);
 				
             });
 		
+		/*
+		{
+			routeId: 1
+			, stages: [
+				{
+					title: 'Stage1'
+					, stageId: 1
+					, stops: [
+						{
+							onwardStop: { id: 1, distance: 2000} //distance from previous stop in that direction to this stop
+							, returnStop: { id: 2, distance: 1000}
+						}
+					]
+				}
+			]
+		}
+		*/
 		res.json(routeDetail);
     });
 	
