@@ -231,12 +231,26 @@ create procedure get_route_detail(
 	IN in_route_id int
 )
 begin
-	select SG.stage_id as stage_id, SG.stage_name as stage_name, S.stop_id as onward_stop_id, S.name as onward_stop_name, coalesce(PS.stop_id, S.stop_id) as return_stop_id, coalesce(PS.name, S.name) as return_stop_name
+	select SG.stage_id as stage_id
+	, SG.stage_name as stage_name
+	, S.stop_id as onward_stop_id
+	, S.name as onward_stop_name
+	, coalesce(BS.distance, 0) as onward_distance
+	, S.stop_id as return_stop_id
+	, PS.name as return_stop_name
+	, coalesce(FS.distance, 0) as return_distance
 	from route R
-	inner join routestop RS on (RS.route_id=R.route_id )
-	inner join stop S on (RS.stop_id=S.stop_id)
+	inner join routestop RS on (RS.route_id=R.route_id )	
+	inner join stop S on (RS.stop_id=S.stop_id)	
 	inner join stage SG on (SG.route_id=R.route_id and RS.stage_id=SG.stage_id)
-	left outer join stop PS on (PS.peer_stop_id=S.stop_id)
+	inner join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))
+	
+	
+	left outer join routestop PRS on (PRS.route_id=in_route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
+	left outer join segment BS on (BS.from_stop_id=PRS.stop_id and BS.to_stop_id=S.stop_id) 
+	left outer join routestop NRS on (NRS.route_id=in_route_id and RS.sequence + 1 = NRS.sequence)/* last routestop does not have an NRS*/
+	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
+	
 	where R.route_id=in_route_id
 	order by RS.sequence;
 	
@@ -260,19 +274,30 @@ end//
 drop procedure if exists get_missing_segments//
 create procedure get_missing_segments()
 begin
-select RS1.stop_id as from_stop_id, RS2.stop_id as to_stop_id
+select RS1.stop_id as from_stop_id, S1.latitude as from_lat, S1.longitude as from_lon, RS2.stop_id as to_stop_id, S2.latitude as to_lat, S2.longitude as to_lon
 from routestop RS1
 inner join routestop RS2 on (RS1.route_id=RS2.route_id and RS1.sequence+1 = RS2.sequence)
-left outer join segment SegOn on (RS1.stop_id=SegOn.from_stop_id and RS2.stop_id=SegOn.to_stop_id)
+inner join stop S1 on (RS1.stop_id=S1.stop_id)
+inner join stop S2 on (RS2.stop_id=S2.stop_id)
+left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=SegOn.to_stop_id)
 where SegOn.from_stop_id is null
 
 union all 
 
-select RS2.stop_id, RS1.stop_id
+select S1.stop_id as from_stop_id, S1.latitude as from_lat, S1.longitude as from_lon
+, S2.stop_id as to_stop_id, S2.latitude as to_lat, S2.longitude as to_lon
 from routestop RS1
 inner join routestop RS2 on (RS1.route_id=RS2.route_id and RS1.sequence+1 = RS2.sequence)
-left outer join segment SegOn on (coalesce(RS2.peer_stop_id,RS2.stop_id)=SegOn.from_stop_id and coalesce(RS1.peer_stop_id,RS1.stop_id)=SegOn.to_stop_id)
+inner join stop S1 on (coalesce(RS2.peer_stop_id, RS2.stop_id)=S1.stop_id)
+inner join stop S2 on (coalesce(RS1.peer_stop_id, RS1.stop_id)=S2.stop_id)
+left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=SegOn.to_stop_id)
 where SegOn.from_stop_id is null
 ;
 end//
 
+drop procedure if exists add_segment//
+create procedure add_segment(in in_from_stop_id int, in in_to_stop_id int, in_distance float)
+begin
+	insert into segment(from_stop_id, to_stop_id, distance)
+	values(in_from_stop_id, in_to_stop_id, in_distance);
+end//

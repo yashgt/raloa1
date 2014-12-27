@@ -388,8 +388,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			stops: {}
         };
 		
-		$scope.forAllStops(function(stop){
-			newTrip.stops[''+stop.id+''] = '00:00';
+		$scope.forAllStops(function(routestop){
+			newTrip.stops[''+((dir==0) ? routestop.onwardStop.id : routestop.returnStop.id)+''] = '00:00';
 		});
 
 		/*
