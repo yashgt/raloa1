@@ -322,7 +322,8 @@ app.post('/api/route/', function(req, res) {
 
                     var tripSeries = [];
 					
-					route.trips.forEach(function(trip){
+					route.trips.forEach(function(tripList){
+					tripList.forEach(function(trip){
 						tripSeries.push(function(callback){
 							var tripWF = [							
 								function(callback) {
@@ -351,6 +352,7 @@ app.post('/api/route/', function(req, res) {
                                     callback(err || null, trip);
                             });
 						});
+					});
 					});
 					
 					async.series(tripSeries, function(err, results) {
@@ -429,7 +431,7 @@ saveRouteStopEntity = function(tran, stop, cb) {
         cb(stopId);
     }, 1000);
 };
-
+*/
 saveTripEntity = function(tran, trip, cb){
 	setTimeout(function() {
         logger.debug('Saved trip record {0}', trip);
@@ -444,11 +446,11 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb){
     }, 1000);
 };
 
-*/
+
 app.get('/api/route/:route_id', function(req, res) {
 	var route_id = req.params.route_id;
 	db.query("call get_route_detail(?);", [route_id], function(results) {
-		var routeDetail = { routeId: route_id, stages:[], trips: [] };
+		var routeDetail = { routeId: route_id, stages:[], trips: [[],[]] };
 		
         results[0].forEach(
             function(routeStop) {
