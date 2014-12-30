@@ -463,7 +463,7 @@ app.get('/api/route/:route_id', function(req, res) {
 					routeDetail.stages.push(stage);
 				}
 				
-				var rs = { onwardStop: { id: routeStop.onward_stop_id, distance:routeStop.onward_distance}, returnStop: { id: routeStop.return_stop_id, distance:return_distance}  };
+				var rs = { onwardStop: { id: routeStop.onward_stop_id, distance:routeStop.onward_distance}, returnStop: { id: routeStop.return_stop_id, distance:routeStop.return_distance}  };
 				stage.stops.push(rs);
 				
             });
