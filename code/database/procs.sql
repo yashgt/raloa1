@@ -236,7 +236,7 @@ begin
 	, S.stop_id as onward_stop_id
 	, S.name as onward_stop_name
 	, coalesce(BS.distance, 0) as onward_distance
-	, S.stop_id as return_stop_id
+	, PS.stop_id as return_stop_id
 	, PS.name as return_stop_name
 	, coalesce(FS.distance, 0) as return_distance
 	from route R

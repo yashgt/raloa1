@@ -297,12 +297,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		routeStop.returnStop = returnStop;
 		console.log("Adding %j %j to stage %j", onwardStop, returnStop,stage);
 		stage.stops.push(routeStop);
+		return routeStop;
 	};
 
     //SCHEDULE REGION
 	$scope.clearScheduleGrid = function(){
 		[0,1].forEach(function(dir){
-			$scope.scheduleOptions[dir].columnDefs.splice(6, 100);
+			$scope.scheduleOptions[dir].columnDefs.splice($scope.scheduleOptions[dir].fixedCols, 100);
 		});
 		
 	};
@@ -313,7 +314,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 field: "stops." + fleetstop.id 
         };
 		
-		var idx = dir==0 ? $scope.scheduleOptions[dir].columnDefs.length : 6 ;
+		var idx = dir==0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols ;
 		
 	    $scope.scheduleOptions[dir].columnDefs.splice(idx, 0, def);
 	};
@@ -361,13 +362,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 					var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
 							return fleetstop.id == routestop.onwardStop.id;
 						});
-					//if(onwardStop) routestop.onwardStop = onwardStop;	
+
 					var returnStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
 							return fleetstop.id == routestop.returnStop.id;
 						});
-					//if(returnStop) routestop.returnStop = returnStop;
+
 					
-					$scope.addStopsToStage(onwardStop, returnStop, routestage);
+					var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
+					newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
 				});
 				
 				
@@ -413,6 +415,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			
 	
 		$scope.routeDetail.trips[dir].push(newTrip);
+		$scope.routeDetail.isDirty = true;
 	};
 	
     $scope.scheduleActions = {
@@ -423,20 +426,51 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
             $scope.routeDetail.trips.splice(idx, 1);
             $scope.routeDetail.isDirty = true;
-        } 
+        }
+		, autocomplete: function(dir, trip) {
+			var i = 0;
+			var allstops = [];
+			var allsegments = [];
+
+			$scope.forAllStops(function(routestop){
+				allstops.push((dir==0)? routestop.onwardStop : routestop.returnStop);
+				allsegments.push(routestop.segments[dir]);
+			});
+			if(dir==1){
+				allstops.reverse();
+				allsegments.reverse();
+			}
+			
+			for(i=0; i< allstops.length; i++){
+				if(i!=0){
+					//var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
+					var prevtime = moment(trip.stops[''+ allstops[i-1].id], 'HH:mm') ;
+					// 30*1000 m in 60 min
+					// distance in X
+					var inctime = allsegments[i] * 60 / 30000;
+					trip.stops[''+ allstops[i].id] = prevtime.add(inctime,'m').format('HH:mm');
+				}
+			}
+		}	
     };
 
 	$scope.scheduleOptions = [];
 	[0,1].forEach(function(dir){
-    $scope.scheduleOptions.splice(dir,0, {
+		$scope.scheduleOptions.splice(dir,0, {
         enableSorting: false,
         enableCellEdit: true,
         enableColumnMenus: false,
         columnDefs: [{
             name: 'Delete',
             displayName: '',
-            cellTemplate: '<button class="btn btn-danger" ng-click="getExternalScopes().deleteTrip(row.entity)">Delete</button>'
-        }, {
+            cellTemplate: '<button class="btn btn-danger btn-xs" ng-click="getExternalScopes().deleteTrip(row.entity)"><span class="glyphicon glyphicon-trash"></span> Delete</button>'
+        }, 
+		{
+            name: 'Auto',
+            displayName: '',
+            cellTemplate: '<button class="btn btn-success btn-xs" ng-click="getExternalScopes().autocomplete(' + dir +',row.entity)"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete</button>'
+        },
+		{
             name: 'ID',
             field: 'tripId',
             enableCellEdit: false,
@@ -464,7 +498,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             field: 'frequency_end_time',
             pinnedLeft: true
         }]
-    });
+		});
+	$scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length ;
 	});
 
     //SCHEDULE REGION ENDS
