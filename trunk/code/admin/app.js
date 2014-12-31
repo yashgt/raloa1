@@ -256,8 +256,7 @@ app.post('/api/route/', function(req, res) {
         //return 
         function(tran) {
             var routesWF = [
-
-                function(callback) {
+				function(callback) {
                     saveRouteEntity(tran, route, function(routeId) {
                         route.routeId = routeId;
                         route.stages.forEach(function(stage) {
@@ -268,7 +267,7 @@ app.post('/api/route/', function(req, res) {
                 },
 				
 				function(tran, route, callback) {
-                    console.log("Saving stages for route %j", route);
+                    console.log("Saving stages for route %j", route.trips);
 
                     var stageSeries = [];
                     route.stages.forEach(function(stage) {
@@ -318,7 +317,7 @@ app.post('/api/route/', function(req, res) {
                     });
                 }
 				, function(tran, route, callback) {
-                    console.log("Saving trips for route %j", route);
+                   // console.log("Saving trips for route %j", route);
 
                     var tripSeries = [];
 					
@@ -391,16 +390,16 @@ saveRouteEntity = function(tran, route, cb) {
 			logger.debug('Saved route record. ID is {0}', route_id);
 			cb(route_id);
 		});
-
 };
+
 saveStageEntity = function(tran, stage, cb) {
     	tran.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId,stage.routeId,stage.title], function(results) {
         stage_id = results[2][0]["@id"];
 		logger.debug('Saved stage record {0}', stage_id);
         cb(stage_id);
 		});
-        
 };
+
 saveRouteStopEntity = function(tran, routeStop, cb) {
         tran.query("CALL save_route_stop(?,?,?,?,?);", [routeStop.onwardStop.id, routeStop.returnStop.id,routeStop.routeId,routeStop.stageId,routeStop.sequence], function(results) {
 		logger.debug('Saved route_stop record');
@@ -408,43 +407,22 @@ saveRouteStopEntity = function(tran, routeStop, cb) {
         });
 };
 
-/*
-
-saveRouteEntity = function(tran, route, cb) {
-	setTimeout(function() {        
-			logger.debug('Saved route record. ID is {0}', route);
-			cb(1);
-	}, 1000);	
-
-};
-saveStageEntity = function(tran, stage, cb) {
-    setTimeout(function() {
-        var stageId = 1;
-        logger.debug('Saved stage record {0}', stageId);
-		cb(stageId);
-    }, 1000);
-};
-saveRouteStopEntity = function(tran, stop, cb) {
-    setTimeout(function() {
-        var stopId = 100;
-        logger.debug('Saved stop record. ID is {0}', stopId);
-        cb(stopId);
-    }, 1000);
-};
-*/
 saveTripEntity = function(tran, trip, cb){
 	setTimeout(function() {
+	tran.query("set @id := ? ; call save_trip(@id,?,?,?,?) ; select @id; ", [trip.direction,trip.frequency_trip,trip.frequency_start_time,trip.frequency_end_time], function(results) {
+        trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
         cb(1);
     }, 1000);
-};
-
+})};
+		
 saveRouteStopTripEntity = function(tran, routestoptrip, cb){
 	setTimeout(function() {
+	tran.query("CALL save_routestoptrip(@id,?,?,?,?); ", [routestoptrip.routeId,routestoptrip.stopId,routestoptrip.tripId,routestoptrip.time], function(results) {
         logger.debug('Saved RStrip record {0}', routestoptrip);
         cb(1);
     }, 1000);
-};
+})};
 
 
 app.get('/api/route/:route_id', function(req, res) {
@@ -455,7 +433,7 @@ app.get('/api/route/:route_id', function(req, res) {
         results[0].forEach(
             function(routeStop) {
 				//Find the stage
-				console.log("Route stop %j", routeStop);
+				//console.log("Route stop %j", routeStop);
 				var stage = _.find(routeDetail.stages, function(stage){ return stage.stageId==routeStop.stage_id;});
 				if(stage==undefined){
 				//If not exists, add the stage
