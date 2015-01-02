@@ -159,7 +159,10 @@ begin
 	select in_fleet_id as fleet_id,vfleet_name as fleet_name,vavg_speed as avg_speed,vcen_lat as cen_lat,vcen_lon as cen_lon,vzoom as zoom,vne_lat as ne_lat,vne_lon as ne_lon,vsw_lat as sw_lat,vsw_lon as sw_lon;
 	
 	
-	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id from stop where fleet_id=root_fleet_id;
+	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id 
+	from stop 
+	where fleet_id=root_fleet_id
+	order by stop_id;
 	
 	select R.route_id as route_id, R.route_name as route_name, S1.name as start_stop_name, S2.name as end_stop_name
 	from route R
@@ -329,3 +332,34 @@ create procedure save_RStrip(
 begin
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) VALUES ((SELECT route_stop_id FROM routestop where stop_id=in_stopId AND route_id=in_routeId), in_tripId, in_time);
 end//
+
+drop procedure if exists generate_stops//
+create procedure generate_stops()
+begin
+	declare lat, lon float;
+	declare name varchar(255) ;
+	declare f, cnt int  ;
+	declare sid int ;
+	set f = 1;
+	set cnt = 1;
+	/*set @sid = 0;*/
+	set lat = 15.359118139929315; 
+	set lon = 73.96272543945315;
+	/*call save_stop( 0, name, lat, lon, 2, 0);*/
+	
+	
+	while cnt < 5000 do
+		set name := concat('stop', convert(cnt, char(50)));
+		set sid := 0;
+		set lat := lat + rand()*f ;
+		set lon := lon + rand()*f ;
+		
+		
+		call save_stop(sid, name, lat, lon, 2, null);
+		select sid;
+		set f := -f;	
+		set cnt := cnt + 1;
+	end while;
+	
+end//
+
