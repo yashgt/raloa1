@@ -2,6 +2,8 @@ var db = require('db');
 var logger = require('logger').getLogger();
 var async = require('async');
 var gm = require('googlemaps');
+var fs = require('fs');
+var ejs = require('ejs');
 
 var formingSegments = false;
 
@@ -10,7 +12,21 @@ exports.saveStops = function saveStops(stops)
 	db.connect( function(conn){
 		//conn.query ....
 	});
-}
+};
+
+exports.generate_kml = function(fleetId, cb){
+	console.log("Gen");
+	fs.readFile('views/kml.ejs', 'utf8', function(err, template){
+		console.log("Template");
+		db.query("call get_stops(?);", [fleetId], function(results){
+			stops = results[0];
+			var content = ejs.render(template, {stops: stops});
+			cb(content);
+		});
+
+	})
+	
+};
 
 exports.generateSegments = function()
 {

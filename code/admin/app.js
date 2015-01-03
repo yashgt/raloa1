@@ -92,7 +92,7 @@ http.createServer(app).listen(app.get('port'), function() {
 });
 
 setInterval(function(){
-	admin.generateSegments();
+	//admin.generateSegments();
 }
 , 5000);
 
@@ -558,27 +558,19 @@ app.post('/api/segments', function(req, res) {
 
 });
 
-/*
-app.get('/api/routes', function(req, res) {
-    //TODO get from DB
-    res.json([{
-        routeId: 1,
-        fromStop: 'Panaji',
-        toStop: 'Mapusa',
-        routeNo: 101
-    }, {
-        routeId: 2,
-        fromStop: 'Panaji',
-        toStop: 'Margao',
-        routeNo: 102
-    }]);
-});
-*/
+
 app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add this to all api routes
     , function(req, res) {
         admin.saveStops([]);
     });
 
-app.get('/api/stops', function(req, res) {
-
+app.get('/api/kml', function(req, res) {
+	var fleetId = req.session.passport.user.rootFleetId; 
+	console.log("KML");
+	admin.generate_kml(fleetId, function(content){
+	//application/vnd.google-earth.kml+xml
+		res.writeHead(200, {'Content-type': 'application/vnd.google-earth.kml+xml'});
+		res.write(content);
+		res.end();
+	});
 });
