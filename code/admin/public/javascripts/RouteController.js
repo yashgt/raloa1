@@ -340,7 +340,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		var def = {
                 name: fleetstop.name,
                 displayName: fleetstop.name,
-                field: "stops." + fleetstop.id 
+                field: "stops." + fleetstop.id,
+				enableCellEdit: true,
+				editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
         };
 		
 		var idx = dir==0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols ;
@@ -418,6 +420,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         });
 	};
 	$scope.addTrip = function(dir){	
+	console.log($scope);
+	console.log(_);
 		var latestTrip = _.min($scope.routeDetail.trips[dir], function(trip){ return trip.tripId;});
 		
 		var newTrip = {
@@ -431,7 +435,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         };
 		
 		$scope.forAllStops(function(routestop){
-			newTrip.stops[''+((dir==0) ? routestop.onwardStop.id : routestop.returnStop.id)+''] = '00:00';
+			newTrip.stops[''+((dir==0) ? routestop.onwardStop.id : routestop.returnStop.id)+''] = '';
 		});
 
 		/*
@@ -1231,6 +1235,61 @@ autofocus = function($timeout) {
     };
 };
 
+dateMask = function($timeout) {
+    return {
+        restrict: 'A',
+        link : function($scope, element) {
+		console.log($(element[0]).val()=='');
+		//if($(element[0]).val()=='')
+			/*$(element[0]).focus(function() {
+				if($(element[0]).val()=='')
+					$(element[0]).val('__:__ am');
+			});
+			*/
+			var patt = new RegExp("^([0-9]|([0-1][0-2])|0[0-9]):([0-9]|[0-5][0-9]) (am|pm)$");
+			
+			$(element[0]).blur(function() {
+			var val = $(element[0]).val();
+	
+				if(!patt.test(val)) {
+				alert('hello');
+					$(element[0]).val('');
+					$scope.$apply();
+				}
+			});
+			
+			$scope.validate = function() {
+				
+				var val = $(element[0]).val();
+				console.log(val);
+				if(!val || val == '')
+					return;
+				var testVal = null;
+				var dummy = '11:11 am';
+				testVal = val + dummy.substring(val.length);
+				console.log(testVal);
+				
+				if(!patt.test(testVal)) {
+					console.log(false);
+					$(element[0]).val(val.substring(0, val.length-1));
+					$scope.validate();
+				} else {
+					console.log(true);
+					if(val.length==2)
+						$(element[0]).val(val+":");
+					else if(val.length==5)
+						$(element[0]).val(val+" ");
+					else if(val.length==7)
+						$(element[0]).val(val+"m");
+				}
+			};
+            $(element[0]).keyup(function(event) {
+				$scope.validate();
+			});
+        }
+    };
+};
+
 var calendars = [];
 
 function ServiceFilter() {
@@ -1298,4 +1357,5 @@ function UnpairedStopsFilter() {
     adminApp.filter('reverse', ReverseFilter);
     adminApp.filter('unpaired', UnpairedStopsFilter);
     adminApp.directive('autofocus', autofocus); 
+	adminApp.directive('dateMask', dateMask); 
 }());
