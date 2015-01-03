@@ -256,7 +256,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             console.log("Tiles loaded");
 			//if($scope.stopLayer ==undefined){
-				$scope.stopLayer = new google.maps.KmlLayer({ url: 'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml' });
+				$scope.stopLayer = new google.maps.KmlLayer({ url: 'http://127.0.0.1:3000/api/kml' });
 				google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
 				console.log($scope.stopLayer.getStatus());
 				});
