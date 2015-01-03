@@ -246,12 +246,23 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.contextMenu.show(model["0"].latLng);
             //alert("Model: event:" + eventName + " " + JSON.stringify(model));
         },
+		
         tilesloaded: function(gMap, eventName, model) {
             if ($scope.gmap == undefined) {
                 $scope.gmap = $scope.map.control.getGMap();
                 routeHelpChannel.gmap = $scope.gmap;
+				
             }
+
             console.log("Tiles loaded");
+			//if($scope.stopLayer ==undefined){
+				$scope.stopLayer = new google.maps.KmlLayer({ url: 'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml' });
+				google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
+				console.log($scope.stopLayer.getStatus());
+				});
+				
+			//}
+			$scope.stopLayer.setMap($scope.gmap);
             $scope.setContextMenu();
             //$scope.setRouteHelperBounds();
         }
@@ -840,7 +851,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     //zIndex: 1000
                 };
             });
-
+			fleetDetail.dstops = [];
+			$scope.stopLayer = new google.maps.KmlLayer({
+    url: 'http://127.0.0.1:3000/api/kml'
+  });
+  
+  
             $scope.closeRoute();
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
