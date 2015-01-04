@@ -164,7 +164,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     longitude: results[0][0].sw_lon
                 }
             },
-            stops: results[1].map(function(stop) {
+            allstops: results[1].map(function(stop) {
                 return {
                     id: stop.stop_id,
                     latitude: stop.latitude,

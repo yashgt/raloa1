@@ -97,7 +97,7 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 
 exports.query = function query( qryStr, arg2, arg3, arg4)
 {
-	console.log("%j %j %j %j", qryStr, arg2, typeof(arg3), typeof(arg4));
+	//console.log("%j %j %j %j", qryStr, arg2, typeof(arg3), typeof(arg4));
 	pool.getConnection(	function(err, conn){
 		if(!err)
 		{
