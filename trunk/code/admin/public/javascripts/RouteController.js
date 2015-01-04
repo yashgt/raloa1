@@ -570,6 +570,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 	//FARE REGION ENDS
 	
 	$scope.stopLayer = new google.maps.KmlLayer({});
+	$scope.myParser = new geoXML3.parser({map:$scope.gmap});
+	
 	google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
 				console.log("Layer is now " + $scope.stopLayer.getStatus());
 	});
@@ -883,6 +885,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			fleetDetail.stops = [];
 			
 			$scope.stopLayer.setUrl('http://14.97.97.173:3000/api/kml/' + fleetId) ;
+			$scope.myParser = new geoXML3.parser({map: $scope.gmap});
+			$scope.myParser.parse('http://127.0.0.1:3000/api/kml/'+ fleetId);
 			//$scope.stopLayer.setMap($scope.gmap);
 			
             $scope.closeRoute();
