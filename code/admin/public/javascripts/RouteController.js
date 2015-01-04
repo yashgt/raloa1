@@ -250,21 +250,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         tilesloaded: function(gMap, eventName, model) {
             if ($scope.gmap == undefined) {
                 $scope.gmap = $scope.map.control.getGMap();
-                routeHelpChannel.gmap = $scope.gmap;
-				
+                routeHelpChannel.gmap = $scope.gmap;				
             }
 
             console.log("Tiles loaded");
-			//if($scope.stopLayer ==undefined){
-				$scope.stopLayer = new google.maps.KmlLayer({ url: 'http://127.0.0.1:3000/api/kml' });
-				google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
-				console.log($scope.stopLayer.getStatus());
-				});
-				
-			//}
+
 			$scope.stopLayer.setMap($scope.gmap);
             $scope.setContextMenu();
-            //$scope.setRouteHelperBounds();
+
         }
     };
     $scope.markerOptions = {
@@ -563,6 +556,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		]
 	}	
 	//FARE REGION ENDS
+	
+	$scope.stopLayer = new google.maps.KmlLayer({});
+	google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
+				console.log("Layer is now " + $scope.stopLayer.getStatus());
+	});
+				
+	
 
     //ROUTELIST REGION
     $scope.routeListOptions = {
@@ -856,11 +856,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 };
             });
 			fleetDetail.dstops = [];
-			$scope.stopLayer = new google.maps.KmlLayer({
-    url: 'http://127.0.0.1:3000/api/kml'
-  });
-  
-  
+			
+			$scope.stopLayer.setUrl('http://14.97.97.173:3000/api/kml/' + fleetId) ;
+			//$scope.stopLayer.setMap($scope.gmap);
+			
             $scope.closeRoute();
             $scope.fleetDetail = fleetDetail;
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
@@ -1037,7 +1036,7 @@ GetThereAdminService = function($http) {
 
     var getSuccess = function(callback) {
         return (function(data) {
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             callback(data);
         });
     };

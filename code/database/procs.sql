@@ -366,9 +366,13 @@ end//
 drop procedure if exists get_stops//
 create procedure get_stops(in in_fleet_id int)
 begin
+	declare root_fleet_id int;
+	
+	select get_root_fleet(in_fleet_id) into root_fleet_id;
+	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id 
 	from stop 
-	where fleet_id=in_fleet_id
+	where fleet_id=root_fleet_id
 	order by stop_id;
 	
 end//

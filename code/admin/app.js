@@ -86,10 +86,12 @@ if ('development' == app.get('env')) {
 //app.get('/', routes.index);
 //app.get('/users', user.list);
 
-http.createServer(app).listen(app.get('port'), function() {
+var server = http.createServer(app).listen(app.get('port'), function() {
     logger.info('Express server listening on port {0}', app.get('port'));
     //console.log('Express server listening on port ' + app.get('port'));
 });
+
+console.log('Server address %j' , server.address());
 
 setInterval(function(){
 	//admin.generateSegments();
@@ -564,8 +566,8 @@ app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add 
         admin.saveStops([]);
     });
 
-app.get('/api/kml', function(req, res) {
-	var fleetId = req.session.passport.user.rootFleetId; 
+app.get('/api/kml/:fleet_id', function(req, res) {
+	var fleetId = req.params.fleet_id; 
 	console.log("KML");
 	admin.generate_kml(fleetId, function(content){
 	//application/vnd.google-earth.kml+xml
