@@ -288,6 +288,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		var returnstop ;
 		
 		if(fleetstop.peerStopId){
+			
+			
 			//returnstop = _.find($scope.fleetDetail.stops, function(returnstop) { return returnstop.id == fleetstop.peerStopId; });
 			returnStop = binarySearch($scope.fleetDetail.stops, fleetstop.peerStopId); 		
 			if(returnstop==undefined){
@@ -304,6 +306,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 	
 	$scope.addStopsToStage = function(onwardStop, returnStop,stage){
+		var routeStop = {};
 		if (onwardStop != undefined) {
             onwardStop.icon = ROUTE_STOP_ICON;
 			$scope.addStopToScheduleGrid(0,onwardStop);	
@@ -312,9 +315,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             returnStop.icon = ROUTE_STOP_ICON;
 			$scope.addStopToScheduleGrid(1,returnStop);	
         }
-		var routeStop = {};
-		onwardStop.icon = ROUTE_STOP_ICON; 
-		returnStop.icon = ROUTE_STOP_ICON; 
+		
 		routeStop.onwardStop = onwardStop;
 		routeStop.returnStop = returnStop;
 		console.log("Adding %j %j to stage %j", onwardStop, returnStop,stage);
@@ -412,6 +413,17 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 stage.stops.forEach(cb);
         });
 	};
+	
+	$scope.findRouteStop = function(cb){
+		var rs ;
+		_.find($scope.routeDetail.stages, function(stage){
+			var rst = _.find(stage.stops, cb);
+			rs = rst ;
+			return rst!=undefined;
+		});
+		return rs;
+	};
+	
 	$scope.addTrip = function(dir){	
 	console.log($scope);
 	console.log(_);
@@ -661,6 +673,19 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //CALENDAR REGION ENDS
     $scope.addStopToRoute = function(stop) {
         if ($scope.routeDetail.routeId >= 0) {
+			$scope.routeDetail.isDirty = true;
+			
+			//If this stop's peer is already an onward stop, add this stop as the return stop
+			if(stop.peerStopId>0) {
+				var routestop = $scope.findRouteStop( function(rs){ return rs.onwardStop.id==stop.peerStopId ;});
+				if(routestop){
+					stop.icon = ROUTE_STOP_ICON;
+					routestop.returnStop = stop;
+					return;
+				}
+			}
+			
+			
             if ($scope.routeDetail.stages.length == 0) {
                 $scope.addNewStage();
                 //$scope.routeDetail.stages[$scope.routeDetail.stages.length -1].title = stop.name ; //TODO capture the village name
@@ -668,7 +693,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1];
             $scope.addStopToStage(stop, lastStage);
-            $scope.routeDetail.isDirty = true;
+            
         }
     };
     $scope.delStopFromRoute = function(stop) {
@@ -844,7 +869,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //Get the details of the selected fleet
     $scope.getFleetDetail = function(fleetId) {
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
-            fleetDetail.stops.forEach(function(stop) {
+            fleetDetail.allstops.forEach(function(stop) {
 
                 stop.icon = stop.peerStopId > 0 ? PEER_STOP_ICON : STOP_ICON;
                 //stop.options = stopOptions; 
@@ -855,7 +880,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     //zIndex: 1000
                 };
             });
-			fleetDetail.dstops = [];
+			fleetDetail.stops = [];
 			
 			$scope.stopLayer.setUrl('http://14.97.97.173:3000/api/kml/' + fleetId) ;
 			//$scope.stopLayer.setMap($scope.gmap);
@@ -894,32 +919,29 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
 
             flash.success = message;
-            if (stopDetail.id <= 0) { //New stop
-                if (stopDetail.peerStopId > 0) //It has a peer stop
-                {
-                    stopDetail.icon = icon;
-					stopDetail.id = stop.id;
-                } else { //Fresh stop
-                    var newStop = {
+            if (stopDetail.id <= 0) { //New stop				
+				var newStop = {
                         id: stop.id,
                         name: stopDetail.name,
                         latitude: stopDetail.latitude,
                         longitude: stopDetail.longitude,
+						peerStopId: stopDetail.peerStopId,
                         icon: icon,
                         options: {
                             draggable: true,
                             title: stopDetail.name
                         }
                     };
-                    $scope.fleetDetail.stops.push(newStop);
+				if(!(stopDetail.peerStopId>0)) { //If this is a fresh non-peer stop, it has to be added to stops with which we can work
+					$scope.fleetDetail.stops.push(newStop);
+				}
 
                     if ($scope.routeDetail.routeId >= 0) {
                         $scope.addStopToRoute(newStop);
                     }
 
                     $scope.map.infoWindow.show = false;
-                    $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null			
-                }
+                    $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	
             }
         }, function(error) {
             flash.error = 'Stop could not be saved';
