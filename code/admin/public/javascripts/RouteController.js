@@ -156,6 +156,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		$scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
         disableStopDragging();
     };
+	
+	
+	$scope.extendRoute = function() {
+        $scope.scheduleOptions[0].data = $scope.routeDetail.trips[0];
+		$scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
+        disableStopDragging();
+    };
 
     $scope.saveRoute = function() {
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
@@ -359,29 +366,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
             routeDetail.stages.forEach(function(stage) {
-			/*
-                var routestage = {
-                    title: stage.title,
-                    stageId: stage.stageId,
-                    stops: []
-                };
 
-                stage.stops.forEach(function(stop) {
-                    var fleetstop = _.find($scope.fleetDetail.stops, function(fleetstop) {
-                        return fleetstop.id == stop.id;
-                    });
-					
-					if(fleetstop!=undefined) $scope.addStopToStage(fleetstop, routestage);
-                });
-
-                $scope.routeDetail.stages.push(routestage);
-				*/
 				var routestage = {
                     title: stage.title,
                     stageId: stage.stageId,
                     stops: []
                 };
 				$scope.routeDetail.stages.push(routestage);
+				console.log("Adding ", routestage);
 				
 				stage.stops.forEach(function(routestop) {
 					var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {

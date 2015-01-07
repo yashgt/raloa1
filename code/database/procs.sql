@@ -203,7 +203,7 @@ begin
 if id > 0 then
 update stage
 set stage_name=in_stage_name
-where stage_id-id;
+where stage_id=id;
 else
 INSERT INTO stage(stage_name, route_id) VALUES (in_stage_name, in_route_id);
 set id = LAST_INSERT_ID() ;
@@ -310,27 +310,36 @@ drop procedure if exists save_trip//
 create procedure save_trip(
 	  INOUT id int
 	, IN in_direction boolean
+	, IN in_route_id
 	, IN in_frequency_trip boolean
 	, IN in_frequency_start_time time
 	, IN in_frequency_end_time time
 )
 begin
 if id < 0 then
-INSERT INTO trip(trip_name, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) VALUES ('trip', in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, 0);
+INSERT INTO trip(trip_name, route_id, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) 
+VALUES ('trip', in_route_id, in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, 0);
 set id = LAST_INSERT_ID() ;
 end if;
 end//
 
 
-drop procedure if exists save_RStrip//
-create procedure save_RStrip(
+drop procedure if exists save_route_stop_trip//
+create procedure save_route_stop_trip(
 	IN in_routeId int
 	, IN in_stopId int
 	, IN in_tripId int
 	, IN in_time time
 )
 begin
-INSERT INTO routestoptrip(route_stop_id, trip_id, time) VALUES ((SELECT route_stop_id FROM routestop where stop_id=in_stopId AND route_id=in_routeId), in_tripId, in_time);
+declare rsid int;
+SELECT route_stop_id into rsid
+FROM routestop 
+where stop_id=in_stopId AND route_id=in_routeId;
+
+INSERT INTO routestoptrip(route_stop_id, trip_id, time) 
+VALUES 
+(rsid, in_tripId, in_time);
 end//
 
 drop procedure if exists generate_stops//

@@ -86,6 +86,7 @@
 
                                             Route options:
                                             <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">New</button>
+											<button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">Extend</button>
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
                                             <button type="submit" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Extend</button>
