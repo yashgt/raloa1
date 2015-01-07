@@ -330,6 +330,7 @@ app.post('/api/route/', function(req, res) {
 								function(callback) {
                                         saveTripEntity(tran, trip, function(tripId) {
                                             trip.tripId = tripId;
+											trip.routeId = routeId;
                                             callback(null, trip);
                                         });
                                 },
@@ -337,7 +338,7 @@ app.post('/api/route/', function(req, res) {
 									var RSTSeries = [];
 									Object.keys(trip.stops).forEach(function(stopId){
 										RSTSeries.push( function(callback){
-											var RST = {routeId: route.routeId, stopId: stopId, tripId: trip.tripId, time: trip.stops[''+ stopId+'']};
+											var RST = {routeId: route.routeId, stopId: parseInt(stopId), tripId: trip.tripId, time: ''+trip.stops[''+ stopId+''] +''};
 											saveRouteStopTripEntity(tran, RST, function(){
 												callback(null,1);
 											});
@@ -411,18 +412,18 @@ saveRouteStopEntity = function(tran, routeStop, cb) {
 
 saveTripEntity = function(tran, trip, cb){
 	setTimeout(function() {
-	tran.query("set @id := ? ; call save_trip(@id,?,?,?,?) ; select @id; ", [trip.direction,trip.frequency_trip,trip.frequency_start_time,trip.frequency_end_time], function(results) {
+	tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?) ; select @id; ", [trip.tripId,trip.routeId,trip.direction,trip.frequency_trip,trip.frequency_start_time,trip.frequency_end_time], function(results) {
         trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
-        cb(1);
+        cb(trip_id);
     }, 1000);
 })};
 		
 saveRouteStopTripEntity = function(tran, routestoptrip, cb){
 	setTimeout(function() {
-	tran.query("CALL save_routestoptrip(@id,?,?,?,?); ", [routestoptrip.routeId,routestoptrip.stopId,routestoptrip.tripId,routestoptrip.time], function(results) {
+	tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId,routestoptrip.stopId,routestoptrip.tripId,routestoptrip.time], function(results) {
         logger.debug('Saved RStrip record {0}', routestoptrip);
-        cb(1);
+        cb(1); //ignore the RSTId
     }, 1000);
 })};
 
