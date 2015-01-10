@@ -4,6 +4,7 @@ function initializeApp($rootScope) {
 
 tempId = 2; //temporary
 var STOP_ICON = "/images/bus_stop.png";
+var DEL_STOP_ICON = "/images/del_bus_stop.jpg";
 var PEER_STOP_ICON = "/images/peer_bus_stop.png";
 var ROUTE_STOP_ICON = "/images/route_bus_stop.png";
 var ROUTE_STOP_REV_ICON = "/images/route_bus_stop.png";
@@ -16,7 +17,7 @@ console.log(HOST);
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi, IsReady) {
-	
+
 
     $scope.fleet = {
         selected: undefined
@@ -28,8 +29,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.fleetChosen(newValue);
         }
     });
-	
-	$scope.hangOn = {promise:null,message:"Please wait",backdrop:true,delay:0,minDuration:0}
+
+    $scope.hangOn = {
+        promise: null,
+        message: "Please wait",
+        backdrop: true,
+        delay: 0,
+        minDuration: 0
+    }
 
     stopChannel.add(function(stopDetail) { //Invoked by DI when a Stop is defined
         //$scope.stopDetail.stopName = stopDetail.name;
@@ -104,7 +111,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         peerStop.peerStopId = stop.id;
 
         console.log("Peer stop %j", peerStop);
-        $scope.fleetDetail.stops.push(peerStop);
+		pushToStops(peerStop);
+        //$scope.fleetDetail.stops.push(peerStop);
         //});
         //Let the stop show a different icon
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
@@ -116,8 +124,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 $scope.routeDetail.stages.forEach(function(stage) {
                     if (stage.stops != undefined) {
                         stage.stops.forEach(function(routestop) {
-							if(routestop.onwardStop) routestop.onwardStop.icon = STOP_ICON;
-							if(routestop.returnStop) routestop.returnStop.icon = STOP_ICON;
+                            if (routestop.onwardStop) routestop.onwardStop.icon = STOP_ICON;
+                            if (routestop.returnStop) routestop.returnStop.icon = STOP_ICON;
                             //stop.icon = STOP_ICON;
                         });
                     }
@@ -128,18 +136,29 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.routeDetail = {
             routeId: -1,
             stages: [],
-			trips: [[],[]]
+            trips: [
+                [],
+                []
+            ]
         };
-		
-		$scope.clearScheduleGrid();
+
+        $scope.clearScheduleGrid();
     };
 
     var enableStopDragging = function() {
+		markers.forEach(function(marker) {
+            marker.draggable = true;
+        });
+		
         $scope.fleetDetail.stops.forEach(function(stop) {
             stop.options.draggable = true;
         });
     };
     var disableStopDragging = function() {
+		markers.forEach(function(marker) {
+            marker.draggable = false;
+        });
+		
         $scope.fleetDetail.stops.forEach(function(stop) {
             stop.options.draggable = false;
         });
@@ -156,26 +175,26 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.clearRoute();
         $scope.gridRoutesApi.selection.clearSelectedRows();
         $scope.routeDetail.routeId = 0;
-		$scope.scheduleOptions[0].data = $scope.routeDetail.trips[0];
-		$scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
+        $scope.scheduleOptions[0].data = $scope.routeDetail.trips[0];
+        $scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
         disableStopDragging();
     };
-	
-	
-	$scope.extendRoute = function() {
+
+
+    $scope.extendRoute = function() {
         $scope.scheduleOptions[0].data = $scope.routeDetail.trips[0];
-		$scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
+        $scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
         disableStopDragging();
     };
 
     $scope.saveRoute = function() {
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
-			flash.success = 'Route saved successully' ;
+            flash.success = 'Route saved successully';
             if ($scope.routeDetail.routeId == 0) {
                 $scope.routeDetail = route;
                 $scope.routeDetail.isDirty = false;
-				
+
                 $scope.fleetDetail.routes.push(route);
                 $scope.gridRoutesApi.selection.selectRow(route);
             }
@@ -249,28 +268,28 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     };
 
-	IsReady.promise().then(function (maps) {
-		$scope.gmap = $scope.map.control.getGMap();
-		markerclusterer = new MarkerClusterer($scope.gmap, [], mcOptions);
-		
-				$scope.stopLayer.setMap($scope.gmap);
-				$scope.myParser = new geoXML3.parser({
-					map: $scope.gmap
-					,suppressInfoWindows: true
-					,afterParse: useTheData
-					,createMarker: createMarker
-				});
-				
-				
-                routeHelpChannel.gmap = $scope.gmap;	
-            console.log("GMap ready");
+    IsReady.promise().then(function(maps) {
+        $scope.gmap = $scope.map.control.getGMap();
+        markerclusterer = new MarkerClusterer($scope.gmap, [], mcOptions);
 
-			//$scope.showStops();
-			
-			
-            $scope.setContextMenu();			
+        $scope.stopLayer.setMap($scope.gmap);
+        $scope.myParser = new geoXML3.parser({
+            map: $scope.gmap,
+            suppressInfoWindows: true,
+            afterParse: useTheData,
+            createMarker: createMarker
+        });
+
+
+        routeHelpChannel.gmap = $scope.gmap;
+        console.log("GMap ready");
+
+        //$scope.showStops();
+
+
+        $scope.setContextMenu();
     });
-	
+
     $scope.mapEvents = {
         rightclick: function(gMap, eventName, model) {
             if (model.$id) {
@@ -279,52 +298,52 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.contextMenu.show(model["0"].latLng);
             //alert("Model: event:" + eventName + " " + JSON.stringify(model));
         }
-        
+
     };
     $scope.markerOptions = {
         draggable: true,
         title: 'Label1'
     };
-	var scnt = 0;
+    var scnt = 0;
 
-	function binarySearch(array, key) {
-    var lo = 0,
-        hi = array.length - 1,
-        mid,
-        element;
-    while (lo <= hi) {
-        mid = ((lo + hi) >> 1);
-        element = array[mid];
-        if (element < key) {
-            lo = mid + 1;
-        } else if (element > key) {
-            hi = mid - 1;
-        } else {
-            return array[mid];
+    function binarySearch(array, key) {
+        var lo = 0,
+            hi = array.length - 1,
+            mid,
+            element;
+        while (lo <= hi) {
+            mid = ((lo + hi) >> 1);
+            element = array[mid];
+            if (element.id < key) {
+                lo = mid + 1;
+            } else if (element.id > key) {
+                hi = mid - 1;
+            } else {
+                return array[mid];
+            }
         }
+        return undefined;
     }
-    return undefined;
-}
 
-	$scope.showStops = function(){
-				markers = [];
-			markerclusterer.clearMarkers();
-	
-		if($scope.fleetDetail && $scope.fleetDetail.fleetId){
-			console.log("Show count ",scnt++);
-			var kmlURL = HOST + '/api/kml/' + $scope.fleetDetail.fleetId;
+    $scope.showStops = function() {
+        markers = [];
+        markerclusterer.clearMarkers();
 
-			if($scope.myParser.docs[0]){
-			$scope.myParser.hideDocument($scope.myParser.docs[0]);
+        if ($scope.fleetDetail && $scope.fleetDetail.fleetId) {
+            console.log("Show count ", scnt++);
+            var kmlURL = HOST + '/api/kml/' + $scope.fleetDetail.fleetId;
 
-			}
+            if ($scope.myParser.docs[0]) {
+                $scope.myParser.hideDocument($scope.myParser.docs[0]);
 
-			//if($scope.myParser.docsBy
-			$scope.myParser.parse(kmlURL);
-			}
-			
-			
-			/*
+            }
+
+            //if($scope.myParser.docsBy
+            $scope.myParser.parse(kmlURL);
+        }
+
+
+        /*
 			//For some strange reason, creating markers from objects makes it slow. 
 			if($scope.fleetDetail && $scope.fleetDetail.allstops){
 			            $scope.fleetDetail.allstops.forEach(function(stop) {
@@ -339,76 +358,69 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
 			}
 			*/
-			
-	};
+
+    };
 
     $scope.addStopToStage = function(fleetstop, routestage) {
-		var returnstop ;
-		
-		if(fleetstop.peerStopId){
-			
-			
-			//returnstop = _.find($scope.fleetDetail.stops, function(returnstop) { return returnstop.id == fleetstop.peerStopId; });
-			returnStop = binarySearch($scope.fleetDetail.stops, fleetstop.peerStopId); 		
-			if(returnstop==undefined){
-				returnStop = fleetstop;
-			}		
-		}
-		else
-		{
-			returnstop = fleetstop;
-		}
-		
-		$scope.addStopsToStage(fleetstop, returnstop, routestage);
-        
+        var returnstop;
+
+        if (fleetstop.peerStopId) {
+            //returnstop = _.find($scope.fleetDetail.stops, function(returnstop) { return returnstop.id == fleetstop.peerStopId; });
+            returnstop = binarySearch($scope.fleetDetail.stops, fleetstop.peerStopId) || fleetstop;
+            
+        } else {
+            returnstop = fleetstop;
+        }
+
+        $scope.addStopsToStage(fleetstop, returnstop, routestage);
+
     };
-	
-	$scope.addStopsToStage = function(onwardStop, returnStop,stage){
-		var routeStop = {};
-		if (onwardStop != undefined) {
+
+    $scope.addStopsToStage = function(onwardStop, returnStop, stage) {
+        var routeStop = {};
+        if (onwardStop != undefined) {
             onwardStop.icon = ROUTE_STOP_ICON;
-			$scope.addStopToScheduleGrid(0,onwardStop);	
+            $scope.addStopToScheduleGrid(0, onwardStop);
         }
-		if (returnStop != undefined) {
+        if (returnStop != undefined) {
             returnStop.icon = ROUTE_STOP_ICON;
-			$scope.addStopToScheduleGrid(1,returnStop);	
+            $scope.addStopToScheduleGrid(1, returnStop);
         }
-		
-		routeStop.onwardStop = onwardStop;
-		routeStop.returnStop = returnStop;
-		console.log("Adding %j %j to stage %j", onwardStop, returnStop,stage);
-		stage.stops.push(routeStop);
-		return routeStop;
-	};
+
+        routeStop.onwardStop = onwardStop;
+        routeStop.returnStop = returnStop;
+        console.log("Adding %j %j to stage %j", onwardStop, returnStop, stage);
+        stage.stops.push(routeStop);
+        return routeStop;
+    };
 
     //SCHEDULE REGION
-	$scope.clearScheduleGrid = function(){
-		[0,1].forEach(function(dir){
-			$scope.scheduleOptions[dir].columnDefs.splice($scope.scheduleOptions[dir].fixedCols, 100);
-		});
-		
-	};
-	$scope.addStopToScheduleGrid = function(dir,fleetstop){
-		var def = {
-                name: fleetstop.name,
-                displayName: fleetstop.name,
-                field: "stops." + fleetstop.id,
-				enableCellEdit: true,
-				editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+    $scope.clearScheduleGrid = function() {
+        [0, 1].forEach(function(dir) {
+            $scope.scheduleOptions[dir].columnDefs.splice($scope.scheduleOptions[dir].fixedCols, 100);
+        });
+
+    };
+    $scope.addStopToScheduleGrid = function(dir, fleetstop) {
+        var def = {
+            name: fleetstop.name,
+            displayName: fleetstop.name,
+            field: "stops." + fleetstop.id,
+            enableCellEdit: true,
+            editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
         };
-		
-		var idx = dir==0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols ;
-		
-	    $scope.scheduleOptions[dir].columnDefs.splice(idx, 0, def);
-	};
-	$scope.delStopFromScheduleGrid = function(dir,stop)
-	{
-		var idx = _.findIndex($scope.scheduleOptions[dir].columnDefs, {
-                field: "stops." + stop.id
-            });
+
+        var idx = dir == 0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols;
+
+        $scope.scheduleOptions[dir].columnDefs.splice(idx, 0, def);
+    };
+    $scope.delStopFromScheduleGrid = function(dir, stop) {
+        var idx = _.findIndex($scope.scheduleOptions[dir].columnDefs, {
+            field: "stops." + stop.id
+        });
         $scope.scheduleOptions[dir].columnDefs.splice(idx, 1);
-	};
-	
+    };
+
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
             $scope.routeDetail.routeId = routeId;
@@ -418,87 +430,89 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             routeDetail.stages.forEach(function(stage) {
 
-				var routestage = {
+                var routestage = {
                     title: stage.title,
                     stageId: stage.stageId,
                     stops: []
                 };
-				$scope.routeDetail.stages.push(routestage);
-				console.log("Adding ", routestage);
-				
-				stage.stops.forEach(function(routestop) {
-					var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
-							return fleetstop.id == routestop.onwardStop.id;
-						});
+                $scope.routeDetail.stages.push(routestage);
+                console.log("Adding ", routestage);
 
-					var returnStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
-							return fleetstop.id == routestop.returnStop.id;
-						});
+                stage.stops.forEach(function(routestop) {
+                    var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
+                        return fleetstop.id == routestop.onwardStop.id;
+                    });
 
-					
-					var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
-					newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
-				});
-				
-				
+                    var returnStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
+                        return fleetstop.id == routestop.returnStop.id;
+                    });
+
+
+                    var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
+                    newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
+                });
+
+
             });
             $scope.routeDetail.trips = routeDetail.trips;
-			[0,1].forEach(function(dir){
-				$scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
-			});
+            [0, 1].forEach(function(dir) {
+                $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
+            });
             //$scope.scheduleOptions.data = $scope.routeDetail.trips;
 
         });
     };
 
-	$scope.forAllStops = function(cb){
-		$scope.routeDetail.stages.forEach(function(stage) {
-                stage.stops.forEach(cb);
+    $scope.forAllStops = function(cb) {
+        $scope.routeDetail.stages.forEach(function(stage) {
+            stage.stops.forEach(cb);
         });
-	};
-	
-	$scope.findRouteStop = function(cb){
-		var rs ;
-		_.find($scope.routeDetail.stages, function(stage){
-			var rst = _.find(stage.stops, cb);
-			rs = rst ;
-			return rst!=undefined;
-		});
-		return rs;
-	};
-	
-	$scope.addTrip = function(dir){	
-	console.log($scope);
-	console.log(_);
-		var latestTrip = _.min($scope.routeDetail.trips[dir], function(trip){ return trip.tripId;});
-		
-		var newTrip = {
-            tripId: (latestTrip.tripId<0)? latestTrip.tripId-1 : -1,
+    };
+
+    $scope.findRouteStop = function(cb) {
+        var rs;
+        _.find($scope.routeDetail.stages, function(stage) {
+            var rst = _.find(stage.stops, cb);
+            rs = rst;
+            return rst != undefined;
+        });
+        return rs;
+    };
+
+    $scope.addTrip = function(dir) {
+        console.log($scope);
+        console.log(_);
+        var latestTrip = _.min($scope.routeDetail.trips[dir], function(trip) {
+            return trip.tripId;
+        });
+
+        var newTrip = {
+            tripId: (latestTrip.tripId < 0) ? latestTrip.tripId - 1 : -1,
             direction: dir,
             serviceId: $scope.fleetDetail.defaultServiceId,
             frequency_trip: false,
             frequency_start_time: '00:00',
             frequency_end_time: '00:00',
-			stops: {}
+            stops: {}
         };
-		
-		$scope.forAllStops(function(routestop){
-			newTrip.stops[''+((dir==0) ? routestop.onwardStop.id : routestop.returnStop.id)+''] = '';
-		});
 
-		/*
+        $scope.forAllStops(function(routestop) {
+            newTrip.stops['' + ((dir == 0) ? routestop.onwardStop.id : routestop.returnStop.id) + ''] = '';
+        });
+
+        /*
 		$scope.routeDetail.stages.forEach(function(stage) {
                 stage.stops.forEach(function(stop) {
 					newTrip.stops[''+stop.id+''] = '08:00';
                 });
         });
 		*/
-			
-	
-		$scope.routeDetail.trips[dir].push(newTrip);
-		$scope.routeDetail.isDirty = true;
-	};
-	
+
+
+        $scope.routeDetail.trips[dir].push(newTrip);
+        $scope.routeDetail.isDirty = true;
+    };
+
     $scope.scheduleActions = {
         deleteTrip: function(trip) {
             console.log(trip);
@@ -507,119 +521,115 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
             $scope.routeDetail.trips.splice(idx, 1);
             $scope.routeDetail.isDirty = true;
-        }
-		, autocomplete: function(dir, trip) {
-			var i = 0;
-			var allstops = [];
-			var allsegments = [];
+        },
+        autocomplete: function(dir, trip) {
+            var i = 0;
+            var allstops = [];
+            var allsegments = [];
 
-			$scope.forAllStops(function(routestop){
-				allstops.push((dir==0)? routestop.onwardStop : routestop.returnStop);
-				allsegments.push(routestop.segments[dir]);
-			});
-			if(dir==1){
-				allstops.reverse();
-				allsegments.reverse();
-			}
-			
-			for(i=0; i< allstops.length; i++){
-				if(i!=0){
-					//var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
-					var prevtime = moment(trip.stops[''+ allstops[i-1].id], 'HH:mm') ;
-					// 30*1000 m in 60 min
-					// distance in X
-					var inctime = allsegments[i] * 60 / 30000;
-					trip.stops[''+ allstops[i].id] = prevtime.add(inctime,'m').format('HH:mm');
-				}
-			}
-		}	
+            $scope.forAllStops(function(routestop) {
+                allstops.push((dir == 0) ? routestop.onwardStop : routestop.returnStop);
+                allsegments.push(routestop.segments[dir]);
+            });
+            if (dir == 1) {
+                allstops.reverse();
+                allsegments.reverse();
+            }
+
+            for (i = 0; i < allstops.length; i++) {
+                if (i != 0) {
+                    //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
+                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'HH:mm');
+                    // 30*1000 m in 60 min
+                    // distance in X
+                    var inctime = allsegments[i] * 60 / 30000;
+                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('HH:mm');
+                }
+            }
+        }
     };
 
-	$scope.scheduleOptions = [];
-	[0,1].forEach(function(dir){
-		$scope.scheduleOptions.splice(dir,0, {
+    $scope.scheduleOptions = [];
+    [0, 1].forEach(function(dir) {
+        $scope.scheduleOptions.splice(dir, 0, {
+            enableSorting: false,
+            enableCellEdit: true,
+            enableColumnMenus: false,
+            columnDefs: [{
+                name: 'Delete',
+                displayName: '',
+                cellTemplate: '<button class="btn btn-danger btn-xs" ng-click="getExternalScopes().deleteTrip(row.entity)"><span class="glyphicon glyphicon-trash"></span> Delete</button>'
+            }, {
+                name: 'Auto',
+                displayName: '',
+                cellTemplate: '<button class="btn btn-success btn-xs" ng-click="getExternalScopes().autocomplete(' + dir + ',row.entity)"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete</button>'
+            }, {
+                name: 'ID',
+                field: 'tripId',
+                enableCellEdit: false,
+                cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
+            }, {
+                editableCellTemplate: 'ui-grid/dropdownEditor',
+                name: 'Service',
+                field: 'serviceId',
+                cellFilter: 'service',
+                editDropdownIdLabel: 'serviceId',
+                editDropdownValueLabel: 'serviceName',
+                editDropdownOptionsArray: []
+            }, {
+                name: 'isFrequency',
+                displayName: 'Frequency?',
+                field: 'frequency_trip',
+                type: 'boolean'
+            }, {
+                name: 'frequencyStart',
+                displayName: 'Frequency St.',
+                field: 'frequency_start_time'
+            }, {
+                name: 'frequencyEnd',
+                displayName: 'Frequency En.',
+                field: 'frequency_end_time',
+                pinnedLeft: true
+            }]
+        });
+        $scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length;
+    });
+
+    //SCHEDULE REGION ENDS
+
+    //FARE REGION
+    $scope.showFares = function() {
+        $scope.fareGridOptions.columnDefs.splice(1, 100);
+        $scope.routeDetail.stages.forEach(function(stage) {
+            var stageCol = {
+                name: '' + stage.stageId,
+                displayName: stage.title,
+                field: 'stages.' + stage.stageId
+            };
+            $scope.fareGridOptions.columnDefs.push(stageCol);
+        });
+        $scope.fareGridOptions.data = $scope.routeDetail.stages;
+    };
+    $scope.fareGridOptions = {
         enableSorting: false,
         enableCellEdit: true,
         enableColumnMenus: false,
         columnDefs: [{
-            name: 'Delete',
-            displayName: '',
-            cellTemplate: '<button class="btn btn-danger btn-xs" ng-click="getExternalScopes().deleteTrip(row.entity)"><span class="glyphicon glyphicon-trash"></span> Delete</button>'
-        }, 
-		{
-            name: 'Auto',
-            displayName: '',
-            cellTemplate: '<button class="btn btn-success btn-xs" ng-click="getExternalScopes().autocomplete(' + dir +',row.entity)"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete</button>'
-        },
-		{
-            name: 'ID',
-            field: 'tripId',
-            enableCellEdit: false,
-			cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
-        }, {
-            editableCellTemplate: 'ui-grid/dropdownEditor',
-            name: 'Service',
-            field: 'serviceId',
-            cellFilter: 'service',
-            editDropdownIdLabel: 'serviceId',
-            editDropdownValueLabel: 'serviceName',
-            editDropdownOptionsArray: []
-        }, {
-            name: 'isFrequency',
-            displayName: 'Frequency?',
-            field: 'frequency_trip',
-            type: 'boolean'
-        }, {
-            name: 'frequencyStart',
-            displayName: 'Frequency St.',
-            field: 'frequency_start_time'
-        }, {
-            name: 'frequencyEnd',
-            displayName: 'Frequency En.',
-            field: 'frequency_end_time',
-            pinnedLeft: true
+            name: 'title',
+            displayName: 'Source',
+            field: 'title'
         }]
-		});
-	$scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length ;
-	});
+    }
+    //FARE REGION ENDS
 
-    //SCHEDULE REGION ENDS
-	
-	//FARE REGION
-	$scope.showFares = function(){
-		$scope.fareGridOptions.columnDefs.splice(1, 100);
-		$scope.routeDetail.stages.forEach(function(stage){
-			var stageCol = {
-				name: ''+stage.stageId,
-				displayName: stage.title,
-				field: 'stages.'+stage.stageId
-			};
-			$scope.fareGridOptions.columnDefs.push(stageCol);
-		});
-		$scope.fareGridOptions.data = $scope.routeDetail.stages;
-	};
-	$scope.fareGridOptions = {
-        enableSorting: false,
-        enableCellEdit: true,
-        enableColumnMenus: false,
-        columnDefs: [
-			{
-				name: 'title'
-				, displayName: 'Source'
-				, field: 'title'
-			}
-		]
-	}	
-	//FARE REGION ENDS
-	
-	$scope.stopLayer = new google.maps.KmlLayer({});
-	
-	
-	google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
-				console.log("Layer is now " + $scope.stopLayer.getStatus());
-	});
-				
-	
+    $scope.stopLayer = new google.maps.KmlLayer({});
+
+
+    google.maps.event.addListener($scope.stopLayer, 'status_changed', function() {
+        console.log("Layer is now " + $scope.stopLayer.getStatus());
+    });
+
+
 
     //ROUTELIST REGION
     $scope.routeListOptions = {
@@ -718,19 +728,21 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //CALENDAR REGION ENDS
     $scope.addStopToRoute = function(stop) {
         if ($scope.routeDetail.routeId >= 0) {
-			$scope.routeDetail.isDirty = true;
-			
-			//If this stop's peer is already an onward stop, add this stop as the return stop
-			if(stop.peerStopId>0) {
-				var routestop = $scope.findRouteStop( function(rs){ return rs.onwardStop.id==stop.peerStopId ;});
-				if(routestop){
-					stop.icon = ROUTE_STOP_ICON;
-					routestop.returnStop = stop;
-					return;
-				}
-			}
-			
-			
+            $scope.routeDetail.isDirty = true;
+
+            //If this stop's peer is already an onward stop, add this stop as the return stop
+            if (stop.peerStopId > 0) {
+                var routestop = $scope.findRouteStop(function(rs) {
+                    return rs.onwardStop.id == stop.peerStopId;
+                });
+                if (routestop) {
+                    stop.icon = ROUTE_STOP_ICON;
+                    routestop.returnStop = stop;
+                    return;
+                }
+            }
+
+
             if ($scope.routeDetail.stages.length == 0) {
                 $scope.addNewStage();
                 //$scope.routeDetail.stages[$scope.routeDetail.stages.length -1].title = stop.name ; //TODO capture the village name
@@ -738,45 +750,43 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1];
             $scope.addStopToStage(stop, lastStage);
-            
+
         }
     };
     $scope.delStopFromRoute = function(stop) {
         if ($scope.routeDetail.routeId >= 0) {
             var stg = _.find($scope.routeDetail.stages, function(stage) {
-				
-				var rs = _.find(stage.stops, function(rs){ return rs.onwardStop.id==stop.id || rs.returnStop.id==stop.id; });
-				if(rs!=undefined){
-					$scope.delStopFromScheduleGrid(0, rs.onwardStop);
-					rs.onwardStop.icon = STOP_ICON;
-					
-					$scope.delStopFromScheduleGrid(1, rs.returnStop);
-					rs.returnStop.icon = STOP_ICON;
-					
-					stage.stops.splice(_.indexOf(stage.stops, rs),1);
-					return true;
-				}
-				return false;				
-            });		
+
+                var rs = _.find(stage.stops, function(rs) {
+                    return rs.onwardStop.id == stop.id || rs.returnStop.id == stop.id;
+                });
+                if (rs != undefined) {
+                    $scope.delStopFromScheduleGrid(0, rs.onwardStop);
+                    rs.onwardStop.icon = STOP_ICON;
+
+                    $scope.delStopFromScheduleGrid(1, rs.returnStop);
+                    rs.returnStop.icon = STOP_ICON;
+
+                    stage.stops.splice(_.indexOf(stage.stops, rs), 1);
+                    return true;
+                }
+                return false;
+            });
 
             $scope.routeDetail.isDirty = true;
         }
     };
 
-	//This will be called for the KML features
-	stopClicked = function(event){
-		$scope.$apply(function(){
-			//Bin search the stop first TODO
-			$scope.stopEvents.click(null, 'click', event.detail.stop);
-		});
-	};
+
 
     $scope.stopEvents = {
         click: function(marker, eventName, stop) {
             var stg = _.find($scope.routeDetail.stages, function(stage) {
-				//TODO need to rework for onward and return Stop
-				var rs = _.find(stage.stops, function(rs){ return rs.onwardStop.id==stop.id || rs.returnStop.id==stop.id; });
-				return (rs!=undefined) ;
+                //TODO need to rework for onward and return Stop
+                var rs = _.find(stage.stops, function(rs) {
+                    return rs.onwardStop.id == stop.id || rs.returnStop.id == stop.id;
+                });
+                return (rs != undefined);
                 //return _.contains(stage.stops, model);
             });
             if (stg == undefined) { //The stop does not already exist in the route
@@ -808,7 +818,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
     $scope.configMap = function() {
         //$scope.gmap = $scope.map.control.getGMap() ;
-//		console.log("Map is ", $scope.map.control.getGMap());
+        //		console.log("Map is ", $scope.map.control.getGMap());
 
         $scope.stageTreeOptions = {
             accept: function(sourceNode, destNodes, destIndex) {
@@ -835,38 +845,40 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             if (newObject.title == "") {
                 newObject.title = "New Stage";
             }
-			var latestStage = _.min($scope.routeDetail.stages, function(stage){ return stage.stageId;});
-			var stageId = -1;
-			if(latestStage.stageId < 0){
-				stageId = latestStage.stageId - 1;
-			}
-			newObject.stageId = stageId;
-			var stages = {};
+            var latestStage = _.min($scope.routeDetail.stages, function(stage) {
+                return stage.stageId;
+            });
+            var stageId = -1;
+            if (latestStage.stageId < 0) {
+                stageId = latestStage.stageId - 1;
+            }
+            newObject.stageId = stageId;
+            var stages = {};
 
-			newObject.stages = stages;
-			
-			//Add the new stage to all existing stages
-			$scope.routeDetail.stages.forEach(function(stage){
-				stage.stages[''+newObject.stageId] = 0;
-			});
-			
-			//Add the new stage to the route
+            newObject.stages = stages;
+
+            //Add the new stage to all existing stages
+            $scope.routeDetail.stages.forEach(function(stage) {
+                stage.stages['' + newObject.stageId] = 0;
+            });
+
+            //Add the new stage to the route
             $scope.routeDetail.stages.push(newObject);
-			$scope.routeDetail.stages.forEach(function(stage){
-				stages[''+stage.stageId] = 0;
-			});
+            $scope.routeDetail.stages.forEach(function(stage) {
+                stages['' + stage.stageId] = 0;
+            });
             $scope.routeDetail.isDirty = true;
             $scope.newStage.title = "";
-			
-			var stageCol = {
-				name: ''+newObject.stageId,
-				displayName: newObject.title,
-				field: 'stages.'+newObject.stageId
-			};
-			$scope.fareGridOptions.columnDefs.push(stageCol);
-			
-			
-			
+
+            var stageCol = {
+                name: '' + newObject.stageId,
+                displayName: newObject.title,
+                field: 'stages.' + newObject.stageId
+            };
+            $scope.fareGridOptions.columnDefs.push(stageCol);
+
+
+
         };
 
 
@@ -917,24 +929,26 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		draggable: true
 	};
 		*/
-	function stopFromPM(pm){
-	                var stop = {
-					id: pm.id
-					, name: pm.name
-					, icon: STOP_ICON
-					, latitude: pm.latlng.lat()
-					, longitude: pm.latlng.lng()
-				};
-				
-				return stop;
-                
-                
-	}	
-	function useTheData(docs) {
-		console.log("Using the data");
+    function stopFromPM(pm) {
+        var stop = {
+            id: parseInt(pm.id),
+			peerStopId: pm.vars.val.peer,
+            name: pm.name,
+            icon: STOP_ICON,
+            latitude: pm.latlng.lat(),
+            longitude: pm.latlng.lng()
+        };
 
-		markerclusterer.addMarkers(markers);
-		/*
+        return stop;
+
+
+    }
+
+    function useTheData(docs) {
+        console.log("Using the data");
+
+        markerclusterer.addMarkers(markers);
+        /*
 		var mcnt =0;
         for (var i = 0; i < docs[0].placemarks.length; i++) {
 			console.log(docs[0].placemarks[i].marker);
@@ -954,82 +968,91 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		}
 		console.log("Added listener for ", mcnt);
 		*/
-		
-	}
-	
-	var mcOptions = {
-      gridSize: 50,
-      maxZoom: 15
+
+    }
+
+    var mcOptions = {
+        gridSize: 50,
+        maxZoom: 15
     };
-    var markerclusterer ;
-	var markers = [];
-	var cnt=0;
-	pushStop = function(stop){
+    var markerclusterer;
+    var markers = [];
+
+	pushToStops = function(stop){
 		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
-		$scope.fleetDetail.stops.splice(sidx,0,stop);
+		$scope.fleetDetail.stops.splice(sidx, 0, stop);
 	};
-	addMarker = function(markerOptions){
-		//console.log("Adding marker ", cnt++);
-		//markerOptions.map = $scope.gmap;
-		var marker = new google.maps.Marker(markerOptions);
-		markers.push(marker);
-		//markerclusterer.addMarker(marker);
-		google.maps.event.addListener(marker, 'click', function(event) 
-    {   
-			pushStop(this.model);
-         // I want to access the document name here of 'car Parks'
-         console.log("Marker clicked ", this.model);
-		 $scope.stopEvents.click(this, "click", this.model);
-    });		
-		google.maps.event.addListener(marker, 'rightclick', function(event) 
-    {           
-		$scope.fleetDetail.stops.push(this.model); 
-         // I want to access the document name here of 'car Parks'
-         console.log("Marker rt clicked ", this.model);
-		 $scope.stopEvents.rightclick(this, "rightclick", this.model);
-    });
-	google.maps.event.addListener(marker, 'dragend', function(event) 
-    {           
-		var oldStopOptions = jQuery.extend({}, markerOptions);
-		oldStopOptions.draggable = false;
-		oldStopOptions.icon = "";
-         // I want to access the document name here of 'car Parks'
-         console.log("Marker dragged ", this.model);
-
-    });
-			google.maps.event.addListener(marker, 'dragend', function(event) 
-    {           
-		$scope.fleetDetail.stops.push(this.model); 
-         // I want to access the document name here of 'car Parks'
-         console.log("Marker dragged ", this.model);
-		 $scope.stopEvents.dragend(this, "dragend", this.model);
-    });
+	removeFromStops = function(stop){
+		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
+		$scope.fleetDetail.stops.splice(sidx, 1);
 	};
-	
-	 createMarker = function(placemark) {
-      //console.log(placemark);
-      //Constructing marker for each Placemark node, and then add it to the markclustere
-      var point = new google.maps.LatLng(placemark.Point.coordinates[0].lat, placemark.Point.coordinates[0].lng);
-	  var stop = stopFromPM(placemark);
-                stop.options = {
-                    draggable: true,
-                    title: stop.name
-                    //zIndex: 1000
-                };	  
-      var markerOptions = {
-        position: point
-		, model : stop
-		, icon : stop.icon
-      };
-	  addMarker(markerOptions);
-      
-
+    pushStop = function(stop) {
+		var stp = binarySearch($scope.fleetDetail.stops, stop.id) ;
+		if(!stp){
+			pushToStops(stop);
+		}
+		
+		if(stop.peerStopId){
+			var peerStop = binarySearch($scope.fleetDetail.allstops, stop.peerStopId);
+			if(!peerStop){ //Peer is not already activated
+				peerStop = binarySearch($scope.fleetDetail.allstops, stop.peerStopId); //Find in the all stops
+				if(peerStop){ //If there exists a peer stop
+					pushToStops(peerStop);
+				}
+			}
+		}
     };
 	
+	//Just add the marker. It will be added to clusterer later
+    addMarker = function(markerOptions) {
+        //console.log("Adding marker ", cnt++);
+        //markerOptions.map = $scope.gmap;
+        var marker = new google.maps.Marker(markerOptions);
+        markers.push(marker);
+        //markerclusterer.addMarker(marker);
+		
+		google.maps.event.addListener(marker, 'dragend', function(event) {
+			this.model.latitude = marker.position.lat();
+			this.model.longitude = marker.position.lng();
+        });
+		
+		//When the user 'works' on any KML marker, remove the marker and put the stop in the fleetDetail.stops array.
+		Object.keys($scope.stopEvents).forEach( function(key){
+			google.maps.event.addListener(marker, key, function(event) {
+				marker.map = null ;
+				markerclusterer.removeMarker(marker);
+				pushStop(this.model); //Put the stop and its peer if exists
+				$scope.stopEvents[key](this, key, this.model);				
+			});
+		});
+    };
+
+    createMarker = function(placemark) {
+        //console.log(placemark);
+        //Constructing marker for each Placemark node, and then add it to the markclustere
+        var point = new google.maps.LatLng(placemark.Point.coordinates[0].lat, placemark.Point.coordinates[0].lng);
+        var stop = stopFromPM(placemark);
+        stop.options = {
+            draggable: true,
+            title: stop.name
+            //zIndex: 1000
+        };
+        var markerOptions = {
+            position: point,
+            model: stop,
+            icon: stop.icon,
+			draggable: true
+        };
+        addMarker(markerOptions);
+
+
+    };
+
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
     //Get the details of the selected fleet
     $scope.getFleetDetail = function(fleetId) {
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
+			//This array is absolutely needed, even with KML. The PushStop function uses it to find a peer
             fleetDetail.allstops.forEach(function(stop) {
 
                 stop.icon = stop.peerStopId > 0 ? PEER_STOP_ICON : STOP_ICON;
@@ -1040,22 +1063,22 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     title: stop.name
                     //zIndex: 1000
                 };
-				
+
             });
-			fleetDetail.stops = [];
-						
+            fleetDetail.stops = [];
+
             $scope.closeRoute();
-			
+
             $scope.fleetDetail = fleetDetail;
-			$scope.fleetDetail.stops = [];
-			$scope.showStops();
+            $scope.fleetDetail.stops = [];
+            $scope.showStops();
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
-			[0,1].forEach(function(dir){
-				var svcCol = _.find($scope.scheduleOptions[dir].columnDefs, function(col) {
-					return col.name == "Service";
-				});
-				svcCol.editDropdownOptionsArray = $scope.fleetDetail.calendars;
-			});
+            [0, 1].forEach(function(dir) {
+                var svcCol = _.find($scope.scheduleOptions[dir].columnDefs, function(col) {
+                    return col.name == "Service";
+                });
+                svcCol.editDropdownOptionsArray = $scope.fleetDetail.calendars;
+            });
             calendars = $scope.fleetDetail.calendars;
             $scope.routeListOptions.data = $scope.fleetDetail.routes;
         });
@@ -1064,9 +1087,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.loadFleets = function() {
         getthereAdminService.loadFleets(function(fleets) {
             $scope.fleets = fleets;
-			$scope.fleet.selected = _.find(fleets, function(fleet){ return fleet.level==0; });
-			//console.log("LOADFLEETS");
-			//$scope.getFleetDetail($scope.fleet.selected.fleetId);
+            $scope.fleet.selected = _.find(fleets, function(fleet) {
+                return fleet.level == 0;
+            });
+            //console.log("LOADFLEETS");
+            //$scope.getFleetDetail($scope.fleet.selected.fleetId);
         });
     };
 
@@ -1083,28 +1108,37 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             flash.success = message;
             if (stopDetail.id <= 0) { //New stop				
-				var newStop = {
-                        id: stop.id,
-                        name: stopDetail.name,
-                        latitude: stopDetail.latitude,
-                        longitude: stopDetail.longitude,
-						peerStopId: stopDetail.peerStopId,
-                        icon: icon,
-                        options: {
-                            draggable: true,
-                            title: stopDetail.name
-                        }
-                    };
-				if(!(stopDetail.peerStopId>0)) { //If this is a fresh non-peer stop, it has to be added to stops with which we can work
-					$scope.fleetDetail.stops.push(newStop);
+                var newStop = {
+                    id: stop.id,
+                    name: stopDetail.name,
+                    latitude: stopDetail.latitude,
+                    longitude: stopDetail.longitude,
+                    peerStopId: stopDetail.peerStopId,
+                    icon: icon,
+                    options: {
+                        draggable: true,
+                        title: stopDetail.name
+                    }
+                };
+                if (!(stopDetail.peerStopId > 0)) { //If this is a fresh non-peer stop, it has to be added to stops with which we can work
+					pushToStops(newStop);
+                    //$scope.fleetDetail.stops.push(newStop);
+                }
+				else{ //The one that has been saved is a peer stop. Update the original stop with the id of the peer stop
+					var origStop = binarySearch($scope.fleetDetail.stops, newStop.peerStopId);
+					origStop.peerStopId = newStop.id ;
+					
+					removeFromStops(stopDetail); //Remove the old peer which has -ve id
+					pushToStops(newStop);
+					
 				}
 
-                    if ($scope.routeDetail.routeId >= 0) {
-                        $scope.addStopToRoute(newStop);
-                    }
+                if ($scope.routeDetail.routeId >= 0) {
+                    $scope.addStopToRoute(newStop);
+                }
 
-                    $scope.map.infoWindow.show = false;
-                    $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	
+                $scope.map.infoWindow.show = false;
+                $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	
             }
         }, function(error) {
             flash.error = 'Stop could not be saved';
@@ -1411,10 +1445,10 @@ NYFleetChoiceDirective = function() {
 autofocus = function($timeout) {
     return {
         restrict: 'A',
-        link : function($scope, element) {
+        link: function($scope, element) {
             $timeout(function() {
-            element[0].focus();
-            },500);
+                element[0].focus();
+            }, 500);
         }
     };
 };
@@ -1422,54 +1456,54 @@ autofocus = function($timeout) {
 dateMask = function($timeout) {
     return {
         restrict: 'A',
-        link : function($scope, element) {
-		console.log($(element[0]).val()=='');
-		//if($(element[0]).val()=='')
-			/*$(element[0]).focus(function() {
+        link: function($scope, element) {
+            console.log($(element[0]).val() == '');
+            //if($(element[0]).val()=='')
+            /*$(element[0]).focus(function() {
 				if($(element[0]).val()=='')
 					$(element[0]).val('__:__ am');
 			});
 			*/
-			var patt = new RegExp("^([0-9]|([0-1][0-2])|0[0-9]):([0-9]|[0-5][0-9]) (am|pm)$");
-			
-			$(element[0]).blur(function() {
-			var val = $(element[0]).val();
-	
-				if(!patt.test(val)) {
-				alert('hello');
-					$(element[0]).val('');
-					$scope.$apply();
-				}
-			});
-			
-			$scope.validate = function() {
-				
-				var val = $(element[0]).val();
-				console.log(val);
-				if(!val || val == '')
-					return;
-				var testVal = null;
-				var dummy = '11:11 am';
-				testVal = val + dummy.substring(val.length);
-				console.log(testVal);
-				
-				if(!patt.test(testVal)) {
-					console.log(false);
-					$(element[0]).val(val.substring(0, val.length-1));
-					$scope.validate();
-				} else {
-					console.log(true);
-					if(val.length==2)
-						$(element[0]).val(val+":");
-					else if(val.length==5)
-						$(element[0]).val(val+" ");
-					else if(val.length==7)
-						$(element[0]).val(val+"m");
-				}
-			};
+            var patt = new RegExp("^([0-9]|([0-1][0-2])|0[0-9]):([0-9]|[0-5][0-9]) (am|pm)$");
+
+            $(element[0]).blur(function() {
+                var val = $(element[0]).val();
+
+                if (!patt.test(val)) {
+                    alert('hello');
+                    $(element[0]).val('');
+                    $scope.$apply();
+                }
+            });
+
+            $scope.validate = function() {
+
+                var val = $(element[0]).val();
+                console.log(val);
+                if (!val || val == '')
+                    return;
+                var testVal = null;
+                var dummy = '11:11 am';
+                testVal = val + dummy.substring(val.length);
+                console.log(testVal);
+
+                if (!patt.test(testVal)) {
+                    console.log(false);
+                    $(element[0]).val(val.substring(0, val.length - 1));
+                    $scope.validate();
+                } else {
+                    console.log(true);
+                    if (val.length == 2)
+                        $(element[0]).val(val + ":");
+                    else if (val.length == 5)
+                        $(element[0]).val(val + " ");
+                    else if (val.length == 7)
+                        $(element[0]).val(val + "m");
+                }
+            };
             $(element[0]).keyup(function(event) {
-				$scope.validate();
-			});
+                $scope.validate();
+            });
         }
     };
 };
@@ -1510,9 +1544,7 @@ function UnpairedStopsFilter() {
 (function() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
-		,'ui.layout'
-        , 'angular-flash.service', 'angular-flash.flash-alert-directive'
-		,'cgBusy'
+        , 'ui.layout', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
     ]);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
@@ -1540,6 +1572,6 @@ function UnpairedStopsFilter() {
     adminApp.factory('getthereAdminService', GetThereAdminService);
     adminApp.filter('reverse', ReverseFilter);
     adminApp.filter('unpaired', UnpairedStopsFilter);
-    adminApp.directive('autofocus', autofocus); 
-	adminApp.directive('dateMask', dateMask); 
+    adminApp.directive('autofocus', autofocus);
+    adminApp.directive('dateMask', dateMask);
 }());

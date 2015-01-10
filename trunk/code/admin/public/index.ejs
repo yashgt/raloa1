@@ -9,30 +9,30 @@
 
     <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.exp"></script>
     <script src="javascripts/ContextMenu.js"></script>
-	<!--
+    <!--
 	<script src="http://javascripts/bower_components/angular/angular.min.js"></script>
 	<script src="http://javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="http://javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
 	-->
-	
-	
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
-	
+
 
     <link rel="styleSheet" href="javascripts/bower_components/angular-ui-grid/ui-grid.min.css" />
     <script src="javascripts/bower_components/angular-ui-grid/ui-grid.min.js"></script>
-	
-	<script src="javascripts/ProjectedOverlay.js"></script>
-	<script src="javascripts/geoxml3.js"></script>
+
+    <script src="javascripts/ProjectedOverlay.js"></script>
+    <script src="javascripts/geoxml3.js"></script>
 
     <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
     <script src="javascripts/bower_components/angular-ui-select/dist/select.js"></script>
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" type="text/javascript"></script>
 
     <script src="javascripts/bower_components/message-center/message-center.js"></script>
     <script src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
@@ -41,13 +41,13 @@
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"></script>
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet">
-	
-	<link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-ui-layout/ui-layout.css"/>
-	<script type="text/javascript" src="javascripts/bower_components/raf/index.js"></script>
-	<script type="text/javascript" src="javascripts/bower_components/angular-ui-layout/ui-layout.js"></script>
-	
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-ui-layout/ui-layout.css" />
+    <script type="text/javascript" src="javascripts/bower_components/raf/index.js"></script>
+    <script type="text/javascript" src="javascripts/bower_components/angular-ui-layout/ui-layout.js"></script>
+
     <script src="javascripts/RouteController.js"></script>
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
@@ -68,7 +68,7 @@
 
 <body ng-controller="RouteController">
 
-    <div cg-busy="hangOn" >
+    <div cg-busy="hangOn">
         <div flash-alert active-class="in alert" class="alert fade" align="right">
             <span class="alert-message">{{flash.message}}</span>
         </div>
@@ -91,7 +91,7 @@
 
                                             Route options:
                                             <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">New</button>
-											<button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">Extend</button>
+                                            <button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">Extend</button>
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
                                             <button type="submit" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId <= 0 ">Extend</button>
@@ -99,7 +99,7 @@
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
-												Zoom: {{fleetDetail.zoom}}  Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}}  Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})
+                                                Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
 
                                                     <ny-ui-gmap-control gmap="gmap" bounds="fleetDetail.bounds"></ny-ui-gmap-control>
@@ -135,13 +135,13 @@
                                             </tab>
                                             <!--Map tab ends -->
                                             <tab heading="Schedule" disabled="routeDetail.routeId<0">
-												<button class="btn btn-primary btn-xs" ng-click="addTrip(0)"><span class="glyphicon glyphicon-plus"></span>Add Onward Trip</button>
+                                                <button class="btn btn-primary btn-xs" ng-click="addTrip(0)"><span class="glyphicon glyphicon-plus"></span>Add Onward Trip</button>
                                                 <div ui-grid="scheduleOptions[0]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
-												
-												<button ng-click="addTrip(1)">Add Return Trip</button>
+
+                                                <button ng-click="addTrip(1)">Add Return Trip</button>
                                                 <div ui-grid="scheduleOptions[1]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
-                                            <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">												
+                                            <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">
                                                 <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
                                             </tab>
                                             <tab heading="Object">
@@ -150,105 +150,105 @@
                                         </tabset>
                                     </td>
 
-                                    <td width=15% valign="top"  >
-									<div ng-disabled="routeDetail.routeId<0">
-                                        <tabset >
-                                            <tab heading="Onward">
-                                                <div ui-tree="stageTreeOptions">
-                                                    <!-- for existing stages -->
-                                                    <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
-                                                        <li ng-repeat="stage in routeDetail.stages" ui-tree-node>
-                                                            <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
-                                                                <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
-                                                                <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
-                                                                <div>{{stage.title}}</div>
-                                                            </div>
-                                                            <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
-                                                                <form class="form-inline" role="form" name="stage_{{stage.stageId}}">
-                                                                    <div class="form-group">
-                                                                        <label class="sr-only" for="title">Stage name</label>
-                                                                        <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title" ng-required="true">
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
-                                                                    <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
-                                                                </form>
-                                                            </div>
-                                                            <ol ui-tree-nodes ng-model="stage.stops" data-type="stage">
-                                                                <li ng-repeat="stop in stage.stops" ui-tree-node data-type="stop">
-                                                                    <div class="category-title angular-ui-tree-handle">
-                                                                        <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
-                                                                        <div>
-                                                                            {{stop.onwardStop.name}}
+                                    <td width=15% valign="top">
+                                        <div ng-disabled="routeDetail.routeId<0">
+                                            <tabset>
+                                                <tab heading="Onward">
+                                                    <div ui-tree="stageTreeOptions">
+                                                        <!-- for existing stages -->
+                                                        <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
+                                                            <li ng-repeat="stage in routeDetail.stages" ui-tree-node>
+                                                                <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
+                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
+                                                                    <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                                    <div>{{stage.title}}</div>
+                                                                </div>
+                                                                <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
+                                                                    <form class="form-inline" role="form" name="stage_{{stage.stageId}}">
+                                                                        <div class="form-group">
+                                                                            <label class="sr-only" for="title">Stage name</label>
+                                                                            <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title" ng-required="true">
                                                                         </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ol>
-                                                        </li>
-                                                    </ol>
-                                                    <ol class="angular-ui-tree-nodes">
-                                                        <li class="angular-ui-tree-node">
-                                                            <div class="group-title angular-ui-tree-handle">
-                                                                <form class="form-inline" role="form" name="newstage_form" >
-                                                                    <div class="form-group">
-                                                                        <label class="sr-only" for="title">Stage name</label>
-                                                                        <input type="text" class="form-control" id="stageName" ng-model="newStage.title" placeholder="Stage name" ng-required="true">
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-default" ng-click="addNewStage()" ng-disabled="newstage_form.$invalid">Add Stage</button>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    </ol>
-                                                </div>
-                                            </tab>
-                                            <tab heading="Return">
-                                                <div ui-tree="stageTreeOptions">
-                                                    <!-- for existing stages -->
-                                                    <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
-                                                        <li ng-repeat="stage in routeDetail.stages | reverse" ui-tree-node>
-                                                            <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
-                                                                <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
-                                                                <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
-                                                                <div>{{stage.title}}</div>
-                                                            </div>
-                                                            <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
-                                                                <form class="form-inline" role="form">
-                                                                    <div class="form-group">
-                                                                        <label class="sr-only" for="title">Stage name</label>
-                                                                        <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title">
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
-                                                                    <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
-                                                                </form>
-                                                            </div>
-                                                            <ol ui-tree-nodes ng-model="stage.stops" data-type="stage">
-                                                                <li ng-repeat="stop in stage.stops | reverse" ui-tree-node data-type="stop">
-                                                                    <div class="category-title angular-ui-tree-handle">
-                                                                        <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
-                                                                        <div>
-                                                                            {{stop.returnStop.name}}
+                                                                        <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
+                                                                        <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
+                                                                    </form>
+                                                                </div>
+                                                                <ol ui-tree-nodes ng-model="stage.stops" data-type="stage">
+                                                                    <li ng-repeat="stop in stage.stops" ui-tree-node data-type="stop">
+                                                                        <div class="category-title angular-ui-tree-handle">
+                                                                            <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
+                                                                            <div>
+                                                                                {{stop.onwardStop.name}}
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ol>
-                                                        </li>
-                                                    </ol>
-                                                    <ol class="angular-ui-tree-nodes">
-                                                        <li class="angular-ui-tree-node">
-                                                            <div class="group-title angular-ui-tree-handle">
-                                                                <form class="form-inline" role="form">
-                                                                    <div class="form-group">
-                                                                        <label class="sr-only" for="title">Stage name</label>
-                                                                        <input type="text" class="form-control" id="stageName" ng-model="newStage.title" placeholder="Stage name">
-                                                                    </div>
-                                                                    <button type="submit" class="btn btn-default" ng-click="addNewStage()">Add Stage</button>
-                                                                </form>
-                                                            </div>
-                                                        </li>
-                                                    </ol>
-                                                </div>
-                                            </tab>
-                                        </tabset>
-										</div>
+                                                                    </li>
+                                                                </ol>
+                                                            </li>
+                                                        </ol>
+                                                        <ol class="angular-ui-tree-nodes">
+                                                            <li class="angular-ui-tree-node">
+                                                                <div class="group-title angular-ui-tree-handle">
+                                                                    <form class="form-inline" role="form" name="newstage_form">
+                                                                        <div class="form-group">
+                                                                            <label class="sr-only" for="title">Stage name</label>
+                                                                            <input type="text" class="form-control" id="stageName" ng-model="newStage.title" placeholder="Stage name" ng-required="true">
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-default" ng-click="addNewStage()" ng-disabled="newstage_form.$invalid">Add Stage</button>
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+                                                    </div>
+                                                </tab>
+                                                <tab heading="Return">
+                                                    <div ui-tree="stageTreeOptions">
+                                                        <!-- for existing stages -->
+                                                        <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
+                                                            <li ng-repeat="stage in routeDetail.stages | reverse" ui-tree-node>
+                                                                <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
+                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
+                                                                    <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
+                                                                    <div>{{stage.title}}</div>
+                                                                </div>
+                                                                <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
+                                                                    <form class="form-inline" role="form">
+                                                                        <div class="form-group">
+                                                                            <label class="sr-only" for="title">Stage name</label>
+                                                                            <input type="text" class="form-control" placeholder="Stage name" ng-model="stage.title">
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Save</button>
+                                                                        <button type="submit" class="btn btn-default" ng-click="stage.editing=false">Cancel</button>
+                                                                    </form>
+                                                                </div>
+                                                                <ol ui-tree-nodes ng-model="stage.stops" data-type="stage">
+                                                                    <li ng-repeat="stop in stage.stops | reverse" ui-tree-node data-type="stop">
+                                                                        <div class="category-title angular-ui-tree-handle">
+                                                                            <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
+                                                                            <div>
+                                                                                {{stop.returnStop.name}}
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ol>
+                                                            </li>
+                                                        </ol>
+                                                        <ol class="angular-ui-tree-nodes">
+                                                            <li class="angular-ui-tree-node">
+                                                                <div class="group-title angular-ui-tree-handle">
+                                                                    <form class="form-inline" role="form">
+                                                                        <div class="form-group">
+                                                                            <label class="sr-only" for="title">Stage name</label>
+                                                                            <input type="text" class="form-control" id="stageName" ng-model="newStage.title" placeholder="Stage name">
+                                                                        </div>
+                                                                        <button type="submit" class="btn btn-default" ng-click="addNewStage()">Add Stage</button>
+                                                                    </form>
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+                                                    </div>
+                                                </tab>
+                                            </tabset>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

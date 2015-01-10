@@ -310,7 +310,7 @@ drop procedure if exists save_trip//
 create procedure save_trip(
 	  INOUT id int
 	, IN in_direction boolean
-	, IN in_route_id
+	, IN in_route_id int
 	, IN in_frequency_trip boolean
 	, IN in_frequency_start_time time
 	, IN in_frequency_end_time time
