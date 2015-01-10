@@ -148,7 +148,8 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
     var fleetId = req.params.fleet_id;
     db.query("call get_fleet_detail(?);", [fleetId], function(results) {
         var fleetDetail = {
-            defaultServiceId : 1
+			fleetId : fleetId
+            ,defaultServiceId : 1
 			,center: {
                 latitude: results[0][0].cen_lat,
                 longitude: results[0][0].cen_lon
@@ -569,8 +570,9 @@ app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add 
 
 app.get('/api/kml/:fleet_id', function(req, res) {
 	var fleetId = req.params.fleet_id; 
+	var host = req.headers.host;
 	console.log("KML");
-	admin.generate_kml(fleetId, function(content){
+	admin.generate_kml(fleetId, host, function(content){
 	//application/vnd.google-earth.kml+xml
 		res.writeHead(200, {'Content-type': 'application/vnd.google-earth.kml+xml'});
 		res.write(content);

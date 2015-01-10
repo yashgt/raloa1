@@ -10,9 +10,13 @@ var ROUTE_STOP_REV_ICON = "/images/route_bus_stop.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
+var HOST = "http://" + window.location.host;
+console.log(HOST);
+
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
-    , flash, GoogleMapApi) {
+    , flash, GoogleMapApi, IsReady) {
+	
 
     $scope.fleet = {
         selected: undefined
@@ -245,6 +249,28 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     };
 
+	IsReady.promise().then(function (maps) {
+		$scope.gmap = $scope.map.control.getGMap();
+		markerclusterer = new MarkerClusterer($scope.gmap, [], mcOptions);
+		
+				$scope.stopLayer.setMap($scope.gmap);
+				$scope.myParser = new geoXML3.parser({
+					map: $scope.gmap
+					,suppressInfoWindows: true
+					,afterParse: useTheData
+					,createMarker: createMarker
+				});
+				
+				
+                routeHelpChannel.gmap = $scope.gmap;	
+            console.log("GMap ready");
+
+			//$scope.showStops();
+			
+			
+            $scope.setContextMenu();			
+    });
+	
     $scope.mapEvents = {
         rightclick: function(gMap, eventName, model) {
             if (model.$id) {
@@ -252,25 +278,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
             $scope.contextMenu.show(model["0"].latLng);
             //alert("Model: event:" + eventName + " " + JSON.stringify(model));
-        },
-		
-        tilesloaded: function(gMap, eventName, model) {
-            if ($scope.gmap == undefined) {
-                $scope.gmap = $scope.map.control.getGMap();
-                routeHelpChannel.gmap = $scope.gmap;				
-            }
-
-            console.log("Tiles loaded");
-
-			$scope.stopLayer.setMap($scope.gmap);
-            $scope.setContextMenu();
-
         }
+        
     };
     $scope.markerOptions = {
         draggable: true,
         title: 'Label1'
     };
+	var scnt = 0;
 
 	function binarySearch(array, key) {
     var lo = 0,
@@ -290,6 +305,42 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     }
     return undefined;
 }
+
+	$scope.showStops = function(){
+				markers = [];
+			markerclusterer.clearMarkers();
+	
+		if($scope.fleetDetail && $scope.fleetDetail.fleetId){
+			console.log("Show count ",scnt++);
+			var kmlURL = HOST + '/api/kml/' + $scope.fleetDetail.fleetId;
+
+			if($scope.myParser.docs[0]){
+			$scope.myParser.hideDocument($scope.myParser.docs[0]);
+
+			}
+
+			//if($scope.myParser.docsBy
+			$scope.myParser.parse(kmlURL);
+			}
+			
+			
+			/*
+			//For some strange reason, creating markers from objects makes it slow. 
+			if($scope.fleetDetail && $scope.fleetDetail.allstops){
+			            $scope.fleetDetail.allstops.forEach(function(stop) {
+		
+				var markerOptions = {
+      optimized: false,
+      position: new google.maps.LatLng(stop.latitude,stop.longitude)
+      ,map: $scope.gmap
+	  , model: stop
+    };
+				addMarker(markerOptions);
+            });
+			}
+			*/
+			
+	};
 
     $scope.addStopToStage = function(fleetstop, routestage) {
 		var returnstop ;
@@ -562,7 +613,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 	//FARE REGION ENDS
 	
 	$scope.stopLayer = new google.maps.KmlLayer({});
-	$scope.myParser = new geoXML3.parser({map:$scope.gmap});
+	
 	
 	google.maps.event.addListener($scope.stopLayer, 'status_changed', function () {
 				console.log("Layer is now " + $scope.stopLayer.getStatus());
@@ -712,6 +763,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         }
     };
 
+	//This will be called for the KML features
+	stopClicked = function(event){
+		$scope.$apply(function(){
+			//Bin search the stop first TODO
+			$scope.stopEvents.click(null, 'click', event.detail.stop);
+		});
+	};
 
     $scope.stopEvents = {
         click: function(marker, eventName, stop) {
@@ -750,6 +808,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
     $scope.configMap = function() {
         //$scope.gmap = $scope.map.control.getGMap() ;
+//		console.log("Map is ", $scope.map.control.getGMap());
 
         $scope.stageTreeOptions = {
             accept: function(sourceNode, destNodes, destIndex) {
@@ -857,8 +916,116 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     /*var stopOptions = {
 		draggable: true
 	};
-	*/
+		*/
+	function stopFromPM(pm){
+	                var stop = {
+					id: pm.id
+					, name: pm.name
+					, icon: STOP_ICON
+					, latitude: pm.latlng.lat()
+					, longitude: pm.latlng.lng()
+				};
+				
+				return stop;
+                
+                
+	}	
+	function useTheData(docs) {
+		console.log("Using the data");
 
+		markerclusterer.addMarkers(markers);
+		/*
+		var mcnt =0;
+        for (var i = 0; i < docs[0].placemarks.length; i++) {
+			console.log(docs[0].placemarks[i].marker);
+			if( docs[0].placemarks[i].marker ){
+			console.log("Adding listener ", mcnt++);
+          google.maps.event.addListener(
+            docs[0].placemarks[i].marker,
+            "rightclick",
+            function(pos) {
+              return function() {				
+                var stop = stopFromPM(docs[0].placemarks[pos]);
+              }
+            }(i)
+          );
+		  }
+
+		}
+		console.log("Added listener for ", mcnt);
+		*/
+		
+	}
+	
+	var mcOptions = {
+      gridSize: 50,
+      maxZoom: 15
+    };
+    var markerclusterer ;
+	var markers = [];
+	var cnt=0;
+	pushStop = function(stop){
+		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
+		$scope.fleetDetail.stops.splice(sidx,0,stop);
+	};
+	addMarker = function(markerOptions){
+		//console.log("Adding marker ", cnt++);
+		//markerOptions.map = $scope.gmap;
+		var marker = new google.maps.Marker(markerOptions);
+		markers.push(marker);
+		//markerclusterer.addMarker(marker);
+		google.maps.event.addListener(marker, 'click', function(event) 
+    {   
+			pushStop(this.model);
+         // I want to access the document name here of 'car Parks'
+         console.log("Marker clicked ", this.model);
+		 $scope.stopEvents.click(this, "click", this.model);
+    });		
+		google.maps.event.addListener(marker, 'rightclick', function(event) 
+    {           
+		$scope.fleetDetail.stops.push(this.model); 
+         // I want to access the document name here of 'car Parks'
+         console.log("Marker rt clicked ", this.model);
+		 $scope.stopEvents.rightclick(this, "rightclick", this.model);
+    });
+	google.maps.event.addListener(marker, 'dragend', function(event) 
+    {           
+		var oldStopOptions = jQuery.extend({}, markerOptions);
+		oldStopOptions.draggable = false;
+		oldStopOptions.icon = "";
+         // I want to access the document name here of 'car Parks'
+         console.log("Marker dragged ", this.model);
+
+    });
+			google.maps.event.addListener(marker, 'dragend', function(event) 
+    {           
+		$scope.fleetDetail.stops.push(this.model); 
+         // I want to access the document name here of 'car Parks'
+         console.log("Marker dragged ", this.model);
+		 $scope.stopEvents.dragend(this, "dragend", this.model);
+    });
+	};
+	
+	 createMarker = function(placemark) {
+      //console.log(placemark);
+      //Constructing marker for each Placemark node, and then add it to the markclustere
+      var point = new google.maps.LatLng(placemark.Point.coordinates[0].lat, placemark.Point.coordinates[0].lng);
+	  var stop = stopFromPM(placemark);
+                stop.options = {
+                    draggable: true,
+                    title: stop.name
+                    //zIndex: 1000
+                };	  
+      var markerOptions = {
+        position: point
+		, model : stop
+		, icon : stop.icon
+      };
+	  addMarker(markerOptions);
+      
+
+    };
+	
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
     //Get the details of the selected fleet
     $scope.getFleetDetail = function(fleetId) {
@@ -873,16 +1040,15 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     title: stop.name
                     //zIndex: 1000
                 };
+				
             });
 			fleetDetail.stops = [];
-			
-			$scope.stopLayer.setUrl('http://14.97.97.173:3000/api/kml/' + fleetId) ;
-			$scope.myParser = new geoXML3.parser({map: $scope.gmap});
-			$scope.myParser.parse('http://127.0.0.1:3000/api/kml/'+ fleetId);
-			//$scope.stopLayer.setMap($scope.gmap);
-			
+						
             $scope.closeRoute();
+			
             $scope.fleetDetail = fleetDetail;
+			$scope.fleetDetail.stops = [];
+			$scope.showStops();
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
 			[0,1].forEach(function(dir){
 				var svcCol = _.find($scope.scheduleOptions[dir].columnDefs, function(col) {
@@ -899,7 +1065,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         getthereAdminService.loadFleets(function(fleets) {
             $scope.fleets = fleets;
 			$scope.fleet.selected = _.find(fleets, function(fleet){ return fleet.level==0; });
-			$scope.getFleetDetail($scope.fleet.selected.fleetId);
+			//console.log("LOADFLEETS");
+			//$scope.getFleetDetail($scope.fleet.selected.fleetId);
         });
     };
 
@@ -1359,7 +1526,7 @@ function UnpairedStopsFilter() {
     adminApp.run(initializeApp);
     adminApp.controller('RouteController', ['$scope', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
-        , 'flash', 'GoogleMapApi'.ns(), RouteController
+        , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', RouteController
     ]);
 
     adminApp.filter('service', ServiceFilter);

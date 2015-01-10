@@ -14,13 +14,14 @@ exports.saveStops = function saveStops(stops)
 	});
 };
 
-exports.generate_kml = function(fleetId, cb){
+exports.generate_kml = function(fleetId, host, cb){
 	console.log("Gen");
 	fs.readFile('views/kml.ejs', 'utf8', function(err, template){
 		console.log("Template");
 		db.query("call get_stops(?);", [fleetId], function(results){
-			stops = results[0];
-			var content = ejs.render(template, {stops: stops});
+			stops = results[0];			
+			console.log("Host is %j", host);
+			var content = ejs.render(template, {stops: stops, fleetId: fleetId, root:host});
 			cb(content);
 		});
 
