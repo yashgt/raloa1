@@ -111,7 +111,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         peerStop.peerStopId = stop.id;
 
         console.log("Peer stop %j", peerStop);
-		pushToStops(peerStop);
+        pushToStops(peerStop);
         //$scope.fleetDetail.stops.push(peerStop);
         //});
         //Let the stop show a different icon
@@ -146,19 +146,19 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     var enableStopDragging = function() {
-		markers.forEach(function(marker) {
+        markers.forEach(function(marker) {
             marker.draggable = true;
         });
-		
+
         $scope.fleetDetail.stops.forEach(function(stop) {
             stop.options.draggable = true;
         });
     };
     var disableStopDragging = function() {
-		markers.forEach(function(marker) {
+        markers.forEach(function(marker) {
             marker.draggable = false;
         });
-		
+
         $scope.fleetDetail.stops.forEach(function(stop) {
             stop.options.draggable = false;
         });
@@ -182,8 +182,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
     $scope.extendRoute = function() {
-        $scope.scheduleOptions[0].data = $scope.routeDetail.trips[0];
-        $scope.scheduleOptions[1].data = $scope.routeDetail.trips[1];
+        [0, 1].forEach(function(dir) {
+            $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir] = [];
+        });
+        $scope.routeDetail.routeId = 0;
+
         disableStopDragging();
     };
 
@@ -367,7 +370,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         if (fleetstop.peerStopId) {
             //returnstop = _.find($scope.fleetDetail.stops, function(returnstop) { return returnstop.id == fleetstop.peerStopId; });
             returnstop = binarySearch($scope.fleetDetail.stops, fleetstop.peerStopId) || fleetstop;
-            
+
         } else {
             returnstop = fleetstop;
         }
@@ -427,7 +430,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             $scope.clearScheduleGrid();
 
-
+			var bounds = new google.maps.LatLngBounds(); 
             routeDetail.stages.forEach(function(stage) {
 
                 var routestage = {
@@ -439,14 +442,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 console.log("Adding ", routestage);
 
                 stage.stops.forEach(function(routestop) {
-                    var onwardStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
-                        return fleetstop.id == routestop.onwardStop.id;
-                    });
-
-                    var returnStop = _.find($scope.fleetDetail.stops, function(fleetstop) {
-                        return fleetstop.id == routestop.returnStop.id;
-                    });
-
+                    var onwardStop = getActiveStopById(routestop.onwardStop.id);
+					bounds.extend(new google.maps.LatLng(onwardStop.latitude, onwardStop.longitude));
+                    var returnStop = getActiveStopById(routestop.returnStop.id);
+					bounds.extend(new google.maps.LatLng(returnStop.latitude, returnStop.longitude));
 
                     var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
                     newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
@@ -454,6 +453,17 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
             });
+			$scope.fleetDetail.bounds = {
+                northeast: {
+                    latitude: bounds.getNorthEast().lat(),
+                    longitude: bounds.getNorthEast().lng()
+                },
+                southwest: {
+                    latitude: bounds.getSouthWest().lat(),
+                    longitude: bounds.getSouthWest().lng()
+                }
+            };
+			
             $scope.routeDetail.trips = routeDetail.trips;
             [0, 1].forEach(function(dir) {
                 $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
@@ -796,24 +806,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
         },
         rightclick: function(marker, eventName, stop) {
-            console.log("Event:" + eventName + " Marker:" + marker, stop);
+            console.log("Event:" + eventName + " Marker:" + marker, stop.id);
             $scope.stopContextMenu.showOnMarker(marker.position, stop);
-            console.log("Event:" + eventName + " Model:" + JSON.stringify(stop));
+
         },
         dragend: function(marker, eventName, stop) {
-            console.log("Stop is now " + JSON.stringify(stop));
-
             $scope.saveStop(stop);
         }
-        /*,mouseover: function(marker, eventName, model) {
-            console.log("Hover on stop" + JSON.stringify(model));
-			$scope.currentStop = model;	
-        }
-		,mouseout: function(marker, eventName, model) {
-            console.log("Out of stop" + JSON.stringify(model));
-			$scope.currentStop = null;
-        }
-		*/
+
 
     };
     $scope.configMap = function() {
@@ -929,10 +929,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		draggable: true
 	};
 		*/
+    var stpPtr = 0;
+
     function stopFromPM(pm) {
+
         var stop = {
             id: parseInt(pm.id),
-			peerStopId: pm.vars.val.peer,
+            peerStopId: pm.vars.val.peer,
             name: pm.name,
             icon: STOP_ICON,
             latitude: pm.latlng.lat(),
@@ -948,26 +951,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         console.log("Using the data");
 
         markerclusterer.addMarkers(markers);
-        /*
-		var mcnt =0;
-        for (var i = 0; i < docs[0].placemarks.length; i++) {
-			console.log(docs[0].placemarks[i].marker);
-			if( docs[0].placemarks[i].marker ){
-			console.log("Adding listener ", mcnt++);
-          google.maps.event.addListener(
-            docs[0].placemarks[i].marker,
-            "rightclick",
-            function(pos) {
-              return function() {				
-                var stop = stopFromPM(docs[0].placemarks[pos]);
-              }
-            }(i)
-          );
-		  }
-
-		}
-		console.log("Added listener for ", mcnt);
-		*/
+        stpPtr = 0;
 
     }
 
@@ -978,72 +962,90 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     var markerclusterer;
     var markers = [];
 
-	pushToStops = function(stop){
-		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
-		$scope.fleetDetail.stops.splice(sidx, 0, stop);
-	};
-	removeFromStops = function(stop){
-		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
-		$scope.fleetDetail.stops.splice(sidx, 1);
-	};
-    pushStop = function(stop) {
-		var stp = binarySearch($scope.fleetDetail.stops, stop.id) ;
-		if(!stp){
-			pushToStops(stop);
-		}
-		
-		if(stop.peerStopId){
-			var peerStop = binarySearch($scope.fleetDetail.allstops, stop.peerStopId);
-			if(!peerStop){ //Peer is not already activated
-				peerStop = binarySearch($scope.fleetDetail.allstops, stop.peerStopId); //Find in the all stops
-				if(peerStop){ //If there exists a peer stop
-					pushToStops(peerStop);
-				}
-			}
-		}
+    pushToStops = function(stop) {
+        if (stop.marker) {
+            stop.marker.map = null;
+            markerclusterer.removeMarker(stop.marker);
+        }
+        stop.marker = undefined;
+        var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
+        $scope.fleetDetail.stops.splice(sidx, 0, stop);
     };
-	
-	//Just add the marker. It will be added to clusterer later
+    removeFromStops = function(stop) {
+        var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
+        $scope.fleetDetail.stops.splice(sidx, 1);
+    };
+    pushStop = function(stop) {
+        var stp = binarySearch($scope.fleetDetail.stops, stop.id);
+        if (!stp) {
+            pushToStops(stop);
+        }
+
+        if (stop.peerStopId) {
+            var peerStop = binarySearch($scope.fleetDetail.stops, stop.peerStopId);
+            if (!peerStop) { //Peer is not already activated
+                peerStop = binarySearch($scope.fleetDetail.allstops, stop.peerStopId); //Find in the all stops
+                if (peerStop) { //If there exists a peer stop					
+                    pushToStops(peerStop);
+                }
+            }
+        }
+    };
+    getActiveStopById = function(id) {
+        var stop;
+        if (!(stop = binarySearch($scope.fleetDetail.stops, id))) {
+            stop = binarySearch($scope.fleetDetail.allstops, id);
+            pushToStops(stop);
+        }
+        return stop;
+    };
+
+    replaceMarker = function(marker, stop) {};
+
+    //Just add the marker. It will be added to clusterer later
     addMarker = function(markerOptions) {
         //console.log("Adding marker ", cnt++);
         //markerOptions.map = $scope.gmap;
         var marker = new google.maps.Marker(markerOptions);
         markers.push(marker);
         //markerclusterer.addMarker(marker);
-		
-		google.maps.event.addListener(marker, 'dragend', function(event) {
-			this.model.latitude = marker.position.lat();
-			this.model.longitude = marker.position.lng();
+
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+            this.model.latitude = marker.position.lat();
+            this.model.longitude = marker.position.lng();
         });
-		
-		//When the user 'works' on any KML marker, remove the marker and put the stop in the fleetDetail.stops array.
-		Object.keys($scope.stopEvents).forEach( function(key){
-			google.maps.event.addListener(marker, key, function(event) {
-				marker.map = null ;
-				markerclusterer.removeMarker(marker);
-				pushStop(this.model); //Put the stop and its peer if exists
-				$scope.stopEvents[key](this, key, this.model);				
-			});
-		});
+
+        //When the user 'works' on any KML marker, remove the marker and put the stop in the fleetDetail.stops array.
+        Object.keys($scope.stopEvents).forEach(function(key) {
+            google.maps.event.addListener(marker, key, function(event) {
+
+                pushStop(this.model); //Put the stop and its peer if exists
+                $scope.stopEvents[key](this, key, this.model);
+            });
+        });
+        return marker;
     };
 
+    var stpPtr = 0;
     createMarker = function(placemark) {
         //console.log(placemark);
         //Constructing marker for each Placemark node, and then add it to the markclustere
         var point = new google.maps.LatLng(placemark.Point.coordinates[0].lat, placemark.Point.coordinates[0].lng);
-        var stop = stopFromPM(placemark);
-        stop.options = {
+        //var stop = stopFromPM(placemark);
+        var stop = $scope.fleetDetail.allstops[stpPtr++];
+        /*stop.options = {
             draggable: true,
             title: stop.name
             //zIndex: 1000
-        };
+        };*/
         var markerOptions = {
             position: point,
             model: stop,
             icon: stop.icon,
-			draggable: true
+            draggable: true
         };
-        addMarker(markerOptions);
+        var marker = addMarker(markerOptions);
+        stop.marker = marker;
 
 
     };
@@ -1052,7 +1054,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     //Get the details of the selected fleet
     $scope.getFleetDetail = function(fleetId) {
         getthereAdminService.getFleetDetail(fleetId, function(fleetDetail) {
-			//This array is absolutely needed, even with KML. The PushStop function uses it to find a peer
+            //This array is absolutely needed, even with KML. The PushStop function uses it to find a peer
             fleetDetail.allstops.forEach(function(stop) {
 
                 stop.icon = stop.peerStopId > 0 ? PEER_STOP_ICON : STOP_ICON;
@@ -1121,17 +1123,16 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                     }
                 };
                 if (!(stopDetail.peerStopId > 0)) { //If this is a fresh non-peer stop, it has to be added to stops with which we can work
-					pushToStops(newStop);
+                    pushToStops(newStop);
                     //$scope.fleetDetail.stops.push(newStop);
+                } else { //The one that has been saved is a peer stop. Update the original stop with the id of the peer stop
+                    var origStop = binarySearch($scope.fleetDetail.stops, newStop.peerStopId);
+                    origStop.peerStopId = newStop.id;
+
+                    removeFromStops(stopDetail); //Remove the old peer which has -ve id
+                    pushToStops(newStop);
+
                 }
-				else{ //The one that has been saved is a peer stop. Update the original stop with the id of the peer stop
-					var origStop = binarySearch($scope.fleetDetail.stops, newStop.peerStopId);
-					origStop.peerStopId = newStop.id ;
-					
-					removeFromStops(stopDetail); //Remove the old peer which has -ve id
-					pushToStops(newStop);
-					
-				}
 
                 if ($scope.routeDetail.routeId >= 0) {
                     $scope.addStopToRoute(newStop);
@@ -1361,7 +1362,8 @@ NYUIGmapControlDirective = function() {
 
                 this.resetBounds = function() {
                     this.bounds = new google.maps.LatLngBounds(
-                        new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude), new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
+                        new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude)
+						, new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
                 };
 
                 this.resetBounds();
