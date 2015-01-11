@@ -885,7 +885,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     }; //end configMap
 
-
+	$scope.fleetDetail.calendars = [];
+	$scope.calendarOptions.data = $scope.fleetDetail.calendars;
     $scope.addCalendar = function() {
         $scope.fleetDetail.calendars.push({
             serviceId: 0,
@@ -899,7 +900,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             sun: true,
             startDate: '2014-10-1',
             endDate: '2100-10-1'
-        });
+        });	
     };
     $scope.saveCalendars = function() {};
     $scope.placeMarkers = [];
