@@ -109,6 +109,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         peerStop.id = -stop.id;
         peerStop.icon = PEER_STOP_ICON;
         peerStop.peerStopId = stop.id;
+		peerStop.options.draggable = true;
 
         console.log("Peer stop %j", peerStop);
         pushToStops(peerStop);
@@ -186,6 +187,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir] = [];
         });
         $scope.routeDetail.routeId = 0;
+		$scope.routeDetail.stages.forEach(function(stage) {
+			stage.stageId = -1;
+		});
 
         disableStopDragging();
     };

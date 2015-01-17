@@ -1,0 +1,1 @@
+convert del_bus_stop.png -resize 16x16 del_bus_stop.png
