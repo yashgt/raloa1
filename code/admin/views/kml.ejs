@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+	<Document>
+	<Style id="myDefaultStyles">
+    <IconStyle>
+      <color>a1ff00ff</color>
+      <scale>1</scale>
+      <Icon>
+        <href>http://<%=root%>/images/bus_stop.png</href>
+      </Icon>
+    </IconStyle>
+    </Style>
+		<% stops.forEach(function(stop) { %>
+			<Placemark id="<%=stop.stop_id%>">
+				<name><%=stop.name%></name>
+				<ExtendedData>
+				<Data name="peer">
+					<value><%=stop.peer_stop_id%></value>
+				</Data>
+				</ExtendedData>
+				<Point>
+					<coordinates>
+						<%= stop.longitude + "," + stop.latitude + "," + 0 %>
+					</coordinates>
+				</Point>
+				<styleUrl>#myDefaultStyles</styleUrl>
+			</Placemark>
+		<% }) %>
+	</Document>
+</kml>
