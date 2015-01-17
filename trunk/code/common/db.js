@@ -88,7 +88,7 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 			{
 				logger.error("Error : {0}", err);
 				if(typeof(cbFailure) == "function"){
-					cbFailure();
+					cbFailure(err);
 				}
 			}
 		}
@@ -176,6 +176,12 @@ function Transaction(callback){
 		scb();
       });
 	};
+	
+	tran.rollback = function(){
+		tran.conn.rollback(function() {
+            console.log('Transaction rolled back successfully!');
+        });
+	}
 	
 	};
 	

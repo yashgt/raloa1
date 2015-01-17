@@ -16,7 +16,7 @@ console.log(HOST);
 
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
-    , flash, GoogleMapApi, IsReady) {
+    , flash, GoogleMapApi, IsReady, uiGridConstants) {
 
 
     $scope.fleet = {
@@ -405,6 +405,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     $scope.clearScheduleGrid = function() {
         [0, 1].forEach(function(dir) {
             $scope.scheduleOptions[dir].columnDefs.splice($scope.scheduleOptions[dir].fixedCols, 100);
+			$scope.scheduleOptions[dir].selectedRows = [];
         });
 
     };
@@ -415,9 +416,18 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             field: "stops." + fleetstop.id,
             enableCellEdit: true,
             editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+			,disableHiding: true
+			,enableSorting: true
+			
         };
 
         var idx = dir == 0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols;
+		
+		if($scope.scheduleOptions[dir].columnDefs.length == $scope.scheduleOptions[dir].fixedCols) //This is column for first stop
+		{
+			def.sort = { direction: uiGridConstants.ASC };
+		}
+		
 
         $scope.scheduleOptions[dir].columnDefs.splice(idx, 0, def);
     };
@@ -527,6 +537,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.routeDetail.isDirty = true;
     };
 
+/*
     $scope.scheduleActions = {
         deleteTrip: function(trip) {
             console.log(trip);
@@ -562,26 +573,83 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
         }
     };
+	*/
+	
+	$scope.deleteTrips= function(dir) {
+		$scope.scheduleOptions[dir].selectedRows.forEach(function(row){
+				var trip = row.entity;
+				console.log(trip);
+				var idx = _.findIndex($scope.routeDetail.trips[dir], {
+					tripId: trip.tripId
+				});
+				$scope.routeDetail.trips[dir].splice(idx, 1);
+				$scope.routeDetail.isDirty = true;
+		});
+		$scope.scheduleOptions[dir].selectedRows = [];
+    };
+	$scope.autocomplete= function(dir){
+		$scope.scheduleOptions[dir].selectedRows.forEach(function(row){
+			var trip = row.entity;
+			var i = 0;
+            var allstops = [];
+            var allsegments = [];
+
+            $scope.forAllStops(function(routestop) {
+                allstops.push((dir == 0) ? routestop.onwardStop : routestop.returnStop);
+                allsegments.push(routestop.segments[dir]);
+            });
+            if (dir == 1) {
+                allstops.reverse();
+                allsegments.reverse();
+            }
+
+            for (i = 0; i < allstops.length; i++) {
+                if (i != 0) {
+                    //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
+                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'HH:mm');
+                    // 30*1000 m in 60 min
+                    // distance in X
+                    var inctime = allsegments[i] * 60 / 30000;
+                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('HH:mm');
+                }
+            }
+			$scope.routeDetail.isDirty = true;
+		});
+		$scope.scheduleOptions[dir].selectedRows = [];
+	};
 
     $scope.scheduleOptions = [];
     [0, 1].forEach(function(dir) {
         $scope.scheduleOptions.splice(dir, 0, {
             enableSorting: false,
             enableCellEdit: true,
+			enableCellEditOnFocus : true,
             enableColumnMenus: false,
-            columnDefs: [{
-                name: 'Delete',
-                displayName: '',
-                cellTemplate: '<button class="btn btn-danger btn-xs" ng-click="getExternalScopes().deleteTrip(row.entity)"><span class="glyphicon glyphicon-trash"></span> Delete</button>'
-            }, {
-                name: 'Auto',
-                displayName: '',
-                cellTemplate: '<button class="btn btn-success btn-xs" ng-click="getExternalScopes().autocomplete(' + dir + ',row.entity)"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete</button>'
-            }, {
+			enableSelectAll: true,
+			enableRowHeaderSelection: true,
+			multiSelect : true,
+			enableSelectionBatchEvent: true,
+			onRegisterApi: function(gridApi){
+      //set gridApi on scope
+			$scope.scheduleOptions[dir].gridApi = gridApi;
+			gridApi.selection.on.rowSelectionChanged($scope,function(row){
+			if(row.isSelected) {
+				$scope.scheduleOptions[dir].selectedRows.push(row);
+			}
+			else{
+				_.pull($scope.scheduleOptions[dir].selectedRows,row);
+			}
+      });
+	  
+		},
+            columnDefs: [
+			
+			{
                 name: 'ID',
                 field: 'tripId',
                 enableCellEdit: false,
                 cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
+				
             }, {
                 editableCellTemplate: 'ui-grid/dropdownEditor',
                 name: 'Service',
@@ -590,11 +658,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 editDropdownIdLabel: 'serviceId',
                 editDropdownValueLabel: 'serviceName',
                 editDropdownOptionsArray: []
+				,disableColumnMenu: true
             }, {
                 name: 'isFrequency',
                 displayName: 'Frequency?',
                 field: 'frequency_trip',
                 type: 'boolean'
+				,disableColumnMenu: true
             }, {
                 name: 'frequencyStart',
                 displayName: 'Frequency St.',
@@ -604,8 +674,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 displayName: 'Frequency En.',
                 field: 'frequency_end_time',
                 pinnedLeft: true
+				,disableColumnMenu: true
             }]
         });
+		$scope.scheduleOptions[dir].selectedRows = [];
         $scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length;
     });
 
@@ -652,6 +724,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         enableColumnMenus: false,
         enableFiltering: true,
         enableRowHeaderSelection: false,
+		enableColumnResizing: true,
         multiSelect: false,
         columnDefs: [{
             name: 'No.',
@@ -1463,21 +1536,13 @@ autofocus = function($timeout) {
 dateMask = function($timeout) {
     return {
         restrict: 'A',
-        link: function($scope, element) {
-            console.log($(element[0]).val() == '');
-            //if($(element[0]).val()=='')
-            /*$(element[0]).focus(function() {
-				if($(element[0]).val()=='')
-					$(element[0]).val('__:__ am');
-			});
-			*/
+        link: function($scope, element) {            
             var patt = new RegExp("^([0-9]|([0-1][0-2])|0[0-9]):([0-9]|[0-5][0-9]) (am|pm)$");
 
             $(element[0]).blur(function() {
                 var val = $(element[0]).val();
 
-                if (!patt.test(val)) {
-                    alert('hello');
+                if (!patt.test(val)) {                    
                     $(element[0]).val('');
                     $scope.$apply();
                 }
@@ -1551,7 +1616,7 @@ function UnpairedStopsFilter() {
 (function() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
-        , 'ui.layout', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
+        , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
     ]);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
@@ -1565,7 +1630,7 @@ function UnpairedStopsFilter() {
     adminApp.run(initializeApp);
     adminApp.controller('RouteController', ['$scope', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
-        , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', RouteController
+        , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', 'uiGridConstants', RouteController
     ]);
 
     adminApp.filter('service', ServiceFilter);

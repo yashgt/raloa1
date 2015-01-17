@@ -266,28 +266,30 @@ app.post('/api/route/', function(req, res) {
                             stage.routeId = routeId;
                         });
                         callback(null, tran, route);
-                    });
+                    }
+					, function(){callback("Unable to save route", null); }
+					);
                 },
 
                 function(tran, route, callback) {
-                    console.log("Saving stages for route %j", route.trips);
+                    console.log("Saving stages for route %j", route);
 
                     var stageSeries = [];
                     route.stages.forEach(function(stage) {
                         stageSeries.push(
                             function(callback) {
                                 var stageWF = [
-
                                     function(callback) {
                                         saveStageEntity(tran, stage, function(stageId) {
                                             stage.stageId = stageId;
                                             stage.stops.forEach(function(stop) { //This is a routestop
                                                 stop.stageId = stageId;
                                                 stop.routeId = stage.routeId;
-
                                             });
                                             callback(null, stageId);
-                                        });
+                                        }
+										, function(){callback("Unable to save stage", null); }
+										);
                                     },
                                     function(stageId, callback) {
                                         var stopSeries = [];
@@ -295,21 +297,21 @@ app.post('/api/route/', function(req, res) {
                                             stopSeries.push(
                                                 function(callback) {
                                                     saveRouteStopEntity(tran, stop, function() {
-
                                                         callback(null, 1);
-                                                    });
-
+                                                    }
+													, function(){callback("Unable to save route-stop", null); }
+													);
                                                 }
                                             );
                                         });
 
                                         async.series(stopSeries, function(err, results) {
-                                            callback(null, stage);
+                                            callback(err || null, stage);
                                         });
                                     }
                                 ];
                                 async.waterfall(stageWF, function(err, result) {
-                                    callback(null, stage);
+                                    callback(err || null, stage);
                                 });
 
                             }
@@ -317,25 +319,26 @@ app.post('/api/route/', function(req, res) {
                     });
 
                     async.series(stageSeries, function(err, results) {
-                        callback(null, tran, route);
+                        callback(err || null, tran, route);
                     });
                 },
                 function(tran, route, callback) {
-                    // console.log("Saving trips for route %j", route);
+                    console.log("Saving trips for route %j", route);
 
                     var tripSeries = [];
-
+					
                     route.trips.forEach(function(tripList) {
                         tripList.forEach(function(trip) {
+							trip.routeId = route.routeId;
                             tripSeries.push(function(callback) {
                                 var tripWF = [
-
                                     function(callback) {
                                         saveTripEntity(tran, trip, function(tripId) {
-                                            trip.tripId = tripId;
-                                            trip.routeId = routeId;
+                                            trip.tripId = tripId;                                            
                                             callback(null, trip);
-                                        });
+                                        }
+										, function(){callback("Unable to save trip", null); }
+										);
                                     },
                                     function(trip, callback) { //Save RSTs
                                         var RSTSeries = [];
@@ -349,7 +352,9 @@ app.post('/api/route/', function(req, res) {
                                                 };
                                                 saveRouteStopTripEntity(tran, RST, function() {
                                                     callback(null, 1);
-                                                });
+                                                }
+												, function(){callback("Unable to save route-stop-trip", null); }
+												);
                                             });
                                         });
                                         async.series(RSTSeries, function(err, results) {
@@ -366,13 +371,13 @@ app.post('/api/route/', function(req, res) {
                     });
 
                     async.series(tripSeries, function(err, results) {
-                        callback(null, route);
+                        callback(err || null, route);
                     });
                 }
             ];
             async.waterfall(routesWF, function(err, result) {
-                tran.commit(function() {
-                    console.log("Sending data");
+				if(!err){
+                tran.commit(function() {                    
                     route.routeNum = "";
                     route.st = route.stages[0].stops[0].onwardStop.name;
                     route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
@@ -380,6 +385,11 @@ app.post('/api/route/', function(req, res) {
                 }, function() {
                     res.send(500, 'Failed to create route');
                 });
+				}
+				else{
+					tran.rollback();
+					res.send(500, 'Failed to create route');
+				}
 
             });
         }
@@ -393,47 +403,55 @@ app.post('/api/route/', function(req, res) {
 
 //CBM TO ADD STORED PROCS
 
-saveRouteEntity = function(tran, route, cb) {
+saveRouteEntity = function(tran, route, cb, fcb) {
     tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.startStopId, route.endStopId, 0], function(results) {
         //console.log(results);
         route_id = results[2][0]["@id"];
         logger.debug('Saved route record. ID is {0}', route_id);
         cb(route_id);
-    });
+    }
+	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);
 };
 
-saveStageEntity = function(tran, stage, cb) {
+saveStageEntity = function(tran, stage, cb, fcb) {
     tran.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId, stage.routeId, stage.title], function(results) {
         stage_id = results[2][0]["@id"];
         logger.debug('Saved stage record {0}', stage_id);
         cb(stage_id);
-    });
+    }
+	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);
 };
 
-saveRouteStopEntity = function(tran, routeStop, cb) {
+saveRouteStopEntity = function(tran, routeStop, cb, fcb) {
     tran.query("CALL save_route_stop(?,?,?,?,?);", [routeStop.onwardStop.id, routeStop.returnStop.id, routeStop.routeId, routeStop.stageId, routeStop.sequence], function(results) {
         logger.debug('Saved route_stop record');
         cb();
-    });
+    }
+	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);
 };
 
-saveTripEntity = function(tran, trip, cb) {
-    setTimeout(function() {
-        tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.routeId, trip.direction, trip.frequency_trip, trip.frequency_start_time, trip.frequency_end_time], function(results) {
-            trip_id = results[2][0]["@id"];
-            logger.debug('Saved trip record {0}', trip);
-            cb(trip_id);
-        }, 1000);
-    })
+saveTripEntity = function(tran, trip, cb, fcb) {
+    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.direction, trip.routeId,  trip.frequency_trip, trip.frequency_start_time, trip.frequency_end_time], function(results) {
+        trip_id = results[2][0]["@id"];
+        logger.debug('Saved trip record {0}', trip);
+        cb(trip_id);
+    }
+	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);
+
 };
 
-saveRouteStopTripEntity = function(tran, routestoptrip, cb) {
-    setTimeout(function() {
-        tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time], function(results) {
-            logger.debug('Saved RStrip record {0}', routestoptrip);
-            cb(1); //ignore the RSTId
-        }, 1000);
-    })
+saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
+    tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time], function(results) {
+        logger.debug('Saved RStrip record {0}', routestoptrip);
+        cb(1); //ignore the RSTId
+    }
+	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);
+
 };
 
 
