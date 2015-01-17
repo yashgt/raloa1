@@ -84,7 +84,7 @@
                                 <tr>
                                     <td width=15% valign="top">
                                         <b>Routes</b>
-                                        <div ui-grid="routeListOptions" ui-grid-selection ui-grid-auto-resize></div>
+                                        <div ui-grid="routeListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize></div>
                                     </td>
                                     <td width=70% valign="top">
                                         <div id="route">
@@ -135,13 +135,16 @@
                                             <!--Map tab ends -->
                                             <tab heading="Schedule" disabled="routeDetail.routeId<0">
                                                 <button class="btn btn-primary btn-xs" ng-click="addTrip(0)"><span class="glyphicon glyphicon-plus"></span>Add Onward Trip</button>
-                                                <div ui-grid="scheduleOptions[0]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
+												<button class="btn btn-danger btn-xs" ng-click="deleteTrips(0)" ng-disabled="scheduleOptions[0].selectedRows.length==0" ><span class="glyphicon glyphicon-trash"></span>Delete Trips</button>
+												<button class="btn btn-success btn-xs" ng-click="autocompleteTrips(0)" ng-disabled="scheduleOptions[0].selectedRows.length==0"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete Trips</button>
+	
+                                                <div ui-grid="scheduleOptions[0]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
 
                                                 <button ng-click="addTrip(1)">Add Return Trip</button>
-                                                <div ui-grid="scheduleOptions[1]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
+                                                <div ui-grid="scheduleOptions[1]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
                                             </tab>
                                             <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">
-                                                <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
+                                                <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns></div>
                                             </tab>
                                             <tab heading="Object">
                                                 <pre class="code">{{ routeDetail | json }}</pre>
@@ -158,7 +161,7 @@
                                                         <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
                                                             <li ng-repeat="stage in routeDetail.stages" ui-tree-node>
                                                                 <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
-                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeGroup(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
+                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeStage(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true"><i class="glyphicon glyphicon-pencil"></i></a>
                                                                     <div>{{stage.title}}</div>
                                                                 </div>
