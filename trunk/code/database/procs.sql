@@ -343,25 +343,37 @@ VALUES
 end//
 
 drop procedure if exists generate_stops//
-create procedure generate_stops()
+create procedure generate_stops(in_fleet_id int)
 begin
 	declare lat, lon float;
 	declare name varchar(255) ;
 	declare f, cnt int  ;
 	declare sid int ;
+
+	declare vfleet_name varchar(200);
+	declare vavg_speed, vzoom int;
+	declare	vcen_lat, vcen_lon, vne_lat, vne_lon ,vsw_lat ,vsw_lon float;
+	declare latinc, loninc float;
+	
+	select fleet_name,avg_speed,cen_lat,cen_lon,zoom,ne_lat,ne_lon,sw_lat,sw_lon 
+	into vfleet_name,vavg_speed,vcen_lat,vcen_lon,vzoom,vne_lat,vne_lon,vsw_lat,vsw_lon
+	from fleet 
+	where fleet_id=in_fleet_id;
+	
 	set f = 1;
 	set cnt = 1;
 	/*set @sid = 0;*/
-	set lat = 15.359118139929315; 
-	set lon = 73.96272543945315;
+	/*set lat = 15.359118139929315; 
+	set lon = 73.96272543945315;*/
 	/*call save_stop( 0, name, lat, lon, 2, 0);*/
 	
-	
+	set latinc = vne_lat - vsw_lat ;
+	set loninc = vne_lon - vsw_lon ;
 	while cnt < 5000 do
 		set name := concat('stop', convert(cnt, char(50)));
 		set sid := 0;
-		set lat := lat + rand()*f ;
-		set lon := lon + rand()*f ;
+		set lat := vsw_lat + latinc * rand() ;
+		set lon := vsw_lon + loninc * rand() ;
 		
 		
 		call save_stop(sid, name, lat, lon, 2, null);
