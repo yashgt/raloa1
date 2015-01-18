@@ -901,7 +901,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             accept: function(sourceNode, destNodes, destIndex) {
                 var srcType = sourceNode.$element.attr('data-type');
                 var destType = destNodes.$element.attr('data-type');
-                return srcType == "stop" && destType == "stage"; // only accept stop in stage 
+				console.log("Source " + srcType + " Dest " + destType);
+				
+                return (srcType == "stop" && destType == "stage") || (srcType == "stage" && destType == "group")
+				; // only accept stop in stage 
             },
             dropped: function(event) {
                 console.log(event);
