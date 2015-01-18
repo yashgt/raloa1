@@ -257,7 +257,7 @@ begin
 	where R.route_id=in_route_id
 	order by RS.sequence;
 	
-	select T.trip_id, T.direction, T.frequency_trip
+	select T.trip_id, T.direction, T.frequency_trip, T.frequency_start_time, T.frequency_end_time, T.frequency_gap
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
@@ -270,7 +270,7 @@ begin
 	inner join routestop as RS on (R.route_id=RS.route_id)
 	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id)	
 	where R.route_id=in_route_id
-	order by RS.sequence;
+	order by T.trip_id, RS.sequence;
 	
 end//
 

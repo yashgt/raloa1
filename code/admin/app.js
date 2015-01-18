@@ -497,7 +497,30 @@ app.get('/api/route/:route_id', function(req, res) {
                 stage.stops.push(rs);
 
             });
-
+			
+		results[1].forEach(
+			function(trip){
+				trip.stops = {};
+				routeDetail.trips[trip.direction].push(trip);
+			}
+		);
+		results[2].forEach(
+			function(rst){
+				//Check if this is onward trip
+				var idx = _.sortedIndex(routeDetail.trips[0], rst,'trip_id');
+				var trip = routeDetail.trips[0][idx];
+				if(trip && trip.trip_id == rst.trip_id){//If the trip really exists in the list
+					trip.stops[''+rst.stop_id+''] = rst.time;					
+				}
+				else{ //Check in return trips
+					idx = _.sortedIndex(routeDetail.trips[1], rst,'trip_id');
+					trip = routeDetail.trips[1][idx];
+					if(trip && trip.trip_id == rst.trip_id){//If the trip really exists in the list
+						trip.stops[''+rst.stop_id+''] = rst.time;					
+					}
+				}
+			}
+		);
         /*
 		{
 			routeId: 1
