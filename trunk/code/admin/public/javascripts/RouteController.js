@@ -649,7 +649,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 field: 'tripId',
                 enableCellEdit: false,
                 cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
-				
+				,disableColumnMenu: true
             }, {
                 editableCellTemplate: 'ui-grid/dropdownEditor',
                 name: 'Service',
