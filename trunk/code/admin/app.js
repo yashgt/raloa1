@@ -94,8 +94,8 @@ var server = http.createServer(app).listen(app.get('port'), function() {
 console.log('Server address %j', server.address());
 
 setInterval(function() {
-    //admin.generateSegments();
-}, 5000);
+    admin.generateSegments();
+}, 10000);
 
 app.get('/api/fleets', function(req, res) {
     var user_id = req.session.passport.user.userId;

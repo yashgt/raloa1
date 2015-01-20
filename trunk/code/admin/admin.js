@@ -36,14 +36,10 @@ exports.generateSegments = function()
 	formingSegments = true ;	
 	db.query("call get_missing_segments()", 
 	function(results){
-		console.log("Segs %j", results[0]);
 		var segSeries = [];
 		results[0].forEach( function(seg){
-			
-			console.log("Segment %j", seg);
 			segSeries.push(
 				function(callback){
-					console.log("Segment in series %j", seg);
 					logger.debug("Getting segment for {0} {1} to {2} {3}", seg.from_lat, seg.from_lon, seg.to_lat, seg.to_lon);
 					var origins = seg.from_lat + "," + seg.from_lon;
 					var destinations = seg.to_lat + "," + seg.to_lon;
