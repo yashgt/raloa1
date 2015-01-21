@@ -261,6 +261,7 @@ begin
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
+	where R.route_id = in_route_id
 	order by T.trip_id;
 	
 	select T.trip_id, RS.stop_id, RST.time

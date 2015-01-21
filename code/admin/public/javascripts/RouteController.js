@@ -587,7 +587,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		});
 		$scope.scheduleOptions[dir].selectedRows = [];
     };
-	$scope.autocomplete= function(dir){
+	$scope.autocompleteTrips= function(dir){
 		$scope.scheduleOptions[dir].selectedRows.forEach(function(row){
 			var trip = row.entity;
 			var i = 0;
