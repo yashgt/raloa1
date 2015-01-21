@@ -269,7 +269,7 @@ begin
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
 	inner join routestop as RS on (R.route_id=RS.route_id)
-	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id)	
+	inner join routestoptrip as RST on (RS.route_stop_id=RST.route_stop_id and T.trip_id=RST.trip_id)	
 	where R.route_id=in_route_id
 	order by T.trip_id, RS.sequence;
 	
