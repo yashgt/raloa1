@@ -411,11 +411,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
     $scope.addStopToScheduleGrid = function(dir, fleetstop) {
         var def = {
-            name: fleetstop.name,
-            displayName: fleetstop.name,
-            field: "stops." + fleetstop.id,
-            enableCellEdit: true,
-            editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+            name: fleetstop.name
+            ,displayName: fleetstop.name
+            ,field: "stops." + fleetstop.id
+			,type: 'string'
+            ,enableCellEdit: true
+            ,editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
 			,disableHiding: true
 			,enableSorting: true
 			
@@ -937,16 +938,19 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
             newObject.stages = stages;
 
+/*
             //Add the new stage to all existing stages
             $scope.routeDetail.stages.forEach(function(stage) {
                 stage.stages['' + newObject.stageId] = 0;
             });
-
+*/
             //Add the new stage to the route
             $scope.routeDetail.stages.push(newObject);
+			/*
             $scope.routeDetail.stages.forEach(function(stage) {
                 stages['' + stage.stageId] = 0;
-            });
+            });*/
+			
             $scope.routeDetail.isDirty = true;
             $scope.newStage.title = "";
 
