@@ -329,44 +329,46 @@ app.post('/api/route/', function(req, res) {
 					
                     route.trips.forEach(function(tripList) {
                         tripList.forEach(function(trip) {
-							trip.routeId = route.routeId;
-                            tripSeries.push(function(callback) {
-                                var tripWF = [
-                                    function(callback) {
-                                        saveTripEntity(tran, trip, function(tripId) {
-                                            trip.tripId = tripId;                                            
-                                            callback(null, trip);
-                                        }
-										, function(){callback("Unable to save trip", null); }
-										);
-                                    },
-                                    function(trip, callback) { //Save RSTs
-                                        var RSTSeries = [];
-                                        Object.keys(trip.stops).forEach(function(stopId) {
-                                            RSTSeries.push(function(callback) {
-                                                var RST = {
-                                                    routeId: route.routeId,
-                                                    stopId: parseInt(stopId),
-                                                    tripId: trip.tripId,
-                                                    time: '' + trip.stops['' + stopId + ''] + ''
-                                                };
-                                                saveRouteStopTripEntity(tran, RST, function() {
-                                                    callback(null, 1);
-                                                }
-												, function(){callback("Unable to save route-stop-trip", null); }
-												);
-                                            });
-                                        });
-                                        async.series(RSTSeries, function(err, results) {
-                                            callback(err || null, trip);
-                                        });
-                                    }
-                                ];
+							if(trip.tripId<0 || trip.isDirty){
+								trip.routeId = route.routeId;
+								tripSeries.push(function(callback) {
+									var tripWF = [
+										function(callback) {
+											saveTripEntity(tran, trip, function(tripId) {
+												trip.tripId = tripId;                                            
+												callback(null, trip);
+											}
+											, function(){callback("Unable to save trip", null); }
+											);
+										},
+										function(trip, callback) { //Save RSTs
+											var RSTSeries = [];
+											Object.keys(trip.stops).forEach(function(stopId) {
+												RSTSeries.push(function(callback) {
+													var RST = {
+														routeId: route.routeId,
+														stopId: parseInt(stopId),
+														tripId: trip.tripId,
+														time: '' + trip.stops['' + stopId + ''] + ''
+													};
+													saveRouteStopTripEntity(tran, RST, function() {
+														callback(null, 1);
+													}
+													, function(){callback("Unable to save route-stop-trip", null); }
+													);
+												});
+											});
+											async.series(RSTSeries, function(err, results) {
+												callback(err || null, trip);
+											});
+										}
+									];
 
-                                async.waterfall(tripWF, function(err, result) {
-                                    callback(err || null, trip);
-                                });
-                            });
+									async.waterfall(tripWF, function(err, result) {
+										callback(err || null, trip);
+									});
+								});
+							}
                         });
                     });
 
@@ -434,8 +436,8 @@ saveRouteStopEntity = function(tran, routeStop, cb, fcb) {
 };
 
 saveTripEntity = function(tran, trip, cb, fcb) {
-    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.direction, trip.routeId,  trip.frequency_trip, trip.frequency_start_time, trip.frequency_end_time], function(results) {
-        trip_id = results[2][0]["@id"];
+    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.serviceId, trip.direction, trip.routeId,  trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
+        var trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
         cb(trip_id);
     }
@@ -500,22 +502,33 @@ app.get('/api/route/:route_id', function(req, res) {
 			
 		results[1].forEach(
 			function(trip){
-				trip.stops = {};
-				routeDetail.trips[trip.direction].push(trip);
+				var routeTrip = {
+					tripId: trip.trip_id
+					,serviceId: trip.service_id
+					,direction: trip.direction
+					,frequencyTrip: trip.frequency_trip
+					,frequencyStartTime: trip.frequency_start_time
+					,frequencyEndTime: trip.frequency_end_time
+					,frequencyGap: trip.frequency_gap
+					,stops: {}
+				};
+				
+				routeDetail.trips[trip.direction].push(routeTrip);
 			}
 		);
 		results[2].forEach(
 			function(rst){
+				rst.tripId = rst.trip_id;
 				//Check if this is onward trip
-				var idx = _.sortedIndex(routeDetail.trips[0], rst,'trip_id');
+				var idx = _.sortedIndex(routeDetail.trips[0], rst,'tripId');
 				var trip = routeDetail.trips[0][idx];
-				if(trip && trip.trip_id == rst.trip_id){//If the trip really exists in the list
+				if(trip && trip.tripId == rst.trip_id){//If the trip really exists in the list
 					trip.stops[''+rst.stop_id+''] = rst.time;					
 				}
 				else{ //Check in return trips
-					idx = _.sortedIndex(routeDetail.trips[1], rst,'trip_id');
+					idx = _.sortedIndex(routeDetail.trips[1], rst,'tripId');
 					trip = routeDetail.trips[1][idx];
-					if(trip && trip.trip_id == rst.trip_id){//If the trip really exists in the list
+					if(trip && trip.tripId == rst.trip_id){//If the trip really exists in the list
 						trip.stops[''+rst.stop_id+''] = rst.time;					
 					}
 				}

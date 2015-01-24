@@ -483,6 +483,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             [0, 1].forEach(function(dir) {
                 $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
             });
+			$scope.routeDetail.deletedTrips = [];
             //$scope.scheduleOptions.data = $scope.routeDetail.trips;
 
         });
@@ -493,6 +494,29 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             stage.stops.forEach(cb);
         });
     };
+	
+	$scope.areSegmentsReady = function(){
+		var ready = true;
+		$scope.forAllStops(function(rs){
+			if(rs.segments[0] ==0 && rs.segments[1]==0){
+				ready = false;
+			}
+		});
+		return ready;
+	};
+	
+	$scope.isFirstStopTimeSet = function(dir){
+		if($scope.routeDetail && $scope.routeDetail.stages.length > 0){
+		var fsid = dir==0 ? (_.first((_.first($scope.routeDetail.stages)).stops)).onwardStop.id : (_.last(_.last($scope.routeDetail.stages)).stops).returnStop.id ;
+		var x = _.findIndex($scope.scheduleOptions[dir].selectedRows, function(row){ 
+				return row.entity.stops[''+fsid] == ""; 
+			});
+			return x==undefined ;	
+		}
+		else{
+			return false;
+		}
+	};
 
     $scope.findRouteStop = function(cb) {
         var rs;
@@ -515,9 +539,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             tripId: (latestTrip.tripId < 0) ? latestTrip.tripId - 1 : -1,
             direction: dir,
             serviceId: $scope.fleetDetail.defaultServiceId,
-            frequency_trip: false,
-            frequency_start_time: '00:00',
-            frequency_end_time: '00:00',
+            frequencyTrip: false,
+            frequencyStartTime: '00:00',
+            frequencyEndTime: '00:00',
             stops: {}
         };
 
@@ -535,46 +559,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
         $scope.routeDetail.trips[dir].push(newTrip);
+		//$scope.scheduleOptions[dir].gridApi.core.notifyDataChange( grid, uiGridConstants.dataChange.EDIT )
         $scope.routeDetail.isDirty = true;
     };
 
-/*
-    $scope.scheduleActions = {
-        deleteTrip: function(trip) {
-            console.log(trip);
-            var idx = _.findIndex($scope.routeDetail.trips, {
-                tripId: trip.tripId
-            });
-            $scope.routeDetail.trips.splice(idx, 1);
-            $scope.routeDetail.isDirty = true;
-        },
-        autocomplete: function(dir, trip) {
-            var i = 0;
-            var allstops = [];
-            var allsegments = [];
-
-            $scope.forAllStops(function(routestop) {
-                allstops.push((dir == 0) ? routestop.onwardStop : routestop.returnStop);
-                allsegments.push(routestop.segments[dir]);
-            });
-            if (dir == 1) {
-                allstops.reverse();
-                allsegments.reverse();
-            }
-
-            for (i = 0; i < allstops.length; i++) {
-                if (i != 0) {
-                    //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
-                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'HH:mm');
-                    // 30*1000 m in 60 min
-                    // distance in X
-                    var inctime = allsegments[i] * 60 / 30000;
-                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('HH:mm');
-                }
-            }
-        }
-    };
-	*/
 	
 	$scope.deleteTrips= function(dir) {
 		$scope.scheduleOptions[dir].selectedRows.forEach(function(row){
@@ -583,7 +571,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 				var idx = _.findIndex($scope.routeDetail.trips[dir], {
 					tripId: trip.tripId
 				});
-				$scope.routeDetail.trips[dir].splice(idx, 1);
+				var delTrips = $scope.routeDetail.trips[dir].splice(idx, 1);
+				delTrips.forEach(function(trip){
+					$scope.routeDetail.deletedTrips.push(trip);
+				});
 				$scope.routeDetail.isDirty = true;
 		});
 		$scope.scheduleOptions[dir].selectedRows = [];
@@ -642,6 +633,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			}
       });
 	  
+		 gridApi.edit.on.afterCellEdit( $scope, function( rowEntity, colDef ) {
+			rowEntity.isDirty = true;
+			$scope.routeDetail.isDirty = true;
+		 });
+	  
 		},
             columnDefs: [
 			
@@ -649,8 +645,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 name: 'ID',
                 field: 'tripId',
                 enableCellEdit: false,
-                cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : row.entity.tripId}}</div>'
+                cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
 				,disableColumnMenu: true
+				,enableColumnResizing:false
+				,cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+          if (row.entity.tripId < 0 ) {
+            return 'newtrip';
+          }
+        }
             }, {
                 editableCellTemplate: 'ui-grid/dropdownEditor',
                 name: 'Service',
@@ -663,17 +665,17 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }, {
                 name: 'isFrequency',
                 displayName: 'Frequency?',
-                field: 'frequency_trip',
+                field: 'frequencyTrip',
                 type: 'boolean'
 				,disableColumnMenu: true
             }, {
                 name: 'frequencyStart',
                 displayName: 'Frequency St.',
-                field: 'frequency_start_time'
+                field: 'frequencyStartTime'
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
-                field: 'frequency_end_time',
+                field: 'frequencyEndTime',
                 pinnedLeft: true
 				,disableColumnMenu: true
             }]

@@ -137,9 +137,9 @@
 												<% [0,1].forEach(function(dir){ %>
                                                 <button class="btn btn-primary btn-xs" ng-click="addTrip(<%= dir %>)"><span class="glyphicon glyphicon-plus"></span>Add <%= dir==0 ? "Onward" : "Return" %> Trip</button>
 												<button class="btn btn-danger btn-xs" ng-click="deleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0" ><span class="glyphicon glyphicon-trash"></span>Delete Trips</button>
-												<button class="btn btn-success btn-xs" ng-click="autocompleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0"><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete Trips</button>
+												<button class="btn btn-success btn-xs" ng-click="autocompleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0 && routeDetail "><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete Trips</button>
 	
-                                                <div ui-grid="scheduleOptions[<%= dir %>]" external-scopes="scheduleActions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
+                                                <div ui-grid="scheduleOptions[<%= dir %>]" external-scopes="scheduleActions" ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
 
                                                 <% }) %>
                                             </tab>
