@@ -257,14 +257,14 @@ begin
 	where R.route_id=in_route_id
 	order by RS.sequence;
 	
-	select T.trip_id, T.direction, T.frequency_trip, T.frequency_start_time, T.frequency_end_time, T.frequency_gap
+	select T.trip_id, T.calendar_id as service_id, T.direction, T.frequency_trip, T.frequency_start_time, T.frequency_end_time, T.frequency_gap
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
 	where R.route_id = in_route_id
 	order by T.trip_id;
 	
-	select T.trip_id, RS.stop_id, RST.time
+	select T.trip_id, CASE T.direction WHEN 0 THEN RS.stop_id ELSE RS.peer_stop_id END as stop_id, RST.time
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
@@ -310,16 +310,18 @@ end//
 drop procedure if exists save_trip//
 create procedure save_trip(
 	  INOUT id int
+	, IN in_calendar_id int  
 	, IN in_direction boolean
 	, IN in_route_id int
 	, IN in_frequency_trip boolean
 	, IN in_frequency_start_time time
 	, IN in_frequency_end_time time
+	, IN in_frequency_gap int
 )
 begin
 if id < 0 then
-INSERT INTO trip(trip_name, route_id, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) 
-VALUES ('trip', in_route_id, in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, 0);
+INSERT INTO trip(trip_name, calendar_id, route_id, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) 
+VALUES ('trip', in_calendar_id, in_route_id, in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, in_frequency_gap);
 set id = LAST_INSERT_ID() ;
 end if;
 end//

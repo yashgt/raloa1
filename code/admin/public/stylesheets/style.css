@@ -103,3 +103,6 @@ input.ng-valid {
 }
 
 
+.newtrip {
+	border: 1px dashed #ff0000;
+}
