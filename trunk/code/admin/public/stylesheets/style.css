@@ -106,3 +106,11 @@ input.ng-valid {
 .newtrip {
 	border: 1px dashed #ff0000;
 }
+
+.stopName {
+	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.ui-grid-cell-contents:hover {
+
+}

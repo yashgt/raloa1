@@ -489,9 +489,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
 			var allStops = [];
 			$scope.forAllStops(function(rs){ allStops.push(rs); });
-			//var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
+			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
-			var wayPoints = [];
+			//var wayPoints = [];
 			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
 
         });
@@ -736,18 +736,22 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         enableCellEdit: false,
         enableColumnMenus: false,
         enableFiltering: true,
+		enableScrollBars: true,
         enableRowHeaderSelection: false,
 		enableColumnResizing: true,
         multiSelect: false,
         columnDefs: [{
             name: 'No.',
             field: 'routeNum'
+			,cellClass: 'stopName'
         }, {
             name: 'From',
             field: 'st'
+			,cellClass: 'stopName'
         }, {
             name: 'To',
             field: 'en'
+			,cellClass: 'stopName'
         }],
         onRegisterApi: function(gridApi) {
             $scope.gridRoutesApi = gridApi;
@@ -1456,10 +1460,20 @@ RouteHelpChannelService = function() {
     this['From'] = undefined;
     this['To'] = undefined;
 	
-	this.directionsDisplay = new google.maps.DirectionsRenderer();
+	var polyLineOpts = {
+		clickable : false
+		,strokeColor : "#41CC56"
+		,strokeOpacity: 1.0
+		,strokeWeight: 5
+	};
+	this.directionsDisplay = new google.maps.DirectionsRenderer({
+		draggable: false
+		,hideRouteList: false
+		,polylineOptions: polyLineOpts
+	});
     this.directionsService = new google.maps.DirectionsService();
     this.searchRoute = function() {
-        this.directionsDisplay.setMap(this.gmap);
+		this.resetDisplay();
 
         var request = {
             origin: this.From,
@@ -1467,8 +1481,15 @@ RouteHelpChannelService = function() {
             travelMode: google.maps.TravelMode.DRIVING
         };
 
+		this.showDisplay(request);
 
-        this.directionsService.route(request, 
+    };
+	this.resetDisplay = function(){
+		this.directionsDisplay.setMap(null);
+        this.directionsDisplay.setMap(this.gmap);
+	};
+	this.showDisplay = function(request){
+		this.directionsService.route(request, 
 			function(display){
 			return function(result, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
@@ -1476,11 +1497,10 @@ RouteHelpChannelService = function() {
 				}
 			}
 			}(this.directionsDisplay)
-			);
-    };
-	
+		);
+	};
 	this.showRoute = function(fromStop, toStop, intermedStops) {
-		this.directionsDisplay.setMap(this.gmap);
+		this.resetDisplay();
 		
 		var request = {
 		origin: new google.maps.LatLng(fromStop.latitude, fromStop.longitude), //place.geometry.location
@@ -1494,16 +1514,7 @@ RouteHelpChannelService = function() {
 			})
 		};
 		
-		this.directionsService.route(request, 
-		function(display){
-		return function(result, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                display.setDirections(result);
-                
-            }
-        }
-		}(this.directionsDisplay)
-		);
+		this.showDisplay(request);
 		
 	};
 };
