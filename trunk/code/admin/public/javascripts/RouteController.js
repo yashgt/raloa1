@@ -485,6 +485,14 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             });
 			$scope.routeDetail.deletedTrips = [];
             //$scope.scheduleOptions.data = $scope.routeDetail.trips;
+			var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
+			var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
+			var allStops = [];
+			$scope.forAllStops(function(rs){ allStops.push(rs); });
+			//var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
+			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
+			var wayPoints = [];
+			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
 
         });
     };
@@ -610,6 +618,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		$scope.scheduleOptions[dir].selectedRows = [];
 	};
 
+	
     $scope.scheduleOptions = [];
     [0, 1].forEach(function(dir) {
         $scope.scheduleOptions.splice(dir, 0, {
@@ -682,6 +691,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         });
 		$scope.scheduleOptions[dir].selectedRows = [];
         $scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length;
+		$scope.scheduleOptions[dir].options = { stopCols : []};
     });
 
     //SCHEDULE REGION ENDS
@@ -1252,8 +1262,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
 function RouteHelpController($scope, routeHelpChannel, flash) {
-    $scope.directionsDisplay = new google.maps.DirectionsRenderer();
-    $scope.directionsService = new google.maps.DirectionsService();
+    //$scope.directionsDisplay = new google.maps.DirectionsRenderer();
+    //$scope.directionsService = new google.maps.DirectionsService();
+	$scope.searchRoute = function(){
+		routeHelpChannel.searchRoute();
+	};
+	/*
     $scope.searchRoute = function() {
         $scope.directionsDisplay.setMap(routeHelpChannel.gmap);
 
@@ -1271,6 +1285,29 @@ function RouteHelpController($scope, routeHelpChannel, flash) {
             }
         });
     };
+	
+	$scope.showRoute = function(fromStop, toStop, intermedStops) {
+		var request = {
+		origin: new google.maps.LatLng(fromStop.latitude, fromStop.longitude), //place.geometry.location
+		destination: new google.maps.LatLng(toStop.latitude, toStop.longitude),
+		travelMode: google.maps.TravelMode.DRIVING,
+		waypoints: intermedStops.map(function(stop){ 
+			return {
+				location: new google.maps.LatLng(stop.latitude, stop.longitude)
+				, stopOver: true 
+			}; 
+			})
+		};
+		
+		$scope.directionsService.route(request, function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                $scope.directionsDisplay.setDirections(result);
+                flash.success = "Road path is marked on the map";
+            }
+        });
+		
+	};
+	*/
 }
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
@@ -1418,6 +1455,57 @@ StopChannelService = function() {
 RouteHelpChannelService = function() {
     this['From'] = undefined;
     this['To'] = undefined;
+	
+	this.directionsDisplay = new google.maps.DirectionsRenderer();
+    this.directionsService = new google.maps.DirectionsService();
+    this.searchRoute = function() {
+        this.directionsDisplay.setMap(this.gmap);
+
+        var request = {
+            origin: this.From,
+            destination: this.To,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+
+
+        this.directionsService.route(request, 
+			function(display){
+			return function(result, status) {
+				if (status == google.maps.DirectionsStatus.OK) {
+					display.setDirections(result);                
+				}
+			}
+			}(this.directionsDisplay)
+			);
+    };
+	
+	this.showRoute = function(fromStop, toStop, intermedStops) {
+		this.directionsDisplay.setMap(this.gmap);
+		
+		var request = {
+		origin: new google.maps.LatLng(fromStop.latitude, fromStop.longitude), //place.geometry.location
+		destination: new google.maps.LatLng(toStop.latitude, toStop.longitude),
+		travelMode: google.maps.TravelMode.DRIVING,
+		waypoints: intermedStops.map(function(stop){ 
+			return {
+				location: new google.maps.LatLng(stop.latitude, stop.longitude)
+				, stopover: true 
+			}; 
+			})
+		};
+		
+		this.directionsService.route(request, 
+		function(display){
+		return function(result, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                display.setDirections(result);
+                
+            }
+        }
+		}(this.directionsDisplay)
+		);
+		
+	};
 };
 
 //This service is used for conveying to other components that a location on the map has been chosen
@@ -1623,7 +1711,7 @@ function UnpairedStopsFilter() {
 }
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
+    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
     ]);
