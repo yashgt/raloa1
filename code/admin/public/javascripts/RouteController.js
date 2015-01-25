@@ -120,6 +120,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     $scope.clearRoute = function() {
+		$scope.forAllStops( function(rs){
+			if (rs.onwardStop) rs.onwardStop.icon = STOP_ICON;
+            if (rs.returnStop) rs.returnStop.icon = STOP_ICON;
+		});
+		
+		/*
         if ($scope.routeDetail != undefined) {
             if ($scope.routeDetail.stages != undefined) {
                 $scope.routeDetail.stages.forEach(function(stage) {
@@ -133,6 +139,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 });
             }
         }
+		*/
 
         $scope.routeDetail = {
             routeId: -1,
@@ -143,6 +150,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             ]
         };
 
+		routeHelpChannel.resetDisplay();
         $scope.clearScheduleGrid();
     };
 
@@ -201,6 +209,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             if ($scope.routeDetail.routeId == 0) {
                 $scope.routeDetail = route;
                 $scope.routeDetail.isDirty = false;
+				
+				//Make sure stops are from working set
+				$scope.forAllStops(function(rs){
+					rs.onwardStop = getActiveStopById(rs.onwardStop.id);
+					rs.returnStop = getActiveStopById(rs.returnStop.id);
+				});
 
                 $scope.fleetDetail.routes.push(route);
                 $scope.gridRoutesApi.selection.selectRow(route);
@@ -416,7 +430,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             ,field: "stops." + fleetstop.id
 			,type: 'string'
             ,enableCellEdit: true
-            ,editableCellTemplate: "<div><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+            ,editableCellTemplate: "<div tooltip=\"" + fleetstop.name + "\"><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
 			,disableHiding: true
 			,enableSorting: true
 			
@@ -498,9 +512,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
 
     $scope.forAllStops = function(cb) {
+		if($scope.routeDetail && $scope.routeDetail.stages){
         $scope.routeDetail.stages.forEach(function(stage) {
             stage.stops.forEach(cb);
         });
+		}
     };
 	
 	$scope.areSegmentsReady = function(){
@@ -1468,7 +1484,7 @@ RouteHelpChannelService = function() {
 	};
 	this.directionsDisplay = new google.maps.DirectionsRenderer({
 		draggable: false
-		,hideRouteList: false
+		,hideRouteList: true
 		,polylineOptions: polyLineOpts
 	});
     this.directionsService = new google.maps.DirectionsService();
@@ -1486,6 +1502,7 @@ RouteHelpChannelService = function() {
     };
 	this.resetDisplay = function(){
 		this.directionsDisplay.setMap(null);
+		this.directionsDisplay.setDirections({ routes: [] }); 
         this.directionsDisplay.setMap(this.gmap);
 	};
 	this.showDisplay = function(request){
@@ -1506,6 +1523,9 @@ RouteHelpChannelService = function() {
 		origin: new google.maps.LatLng(fromStop.latitude, fromStop.longitude), //place.geometry.location
 		destination: new google.maps.LatLng(toStop.latitude, toStop.longitude),
 		travelMode: google.maps.TravelMode.DRIVING,
+		optimizeWaypoints: true,
+		durationInTraffic: false,
+		provideRouteAlternatives: false,
 		waypoints: intermedStops.map(function(stop){ 
 			return {
 				location: new google.maps.LatLng(stop.latitude, stop.longitude)
