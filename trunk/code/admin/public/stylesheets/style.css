@@ -122,3 +122,7 @@ input.ng-valid {
 .sched-grid {
 
 }
+
+.angular-ui-tree-empty {
+	min-height: 0px
+}
