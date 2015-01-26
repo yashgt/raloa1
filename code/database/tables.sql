@@ -59,20 +59,6 @@ PRIMARY KEY (session_id),
 FOREIGN KEY (user_id) REFERENCES user(user_id)
 );
 
-CREATE TABLE if not exists route
-(
-route_id INT AUTO_INCREMENT,
-gtfs_route_id int,
-fleet_id int,
-is_deleted boolean DEFAULT 0,
-route_name varchar(255),
-start_stop_id int,
-end_stop_id int,
-PRIMARY KEY (route_id),
-FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
-);
-
-
 CREATE TABLE if not exists stop
 (
 stop_id int AUTO_INCREMENT,
@@ -85,10 +71,13 @@ alias_name2 varchar(255),
 locality varchar(500),
 stop_loc_id int,
 peer_stop_id int,
+user_id int,
 PRIMARY KEY (stop_id)
 ,FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 ,FOREIGN KEY (peer_stop_id) REFERENCES stop(stop_id)
+,foreign key (user_id) references user(user_id)
 );
+
 
 CREATE TABLE if not exists stop_loc
 (
@@ -98,6 +87,23 @@ loc_text varchar(255),
 FOREIGN KEY (stop_id) REFERENCES stop(stop_id)
 ,SPATIAL INDEX(location)
 ) ENGINE = MyISAM;
+
+CREATE TABLE if not exists route
+(
+route_id INT AUTO_INCREMENT,
+gtfs_route_id int,
+fleet_id int,
+is_deleted boolean DEFAULT 0,
+route_name varchar(255),
+start_stop_id int,
+end_stop_id int,
+PRIMARY KEY (route_id),
+FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id),
+foreign key (start_stop_id) references stop(stop_id),
+foreign key (end_stop_id) references stop(stop_id)
+);
+
+
 
 delimiter //
 drop trigger if exists ins_stop//

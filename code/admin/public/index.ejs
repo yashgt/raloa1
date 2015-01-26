@@ -72,10 +72,12 @@
         <div flash-alert active-class="in alert" class="alert fade" align="right">
             <span class="alert-message">{{flash.message}}</span>
         </div>
-        <ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets"></ny-fleet-choice># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.stops.length}} # Un-paired stops: {{fleetDetail.stops | unpaired}} Logged in as
-        <%= user.username %>,
-            <% if(user.role==1 ) { %>Fleet Administrator
-                <% } %> <a href='/logout'>Logout</a>
+		<table><tr>
+		<td><ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets"></ny-fleet-choice></td>
+		<td># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.allstops.length}} </td>
+		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td>
+		</tr></table>        
+		
                     <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
 
                     <tabset vertical="false" justified="false">
