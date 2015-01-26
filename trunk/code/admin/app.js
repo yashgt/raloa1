@@ -113,9 +113,10 @@ app.get('/api/fleets', function(req, res) {
 
 app.post('/api/stop', function(req, res) {
     var stopDetail = req.body;
+	var user_id = req.session.passport.user.userId;
     stopDetail.fleetId = req.session.passport.user.rootFleetId;
     logger.info("Saving stop {0}", stopDetail);
-    db.query("set @id := ? ; call save_stop(@id,?,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.name, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId, stopDetail.peerStopId], function(results) {
+    db.query("set @id := ? ; call save_stop(@id,?,?,?,?,?,?) ; select @id; ", [stopDetail.id, stopDetail.name, stopDetail.latitude, stopDetail.longitude, stopDetail.fleetId, stopDetail.peerStopId, user_id], function(results) {
         var id = results[2][0]["@id"];
         logger.info("Stop {0} created with ID {1}", stopDetail.name, id);
         res.json({

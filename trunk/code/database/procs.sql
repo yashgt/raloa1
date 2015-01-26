@@ -106,16 +106,17 @@ create procedure save_stop(
 	, IN lon float
 	, IN fleet_id int
 	, IN in_peer_stop_id int
+	, IN in_user_id int
 )
 begin
 	if id > 0 then /*Existing stop is being modified*/
 		update stop
-		set latitude=lat, longitude=lon, name=stop_name
+		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
 		where stop_id=id;
 		
 	else /*New or peer stop is being created*/
-		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id) 
-		values ( fleet_id, lat, lon, stop_name, in_peer_stop_id) ;
+		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id, user_id) 
+		values ( fleet_id, lat, lon, stop_name, in_peer_stop_id, in_user_id) ;
 		set id = LAST_INSERT_ID() ;
 		
 		if in_peer_stop_id > 0 then
@@ -379,7 +380,7 @@ begin
 		set lon := vsw_lon + loninc * rand() ;
 		
 		
-		call save_stop(sid, name, lat, lon, 2, null);
+		call save_stop(sid, name, lat, lon, 2, null,1);
 		select sid;
 		set f := -f;	
 		set cnt := cnt + 1;
