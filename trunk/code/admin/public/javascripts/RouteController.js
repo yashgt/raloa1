@@ -1159,7 +1159,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             position: point,
             model: stop,
             icon: stop.icon,
-            draggable: true
+            draggable: true,
+			title: stop.name
         };
         var marker = addMarker(markerOptions);
         stop.marker = marker;
