@@ -92,7 +92,7 @@ CREATE TABLE if not exists route
 (
 route_id INT AUTO_INCREMENT,
 gtfs_route_id int,
-fleet_id int,
+fleet_id int comment 'Fleet to which the route belongs. This is always the Root Fleet',
 is_deleted boolean DEFAULT 0,
 route_name varchar(255),
 start_stop_id int,
@@ -145,7 +145,7 @@ FOREIGN KEY (route_id) REFERENCES route(route_id)
 CREATE TABLE if not exists routestop
 (
 stop_id int,
-peer_stop_id int comment 'Stop that appears on the corresponding location in the reverse direction. By default, this should be the peer stop of the primary stop',
+peer_stop_id int comment 'Stop in the reverse direction',
 route_id int,
 stage_id int,
 sequence int,

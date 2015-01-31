@@ -4,7 +4,7 @@ body {
 
 .angular-google-map-container {
     width: 100%;
-    height: 400px;
+    height: 500px;
 }
 
 /* fix for Twitter Bootstrap handling of responsive images */

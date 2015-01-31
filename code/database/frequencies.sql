@@ -5,4 +5,5 @@ trip_id
 ,frequency_gap as headway_secs
 from trip
 where fleet_id=@fleet_id
+and frequency_trip=1
 ;

@@ -109,6 +109,9 @@ create procedure save_stop(
 	, IN in_user_id int
 )
 begin
+	declare root_fleet_id int;
+	select get_root_fleet(in_fleet_id) into root_fleet_id;
+	
 	if id > 0 then /*Existing stop is being modified*/
 		update stop
 		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
@@ -116,7 +119,7 @@ begin
 		
 	else /*New or peer stop is being created*/
 		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id, user_id) 
-		values ( fleet_id, lat, lon, stop_name, in_peer_stop_id, in_user_id) ;
+		values ( root_fleet_id, lat, lon, stop_name, in_peer_stop_id, in_user_id) ;
 		set id = LAST_INSERT_ID() ;
 		
 		if in_peer_stop_id > 0 then
