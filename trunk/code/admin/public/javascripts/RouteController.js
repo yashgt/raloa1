@@ -244,15 +244,18 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
             flash.success = 'Route saved successully';
+			
+			if ($scope.routeDetail.routeId == 0) { //Check this before it is overwritten
+                $scope.fleetDetail.routes.push(route);
+                $scope.gridRoutesApi.selection.selectRow(route);
+            }
+			
 			$scope.routeDetail = route;
             $scope.routeDetail.isDirty = false;
 				
 			$scope.sanctifyRoute();
 			$scope.resetSchedules();
-            if ($scope.routeDetail.routeId == 0) {
-                $scope.fleetDetail.routes.push(route);
-                $scope.gridRoutesApi.selection.selectRow(route);
-            }
+
 
         }, function(error) {
             flash.error = 'Route could not be saved';
@@ -555,7 +558,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = [];
-			//routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
 
         });
     };
