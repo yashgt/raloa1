@@ -142,7 +142,6 @@
 												<button class="btn btn-success btn-xs" ng-click="autocompleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0 && routeDetail "><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete Trips</button>
 	
                                                 <div ui-grid="scheduleOptions[<%= dir %>]" external-scopes="scheduleActions" ui-grid-pinning ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
-
                                                 <% }) %>
                                             </tab>
                                             <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">

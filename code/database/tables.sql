@@ -28,7 +28,7 @@ sw_lat float,
 sw_lon float,
 zoom int,
 agency_lang varchar (5),
-agency_timezone varchar (10),
+agency_timezone varchar (20),
 agency_phone varchar (20),
 agency_url varchar (255),
 PRIMARY KEY (fleet_id),
@@ -201,7 +201,7 @@ trip_id int,
 time time,
 FOREIGN KEY (route_stop_id) REFERENCES routestop(route_stop_id),
 FOREIGN KEY (trip_id) REFERENCES trip(trip_id),
-CONSTRAINT pk_rst PRIMARY KEY (route_stop_id,trip_id)
+CONSTRAINT pk_rst PRIMARY KEY (route_stop_id,trip_id)  
 );
 
 create table if not exists numbers

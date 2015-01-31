@@ -342,8 +342,8 @@ FROM routestop
 where stop_id=in_stopId AND route_id=in_routeId;
 
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) 
-VALUES 
-(rsid, in_tripId, in_time);
+VALUES  (rsid, in_tripId, in_time)
+on duplicate key update time=in_time;
 end//
 
 drop procedure if exists generate_stops//
@@ -379,11 +379,12 @@ begin
 		set lat := vsw_lat + latinc * rand() ;
 		set lon := vsw_lon + loninc * rand() ;
 		
-		
+		if lat < 15.8 AND lat > 14.89833 AND lon < 74.336944 AND lon > 73.675833 then
 		call save_stop(sid, name, lat, lon, 2, null,1);
 		select sid;
 		set f := -f;	
 		set cnt := cnt + 1;
+		end if;
 	end while;
 	
 end//
@@ -396,8 +397,18 @@ begin
 	select get_root_fleet(in_fleet_id) into root_fleet_id;
 	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id 
-	from stop 
+	from stop
 	where fleet_id=root_fleet_id
 	order by stop_id;
 	
+end//
+
+
+drop procedure if exists delete_trips//
+create procedure delete_trips(
+IN in_trip_id int
+)
+begin
+DELETE FROM routestoptrip WHERE trip_id=in_trip_id;
+DELETE FROM trip WHERE trip_id=in_trip_id;
 end//

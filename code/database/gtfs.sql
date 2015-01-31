@@ -1,16 +1,6 @@
 agency_id,agency_name,agency_lang,agency_timezone,agency_phone,agency_url
 
 SELECT 'KTC' as agency_id
-,'Kadamba Transport Corporation' as agency_name
-,'en' as agency_lang
-,'Asia/Kolkata' as agency_timezone
-,'(0091)0832-2438034' as agency_phone
-,'http://ktclgoa.com/' as agency_url
-INTO OUTFILE 'C:/Users/Anjali/Desktop/GoaTrans/code/GTFS/agency.txt'
-FIELDS TERMINATED BY ','
-LINES TERMINATED BY '\n'
-
-SELECT 'KTC' as agency_id
 ,agency_name
 ,agency_lang
 ,agency_timezone
@@ -19,7 +9,6 @@ SELECT 'KTC' as agency_id
 INTO OUTFILE 'C:/Users/Anjali/Desktop/GoaTrans/code/GTFS/agency.txt'
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\n'
-
 
 
 stop_id,stop_name,stop_lat,stop_lon,location_type

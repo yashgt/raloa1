@@ -566,6 +566,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             frequencyTrip: false,
             frequencyStartTime: '00:00',
             frequencyEndTime: '00:00',
+			frequency_gap : '00:00',
             stops: {}
         };
 
@@ -703,6 +704,10 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 field: 'frequencyEndTime',
                 pinnedLeft: true
 				,disableColumnMenu: true
+            }, {
+                name: 'frequencyGap',
+                displayName: 'Frequency interval',
+                field: 'frequency_gap'
             }]
         });
 		$scope.scheduleOptions[dir].selectedRows = [];
@@ -997,9 +1002,12 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         };
 
-
+		$scope.deleteStage = function() {
+		};
 
     }; //end configMap
+	
+	
 
 	$scope.fleetDetail.calendars = [];
 	$scope.calendarOptions.data = $scope.fleetDetail.calendars;
