@@ -76,6 +76,7 @@
 		<td><ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets"></ny-fleet-choice></td>
 		<td># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.allstops.length}} </td>
 		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td>
+		
 		</tr></table>        
 		
                     <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
@@ -97,10 +98,11 @@
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
                                             <input class="route_num" type="number" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
+											<div style="vertical-align:top"><font size="0.5">Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})</font></div>
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
-                                                Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})
+                                                
                                                 <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control">
 
                                                     <ny-ui-gmap-control gmap="gmap" bounds="fleetDetail.bounds"></ny-ui-gmap-control>

@@ -16,14 +16,14 @@ module.exports = {
   //console.log("Looking for %j %j", username, password);
 	db.connect( function(conn){
 		
-		conn.query("select user_id, username, fleet_id, role_type  from user where username = ? and password=?", [ username, password ]
+		conn.query("select user_id, username, fleet_id, get_root_fleet(fleet_id) as root_fleet_id, role_type  from user where username = ? and password=?", [ username, password ]
 			, function (err, results){
 				if(!err){
 					if(results[0]){
 						var user = //This object is saved to the session
 							{userId: results[0].user_id			//User ID
 							, username: results[0].username	//For display on the Admin page
-							, rootFleetId: results[0].fleet_id
+							, rootFleetId: results[0].root_fleet_id
 							, fleetId: results[0].fleet_id	//KTCL							
 							, role: results[0].role_type
 							}; //This object will be stored in the session

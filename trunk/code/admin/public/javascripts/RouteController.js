@@ -506,7 +506,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = [];
-			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+			//routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
 
         });
     };
