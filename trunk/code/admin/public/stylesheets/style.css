@@ -107,6 +107,10 @@ input.ng-valid {
 	border: 1px dashed #ff0000;
 }
 
+.unsettime {
+	border: 1px dashed #ff0000;
+}
+
 .stopName {
 	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
 }

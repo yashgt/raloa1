@@ -202,20 +202,54 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         disableStopDragging();
     };
 
-    $scope.saveRoute = function() {
-        $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
-
-            flash.success = 'Route saved successully';
-            if ($scope.routeDetail.routeId == 0) {
-                $scope.routeDetail = route;
-                $scope.routeDetail.isDirty = false;
-				
-				//Make sure stops are from working set
+	$scope.forAllStopTimes = function(cb){
+		[0,1].forEach(function(dir){
+			$scope.routeDetail.trips[dir].forEach(function(trip){
+				Object.keys(trip.stops).forEach(function(stopId){
+					cb(trip,stopId);
+				});
+			});
+		});
+	};
+	
+	$scope.sanctifyRoute = function(){
 				$scope.forAllStops(function(rs){
 					rs.onwardStop = getActiveStopById(rs.onwardStop.id);
 					rs.returnStop = getActiveStopById(rs.returnStop.id);
 				});
+				
+				$scope.forAllStopTimes(function(trip, stopId){
+					var tm = moment(trip.stops[''+ stopId], 'HH:mm');
+					trip.stops[''+ stopId] = tm.format('hh:mm a');
+				});
+	};
+	
+    $scope.saveRoute = function() {
+		var tripIncomplete = false;
+		$scope.forAllStopTimes(function(trip, stopId){
+			var stopTime = trip.stops[''+ stopId];
+			if( stopTime == undefined || stopTime==''){
+				tripIncomplete = true;
+			}
+		});
+		if(tripIncomplete){
+			flash.error = 'Some trips are incomplete';
+			return ;
+		}
+		
+		$scope.forAllStopTimes(function(trip, stopId){
+			var tm = moment(trip.stops[''+ stopId], 'hh:mm a');
+			trip.stops[''+ stopId] = tm.format('HH:mm');
+		});
+        $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
+            flash.success = 'Route saved successully';
+			$scope.routeDetail = route;
+            $scope.routeDetail.isDirty = false;
+				
+			$scope.sanctifyRoute();
+			$scope.resetSchedules();
+            if ($scope.routeDetail.routeId == 0) {
                 $scope.fleetDetail.routes.push(route);
                 $scope.gridRoutesApi.selection.selectRow(route);
             }
@@ -433,7 +467,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             ,editableCellTemplate: "<div tooltip=\"" + fleetstop.name + "\"><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
 			,disableHiding: true
 			,enableSorting: true
-			
+			/*
+			,cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+				if (row.entity.stops[''+ fleetstop.id] ==undefined ||  row.entity.stops[''+ fleetstop.id] == '' ) {
+					return 'unsettime';
+				}
+			}
+			*/
         };
 
         var idx = dir == 0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols;
@@ -453,6 +493,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.scheduleOptions[dir].columnDefs.splice(idx, 1);
     };
 
+	$scope.resetSchedules = function(){
+		[0, 1].forEach(function(dir) {
+                $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
+        });
+	};
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
             $scope.routeDetail.routeId = routeId;
@@ -494,9 +539,13 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             };
 			
             $scope.routeDetail.trips = routeDetail.trips;
-            [0, 1].forEach(function(dir) {
-                $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
-            });
+			
+			$scope.forAllStopTimes(function(trip, stopId){
+					var tm = moment(trip.stops[''+ stopId], 'HH:mm');
+					trip.stops[''+ stopId] = tm.format('hh:mm a');
+			});
+			
+			$scope.resetSchedules();
 			$scope.routeDetail.deletedTrips = [];
             //$scope.scheduleOptions.data = $scope.routeDetail.trips;
 			var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
@@ -623,15 +672,16 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             for (i = 0; i < allstops.length; i++) {
                 if (i != 0) {
                     //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
-                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'HH:mm');
+                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'hh:mm a');
                     // 30*1000 m in 60 min
                     // distance in X
                     var inctime = allsegments[i] * 60 / 30000;
-                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('HH:mm');
+                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('hh:mm a');
                 }
             }
 			$scope.routeDetail.isDirty = true;
 		});
+		$scope.scheduleOptions[dir].gridApi.selection.clearSelectedRows(null);
 		$scope.scheduleOptions[dir].selectedRows = [];
 	};
 
@@ -1296,47 +1346,7 @@ function RouteHelpController($scope, routeHelpChannel, flash) {
 	$scope.searchRoute = function(){
 		routeHelpChannel.searchRoute();
 	};
-	/*
-    $scope.searchRoute = function() {
-        $scope.directionsDisplay.setMap(routeHelpChannel.gmap);
-
-        var request = {
-            origin: routeHelpChannel.From,
-            destination: routeHelpChannel.To,
-            travelMode: google.maps.TravelMode.DRIVING
-        };
-
-
-        $scope.directionsService.route(request, function(result, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                $scope.directionsDisplay.setDirections(result);
-                flash.success = "Mark the stops of the onward trip along the plotted path";
-            }
-        });
-    };
 	
-	$scope.showRoute = function(fromStop, toStop, intermedStops) {
-		var request = {
-		origin: new google.maps.LatLng(fromStop.latitude, fromStop.longitude), //place.geometry.location
-		destination: new google.maps.LatLng(toStop.latitude, toStop.longitude),
-		travelMode: google.maps.TravelMode.DRIVING,
-		waypoints: intermedStops.map(function(stop){ 
-			return {
-				location: new google.maps.LatLng(stop.latitude, stop.longitude)
-				, stopOver: true 
-			}; 
-			})
-		};
-		
-		$scope.directionsService.route(request, function(result, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                $scope.directionsDisplay.setDirections(result);
-                flash.success = "Road path is marked on the map";
-            }
-        });
-		
-	};
-	*/
 }
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
@@ -1510,7 +1520,7 @@ RouteHelpChannelService = function() {
 
     };
 	this.resetDisplay = function(){
-		this.directionsDisplay.setMap(null);
+		//this.directionsDisplay.setMap(null);
 		this.directionsDisplay.setDirections({ routes: [] }); 
         this.directionsDisplay.setMap(this.gmap);
 	};

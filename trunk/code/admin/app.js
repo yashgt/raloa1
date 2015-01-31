@@ -535,89 +535,11 @@ app.get('/api/route/:route_id', function(req, res) {
 				}
 			}
 		);
-        /*
-		{
-			routeId: 1
-			, stages: [
-				{
-					title: 'Stage1'
-					, stageId: 1
-					, stops: [
-						{
-							onwardStop: { id: 1, distance: 2000} //distance from previous stop in that direction to this stop
-							, returnStop: { id: 2, distance: 1000}
-						}
-					]
-				}
-			]
-		}
-		*/
+
         res.json(routeDetail);
     });
 
-    /*
-    //TODO get from DB
-    res.json({
-        routeId: 1,
-        stages: [{
-            title: 'Stage1',
-			stageId: 1,
-            direction: 0,
-            stops: [{
-                id: 1
-            }, {
-                id: 2
-            }],
-			stages: {
-				'1' : 5.0
-				, '2' : 10.0
-			}
-        }, {
-            title: 'Stage2',
-			stageId: 2,
-            direction: 0,
-            stops: [{
-                id: 3
-            }, {
-                id: 4
-            }]
-			,stages: {
-				'1' : 10.0
-				, '2' : 5.0
-			}
-        }]
 
-        ,
-        trips: [{
-            tripId: 1,
-            direction: 0,
-            serviceId: 1,
-            frequency_trip: true,
-            frequency_start_time: '09:00',
-            frequency_end_time: '10:00',
-			stops: {
-            '1': '09:00',
-            '2': '09:10',
-            '3': '09:20',
-            '4': '09:25'
-			}
-        }, {
-            tripId: 2,
-            direction: 0,
-            serviceId: 1,
-            frequency_trip: true,
-            frequency_start_time: '09:00',
-            frequency_end_time: '10:00',
-			stops: {
-            '1': '09:00',
-            '2': '09:10',
-            '3': '09:20',
-            '4': '09:25'
-			}
-        }]
-		, fares: []
-    });
-	*/
 });
 
 //AUTH REGION
