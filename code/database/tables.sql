@@ -191,9 +191,6 @@ last_upd_on datetime,
 FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 );
 
-
-
-
 CREATE TABLE if not exists routestoptrip
 (
 route_stop_id int,
@@ -261,7 +258,7 @@ CREATE TABLE if not exists calendar
 (
 	calendar_id int AUTO_INCREMENT,
 	fleet_id int,
-	calendar_name varchar(255),
+	calendar_name varchar(25),
 	start_date date,
 	end_date date,
 	mon boolean, tue boolean, wed boolean, thu boolean, fri boolean, sat boolean, sun boolean,

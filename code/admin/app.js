@@ -174,20 +174,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     peerStopId: stop.peer_stop_id
                 };
             }),
-            calendars: [{ //TODO
-                serviceId: 1,
-                serviceName: 'All days',
-                mon: true,
-                tue: true,
-                wed: true,
-                thu: true,
-                fri: true,
-                sat: true,
-                sun: true,
-                startDate: '2014-10-1',
-                endDate: '2100-10-1'
-            }],
-
+            
             routes: results[2].map(function(route) {
                 return {
                     routeId: route.route_id,
@@ -196,25 +183,24 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     en: route.end_stop_name
 
                 };
-            })
-            /*
-            routes: [{
-                routeId: 1,
-                routeNum: 100,
-                st: 'Panaji',
-                en: 'Mapusa'
-            }, {
-                routeId: 2,
-                routeNum: 101,
-                st: 'Panaji',
-                en: 'Margao'
-            }, {
-                routeId: 3,
-                routeNum: 102,
-                st: 'Panaji',
-                en: 'Ponda'
-            }] //TODO
-			*/
+            }),
+						
+			calendars: results[3].map(function(calendar) {
+			return {
+                serviceId: calendar.calendar_id,
+                serviceName: calendar.calendar_name,
+                mon: calendar.mon,
+                tue: calendar.tue,
+                wed: calendar.wed,
+                thu: calendar.thu,
+                fri: calendar.fri,
+                sat: calendar.sat,
+                sun: calendar.sun,
+                startDate: calendar.start_date,
+                endDate: calendar.end_date
+				};
+            }),
+           
         };
         res.json(fleetDetail);
     });
