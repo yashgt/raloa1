@@ -22,6 +22,7 @@
     "angular-google-maps": "2.0.1",
     "ng-table": "~0.3.1",
     "angular-bootstrap": "~0.11.0",
+	"angular-bootstrap": "~0.12.0",
     "angular-ui-select": "~0.8.2",
     "selectize": "~0.8.5",
     "angular-flash-messages": "*",
@@ -31,7 +32,9 @@
     "angular-ui-grid": "~3.0.0-rc.16",
     "angular-ui-tree": "~2.1.5",
     "angular-busy": "~4.1.2",
-    "angular-ui-layout": "~1.0.5"
+    "angular-ui-layout": "~1.0.5",
+	"moment": "~2.9.0"
+	
   },
   "devDependencies": {
     "angular-ui-grid": "~3.0.0-rc.12",

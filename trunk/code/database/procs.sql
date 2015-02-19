@@ -150,6 +150,7 @@ begin
 	declare vfleet_name varchar(200);
 	declare vavg_speed, vzoom int;
 	declare	vcen_lat, vcen_lon, vne_lat, vne_lon ,vsw_lat ,vsw_lon float;
+
 	
 	select get_root_fleet(in_fleet_id) into root_fleet_id;
 
@@ -174,6 +175,9 @@ begin
 	inner join stop S2 on (R.end_stop_id=S2.stop_id)
 	where R.fleet_id = root_fleet_id
 	and R.is_deleted=0;
+	
+	select * from calendar
+	where fleet_id=in_fleet_id;
 	
 end//
 
@@ -414,4 +418,31 @@ IN in_trip_id int
 begin
 DELETE FROM routestoptrip WHERE trip_id=in_trip_id;
 DELETE FROM trip WHERE trip_id=in_trip_id;
+end//
+
+drop procedure if exists add_calendars//
+create procedure add_calendars(
+	IN in_fleet_id int
+	,IN in_calendar_name varchar(25)
+	,IN in_start_date DATE
+	,IN in_end_date DATE
+	,IN in_mon BOOLEAN
+	,IN in_tue BOOLEAN
+	,IN in_wed BOOLEAN
+	,IN in_thu BOOLEAN
+	,IN in_fri BOOLEAN
+	,IN in_sat BOOLEAN
+	,IN in_sun BOOLEAN
+)
+begin
+insert into calendar(fleet_id,calendar_name,start_date,end_date,mon,tue,wed,thu,fri,sat,sun) VALUES (3,'FULLW','2015-10-02','2017-09-02',1,1,1,1,1,1,1);
+end//
+
+drop procedure if exists get_calendars//
+create procedure get_calendars(
+IN in_fleet_id int
+)
+begin
+select * from calendar
+where fleet_id=in_fleet_id;
 end//
