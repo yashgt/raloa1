@@ -419,6 +419,11 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     };
 
+	$scope.removeStage = function(stage){
+		//$scope.routeDetail.stages.splice(
+		//TODO
+	};
+	
     $scope.addStopToStage = function(fleetstop, routestage) {
         var returnstop;
 
