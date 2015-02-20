@@ -4,75 +4,72 @@
 <head>
 
     <title>Fleet Manager</title>
-
-    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
-	<script src="javascripts/jquery.min.js">
-
-    <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.exp"></script>
-    <script src="javascripts/ContextMenu.js"></script>
-    <!--
-	<script src="http://javascripts/bower_components/angular/angular.min.js"></script>
-	<script src="http://javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
-	<script src="http://javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
+	
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.exp" ></script>
+	
+	<!--
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
 	-->
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
-
-
-    <link rel="styleSheet" href="javascripts/bower_components/angular-ui-grid/ui-grid.min.css" />
-    <script src="javascripts/bower_components/angular-ui-grid/ui-grid.js"></script>
-
-    <script src="javascripts/ProjectedOverlay.js"></script>
-    <script src="javascripts/geoxml3.js"></script>
-
-    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script> -->
-	<script src="javascripts/lodash.min.js"></script>
 	
-    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script> -->
-	<script src="javascripts/ui-bootstrap-tpls.min.js"></script>
-    
-	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">
-
-   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" type="text/javascript"></script> -->
-	<script src="javascripts/moment.min.js"></script>
+ 
+	<script src="javascripts/bower_components/angular/angular.min.js"></script>
+	<script src="javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
 	
-    <script src="javascripts/bower_components/message-center/message-center.js"></script>
-    <script src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
-    <script src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+	
+	
+	<!-- CDN LIBS  
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>	
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script>	
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.9.9/select.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.9.9/select.min.css">	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" type="text/javascript"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"></script>
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	-->
+	
+	<!-- LOCAL LIBS -->
+	<script type="text/javascript" src="javascripts/bower_components/jquery/dist/jquery.min.js" ></script>
+	<script type="text/javascript" src="javascripts/lodash.min.js"></script>
+	<script type="text/javascript" src="javascripts/ui-bootstrap-tpls.min.js"></script>
+	<script type="text/javascript" src="javascripts/bower_components/angular-ui-select/dist/select.min.js"></script>
+	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">   
+	<script type="text/javascript" src="javascripts/moment.min.js"></script>
+	<script type="text/javascript" src="javascripts/angular-busy.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="javascripts/angular-busy.min.css" />
+    <link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
+	
+    <script type="text/javascript" src="javascripts/bower_components/message-center/message-center.js"></script>
+    <script type="text/javascript" src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
+    <script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
-    <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">
-
-   <!--  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"></script> -->
-   <script src="javascripts/angular-busy.min.js"></script>
-      
-   <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet"> -->
-   <link rel="stylesheet" type="text/css" href="javascripts/angular-busy.min.css" />
-   
-
+    <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">   
+	
+	<!-- libs not found on CDN -->
+	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-grid/ui-grid.min.css" />
+    <script type="text/javascript" src="javascripts/bower_components/angular-ui-grid/ui-grid.js"></script>
+	
     <link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-ui-layout/ui-layout.css" />
     <script type="text/javascript" src="javascripts/bower_components/raf/index.js"></script>
     <script type="text/javascript" src="javascripts/bower_components/angular-ui-layout/ui-layout.js"></script>
 
-    <script src="javascripts/RouteController.js"></script>
+	<script src="javascripts/ContextMenu.js"></script>		
+    <script type="text/javascript" src="javascripts/ProjectedOverlay.js"></script>
+    <script type="text/javascript" src="javascripts/geoxml3.js"></script>
+	
+	<!--project resources -->
+    <script type="text/javascript" src="javascripts/RouteController.js"></script>
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/map.css' />
     <link rel='stylesheet' href='/stylesheets/context_menu.css' />
-    <!--<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">-->
-    <link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-
-
-
-
-    <!--<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">-->
-    <link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
-
-
-
 </head>
 
 <body ng-controller="RouteController">

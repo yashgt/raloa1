@@ -13,7 +13,7 @@ var admin = require('admin');
 var logger = require('logger').getLogger();
 var async = require('async');
 var _ = require('underscore');
-var gm = require('googlemaps');
+var gm = require('googlemaps');maxage
 
 
 var app = express();
@@ -75,7 +75,11 @@ app.configure(function() {
     app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'public')));
+	var staticOptions = {
+		maxAge: '10d'
+	};
+
+    app.use(express.static(path.join(__dirname, 'public'), staticOptions));
 }); //configure ends
 
 // development only
