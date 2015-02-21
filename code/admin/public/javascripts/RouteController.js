@@ -609,6 +609,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         return rs;
     };
 
+	$scope.showData = function(){
+		console.log(JSON.stringify($scope.fleetDetail));
+	};
     $scope.addTrip = function(dir) {
         console.log($scope);
         console.log(_);
@@ -1256,6 +1259,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.closeRoute();
 
             $scope.fleetDetail = fleetDetail;
+			console.log(JSON.stringify($scope.fleetDetail));
             $scope.fleetDetail.stops = [];
             $scope.showStops();
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;

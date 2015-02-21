@@ -4,20 +4,26 @@
 <head>
 
     <title>Fleet Manager</title>
-	
+	<!--
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places&sensor=false&language=en&v=3.exp" ></script>
-	
+	-->
+	<script type="text/javascript" src="javascripts/map/gmap.js" ></script>
+
 	<!--
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
 	-->
 	
- 
+ <!-- TODO later 
 	<script src="javascripts/bower_components/angular/angular.min.js"></script>
 	<script src="javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
+	-->
 	
+	<script src="javascripts/angular.min.js"></script>
+	<script src="javascripts/angular-sanitize.min.js"></script>
+	<script src="javascripts/angular-animate.min.js"></script>
 	
 	
 	<!-- CDN LIBS  
@@ -31,6 +37,7 @@
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.12/angular-google-maps.min.js"></script>
 	-->
 	
 	<!-- LOCAL LIBS -->
@@ -40,14 +47,16 @@
 	<script type="text/javascript" src="javascripts/bower_components/angular-ui-select/dist/select.min.js"></script>
 	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">   
 	<script type="text/javascript" src="javascripts/moment.min.js"></script>
-	<script type="text/javascript" src="javascripts/angular-busy.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="javascripts/angular-busy.min.css" />
+	<script type="text/javascript" src="javascripts/bower_components/angular-busy/dist/angular-busy.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-busy/dist/angular-busy.min.css" />
     <link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
+	<script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 	
     <script type="text/javascript" src="javascripts/bower_components/message-center/message-center.js"></script>
     <script type="text/javascript" src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
-    <script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+	
+    
 
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">   
@@ -103,6 +112,7 @@
                                             <button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty || routeDetail.routeId<=e0">Extend</button>
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
+											<button type="submit" ng-click="showData()">Data</button>
                                             <input class="route_num" type="number" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
 											<div style="vertical-align:top"><font size="0.5">Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})</font></div>
                                         </div>
