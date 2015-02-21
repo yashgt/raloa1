@@ -177,7 +177,7 @@ begin
 	and R.is_deleted=0;
 	
 	select * from calendar
-	where fleet_id=in_fleet_id;
+	where fleet_id=root_fleet_id;
 	
 end//
 
