@@ -10,9 +10,9 @@
 	<script type="text/javascript" src="javascripts/map/gmap.js" ></script>
 
 	<!--
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.js"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-animate.min.js"></script>
 	-->
 	
  <!-- TODO later 
@@ -29,13 +29,18 @@
 	<!-- CDN LIBS  
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js" type="text/javascript"></script>	
+	
     <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.0/ui-bootstrap-tpls.min.js" type="text/javascript"></script>	
+	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.9.9/select.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-select/0.9.9/select.min.css">	
+	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js" type="text/javascript"></script>
+	
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.js"></script>
 	<link href="http://cdnjs.cloudflare.com/ajax/libs/angular-busy/4.1.2/angular-busy.min.css" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.12/angular-google-maps.min.js"></script>
 	-->
@@ -43,27 +48,28 @@
 	<!-- LOCAL LIBS -->
 	<script type="text/javascript" src="javascripts/bower_components/jquery/dist/jquery.min.js" ></script>
 	<script type="text/javascript" src="javascripts/lodash.min.js"></script>
-	<script type="text/javascript" src="javascripts/ui-bootstrap-tpls.min.js"></script>
+	
+	<script type="text/javascript" src="javascripts/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+	<link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	
 	<script type="text/javascript" src="javascripts/bower_components/angular-ui-select/dist/select.min.js"></script>
 	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-select/dist/select.min.css">   
 	<script type="text/javascript" src="javascripts/moment.min.js"></script>
 	<script type="text/javascript" src="javascripts/bower_components/angular-busy/dist/angular-busy.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-busy/dist/angular-busy.min.css" />
-    <link href="javascripts/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    
     <link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
 	<script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
 	
     <script type="text/javascript" src="javascripts/bower_components/message-center/message-center.js"></script>
     <script type="text/javascript" src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
 	
-    
-
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">   
 	
 	<!-- libs not found on CDN -->
-	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-grid/ui-grid.min.css" />
-    <script type="text/javascript" src="javascripts/bower_components/angular-ui-grid/ui-grid.js"></script>
+	<link rel="stylesheet" href="javascripts/ui-grid/ui-grid-unstable.min.css" />
+    <script type="text/javascript" src="javascripts/ui-grid/ui-grid-unstable.min.js"></script>
 	
     <link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-ui-layout/ui-layout.css" />
     <script type="text/javascript" src="javascripts/bower_components/raf/index.js"></script>
@@ -105,7 +111,7 @@
                                         <div ui-grid="routeListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
                                     </td>
                                     <td width=70% valign="top">
-                                        <div id="route">
+                                        <div id="route" style="width:100%">
 
                                             Route options:
                                             <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">New</button>
@@ -159,7 +165,7 @@
 												<button class="btn btn-danger btn-xs" ng-click="deleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0" ><span class="glyphicon glyphicon-trash"></span>Delete Trips</button>
 												<button class="btn btn-success btn-xs" ng-click="autocompleteTrips(<%= dir %>)" ng-disabled="scheduleOptions[<%= dir %>].selectedRows.length==0 && routeDetail "><span class="glyphicon glyphicon-arrow-right"></span>Autocomplete Trips</button>
 	
-                                                <div ui-grid="scheduleOptions[<%= dir %>]" external-scopes="scheduleActions" ui-grid-pinning ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
+                                                <div class="sched-grid" ui-grid="scheduleOptions[<%= dir %>]" external-scopes="scheduleActions" ui-grid-pinning ui-grid-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns ui-grid-selection></div>
                                                 <% }) %>
                                             </tab>
                                             <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">

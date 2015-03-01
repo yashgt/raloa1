@@ -472,9 +472,17 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             ,field: "stops." + fleetstop.id
 			,type: 'string'
             ,enableCellEdit: true
-            ,editableCellTemplate: "<div tooltip=\"" + fleetstop.name + "\"><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
-			,disableHiding: true
-			,enableSorting: true
+            //,editableCellTemplate: "<div tooltip=\"" + fleetstop.name + "\"><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
+			,editableCellTemplate:'templates/stoptime.html'			
+			//,disableHiding: true
+			//,enableSorting: true
+			,headerCellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+				//if (row.entity.stops[''+ fleetstop.id] ==undefined ||  row.entity.stops[''+ fleetstop.id] == '' ) {
+					return 'stop_name';
+				//}
+			}
+			, minWidth: 80
+			//, maxWidth: 40
 			/*
 			,cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
 				if (row.entity.stops[''+ fleetstop.id] ==undefined ||  row.entity.stops[''+ fleetstop.id] == '' ) {
@@ -681,7 +689,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
 
             for (i = 0; i < allstops.length; i++) {
-                if (i != 0) {
+                if (i != 0 && allsegments[i]>=0) {
                     //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
                     var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'hh:mm a');
                     // 30*1000 m in 60 min
@@ -706,6 +714,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             enableColumnMenus: false,
 			enableSelectAll: true,
 			enableRowHeaderSelection: true,
+			enableScrollbars: true,
 			multiSelect : true,
 			enableSelectionBatchEvent: true,
 			onRegisterApi: function(gridApi){
@@ -735,6 +744,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
 				,disableColumnMenu: true
 				,enableColumnResizing:false
+				,maxWidth:50
 				,cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
           if (row.entity.tripId < 0 ) {
             return 'newtrip';
@@ -749,26 +759,31 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 editDropdownValueLabel: 'serviceName',
                 editDropdownOptionsArray: []
 				,disableColumnMenu: true
+				,minWidth:80
             }, {
                 name: 'isFrequency',
-                displayName: 'Frequency?',
+                displayName: 'Freq?',
                 field: 'frequencyTrip',
-                type: 'boolean'
+                type: 'boolean'				
 				,disableColumnMenu: true
+				,minWidth:20
             }, {
                 name: 'frequencyStart',
                 displayName: 'Frequency St.',
                 field: 'frequencyStartTime'
+				,minWidth:80
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
                 field: 'frequencyEndTime',
                 pinnedLeft: true
 				,disableColumnMenu: true
+				,minWidth:80
             }, {
                 name: 'frequencyGap',
                 displayName: 'Frequency interval',
-                field: 'frequency_gap'
+                field: 'frequency_gap'				
+				,minWidth:80
             }]
         });
 		$scope.scheduleOptions[dir].selectedRows = [];
@@ -825,15 +840,20 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         columnDefs: [{
             name: 'No.',
             field: 'routeNum'
-			,cellClass: 'stopName'
+			,cellClass: 'routeNum'
+			, minWidth: 40
+			, maxWidth: 40
         }, {
             name: 'From',
             field: 'st'
 			,cellClass: 'stopName'
+			//,celltemplate: 'templates/routelistStopName.html'
+			,cellTemplate: '<div class="stopName" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
         }, {
             name: 'To',
             field: 'en'
 			,cellClass: 'stopName'
+			,cellTemplate: '<div class="stopName" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
         }],
         onRegisterApi: function(gridApi) {
             $scope.gridRoutesApi = gridApi;
