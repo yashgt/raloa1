@@ -5,6 +5,8 @@ var gm = require('googlemaps');
 var fs = require('fs');
 var ejs = require('ejs');
 
+//gm.setProxy("http://yash_ganthe:(0pspl1)@goaproxy.persistent.co.in:8080");
+
 var formingSegments = false;
 
 exports.saveStops = function saveStops(stops)
@@ -38,6 +40,7 @@ exports.generateSegments = function()
 	function(results){
 		var segSeries = [];
 		results[0].forEach( function(seg){
+			console.log("Segment %j", seg);
 			segSeries.push(
 				function(callback){
 					logger.debug("Getting segment for {0} {1} to {2} {3}", seg.from_lat, seg.from_lon, seg.to_lat, seg.to_lon);
@@ -51,8 +54,8 @@ exports.generateSegments = function()
 					var language = 'en';
 					var dcb = function(err, data){
 						if(!err ){
-							if(data.status = 'OK'){
-								var distance = data.rows[0].elements[0].distance.value ;
+							if(data.status == 'OK'){								
+								var distance = data.rows[0].elements[0].status=="OK" ? data.rows[0].elements[0].distance.value : -1 ;
 								db.query("call add_segment(?,?,?); ", [ seg.from_stop_id , seg.to_stop_id , distance]
 								,function(results){
 									console.log("Distance data %j", data);
@@ -60,7 +63,10 @@ exports.generateSegments = function()
 								});								
 							}
 						}
-						callback(err, 1);
+						else{
+							console.log("Error %j for %j %j", err,origins, destinations);
+							callback(err, 1);
+						}
 					};
 					gm.distance(origins, destinations, dcb, sensor, mode, alternatives, avoid, units, language)
 				}
@@ -68,7 +74,12 @@ exports.generateSegments = function()
 			
 		});
 		async.series(segSeries, function(err,results){
-			logger.debug("Completed generation of segments");
+			if(err){
+				logger.error("Error encountered while generating segments {0}", err);
+			}
+			else{
+				logger.debug("Completed generation of segments");
+			}
 			formingSegments = false;
 		});
 	});

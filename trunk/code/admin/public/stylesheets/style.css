@@ -23,6 +23,7 @@ a {
     border: 1px solid #dae2ea;
     color: #7c9eb2;
     padding: 10px 10px;
+	max-height: 40px;
 }
 
 .angular-ui-tree-handle:hover {
@@ -43,6 +44,13 @@ a {
 .group-title {
     background-color: #687074 !important;
     color: #FFF !important;
+	max-height: 100px;
+}
+
+.category-title {    
+    /*color: #FFF !important;	*/
+	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;	
+	overflow:visible;
 }
 
 input.ng-invalid {
@@ -76,11 +84,13 @@ input.ng-valid {
 }
 
 .stop_name {
-	-ms-transform:rotate(270deg); /* IE 9 */
-  -moz-transform:rotate(270deg); /* Firefox */
-  -webkit-transform:rotate(270deg); /* Safari and Chrome */
-  -o-transform:rotate(270deg); /* Opera */
-  padding: 10px;
+/*
+	-ms-transform:rotate(270deg); 
+  -moz-transform:rotate(270deg); 
+  -webkit-transform:rotate(270deg); 
+  -o-transform:rotate(270deg); */
+  /*padding: 10px;*/
+  color:blue;
 }
 
 .route_num {
@@ -111,8 +121,15 @@ input.ng-valid {
 	border: 1px dashed #ff0000;
 }
 
+.routeNum {
+	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
 .stopName {
 	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+	white-space:pre-line;
+	overflow:visible;
+	/*word-wrap: break-word;*/
+	
 }
 
 .ui-grid-cell-contents:hover {
@@ -124,7 +141,15 @@ input.ng-valid {
 }
 
 .sched-grid {
+	width: 100%;
+	/*height: 100px;*/
+}
 
+.colt {
+	padding:5px !important; 
+	border:2px solid #ccc !important; 
+	-webkit-border-radius: 5px;
+    border-radius: 5px !important;
 }
 
 .angular-ui-tree-empty {
