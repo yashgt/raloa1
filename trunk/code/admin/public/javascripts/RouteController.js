@@ -98,6 +98,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     };
     deleteStop = function(stop) {
         console.log("Deleting stop " + JSON.stringify(stop));
+		//CBM TODO:If the stop is part of any route, do not allow deletion of the stop.
     };
     linkStop = function(stop) {
 
@@ -497,6 +498,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		if($scope.scheduleOptions[dir].columnDefs.length == $scope.scheduleOptions[dir].fixedCols) //This is column for first stop
 		{
 			def.sort = { direction: uiGridConstants.ASC };
+			def.pinnedLeft = true;
 		}
 		
 
@@ -775,8 +777,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
-                field: 'frequencyEndTime',
-                pinnedLeft: true
+                field: 'frequencyEndTime'
+                //,pinnedLeft: true
 				,disableColumnMenu: true
 				,minWidth:80
             }, {
@@ -828,6 +830,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
     //ROUTELIST REGION
+
     $scope.routeListOptions = {
         enableSorting: true,
         enableCellEdit: false,
@@ -848,14 +851,23 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             field: 'st'
 			,cellClass: 'stopName'
 			//,celltemplate: 'templates/routelistStopName.html'
-			,cellTemplate: '<div class="stopName" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
+			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
         }, {
             name: 'To',
             field: 'en'
 			,cellClass: 'stopName'
-			,cellTemplate: '<div class="stopName" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
-        }],
-        onRegisterApi: function(gridApi) {
+			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
+        }]
+		//,rowTemplate: '<div ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }" ui-grid-cell></div></div>'
+		//,rowTemplate: '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>'
+		/*
+		,rowTemplate: '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell ">' +
+                           '<div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }"> </div>' +
+                           '<div ng-cell></div>' +
+                     '</div>'
+					 */
+		//, rowTemplate: 'templates/routeRow.html' 
+        ,onRegisterApi: function(gridApi) {
             $scope.gridRoutesApi = gridApi;
 
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
@@ -1290,6 +1302,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 svcCol.editDropdownOptionsArray = $scope.fleetDetail.calendars;
             });
             calendars = $scope.fleetDetail.calendars;
+			console.log($scope.fleetDetail.routes);
             $scope.routeListOptions.data = $scope.fleetDetail.routes;
         });
     };
@@ -1794,6 +1807,7 @@ function UnpairedStopsFilter() {
 
 (function() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
+	//, 'ui.grid.pinning'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
     ]);

@@ -112,6 +112,14 @@ input.ng-valid {
 .stretch {
 }
 
+.svcd_route {
+font-weight:bold;
+color:blue;
+}
+
+.unsvcd_route {
+color:black;
+}
 
 .newtrip {
 	border: 1px dashed #ff0000;
@@ -127,7 +135,7 @@ input.ng-valid {
 .stopName {
 	font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
 	white-space:pre-line;
-	overflow:visible;
+	/*overflow:visible;*/
 	/*word-wrap: break-word;*/
 	
 }

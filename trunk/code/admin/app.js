@@ -184,7 +184,8 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     routeId: route.route_id,
                     routeNum: route.route_name,
                     st: route.start_stop_name,
-                    en: route.end_stop_name
+                    en: route.end_stop_name,
+					serviced: route.serviced
 
                 };
             }),
@@ -230,6 +231,7 @@ app.post('/api/route/', function(req, res) {
     logger.info("Saving route {0}", route);
     logger.info("Route:", route);
     route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
+	var currentFleetId = req.session.passport.user.fleetId; // The trip belongs to the currently chosen fleet
 
     route.startStopId = route.stages[0].stops[0].onwardStop.id;
     var stageLength = route.stages.length - 1
@@ -322,6 +324,8 @@ app.post('/api/route/', function(req, res) {
                         tripList.forEach(function(trip) {
 							if(trip.tripId<0 || trip.isDirty){
 								trip.routeId = route.routeId;
+								if(trip.tripId<0)
+									trip.fleetId = currentFleetId; //Set the fleet only for new trips
 								tripSeries.push(function(callback) {
 									var tripWF = [
 										function(callback) {
@@ -427,7 +431,7 @@ saveRouteStopEntity = function(tran, routeStop, cb, fcb) {
 };
 
 saveTripEntity = function(tran, trip, cb, fcb) {
-    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.serviceId, trip.direction, trip.routeId,  trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
+    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.serviceId, trip.direction, trip.routeId,  trip.fleetId, trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
         var trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
         cb(trip_id);
