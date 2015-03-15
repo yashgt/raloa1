@@ -13,7 +13,7 @@ var slf4j = require('binford-slf4j');
 var binfordLogger = require('binford-logger');
 slf4j.setLoggerFactory(binfordLogger.loggerFactory);
 slf4j.loadConfig({
-    level: 4,
+    level: 3,
     appenders:
         [{
             appender: binfordLogger.getDefaultAppender()

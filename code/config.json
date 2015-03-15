@@ -10,6 +10,7 @@
 	},
 	"admin" : {
 		"port" : 3000
+		,"sslport": 4000
 	},
 	"mobapp" : {
 		"port" : 8000
