@@ -125,6 +125,10 @@ color:black;
 	border: 1px dashed #ff0000;
 }
 
+.myTrip {
+	color: blue;
+}
+
 .unsettime {
 	border: 1px dashed #ff0000;
 }
@@ -140,9 +144,6 @@ color:black;
 	
 }
 
-.ui-grid-cell-contents:hover {
-
-}
 
 .routelist {
 	height: 500px

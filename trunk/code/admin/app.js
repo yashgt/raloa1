@@ -149,7 +149,7 @@ app.post('/api/calendar', function(req, res) {
 });
 
 app.get('/api/fleet/:fleet_id', function(req, res) {
-    var fleetId = req.params.fleet_id;
+    var fleetId = parseInt(req.params.fleet_id);
     db.query("call get_fleet_detail(?);", [fleetId], function(results) {
         var fleetDetail = {
             fleetId: fleetId,
@@ -453,7 +453,7 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
 
 
 app.get('/api/route/:route_id', function(req, res) {
-    var route_id = req.params.route_id;
+    var route_id = parseInt(req.params.route_id);
     db.query("call get_route_detail(?);", [route_id], function(results) {
         var routeDetail = {
             routeId: route_id,
@@ -499,6 +499,7 @@ app.get('/api/route/:route_id', function(req, res) {
 			function(trip){
 				var routeTrip = {
 					tripId: trip.trip_id
+					,fleetId: trip.fleet_id
 					,serviceId: trip.service_id
 					,direction: trip.direction
 					,frequencyTrip: trip.frequency_trip
