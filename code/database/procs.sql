@@ -272,7 +272,7 @@ begin
 	where R.route_id=in_route_id
 	order by RS.sequence;
 	
-	select T.trip_id, T.calendar_id as service_id, T.direction, T.frequency_trip, T.frequency_start_time, T.frequency_end_time, T.frequency_gap
+	select T.trip_id, T.fleet_id as fleet_id, T.calendar_id as service_id, T.direction, T.frequency_trip, T.frequency_start_time, T.frequency_end_time, T.frequency_gap
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)

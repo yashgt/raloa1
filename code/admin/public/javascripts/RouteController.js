@@ -706,18 +706,26 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 		$scope.scheduleOptions[dir].selectedRows = [];
 	};
 
+	var isTripEditable = function($scoperow){
+		//use $scope.row.entity and $scope.col.colDef to determine if editing is allowed
+		return $scoperow.row.entity.fleetId==$scope.fleetDetail.fleetId;
+	};
 	
+	var tripOwnerShipClass = "\"{\'myTrip\': grid.appScope.fleetDetail.fleetId==row.entity.fleetId}\"";
     $scope.scheduleOptions = [];
     [0, 1].forEach(function(dir) {
         $scope.scheduleOptions.splice(dir, 0, {
             enableSorting: false,
             enableCellEdit: true,
+			cellEditableCondition: isTripEditable, 
 			enableCellEditOnFocus : true,
             enableColumnMenus: false,
 			enableSelectAll: true,
 			enableRowHeaderSelection: true,
 			enableScrollbars: true,
 			multiSelect : true,
+			minRowsToShow : 2,
+			maxRowsToShow : 10,
 			enableSelectionBatchEvent: true,
 			onRegisterApi: function(gridApi){
       //set gridApi on scope
@@ -743,7 +751,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 name: 'ID',
                 field: 'tripId',
                 enableCellEdit: false,
-                cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
+                cellTemplate: '<div ' + 'ng-class='+tripOwnerShipClass +'>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
 				,disableColumnMenu: true
 				,enableColumnResizing:false
 				,maxWidth:50
@@ -774,6 +782,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 displayName: 'Frequency St.',
                 field: 'frequencyStartTime'
 				,minWidth:80
+				
             }, {
                 name: 'frequencyEnd',
                 displayName: 'Frequency En.',
@@ -843,20 +852,23 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         columnDefs: [{
             name: 'No.',
             field: 'routeNum'
-			,cellClass: 'routeNum'
+			, cellClass: 'routeNum'
+			, cellTooltip: true
 			, minWidth: 40
 			, maxWidth: 40
         }, {
             name: 'From',
             field: 'st'
 			,cellClass: 'stopName'
+			, cellTooltip: true
 			//,celltemplate: 'templates/routelistStopName.html'
-			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
+			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
         }, {
             name: 'To',
             field: 'en'
 			,cellClass: 'stopName'
-			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
+			, cellTooltip: true
+			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
         }]
 		//,rowTemplate: '<div ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }" ui-grid-cell></div></div>'
 		//,rowTemplate: '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>'
