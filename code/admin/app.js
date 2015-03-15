@@ -61,7 +61,8 @@ app.configure(function() {
     app.use(express.bodyParser());
     app.use(express.session({
         secret: 'supersecretkeygoeshere',
-        store: new MySQLStore(options)
+        store: new MySQLStore(options),
+		//cookie: {maxAge: 1000}
     }));
     app.use(passport.initialize());
     app.use(passport.session());
@@ -75,8 +76,11 @@ app.configure(function() {
     app.use(express.urlencoded());
     app.use(express.methodOverride());
     app.use(app.router);
+	app.use(express.compress());
+	
+	var oneDay = 86400000;
 	var staticOptions = {
-		maxAge: '36000000'
+		maxAge: oneDay
 	};
 
     app.use(express.static(path.join(__dirname, 'public'), staticOptions));
