@@ -6,6 +6,7 @@ var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
+var https = require('https');
 var path = require('path');
 //var mysql = require('mysql');
 var db = require('db');
@@ -14,6 +15,7 @@ var logger = require('logger').getLogger();
 var async = require('async');
 var _ = require('underscore');
 var gm = require('googlemaps');
+var fs = require('fs');
 
 
 var app = express();
@@ -67,7 +69,8 @@ app.configure(function() {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || nconf.get('admin:port') || 3000);
+	app.set('sslport', process.env.PORT || nconf.get('admin:sslport') || 4000);
     app.set('views', path.join(__dirname, 'public'));
     app.set('view engine', 'ejs');
     app.use(express.favicon());
@@ -93,9 +96,23 @@ if ('development' == app.get('env')) {
 
 //app.get('/', routes.index);
 //app.get('/users', user.list);
+var sslOptions = {
+  key: fs.readFileSync('ssl-key.pem'),
+  cert: fs.readFileSync('ssl-cert.pem'),
+  
+  requestCert: true,
+  rejectUnauthorized: false
+};
 
+/*
 var server = http.createServer(app).listen(app.get('port'), function() {
     logger.info('Express server listening on port {0}', app.get('port'));
+    //console.log('Express server listening on port ' + app.get('port'));
+});
+*/
+
+var server = https.createServer(sslOptions,app).listen(app.get('sslport'), function() {
+    logger.info('Express server listening for https on port {0}', app.get('sslport'));
     //console.log('Express server listening on port ' + app.get('port'));
 });
 

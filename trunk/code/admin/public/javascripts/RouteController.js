@@ -11,7 +11,7 @@ var ROUTE_STOP_REV_ICON = "/images/route_bus_stop.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
-var HOST = "http://" + window.location.host;
+var HOST = window.location.protocol + "//" + window.location.host;
 console.log(HOST);
 
 function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
@@ -1187,7 +1187,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
     var mcOptions = {
         gridSize: 50,
-        maxZoom: 15
+        maxZoom: 15,
+		imagePath: "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m"
     };
     var markerclusterer;
     var markers = [];
