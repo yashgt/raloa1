@@ -76,12 +76,12 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 		}
 	}
 	
-	logger.debug("Executing {0} with {1}", qryStr, args);
+	logger.trace("Executing {0} with {1}", qryStr, args);
 	connection.query(qryStr, args, 
 		function(err, results) {
 			if(!err)
 			{
-				logger.debug("Results are : {0}", results);
+				logger.trace("Results are : {0}", results);
 				cbSuccess(results);
 			}
 			else
@@ -152,7 +152,6 @@ function Transaction(callback){
 		pool.getConnection(	function(err, conn){
 		if(!err)
 		{
-			console.log("Got connection");
 			tran.conn = conn ;
 
 			conn.beginTransaction(			
@@ -179,7 +178,7 @@ function Transaction(callback){
 	
 	tran.rollback = function(){
 		tran.conn.rollback(function() {
-            console.log('Transaction rolled back successfully!');
+            logger.debug('Transaction rolled back successfully!');
         });
 	}
 	

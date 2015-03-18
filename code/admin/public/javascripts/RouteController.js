@@ -14,7 +14,7 @@ var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 var HOST = window.location.protocol + "//" + window.location.host;
 console.log(HOST);
 
-function RouteController($scope, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
+function RouteController($scope, $log, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi, IsReady, uiGridConstants) {
 
@@ -286,7 +286,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
         var contextMenu = new ContextMenu($scope.gmap, contextMenuOptions);
 
-        console.log("Created context menu");
+        
         //	listen for the ContextMenu 'menu_item_selected' event
         google.maps.event.addListener(contextMenu, 'menu_item_selected', function(latLng, eventName, model) {
             var item = _.find(menuItems, function(item) {
@@ -341,7 +341,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
 
 
         routeHelpChannel.gmap = $scope.gmap;
-        console.log("GMap ready");
+        $log.debug("GMap ready");
 
         //$scope.showStops();
 
@@ -389,7 +389,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         markerclusterer.clearMarkers();
 
         if ($scope.fleetDetail && $scope.fleetDetail.fleetId) {
-            console.log("Show count ", scnt++);
+            
             var kmlURL = HOST + '/api/kml/' + $scope.fleetDetail.fleetId;
 
             if ($scope.myParser.docs[0]) {
@@ -1055,9 +1055,9 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             }
         };
         $scope.fleetChosen = function(fleet) {
-            console.log('FleetChosen');
+            $log.debug('FleetChosen');
             getthereAdminService.setCurrentFleet(fleet, function(fleet) {
-                console.log("Setting fleet ", fleet);
+                $log.debug("Setting fleet ", fleet);
                 $scope.getFleetDetail(fleet.fleetId);
             });
 
@@ -1178,11 +1178,8 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
     }
 
     function useTheData(docs) {
-        console.log("Using the data");
-
         markerclusterer.addMarkers(markers);
         stpPtr = 0;
-
     }
 
     var mcOptions = {
@@ -1304,7 +1301,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
             $scope.closeRoute();
 
             $scope.fleetDetail = fleetDetail;
-			console.log(JSON.stringify($scope.fleetDetail));
+			$log.debug("Fleet", $scope.fleetDetail);
             $scope.fleetDetail.stops = [];
             $scope.showStops();
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
@@ -1315,7 +1312,6 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
                 svcCol.editDropdownOptionsArray = $scope.fleetDetail.calendars;
             });
             calendars = $scope.fleetDetail.calendars;
-			console.log($scope.fleetDetail.routes);
             $scope.routeListOptions.data = $scope.fleetDetail.routes;
         });
     };
@@ -1394,7 +1390,7 @@ function RouteController($scope, getthereAdminService, stopChannel, locationChan
         $scope.configMap();
     });
 
-    console.log("RouteController created");
+    $log.debug("RouteController created");
 };
 
 
@@ -1408,9 +1404,9 @@ function RouteHelpController($scope, routeHelpChannel, flash) {
 }
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
-function StopController($scope, stopChannel, locationChannel) {
+function StopController($scope, $log, stopChannel, locationChannel) {
     var geocoder = new google.maps.Geocoder();
-    console.log("Creating SC");
+    $log.debug("Creating SC");
 
     locationChannel.add(function(latLng) {
         var loc = new google.maps.LatLng(latLng.latitude, latLng.longitude);
@@ -1424,12 +1420,12 @@ function StopController($scope, stopChannel, locationChannel) {
             'latLng': loc
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
-                console.log(results);
+                $log.debug(results);
                 $scope.stopDetail.address = results[0].formatted_address;
             }
         });
 
-        console.log("Stop detail is %j", $scope.stopDetail);
+        $log.debug("Stop detail is %j", $scope.stopDetail);
     });
 
     $scope.saveStop = function() {
@@ -1441,7 +1437,7 @@ function StopController($scope, stopChannel, locationChannel) {
 
 //Service that communicates with the server. All communication with server should happen through functions defined in this service.
 //TODO: Most of this looks repetitive. Simplify it.
-GetThereAdminService = function($http) {
+GetThereAdminService = function($http, $log) {
     var services = [{
         name: 'saveRoute',
         path: '/api/route/',
@@ -1483,7 +1479,7 @@ GetThereAdminService = function($http) {
     };
     var getError = function(callback) {
         return function(data) {
-            console.log("ERROR " + JSON.stringify(data));
+            $log.error(JSON.stringify(data));
             if (_.isFunction(callback)) {
                 callback(data);
             }
@@ -1493,7 +1489,7 @@ GetThereAdminService = function($http) {
         switch (svc.method) {
             case "post":
                 service[svc.name] = function(data, callback, errorCallback) {
-                    console.log("Hitting URL %j", svc.path);
+                    $log.debug("Hitting URL %j", svc.path);
                     return $http.post(svc.path, data)
                         .success(getSuccess(callback))
                         .error(getError(errorCallback));
@@ -1504,10 +1500,9 @@ GetThereAdminService = function($http) {
                     var invoke = function(path, args, callback, errorCallback) {
                         var url = path;
                         args.forEach(function(arg) {
-                            console.log(url);
                             url = url.replace(/:\w+/, arg);
                         });
-                        console.log("Hitting URL %j", url);
+                        $log.debug("Hitting URL %j", url);
                         return $http.get(url)
                             .success(getSuccess(callback))
                             .error(getError(errorCallback));
@@ -1823,6 +1818,7 @@ function UnpairedStopsFilter() {
 	//, 'ui.grid.pinning'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
+		, 'DecoratedLogWithLineNumber'
     ]);
     adminApp.config(['GoogleMapApiProvider'.ns(),
         function(GoogleMapApi) {
@@ -1834,7 +1830,7 @@ function UnpairedStopsFilter() {
         }
     ]);
     adminApp.run(initializeApp);
-    adminApp.controller('RouteController', ['$scope', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
+    adminApp.controller('RouteController', ['$scope', '$log', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
         , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', 'uiGridConstants', RouteController
     ]);
