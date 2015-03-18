@@ -17,12 +17,9 @@ exports.saveStops = function saveStops(stops)
 };
 
 exports.generate_kml = function(fleetId, host, cb){
-	console.log("Gen");
 	fs.readFile('views/kml.ejs', 'utf8', function(err, template){
-		console.log("Template");
 		db.query("call get_stops(?);", [fleetId], function(results){
 			stops = results[0];			
-			console.log("Host is %j", host);
 			var content = ejs.render(template, {stops: stops, fleetId: fleetId, root:host});
 			cb(content);
 		});
@@ -58,13 +55,13 @@ exports.generateSegments = function()
 								var distance = data.rows[0].elements[0].status=="OK" ? data.rows[0].elements[0].distance.value : -1 ;
 								db.query("call add_segment(?,?,?); ", [ seg.from_stop_id , seg.to_stop_id , distance]
 								,function(results){
-									console.log("Distance data %j", data);
+									logger.trace("Distance data {0}", data);
 									callback(null, distance);									
 								});								
 							}
 						}
 						else{
-							console.log("Error %j for %j %j", err,origins, destinations);
+							logger.error("Error {0} for {1} {2}", err,origins, destinations);
 							callback(err, 1);
 						}
 					};
@@ -78,7 +75,7 @@ exports.generateSegments = function()
 				logger.error("Error encountered while generating segments {0}", err);
 			}
 			else{
-				logger.debug("Completed generation of segments");
+				logger.trace("Completed generation of segments");
 			}
 			formingSegments = false;
 		});
