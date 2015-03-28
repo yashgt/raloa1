@@ -146,19 +146,54 @@ end//
 drop procedure if exists get_fleet_detail//
 create procedure get_fleet_detail(in in_fleet_id int)
 begin
-	declare root_fleet_id int;
+	declare root_fleet_id, cur_fleet_id int;
 	declare vfleet_name varchar(200);
 	declare vavg_speed, vzoom int;
 	declare	vcen_lat, vcen_lon, vne_lat, vne_lon ,vsw_lat ,vsw_lon float;
 
 	
 	select get_root_fleet(in_fleet_id) into root_fleet_id;
+	set cur_fleet_id = in_fleet_id;
 
+	hier: LOOP
+		select 
+			coalesce(vfleet_name, fleet_name)
+			,coalesce(vavg_speed, avg_speed)
+			,coalesce(vcen_lat, cen_lat)
+			,coalesce(vcen_lon, cen_lon)
+			,coalesce(vzoom, zoom)
+			,coalesce(vne_lat, ne_lat)
+			,coalesce(vne_lon, ne_lon)
+			,coalesce(vsw_lat, sw_lat)
+			,coalesce(vsw_lon, sw_lon)
+		into vfleet_name,vavg_speed,vcen_lat,vcen_lon,vzoom,vne_lat,vne_lon,vsw_lat,vsw_lon
+		from fleet 
+		where fleet_id=cur_fleet_id;		
 
-	select fleet_name,avg_speed,cen_lat,cen_lon,zoom,ne_lat,ne_lon,sw_lat,sw_lon 
-	into vfleet_name,vavg_speed,vcen_lat,vcen_lon,vzoom,vne_lat,vne_lon,vsw_lat,vsw_lon
-	from fleet 
-	where fleet_id=in_fleet_id;
+			
+		if	vfleet_name is not null 
+			and vavg_speed is not null 
+			and vcen_lat is not null 
+			and vcen_lon is not null 
+			and vzoom is not null 
+			and vne_lat is not null 
+			and vne_lon is not null 
+			and vsw_lat is not null 
+			and vsw_lon is not null
+		then
+				leave hier;
+		end if;	
+			
+		if cur_fleet_id = root_fleet_id then
+			leave hier;
+		end if;
+	
+		select parent_fleet_id into cur_fleet_id
+		from fleet
+		where fleet_id=cur_fleet_id
+		and parent_fleet_id<>1;		
+	END LOOP;
+
 	
 	
 	select in_fleet_id as fleet_id,vfleet_name as fleet_name,vavg_speed as avg_speed,vcen_lat as cen_lat,vcen_lon as cen_lon,vzoom as zoom,vne_lat as ne_lat,vne_lon as ne_lon,vsw_lat as sw_lat,vsw_lon as sw_lon;

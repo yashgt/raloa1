@@ -58,6 +58,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 
 
     $scope.fleetDetail = {
+	
         center: {
             latitude: 0,
             longitude: 0
@@ -74,8 +75,8 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
             }
         },
         stops: [],
-        stops: [],
         routes: [1]
+		
     };
     addStopWindow = function(latLng) {
 
@@ -385,8 +386,11 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
     }
 
     $scope.showStops = function() {
+		if(!$scope.gmap)
+			return;
         markers = [];
-        markerclusterer.clearMarkers();
+		
+		markerclusterer.clearMarkers();
 
         if ($scope.fleetDetail && $scope.fleetDetail.fleetId) {
             
@@ -631,6 +635,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 
         var newTrip = {
             tripId: (latestTrip.tripId < 0) ? latestTrip.tripId - 1 : -1,
+			fleetId:$scope.fleetDetail.fleetId,
             direction: dir,
             serviceId: $scope.fleetDetail.defaultServiceId,
             frequencyTrip: false,
@@ -1298,12 +1303,12 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 
             });
             fleetDetail.stops = [];
-
-            $scope.closeRoute();
-
+            
             $scope.fleetDetail = fleetDetail;
+			
+			$scope.closeRoute();
+
 			$log.debug("Fleet", $scope.fleetDetail);
-            $scope.fleetDetail.stops = [];
             $scope.showStops();
             $scope.calendarOptions.data = $scope.fleetDetail.calendars;
             [0, 1].forEach(function(dir) {
@@ -1640,9 +1645,11 @@ NYUIGmapControlDirective = function() {
             RouteSearchOptions = function(key) {
 
                 this.resetBounds = function() {
-                    this.bounds = new google.maps.LatLngBounds(
+					if($scope.bounds){
+						this.bounds = new google.maps.LatLngBounds(
                         new google.maps.LatLng($scope.bounds.southwest.latitude, $scope.bounds.southwest.longitude)
 						, new google.maps.LatLng($scope.bounds.northeast.latitude, $scope.bounds.northeast.longitude));
+					}
                 };
 
                 this.resetBounds();
