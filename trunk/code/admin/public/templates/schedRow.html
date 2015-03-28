@@ -1,0 +1,5 @@
+<div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" 
+ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader, 'myTrip': grid.appScope.fleetDetail.fleetId==row.entity.fleetId }"  
+ui-grid-cell>
+</div>
+

@@ -751,7 +751,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 name: 'ID',
                 field: 'tripId',
                 enableCellEdit: false,
-                cellTemplate: '<div ' + 'ng-class='+tripOwnerShipClass +'>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
+                cellTemplate: '<div>{{ (row.entity.tripId<0)? "NEW" : "" + row.entity.tripId  }}</div>'
 				,disableColumnMenu: true
 				,enableColumnResizing:false
 				,maxWidth:50
@@ -793,10 +793,11 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
             }, {
                 name: 'frequencyGap',
                 displayName: 'Frequency interval',
-                field: 'frequency_gap'				
+                field: 'frequencyGap'				
 				,minWidth:80
             }]
         });
+		$scope.scheduleOptions[dir].rowTemplate = 'templates/schedRow.html' 
 		$scope.scheduleOptions[dir].selectedRows = [];
         $scope.scheduleOptions[dir].fixedCols = $scope.scheduleOptions[dir].columnDefs.length;
 		$scope.scheduleOptions[dir].options = { stopCols : []};
@@ -862,13 +863,13 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 			,cellClass: 'stopName'
 			, cellTooltip: true
 			//,celltemplate: 'templates/routelistStopName.html'
-			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
+			//,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
         }, {
             name: 'To',
             field: 'en'
 			,cellClass: 'stopName'
 			, cellTooltip: true
-			,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
+			//,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
         }]
 		//,rowTemplate: '<div ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }" ui-grid-cell></div></div>'
 		//,rowTemplate: '<div ng-style="{ \'cursor\': row.cursor }" ng-repeat="col in renderedColumns" ng-class="col.colIndex()" class="ngCell {{col.cellClass}}"><div class="ngVerticalBar" ng-style="{height: rowHeight}" ng-class="{ ngVerticalBarVisible: !$last }">&nbsp;</div><div ng-cell></div></div>'
@@ -878,7 +879,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                            '<div ng-cell></div>' +
                      '</div>'
 					 */
-		//, rowTemplate: 'templates/routeRow.html' 
+		, rowTemplate: 'templates/routeRow.html' 
         ,onRegisterApi: function(gridApi) {
             $scope.gridRoutesApi = gridApi;
 
