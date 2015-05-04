@@ -690,15 +690,16 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 allstops.push((dir == 0) ? routestop.onwardStop : routestop.returnStop);
                 allsegments.push(routestop.segments[dir]);
             });
+			
             if (dir == 1) {
                 allstops.reverse();
                 allsegments.reverse();
             }
-
+			
             for (i = 0; i < allstops.length; i++) {
                 if (i != 0 && allsegments[i]>=0) {
                     //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
-                    var prevtime = moment(trip.stops['' + allstops[i - 1].id], 'hh:mm a');
+                    var prevtime = moment(trip.stops['' + allstops[i-1].id], 'hh:mm a');
                     // 30*1000 m in 60 min
                     // distance in X
                     var inctime = allsegments[i] * 60 / 30000;
