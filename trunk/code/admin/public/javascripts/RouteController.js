@@ -22,6 +22,17 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
     $scope.fleet = {
         selected: undefined
     };
+	
+	$scope.$watch('routeDetail', function(newVal, oldVal, scope){		
+		if(newVal!=undefined && newVal.routeId!=-1){	//Either new route or existing route is getting changed
+			if(oldVal!=undefined && oldVal.routeId!=newVal.routeId) {
+				scope.isRouteDirty = false;
+			}
+			else{
+				scope.isRouteDirty = true;
+			}
+		}
+	}, true);
 
     $scope.$watch('fleet.selected', function(newValue, oldValue) {
         if ((newValue !== oldValue)) {
@@ -151,7 +162,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 []
             ]
         };
-
+        $scope.isRouteDirty = false;
 		routeHelpChannel.resetDisplay();
         $scope.clearScheduleGrid();
     };
@@ -578,6 +589,8 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
 			//var wayPoints = [];
 			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+			
+			$scope.isRouteDirty = false;
 
         });
     };
