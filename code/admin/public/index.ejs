@@ -117,9 +117,9 @@
                                         <div id="route" style="width:100%">
 
                                             Route options:
-                                            <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty">New</button>
-                                            <button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.isDirty || routeDetail.routeId<=e0">Extend</button>
-                                            <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!routeDetail.isDirty">Save</button>
+                                            <button type="button" ng-click="newRoute()" class="btn btn-primary btn-xs" ng-disabled="isRouteDirty">New</button>
+                                            <button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="isRouteDirty || routeDetail.routeId<=e0">Extend</button>
+                                            <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!isRouteDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
 											
                                             <input class="route_num" type="number" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
@@ -175,7 +175,7 @@
                                                 <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns></div>
                                             </tab>
                                             <tab heading="Object">
-                                                <pre class="code">{{ routeDetail | json }}</pre>
+                                                <pre class="code">{{ isRouteDirty | json }}</pre>
                                             </tab>
                                         </tabset>
                                     </td>
