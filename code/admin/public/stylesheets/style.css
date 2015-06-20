@@ -164,3 +164,9 @@ color:black;
 .angular-ui-tree-empty {
 	min-height: 0px
 }
+
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 5px 10px;
+}

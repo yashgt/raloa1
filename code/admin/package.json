@@ -11,11 +11,11 @@
     "binford-slf4j": "*",
     "bower": "*",
     "connect-mysql": "^2.0.5",
-    "db": "*",
+    
     "ejs": "*",
     "express": "3.4.8",
     "googlemaps": "^0.1.9",
-    "log4js": "^0.6.20",
+    "log4js": "*",
     "mysql": "*",
     "nconf": "^0.6.9",
     "passport": "^0.2.0",

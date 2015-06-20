@@ -53,12 +53,10 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         //$scope.stopDetail.stopName = stopDetail.name;
 
         $scope.stopDetail.name = stopDetail.name;
-        $scope.stopDetail.id = -1;
+        //$scope.stopDetail.id = -1;
         console.log("Saving stop %j", $scope.stopDetail);
 
-
         $scope.saveStop($scope.stopDetail);
-
     });
 
 
@@ -94,23 +92,41 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         //$scope.map.infoWindow.coords = {latitude:latLng.lat(), longitude:latLng.lng()};
 
         //TODO
-        $scope.stopDetail = {
+		
+        
+		$scope.stopDetail = locationChannel.stopDetail = {
             id: 0,
             latitude: latLng.lat(),
             longitude: latLng.lng(),
-            name: "stopname",
-            address: "Reverse geocoded address goes here"
+            name: "",
+            address: ""
         };
+		/*
         locationChannel.publishLocation({
             latitude: latLng.lat(),
             longitude: latLng.lng()
         });
-        $scope.map.infoWindow.show = true;
+		*/
+       
+		$scope.map.infoWindow.show = true;
 
     };
-    deleteStop = function(stop) {
-        console.log("Deleting stop " + JSON.stringify(stop));
-		//CBM TODO:If the stop is part of any route, do not allow deletion of the stop.
+
+	editStop = function(stop) {
+		console.log("Editing stop " + JSON.stringify(stop));
+		$scope.stopDetail = locationChannel.stopDetail = stop;
+		$scope.map.infoWindow.show = true;
+	};
+    deleteStop = function(stopDetail) {
+        
+		var r = confirm("Are you sure you want to delete stop " + stop.name + "?");
+		if (r == true) {
+			$log.debug("Deleting stop " + JSON.stringify(stop));
+			getthereAdminService.deleteStop(stopDetail.id, function(stop) {
+				removeFromStops(stop);					
+			});
+		} else {			
+		}
     };
     linkStop = function(stop) {
 
@@ -335,6 +351,11 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
             eventName: 'link_stop',
             label: 'Link stop',
             handler: linkStop
+        }, {
+            className: 'context_menu_item',
+            eventName: 'edit_stop',
+            label: 'Edit stop',
+            handler: editStop
         }]);
 
     };
@@ -1168,12 +1189,14 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         }
     };
 
+/*
     $scope.$watch('map.infoWindow.show', function(newValue, oldValue) {
         if ((newValue !== oldValue) && (newValue == true)) {
             //$( "input[name='stopName']" ).focus();
             document.stop_form.stopName.focus();
         }
     });
+	*/
 
     /*var stopOptions = {
 		draggable: true
@@ -1223,6 +1246,10 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
         $scope.fleetDetail.stops.splice(sidx, 1);
     };
+	editOneStop = function(stop){
+		var sidx = _.sortedIndex($scope.fleetDetail.stops, stop, 'id');
+        $scope.fleetDetail.stops.splice(sidx, 1, stop);
+	};
     pushStop = function(stop) {
         var stp = binarySearch($scope.fleetDetail.stops, stop.id);
         if (!stp) {
@@ -1295,8 +1322,6 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         };
         var marker = addMarker(markerOptions);
         stop.marker = marker;
-
-
     };
 
     //Region:Business Logic: This is the region that binds UI data to server data. This invokes business logic at the server to get things done at the server.
@@ -1387,10 +1412,11 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 if ($scope.routeDetail.routeId >= 0) {
                     $scope.addStopToRoute(newStop);
                 }
-
-                $scope.map.infoWindow.show = false;
-                $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	
-            }
+            } else {
+				stopDetail.options.title = stopDetail.name;
+			}
+			$scope.map.infoWindow.show = false;
+            $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	
         }, function(error) {
             flash.error = 'Stop could not be saved';
             var idx = _.findIndex($scope.fleetDetail.stops, {
@@ -1422,12 +1448,38 @@ function RouteHelpController($scope, routeHelpChannel, flash) {
 	};
 	
 }
+
+function GeoCoderService($log) {
+	this.geocoder = new google.maps.Geocoder();
+	this.geocode = function(stop, cb){
+		var loc = new google.maps.LatLng(stop.latitude, stop.longitude);
+		this.geocoder.geocode({
+            'latLng': loc
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                $log.debug(results);
+                cb(results[0].formatted_address);
+            }
+        });
+	};
+	return this;
+}
+
 //This controller starts with a lat-lng and gets the user to define the name of the stop. It also performs reverse geocoding
 //TODO: CBM to do rev geocoding
-function StopController($scope, $log, stopChannel, locationChannel) {
-    var geocoder = new google.maps.Geocoder();
+function StopController($scope, $log, stopChannel, locationChannel, geocoder) {
+    //var geocoder = new google.maps.Geocoder();
     $log.debug("Creating SC");
 
+$scope.stopDetail = locationChannel.stopDetail;
+geocoder.geocode($scope.stopDetail, function(formatted_address){
+	$scope.stopDetail.address =  formatted_address;
+});
+  this.getStopDetail = function(){
+    return locationChannel.stopDetail;
+  };
+  
+  /*
     locationChannel.add(function(latLng) {
         var loc = new google.maps.LatLng(latLng.latitude, latLng.longitude);
         $scope.stopDetail = {
@@ -1447,9 +1499,9 @@ function StopController($scope, $log, stopChannel, locationChannel) {
 
         $log.debug("Stop detail is %j", $scope.stopDetail);
     });
+	*/
 
     $scope.saveStop = function() {
-        //TODO Suprisingly only the new name remains. lat and long have vanished 
         stopChannel.publishStop($scope.stopDetail);
     };
 }
@@ -1470,6 +1522,10 @@ GetThereAdminService = function($http, $log) {
         name: 'saveStop',
         path: '/api/stop/',
         method: 'post'
+    }, {
+        name: 'deleteStop',
+        path: '/api/stop/:id',
+        method: 'delete'
     }, {
         name: 'saveCalendar',
         path: '/api/calendar/',
@@ -1515,6 +1571,34 @@ GetThereAdminService = function($http, $log) {
                         .error(getError(errorCallback));
                 };
                 break;
+			case "delete":
+				service[svc.name] = (function() {
+                    var invoke = function(path, args, callback, errorCallback) {
+                        var url = path;
+                        args.forEach(function(arg) {
+                            url = url.replace(/:\w+/, arg);
+                        });
+                        $log.debug("Hitting URL %j", url);
+                        return $http.delete(url)
+                            .success(getSuccess(callback))
+                            .error(getError(errorCallback));
+                    };
+                    var f;
+                    switch ((svc.path.match(/:/g) || []).length) {
+                        case 1:
+                            f = function(a1, callback, errorCallback) {
+                                return invoke(svc.path, [a1], callback, errorCallback);
+                            };
+                            break;
+                        default:
+                            f = function(callback, errorCallback) {
+                                return invoke(svc.path, [], callback, errorCallback);
+                            };
+                            break;
+                    }
+                    return f;
+                })();
+				break;
             case "get":
                 service[svc.name] = (function() {
                     var invoke = function(path, args, callback, errorCallback) {
@@ -1863,6 +1947,7 @@ function UnpairedStopsFilter() {
     adminApp.service('stopChannel', StopChannelService);
     adminApp.service('locationChannel', LocationChannelService);
     adminApp.service('routeHelpChannel', RouteHelpChannelService);
+	adminApp.service('geocoder', GeoCoderService);
     adminApp.directive('nyFleetChoice', NYFleetChoiceDirective);
     adminApp.directive('nyUiGmapControl', NYUIGmapControlDirective);
     adminApp.factory('getthereAdminService', GetThereAdminService);

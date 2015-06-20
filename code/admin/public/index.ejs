@@ -132,21 +132,18 @@
 
                                                     <ny-ui-gmap-control gmap="gmap" bounds="fleetDetail.bounds"></ny-ui-gmap-control>
 
-                                                    <ui-gmap-window show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
+                                                    <ui-gmap-window ng-if="stopDetail" show="map.infoWindow.show" coords="stopDetail" isIconVisibleOnClick="false" ng-cloak>
                                                         <div>
-
-
-                                                            <form name="stop_form" ng-controller="StopController" ng-submit="saveStop()" novalidate>
-                                                                <p>Adding stop at {{ stopDetail.latitude | number:4 }}, {{ stopDetail.longitude | number:4 }}</p>
+                                                            <form name="stop_form" ng-controller="StopController as S" ng-submit="saveStop()" novalidate>
+																<p>Stop ID : {{ S.getStopDetail().id }}</p>
+                                                                <p>Location : {{ S.getStopDetail().latitude | number:4 }}, {{ S.getStopDetail().longitude | number:4 }}</p>																
                                                                 <br/>
-                                                                <input type="text" name="stopName" placeholder="Stop Name" ng-model="stopDetail.name" ng-required="true" autofocus />
+                                                                <input type="text" name="stopName" ng-model="S.getStopDetail().name" ng-required="true" autofocus />
                                                                 <br/>
-                                                                <textarea ng-model="stopDetail.address" placeholder="Stop Address"></textarea>
+                                                                <textarea ng-model="S.getStopDetail().address" placeholder="Stop Address"></textarea>
                                                                 <br/>
                                                                 <button type="submit" ng-disabled="stop_form.$invalid">Save</button>
-
                                                             </form>
-
                                                         </div>
                                                     </ui-gmap-window>
 

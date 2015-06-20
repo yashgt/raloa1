@@ -152,6 +152,19 @@ app.post('/api/stop', function(req, res) {
     });
 });
 
+app.delete('/api/stop/:id', function(req, res) {
+	var stop_id = req.params.id ;
+	var user_id = req.session.passport.user.userId;
+	db.query("set @id := ? ; call delete_stop(@id,?) ; select @id; ", [stop_id, user_id], function(results) {
+        logger.info("Stop {0} deleted", stop_id);
+        res.json({
+            id: id
+        });
+    }, function(error) {
+        res.send(500, 'Failed to delete stop: ' + error);
+    });
+});
+
 app.post('/api/currentFleet', function(req, res) {
     var fleet = req.body;
     logger.debug("Current fleet is {0}", fleet.fleetId);

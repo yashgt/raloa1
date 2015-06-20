@@ -131,6 +131,15 @@ begin
 	end if;
 end//
 
+drop procedure if exists delete_stop//
+create procedure delete_stop(
+	IN id int,
+	IN user_id int
+)
+begin
+	delete from stop where stop_id = id;	
+end//
+
 drop procedure if exists csvtodb//
 create procedure csvtodb(
 	  IN stop_id int

@@ -25,7 +25,7 @@
     "angular-ui-select": "~0.8.2",
     "selectize": "~0.8.5",
     "angular-flash-messages": "*",
-    "message-center": "*",
+    
     "angular-flash": "~0.1.13",
     "angular-animate": "~1.2.26",
 	"angular-sanitize": "~1.2.26",
