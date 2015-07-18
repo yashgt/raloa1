@@ -11,7 +11,6 @@
     "binford-slf4j": "*",
     "bower": "*",
     "connect-mysql": "^2.0.5",
-    
     "ejs": "*",
     "express": "3.4.8",
     "googlemaps": "^0.1.9",
@@ -20,6 +19,7 @@
     "nconf": "^0.6.9",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "binford-slf4j-adapter": "0.0.1"
   }
 }

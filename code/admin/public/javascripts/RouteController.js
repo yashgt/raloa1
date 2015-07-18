@@ -1060,11 +1060,13 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 return (rs != undefined);
                 //return _.contains(stage.stops, model);
             });
+			$scope.$apply(function(){
             if (stg == undefined) { //The stop does not already exist in the route
                 $scope.addStopToRoute(stop);
             } else {
                 $scope.delStopFromRoute(stop);
             }
+			});
         },
         rightclick: function(marker, eventName, stop) {
             console.log("Event:" + eventName + " Marker:" + marker, stop.id);

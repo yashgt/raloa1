@@ -10,16 +10,21 @@ exports.getLogger = function getLogger(){
 */
 
 var slf4j = require('binford-slf4j');
+//var slf4j-adapter = require('binford-slf4j-adapter');
+//var logprovider = slf4j-adapter.log4js();
+
 var binfordLogger = require('binford-logger');
 slf4j.setLoggerFactory(binfordLogger.loggerFactory);
+
+//slf4j.setLoggerFactory(logprovider.loggerFactory);
 slf4j.loadConfig({
-    level: 4,
+    level: 5,
     appenders:
         [{
             appender: binfordLogger.getDefaultAppender()
         }]
 });
-var logger = slf4j.getLogger('app.js');
+var logger = slf4j.getLogger('app.js',{useLocalTime:true});
 
 exports.getLogger = function getLogger(){
 	return logger;

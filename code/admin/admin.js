@@ -40,7 +40,7 @@ exports.generateSegments = function()
 			console.log("Segment %j", seg);
 			segSeries.push(
 				function(callback){
-					logger.debug("Getting segment for {0} {1} to {2} {3}", seg.from_lat, seg.from_lon, seg.to_lat, seg.to_lon);
+					logger.debug("Getting segment for {0} [{1},{2}] to {3} [{4},{5}]", seg.from_stop_id, seg.from_lat, seg.from_lon, seg.to_stop_id, seg.to_lat, seg.to_lon);
 					var origins = seg.from_lat + "," + seg.from_lon;
 					var destinations = seg.to_lat + "," + seg.to_lon;
 					var sensor = true;
@@ -52,12 +52,17 @@ exports.generateSegments = function()
 					var dcb = function(err, data){
 						if(!err ){
 							if(data.status == 'OK'){								
+								logger.trace("Distance data {0}", data);
 								var distance = data.rows[0].elements[0].status=="OK" ? data.rows[0].elements[0].distance.value : -1 ;
 								db.query("call add_segment(?,?,?); ", [ seg.from_stop_id , seg.to_stop_id , distance]
 								,function(results){
-									logger.trace("Distance data {0}", data);
+									logger.trace("Distance data {0} saved as segment", data);
 									callback(null, distance);									
 								});								
+							}
+							else{
+								logger.error("Segment data received with status {0} for {1} {2}", data.status,origins, destinations);
+								callback(data.status, 1);
 							}
 						}
 						else{

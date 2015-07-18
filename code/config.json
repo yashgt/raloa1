@@ -1,16 +1,16 @@
 {
 	"database" : {
-		"host": "localhost",
+		"host": "ny-prod-db.cvoo5nr5votw.ap-southeast-1.rds.amazonaws.com",
 		"user": "root",
-		"password": "goatrans",
-		"database": "avishkar"
+		"password": "goatransport",
+		"database": "raloa2"
 	},
 	"gmap" : {
 		"key" : "AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q"
 	},
 	"admin" : {
-		"port" : 3000
-		,"sslport": 4000
+		"port" : 3001
+		,"sslport": 4001
 	},
 	"mobapp" : {
 		"port" : 8000

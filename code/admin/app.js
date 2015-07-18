@@ -104,12 +104,12 @@ var sslOptions = {
   rejectUnauthorized: false
 };
 
-/*
+
 var server = http.createServer(app).listen(app.get('port'), function() {
     logger.info('Express server listening on port {0}', app.get('port'));
     //console.log('Express server listening on port ' + app.get('port'));
 });
-*/
+
 
 var server = https.createServer(sslOptions,app).listen(app.get('sslport'), function() {
     logger.info('Express server listening for https on port {0}', app.get('sslport'));
@@ -120,7 +120,7 @@ console.log('Server address %j', server.address());
 
 setInterval(function() {
     admin.generateSegments();
-}, 10000);
+}, 60000);
 
 app.get('/api/fleets', function(req, res) {
     var user_id = req.session.passport.user.userId;
