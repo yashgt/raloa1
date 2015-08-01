@@ -243,11 +243,15 @@ create procedure save_route(
 )
 begin
 if id = 0 then
-INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
+INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) 
+VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
 set id = LAST_INSERT_ID() ;
 else
 update route
 set route_name=in_route_name
+, start_stop_id=in_start_stop
+, end_stop_id=in_end_stop
+, gtfs_route_id=in_gtfs_id
 where route_id=id;
 end if;
 end//

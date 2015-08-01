@@ -764,7 +764,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 			enableRowHeaderSelection: true,
 			enableScrollbars: true,
 			multiSelect : true,
-			minRowsToShow : 2,
+			minRowsToShow : 8,
 			maxRowsToShow : 10,
 			enableSelectionBatchEvent: true,
 			onRegisterApi: function(gridApi){
@@ -890,6 +890,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         enableRowHeaderSelection: false,
 		enableColumnResizing: true,
         multiSelect: false,
+		maxRowsToShow : 20,
         columnDefs: [{
             name: 'No.',
             field: 'routeNum'
