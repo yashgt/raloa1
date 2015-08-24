@@ -888,7 +888,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
         enableFiltering: true,
 		enableScrollBars: true,
         enableRowHeaderSelection: false,
-		enableColumnResizing: true,
+		enableColumnResizing: false,
         multiSelect: false,
 		maxRowsToShow : 20,
         columnDefs: [{
