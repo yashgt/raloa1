@@ -28,12 +28,14 @@ exports.generate_kml = function(fleetId, host, cb){
 	
 };
 
-exports.generateSegments = function()
+exports.generateSegments = function(routeId, segCallback)
 {
+/*
 	if(formingSegments)
 		return;
 	formingSegments = true ;	
-	db.query("call get_missing_segments()", 
+	*/
+	db.query("call get_missing_segments(?);", [routeId], 
 	function(results){
 		var segSeries = [];
 		results[0].forEach( function(seg){

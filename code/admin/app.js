@@ -118,10 +118,11 @@ var server = https.createServer(sslOptions,app).listen(app.get('sslport'), funct
 
 console.log('Server address %j', server.address());
 
+/*
 setInterval(function() {
     admin.generateSegments();
 }, 60000);
-
+*/
 app.get('/api/fleets', function(req, res) {
     var user_id = req.session.passport.user.userId;
     db.query("call list_user_fleets(?);", [user_id], function(results) {
