@@ -146,9 +146,9 @@ color:black;
 
 
 .routelist {
-	/*height: 500px*/
-	height: 100%;
-	overflow: scroll
+	height: 550px;
+	/*height: 100%;*/
+	/*overflow-x: scroll;*/
 }
 .stagetree {
 	/*height: 500px*/

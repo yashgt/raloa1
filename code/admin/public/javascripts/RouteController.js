@@ -278,12 +278,15 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                 $scope.fleetDetail.routes.push(route);
                 $scope.gridRoutesApi.selection.selectRow(route);
             }
+			$scope.getRoute(route.routeId);
 			
-			$scope.routeDetail = route;
             $scope.routeDetail.isDirty = false;
+			/*
+			$scope.routeDetail = route;
 				
 			$scope.sanctifyRoute();
 			$scope.resetSchedules();
+			*/
 
 
         }, function(error) {
@@ -567,7 +570,6 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
                     stops: []
                 };
                 $scope.routeDetail.stages.push(routestage);
-                console.log("Adding ", routestage);
 
                 stage.stops.forEach(function(routestop) {
                     var onwardStop = getActiveStopById(routestop.onwardStop.id);
@@ -925,7 +927,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
             $scope.gridRoutesApi = gridApi;
 
             gridApi.selection.on.rowSelectionChanged($scope, function(row) {
-                console.log(row);
+				$log.debug("Row selection changed for ", row.entity);
                 $scope.clearRoute();
                 if (row.isSelected) {
                     $scope.getRoute(row.entity.routeId);
@@ -1229,8 +1231,8 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
     }
 
     var mcOptions = {
-        gridSize: 50,
-        maxZoom: 15,
+        gridSize: 20,
+        maxZoom: 14,
 		imagePath: "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m"
     };
     var markerclusterer;

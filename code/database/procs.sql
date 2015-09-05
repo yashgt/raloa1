@@ -297,6 +297,19 @@ create procedure get_route_detail(
 	IN in_route_id int
 )
 begin
+	select 
+	R.route_id as route_id
+	, R.route_name as route_name
+	, S1.name as start_stop_name
+	, S2.name as end_stop_name
+	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id ) as serviced
+	from route R
+	inner join stop S1 on (R.start_stop_id= S1.stop_id)
+	inner join stop S2 on (R.end_stop_id=S2.stop_id)
+	where R.route_id = in_route_id
+	and R.is_deleted=0
+	;
+	
 	select SG.stage_id as stage_id
 	, SG.stage_name as stage_name
 	, S.stop_id as onward_stop_id
@@ -339,7 +352,7 @@ begin
 end//
 
 drop procedure if exists get_missing_segments//
-create procedure get_missing_segments()
+create procedure get_missing_segments(in in_route_id int)
 begin
 select RS1.stop_id as from_stop_id, S1.latitude as from_lat, S1.longitude as from_lon, RS2.stop_id as to_stop_id, S2.latitude as to_lat, S2.longitude as to_lon
 from routestop RS1
@@ -348,6 +361,7 @@ inner join stop S1 on (RS1.stop_id=S1.stop_id)
 inner join stop S2 on (RS2.stop_id=S2.stop_id)
 left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=SegOn.to_stop_id)
 where SegOn.from_stop_id is null
+and (RS1.route_id=in_route_id or in_route_id is null)
 
 union all 
 
@@ -359,6 +373,7 @@ inner join stop S1 on (coalesce(RS2.peer_stop_id, RS2.stop_id)=S1.stop_id)
 inner join stop S2 on (coalesce(RS1.peer_stop_id, RS1.stop_id)=S2.stop_id)
 left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=SegOn.to_stop_id)
 where SegOn.from_stop_id is null
+and (RS1.route_id=in_route_id or in_route_id is null)
 ;
 end//
 

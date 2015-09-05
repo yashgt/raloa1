@@ -4,6 +4,7 @@ var async = require('async');
 var gm = require('googlemaps');
 var fs = require('fs');
 var ejs = require('ejs');
+var _ = require('underscore');
 
 //gm.setProxy("http://yash_ganthe:(0pspl1)@goaproxy.persistent.co.in:8080");
 
@@ -28,6 +29,100 @@ exports.generate_kml = function(fleetId, host, cb){
 	
 };
 
+
+exports.getRouteDetail = function(route_id, callback){
+    db.query("call get_route_detail(?);", [route_id], function(results) {
+        var routeDetail = {
+			st: '',
+			en: '',
+            routeId: route_id,
+            stages: [],
+            trips: [
+                [],
+                []
+            ]
+        };
+
+        results[0].forEach(
+            function(route) {
+				routeDetail.st = route.start_stop_name;
+				routeDetail.en = route.end_stop_name;
+				routeDetail.serviced = route.serviced;
+			
+			}
+		);
+        results[1].forEach(
+            function(routeStop) {
+                //Find the stage
+                //console.log("Route stop %j", routeStop);
+                var stage = _.find(routeDetail.stages, function(stage) {
+                    return stage.stageId == routeStop.stage_id;
+                });
+                if (stage == undefined) {
+                    //If not exists, add the stage
+                    stage = {
+                        title: routeStop.stage_name,
+                        stageId: routeStop.stage_id,
+                        stops: []
+                    };
+                    routeDetail.stages.push(stage);
+                }
+
+                var rs = {
+                    onwardStop: {
+                        id: routeStop.onward_stop_id,
+                        distance: routeStop.onward_distance
+                    },
+                    returnStop: {
+                        id: routeStop.return_stop_id,
+                        distance: routeStop.return_distance
+                    }
+                };
+                stage.stops.push(rs);
+
+            });
+			
+		results[2].forEach(
+			function(trip){
+				var routeTrip = {
+					tripId: trip.trip_id
+					,fleetId: trip.fleet_id
+					,serviceId: trip.service_id
+					,direction: trip.direction
+					,frequencyTrip: trip.frequency_trip
+					,frequencyStartTime: trip.frequency_start_time
+					,frequencyEndTime: trip.frequency_end_time
+					,frequencyGap: trip.frequency_gap
+					,stops: {}
+				};
+				
+				routeDetail.trips[trip.direction].push(routeTrip);
+			}
+		);
+		results[3].forEach(
+			function(rst){
+				rst.tripId = rst.trip_id;
+				//Check if this is onward trip
+				var idx = _.sortedIndex(routeDetail.trips[0], rst,'tripId');
+				var trip = routeDetail.trips[0][idx];
+				if(trip && trip.tripId == rst.trip_id){//If the trip really exists in the list
+					trip.stops[''+rst.stop_id+''] = rst.time;					
+				}
+				else{ //Check in return trips
+					idx = _.sortedIndex(routeDetail.trips[1], rst,'tripId');
+					trip = routeDetail.trips[1][idx];
+					if(trip && trip.tripId == rst.trip_id){//If the trip really exists in the list
+						trip.stops[''+rst.stop_id+''] = rst.time;					
+					}
+				}
+			}
+		);
+
+		callback(routeDetail);
+    });
+
+
+};
 exports.generateSegments = function(routeId, segCallback)
 {
 /*
@@ -83,6 +178,7 @@ exports.generateSegments = function(routeId, segCallback)
 			}
 			else{
 				logger.trace("Completed generation of segments");
+				segCallback();
 			}
 			formingSegments = false;
 		});

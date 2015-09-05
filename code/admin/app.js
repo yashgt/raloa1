@@ -264,14 +264,15 @@ app.post('/api/route/', function(req, res) {
     var route = req.body;
 
     logger.info("Saving route {0}", route);
-    logger.info("Route:", route);
     route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
 	var currentFleetId = req.session.passport.user.fleetId; // The trip belongs to the currently chosen fleet
 
     route.startStopId = route.stages[0].stops[0].onwardStop.id;
+	var start_stop_name = route.stages[0].stops[0].onwardStop.name;
     var stageLength = route.stages.length - 1
     var stopLength = route.stages[stageLength].stops.length - 1
     route.endStopId = route.stages[stageLength].stops[stopLength].onwardStop.id;
+	var end_stop_name = route.stages[stageLength].stops[stopLength].onwardStop.name;
 
     var stop_sequence = 1;
     route.stages.forEach(function(stage) {
@@ -410,10 +411,29 @@ app.post('/api/route/', function(req, res) {
             async.waterfall(routesWF, function(err, result) {
 				if(!err){
                 tran.commit(function() {                    
-                    route.routeNum = "";
-                    route.st = route.stages[0].stops[0].onwardStop.name;
-                    route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
-                    res.json(route);
+					admin.generateSegments(
+						route.routeId, 
+					/*(function(route){
+					 * 						return */
+						function(){
+
+							admin.getRouteDetail(route_id, function(routeDetail){
+								routeDetail.st = start_stop_name;
+								routeDetail.en = end_stop_name;
+
+        						res.json(routeDetail);
+							});	
+							/*
+							route.routeNum = "";
+							route.st = route.stages[0].stops[0].onwardStop.name;
+							route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
+							res.json(route);
+							*/
+						}
+																				
+					/*})(route)*/
+					);
+
                 }, function() {
                     res.send(500, 'Failed to create route');
                 });
@@ -486,7 +506,7 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
 
 };
 
-
+/*
 app.get('/api/route/:route_id', function(req, res) {
     var route_id = parseInt(req.params.route_id);
     db.query("call get_route_detail(?);", [route_id], function(results) {
@@ -571,6 +591,16 @@ app.get('/api/route/:route_id', function(req, res) {
 
 
 });
+*/
+
+app.get('/api/route/:route_id', function(req, res) {
+    var route_id = parseInt(req.params.route_id);
+	admin.getRouteDetail(route_id, function(routeDetail){
+        res.json(routeDetail);
+	});	
+
+});
+
 
 //AUTH REGION
 passport.serializeUser(authentication.serializeUser);
