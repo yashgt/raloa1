@@ -14,7 +14,7 @@ var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 var HOST = window.location.protocol + "//" + window.location.host;
 console.log(HOST);
 
-function RouteController($scope, $log, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
+function RouteController($scope, $timeout, $log, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi, IsReady, uiGridConstants) {
 
@@ -276,11 +276,13 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 			
 			if ($scope.routeDetail.routeId == 0) { //Check this before it is overwritten
                 $scope.fleetDetail.routes.push(route);
-                $scope.gridRoutesApi.selection.selectRow(route);
+				$timeout(function(){
+                	$scope.gridRoutesApi.selection.selectRow(route);
+				});
             }
-			$scope.getRoute(route.routeId);
+		//	$scope.getRoute(route.routeId);
 			
-            $scope.routeDetail.isDirty = false;
+            //$scope.routeDetail.isDirty = false;
 			/*
 			$scope.routeDetail = route;
 				
@@ -663,8 +665,6 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 		console.log(JSON.stringify($scope.fleetDetail));
 	};
     $scope.addTrip = function(dir) {
-        console.log($scope);
-        console.log(_);
         var latestTrip = _.min($scope.routeDetail.trips[dir], function(trip) {
             return trip.tripId;
         });
@@ -768,6 +768,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 			multiSelect : true,
 			minRowsToShow : 8,
 			maxRowsToShow : 10,
+			maxVisibleColumnCount : 5,
 			enableSelectionBatchEvent: true,
 			onRegisterApi: function(gridApi){
       //set gridApi on scope
@@ -1232,7 +1233,7 @@ function RouteController($scope, $log, getthereAdminService, stopChannel, locati
 
     var mcOptions = {
         gridSize: 20,
-        maxZoom: 14,
+        maxZoom: 13,
 		imagePath: "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m"
     };
     var markerclusterer;
@@ -1941,7 +1942,7 @@ function UnpairedStopsFilter() {
         }
     ]);
     adminApp.run(initializeApp);
-    adminApp.controller('RouteController', ['$scope', '$log', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
+    adminApp.controller('RouteController', ['$scope', '$timeout', '$log', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
         , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', 'uiGridConstants', RouteController
     ]);
