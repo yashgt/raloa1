@@ -5,8 +5,11 @@ mkdir -p ${folder}
 
 #export mypath="C:\Program Files\MySQL\MySQL Server 5.6\bin"
 host=`jq -r ".database.host" ../config.json`
+user=`jq -r ".database.user" ../config.json`
+password=`jq -r ".database.password" ../config.json`
+database=`jq -r ".database.database" ../config.json`
 
-myopts="-uroot -pgoatransport --database=raloa2 --host=${host}"
+myopts="-u${user} -p${password} --database=${database} --host=${host}"
 echo ${myopts}
 
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
