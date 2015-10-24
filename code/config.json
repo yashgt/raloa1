@@ -1,9 +1,9 @@
 {
 	"database" : {
-		"host": "ny-prod-db.cvoo5nr5votw.ap-southeast-1.rds.amazonaws.com",
+		"host": "localhost",
 		"user": "root",
 		"password": "goatransport",
-		"database": "raloa2"
+		"database": "avishkar"
 	},
 	"gmap" : {
 		"key" : "AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q"

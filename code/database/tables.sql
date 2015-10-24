@@ -196,8 +196,8 @@ CREATE TABLE if not exists routestoptrip
 route_stop_id int,
 trip_id int,
 time time,
-FOREIGN KEY (route_stop_id) REFERENCES routestop(route_stop_id),
-FOREIGN KEY (trip_id) REFERENCES trip(trip_id),
+FOREIGN KEY (route_stop_id) REFERENCES routestop(route_stop_id) on delete cascade,
+FOREIGN KEY (trip_id) REFERENCES trip(trip_id) on delete cascade,
 CONSTRAINT pk_rst PRIMARY KEY (route_stop_id,trip_id)  
 );
 
