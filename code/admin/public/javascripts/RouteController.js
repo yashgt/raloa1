@@ -1181,9 +1181,24 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
     $scope.saveCalendars = function() {};
     $scope.placeMarkers = [];
 
+	$scope.mapOptions = {
+		panControl    : true,
+		zoomControl   : true,
+		scaleControl  : true,
+		mapTypeControl: false,
+		mapTypeControlOptions: {
+			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			mapTypeIds: [
+				google.maps.MapTypeId.ROADMAP
+			]
+		},
+		streetViewControl: false		
+	};
+
+
     $scope.map = {
-        control: {},
-        infoWindow: {
+        control: {}
+        ,infoWindow: {
             /*coords: {
           latitude: 36.270850,
           longitude: -44.296875
@@ -1191,6 +1206,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
             options: {
                 disableAutoPan: true
             },
+			
             show: false
         }
     };
