@@ -106,13 +106,17 @@
 
                     <tabset vertical="false" justified="false">
                         <tab heading="Routes">
+						<!--
                             <table border="1" width=100% height=100%>
                                 <tr>
-                                    <td width=15% valign="top">
+                                    <td width=15% valign="top"> -->
+									<div class="col-md-2">
                                         <b>Routes</b>
                                         <div ui-grid="routeListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
-                                    </td>
-                                    <td width=70% valign="top">
+									</div>	
+                                    <!-- </td> -->
+                                    <!-- <td width=70% valign="top"> -->
+									<div class="col-md-8">
                                         <div id="route" style="width:100%">
 
                                             Route options:
@@ -182,9 +186,11 @@
                                                 <pre class="code">{{ isRouteDirty | json }}</pre>
                                             </tab>
                                         </tabset>
-                                    </td>
+									</div>	
+                                    <!--</td>-->
 
-                                    <td width=15% valign="top">
+                                    <!-- <td width=15% valign="top"> -->
+									<div class="col-md-2">
                                         <div ng-disabled="routeDetail.routeId<0" class="stagetree">
                                             <tabset>
                                                 <tab heading="Onward">
@@ -283,9 +289,12 @@
                                                 </tab>
                                             </tabset>
                                         </div>
+									</div>
+									<!--
                                     </td>
                                 </tr>
                             </table>
+							-->
                         </tab>
                         <tab heading="Calendars">
                             <button ng-click="addCalendar()" class="btn btn-default">Add</button>

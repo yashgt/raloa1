@@ -559,6 +559,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 	};
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
+			$log.debug("Got route detail");
             $scope.routeDetail.routeId = routeId;
 
             $scope.clearScheduleGrid();
@@ -1670,7 +1671,7 @@ StopChannelService = function() {
     return this;
 };
 
-RouteHelpChannelService = function() {
+RouteHelpChannelService = function($log) {
     this['From'] = undefined;
     this['To'] = undefined;
 	
@@ -1715,6 +1716,8 @@ RouteHelpChannelService = function() {
 		);
 	};
 	this.showRoute = function(fromStop, toStop, intermedStops) {
+		$log.debug("Showing route on map");
+		
 		this.resetDisplay();
 		
 		var request = {
@@ -1733,6 +1736,7 @@ RouteHelpChannelService = function() {
 		};
 		
 		this.showDisplay(request);
+		$log.debug("Done showing route on map");
 		
 	};
 };
