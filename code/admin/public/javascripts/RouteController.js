@@ -270,6 +270,9 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			var tm = moment(trip.stops[''+ stopId], 'hh:mm a');
 			trip.stops[''+ stopId] = tm.format('HH:mm');
 		});
+		while(_.isEmpty($scope.routeDetail.stages[0].stops)){
+			$scope.routeDetail.stages.splice(0,1);
+        }
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
             flash.success = 'Route saved successully';

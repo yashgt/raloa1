@@ -423,7 +423,7 @@ begin
 declare rsid int;
 SELECT route_stop_id into rsid
 FROM routestop 
-where stop_id=in_stopId AND route_id=in_routeId;
+where (stop_id=in_stopId OR peer_stop_id=in_stopId) AND route_id=in_routeId;
 
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) 
 VALUES  (rsid, in_tripId, in_time)
