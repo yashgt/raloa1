@@ -8,53 +8,29 @@ var db = require('db');
 module.exports = {
   localStrategy: new localStrategy(
   function(username, password, done) {
-  try{
-  logger.info("Looking for " + username + " " + password);
-  }catch(err){
-  console.log("%j", err);
-  }
-  //console.log("Looking for %j %j", username, password);
-	db.connect( function(conn){
-		
-		conn.query("select user_id, username, fleet_id, get_root_fleet(fleet_id) as root_fleet_id, role_type  from user where username = ? and password=?", [ username, password ]
-			, function (err, results){
-				if(!err){
-					if(results[0]){
-						var user = //This object is saved to the session
-							{userId: results[0].user_id			//User ID
-							, username: results[0].username	//For display on the Admin page
-							, rootFleetId: results[0].root_fleet_id
-							, fleetId: results[0].fleet_id	//KTCL							
-							, role: results[0].role_type
-							}; //This object will be stored in the session
-						console.log("User %j",user);
-						return done(null, user);
-					}
-				}
-				else{
-					logger.error(err);
-				}
-				return done(null, false, {message: 'Incorrect credentials'});
-			});
-	});
-	/*
-	if (username === 'ktcladmin' && password === 'ktclpwd') {
-		//TODO, get the right user
-		return done(null, 
-		//This object is saved to the session
-		{id: 1			//User ID
-		, name: 'Mr. Sanjay Ghate & Mr.Jeorge Fernandes'	//For display on the Admin page
-		, fleetId: 1	//KTCL
-		, fleetGroupId: 1	//Goa Public Transport
-		, role: 'FLEETADMIN'
-		} //This object will be stored in the session
-		);
-	}
-	else {
-		return done(null, false, {message: 'Incorrect credentials'});
+  	logger.info("Looking for " + username + " " + password);
+	db.query("select user_id, username, fleet_id, get_root_fleet(fleet_id) as root_fleet_id, role_type  from user where username = ? and password=?", 
+	[ username, password ]
+	, function(results){
+		if(results[0]){
+				var user = //This object is saved to the session
+					{userId: results[0].user_id			//User ID
+					, username: results[0].username	//For display on the Admin page
+					, rootFleetId: results[0].root_fleet_id
+					, fleetId: results[0].fleet_id	//KTCL							
+					, role: results[0].role_type
+					}; //This object will be stored in the session
+				logger.info("Found user %j",user);
+				return done(null, user);
 		}
-		*/
-		
+		else {
+				logger.info("Incorrect credentials");
+				return done(null, false, {message: 'Incorrect credentials'});
+		}
+	}
+	, function(error){
+		return done(null, false, {message: 'Error encountered'});
+	});
   }
 ),
 
