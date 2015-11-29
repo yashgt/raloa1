@@ -20,6 +20,8 @@
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
     "underscore": "^1.7.0",
-    "binford-slf4j-adapter": "0.0.1"
+    "binford-slf4j-adapter": "0.0.1",
+    "morgan": "~1.6.1",
+    "date-format-lite": "~0.7.4"
   }
 }

@@ -1,7 +1,7 @@
 /**
  * Module dependencies.
  */
-
+//require('newrelic');
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -16,6 +16,11 @@ var async = require('async');
 var _ = require('underscore');
 var gm = require('googlemaps');
 var fs = require('fs');
+var morgan = require('morgan');
+require("date-format-lite");
+morgan.token('local-datetm', function(req, res){
+	return (new Date()).format('YYYYMMDD hh:mm:ss.SS');
+	})
 
 
 var app = express();
@@ -74,7 +79,9 @@ app.configure(function() {
     app.set('views', path.join(__dirname, 'public'));
     app.set('view engine', 'ejs');
     app.use(express.favicon());
-    app.use(express.logger('dev'));
+    //app.use(express.logger('dev'));
+    //app.use(express.logger({format : ':remote-addr :date :method :url :referrer :user-agent :status :response-time'}));
+	app.use(morgan(':remote-addr :local-datetm :method :url :referrer :status :response-time :res[content-length]'));
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
@@ -608,7 +615,7 @@ passport.deserializeUser(authentication.deserializeUser);
 
 
 app.get('/', authentication.ensureLogin, function(req, res) {
-    console.log("%j", req.session);
+    logger.info("Session is {0}", req.session);
     res.render('index', {
         user: req.session.passport.user
     });
@@ -638,7 +645,6 @@ app.post('/api/stops', authentication.ensureAPIRoles(['FLEETADMIN']) //TODO Add 
 app.get('/api/kml/:fleet_id', function(req, res) {
     var fleetId = req.params.fleet_id;
     var host = req.headers.host;
-    console.log("KML");
     admin.generate_kml(fleetId, host, function(content) {
         //application/vnd.google-earth.kml+xml
         res.writeHead(200, {
