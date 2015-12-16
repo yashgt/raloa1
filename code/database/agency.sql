@@ -1,5 +1,5 @@
 SELECT 
-fleet_name as agency_id
+gtfs_agency_id as agency_id
 ,fleet_name as agency_name
 ,agency_lang
 ,agency_timezone

@@ -1,5 +1,5 @@
-SELECT S.stop_id
-,S.name as stop_name
+SELECT distinct S.stop_id
+,CONCAT('"',S.name,'"') as stop_name
 ,S.latitude as stop_lat
 ,S.longitude as stop_lon
 ,0 as location_type
