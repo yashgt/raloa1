@@ -170,8 +170,8 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         $scope.clearScheduleGrid();
 	};
     $scope.clearRoute = function() {
-		clearRouteDetail();
 		clearRouteOnMap();
+		clearRouteDetail();
     };
 
     var enableStopDragging = function() {
@@ -271,25 +271,12 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			
 			if ($scope.routeDetail.routeId == 0) { //Check this before it is overwritten
                 $scope.fleetDetail.routes.push(route);
-								$timeout(function(){
+				$timeout(function(){
                 	$scope.gridRoutesApi.selection.selectRow(route);
 				});
             }
 			clearRouteDetail();
 			showRouteDetail(route);
-
-		
-		//	$scope.getRoute(route.routeId);
-			
-            //$scope.routeDetail.isDirty = false;
-			/*
-			$scope.routeDetail = route;
-				
-			$scope.sanctifyRoute();
-			$scope.resetSchedules();
-			*/
-
-
         }, function(error) {
             flash.error = 'Route could not be saved';
         });

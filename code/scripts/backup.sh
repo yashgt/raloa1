@@ -1,4 +1,9 @@
 TS=`date +%Y%m%d%H%M%S`
+BKPFILE=$HOME/dbdumps/${TS}_avishkar.sql
+STG_BKPFILE=$HOME/dbdumps/${TS}_avishkar_to_raloa2.sql
 echo $DBHOST
-mysqldump --host=${DBHOST} --user=${DBUSER} --password=${DBPWD} avishkar > $HOME/dbdumps/$TS.sql
-mutt -s 'Backup on ${TS}' yashgt@gmail.com -a $HOME/dbdumps/$TS.sql < /dev/null
+echo $BKPFILE
+mysqldump --ignore-table=avishkar.sessions  --host=${DBHOST} --user=${DBUSER} --password=${DBPWD} --add-drop-database --databases avishkar > $BKPFILE
+mutt -s 'Backup on ${TS}' yashgt@gmail.com -a $BKPFILE < /dev/null
+
+cp $BKPFILE $STG_BKPFILE
