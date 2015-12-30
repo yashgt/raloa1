@@ -211,6 +211,7 @@ app.get('/api/fleet/:fleet_id', function(req, res) {
                     longitude: results[0][0].sw_lon
                 }
             },
+			trip_cnt: results[0][0].trip_cnt,
             allstops: results[1].map(function(stop) {
                 return {
                     id: stop.stop_id,

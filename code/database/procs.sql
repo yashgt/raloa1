@@ -159,6 +159,7 @@ begin
 	declare vfleet_name varchar(200);
 	declare vavg_speed, vzoom int;
 	declare	vcen_lat, vcen_lon, vne_lat, vne_lon ,vsw_lat ,vsw_lon float;
+	declare vtrip_cnt int;
 
 	
 	select get_root_fleet(in_fleet_id) into root_fleet_id;
@@ -203,9 +204,23 @@ begin
 		and parent_fleet_id<>1;		
 	END LOOP;
 
+	select count(*) into vtrip_cnt
+	from fleet F
+	inner join trip T on (F.fleet_id=T.fleet_id)
+	where F.fleet_id=in_fleet_id;
 	
-	
-	select in_fleet_id as fleet_id,vfleet_name as fleet_name,vavg_speed as avg_speed,vcen_lat as cen_lat,vcen_lon as cen_lon,vzoom as zoom,vne_lat as ne_lat,vne_lon as ne_lon,vsw_lat as sw_lat,vsw_lon as sw_lon;
+	select 
+		in_fleet_id as fleet_id
+		,vfleet_name as fleet_name
+		,vavg_speed as avg_speed
+		,vcen_lat as cen_lat
+		,vcen_lon as cen_lon
+		,vzoom as zoom
+		,vne_lat as ne_lat
+		,vne_lon as ne_lon
+		,vsw_lat as sw_lat
+		,vsw_lon as sw_lon
+		,vtrip_cnt as trip_cnt;
 	
 	
 	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id 
