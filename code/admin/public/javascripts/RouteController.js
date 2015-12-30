@@ -29,6 +29,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 				scope.isRouteDirty = false;
 			}
 			else{
+				if(newVal.isDirty!=undefined)
 				scope.isRouteDirty = true;
 			}
 		}
@@ -148,29 +149,16 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
     };
 
-    $scope.clearRoute = function() {
+	clearRouteOnMap = function(){
 		$scope.forAllStops( function(rs){
 			if (rs.onwardStop) rs.onwardStop.icon = STOP_ICON;
             if (rs.returnStop) rs.returnStop.icon = STOP_ICON;
 		});
 		
-		/*
-        if ($scope.routeDetail != undefined) {
-            if ($scope.routeDetail.stages != undefined) {
-                $scope.routeDetail.stages.forEach(function(stage) {
-                    if (stage.stops != undefined) {
-                        stage.stops.forEach(function(routestop) {
-                            if (routestop.onwardStop) routestop.onwardStop.icon = STOP_ICON;
-                            if (routestop.returnStop) routestop.returnStop.icon = STOP_ICON;
-                            //stop.icon = STOP_ICON;
-                        });
-                    }
-                });
-            }
-        }
-		*/
-
-        $scope.routeDetail = {
+	 	routeHelpChannel.resetDisplay();
+	};
+	clearRouteDetail = function(){
+	   $scope.routeDetail = {
             routeId: -1,
             stages: [],
             trips: [
@@ -179,8 +167,11 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
             ]
         };
         $scope.isRouteDirty = false;
-		routeHelpChannel.resetDisplay();
         $scope.clearScheduleGrid();
+	};
+    $scope.clearRoute = function() {
+		clearRouteDetail();
+		clearRouteOnMap();
     };
 
     var enableStopDragging = function() {
@@ -276,13 +267,18 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 
             flash.success = 'Route saved successully';
+			console.log("%j",route);
 			
 			if ($scope.routeDetail.routeId == 0) { //Check this before it is overwritten
                 $scope.fleetDetail.routes.push(route);
-				$timeout(function(){
+								$timeout(function(){
                 	$scope.gridRoutesApi.selection.selectRow(route);
 				});
             }
+			clearRouteDetail();
+			showRouteDetail(route);
+
+		
 		//	$scope.getRoute(route.routeId);
 			
             //$scope.routeDetail.isDirty = false;
@@ -560,34 +556,15 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
                 $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
         });
 	};
-    $scope.getRoute = function(routeId) {
-        getthereAdminService.getRoute(routeId, function(routeDetail) {
-			$log.debug("Got route detail");
-            $scope.routeDetail.routeId = routeId;
-
-            $scope.clearScheduleGrid();
-
+	showRouteOnMap = function(){
 			var bounds = new google.maps.LatLngBounds(); 
-            routeDetail.stages.forEach(function(stage) {
-
-                var routestage = {
-                    title: stage.title,
-                    stageId: stage.stageId,
-                    stops: []
-                };
-                $scope.routeDetail.stages.push(routestage);
-
+            $scope.routeDetail.stages.forEach(function(stage) {
                 stage.stops.forEach(function(routestop) {
                     var onwardStop = getActiveStopById(routestop.onwardStop.id);
 					bounds.extend(new google.maps.LatLng(onwardStop.latitude, onwardStop.longitude));
                     var returnStop = getActiveStopById(routestop.returnStop.id);
 					bounds.extend(new google.maps.LatLng(returnStop.latitude, returnStop.longitude));
-
-                    var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
-                    newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
                 });
-
-
             });
 			$scope.fleetDetail.bounds = {
                 northeast: {
@@ -600,6 +577,39 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
                 }
             };
 			
+			var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
+			var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
+			var allStops = [];
+			$scope.forAllStops(function(rs){ allStops.push(rs); });
+			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
+			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
+			//var wayPoints = [];
+			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+	};
+	showRouteDetail = function(routeDetail){
+			$scope.routeDetail.routeId = routeDetail.routeId ;
+			$scope.clearScheduleGrid();
+
+            routeDetail.stages.forEach(function(stage) {
+
+                var routestage = {
+                    title: stage.title,
+                    stageId: stage.stageId,
+                    stops: []
+                };
+                $scope.routeDetail.stages.push(routestage);
+
+                stage.stops.forEach(function(routestop) {
+                    var onwardStop = getActiveStopById(routestop.onwardStop.id);
+                    var returnStop = getActiveStopById(routestop.returnStop.id);
+
+                    var newroutestop = $scope.addStopsToStage(onwardStop, returnStop, routestage);
+                    newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
+                });
+
+
+            });
+		
             $scope.routeDetail.trips = routeDetail.trips;
 			
 			$scope.forAllStopTimes(function(trip, stopId){
@@ -609,18 +619,21 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			
 			$scope.resetSchedules();
 			$scope.routeDetail.deletedTrips = [];
-            //$scope.scheduleOptions.data = $scope.routeDetail.trips;
-			var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
-			var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
-			var allStops = [];
-			$scope.forAllStops(function(rs){ allStops.push(rs); });
-			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
-			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
-			//var wayPoints = [];
-			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
-			
+   		
 			$scope.isRouteDirty = false;
 
+	};
+	showRoute = function(routeDetail) {
+		showRouteDetail(routeDetail);
+		showRouteOnMap();
+	};
+    $scope.getRoute = function(routeId) {
+        getthereAdminService.getRoute(routeId, function(routeDetail) {
+			$log.debug("Got route detail");
+            $scope.routeDetail.routeId = routeId;
+			showRoute(routeDetail);
+
+            
         });
     };
 
@@ -715,7 +728,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 				delTrips.forEach(function(trip){
 					$scope.routeDetail.deletedTrips.push(trip);
 				});
-				$scope.routeDetail.isDirty = true;
+				//$scope.routeDetail.isDirty = true;
 		});
 		$scope.scheduleOptions[dir].selectedRows = [];
     };
