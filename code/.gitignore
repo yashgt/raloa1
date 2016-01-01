@@ -1,0 +1,6 @@
+#ignore config file
+config.json
+bower_components
+gtfs_*
+validation-results.html
+node_modules

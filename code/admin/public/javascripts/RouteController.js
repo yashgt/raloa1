@@ -493,6 +493,11 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         });
 
     };
+	var timeSortFn = function(a,b){
+		var tma = moment(a, 'hh:mm a');
+		var tmb = moment(b, 'hh:mm a');
+		return tma - tmb;
+	};
     $scope.addStopToScheduleGrid = function(dir, fleetstop) {
         var def = {
             name: fleetstop.name
@@ -524,6 +529,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 		
 		if($scope.scheduleOptions[dir].columnDefs.length == $scope.scheduleOptions[dir].fixedCols) //This is column for first stop
 		{
+			def.sortingAlgorithm = timeSortFn;
 			def.sort = { direction: uiGridConstants.ASC };
 			def.pinnedLeft = true;
 		}
