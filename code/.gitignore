@@ -4,3 +4,6 @@ bower_components
 gtfs_*
 validation-results.html
 node_modules
+admin/node.pid
+admin/nohup.out
+admin/nohup.out.bak
