@@ -29,6 +29,71 @@ exports.generate_kml = function(fleetId, host, cb){
 	
 };
 
+exports.getFleetDetail = function(fleetId, callback){
+	console.log("GFD");
+	    db.query("call get_fleet_detail(?);", [fleetId], function(results) {
+        var fleetDetail = {
+            fleetId: fleetId,
+            defaultServiceId: 1,
+            center: {
+                latitude: results[0][0].cen_lat,
+                longitude: results[0][0].cen_lon
+            },
+            zoom: results[0][0].zoom,
+            bounds: {
+                northeast: {
+                    latitude: results[0][0].ne_lat,
+                    longitude: results[0][0].ne_lon
+                },
+                southwest: {
+                    latitude: results[0][0].sw_lat,
+                    longitude: results[0][0].sw_lon
+                }
+            },
+			trip_cnt: results[0][0].trip_cnt,
+            allstops: results[1].map(function(stop) {
+                return {
+                    id: stop.stop_id,
+                    latitude: stop.latitude,
+                    longitude: stop.longitude,
+                    name: stop.name,
+                    peerStopId: stop.peer_stop_id
+                };
+            }),
+            
+            routes: results[2].map(function(route) {
+                return {
+                    routeId: route.route_id,
+                    routeNum: route.route_name,
+                    st: route.start_stop_name,
+                    en: route.end_stop_name,
+					serviced: route.serviced
+
+                };
+            }),
+						
+			calendars: results[3].map(function(calendar) {
+			return {
+                serviceId: calendar.calendar_id,
+                serviceName: calendar.calendar_name,
+                mon: calendar.mon,
+                tue: calendar.tue,
+                wed: calendar.wed,
+                thu: calendar.thu,
+                fri: calendar.fri,
+                sat: calendar.sat,
+                sun: calendar.sun,
+                startDate: calendar.start_date,
+                endDate: calendar.end_date
+				};
+            }),
+           
+        };
+		
+		callback(fleetDetail);
+        
+    });
+}
 
 exports.getRouteDetail = function(route_id, callback){
     db.query("call get_route_detail(?);", [route_id], function(results) {
@@ -71,10 +136,12 @@ exports.getRouteDetail = function(route_id, callback){
                 var rs = {
                     onwardStop: {
                         id: routeStop.onward_stop_id,
+						name: routeStop.onward_stop_name,
                         distance: routeStop.onward_distance
                     },
                     returnStop: {
                         id: routeStop.return_stop_id,
+						name: routeStop.return_stop_name,
                         distance: routeStop.return_distance
                     }
                 };

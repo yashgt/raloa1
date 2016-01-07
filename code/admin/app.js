@@ -192,67 +192,9 @@ app.post('/api/calendar', function(req, res) {
 
 app.get('/api/fleet/:fleet_id', function(req, res) {
     var fleetId = parseInt(req.params.fleet_id);
-    db.query("call get_fleet_detail(?);", [fleetId], function(results) {
-        var fleetDetail = {
-            fleetId: fleetId,
-            defaultServiceId: 1,
-            center: {
-                latitude: results[0][0].cen_lat,
-                longitude: results[0][0].cen_lon
-            },
-            zoom: results[0][0].zoom,
-            bounds: {
-                northeast: {
-                    latitude: results[0][0].ne_lat,
-                    longitude: results[0][0].ne_lon
-                },
-                southwest: {
-                    latitude: results[0][0].sw_lat,
-                    longitude: results[0][0].sw_lon
-                }
-            },
-			trip_cnt: results[0][0].trip_cnt,
-            allstops: results[1].map(function(stop) {
-                return {
-                    id: stop.stop_id,
-                    latitude: stop.latitude,
-                    longitude: stop.longitude,
-                    name: stop.name,
-                    peerStopId: stop.peer_stop_id
-                };
-            }),
-            
-            routes: results[2].map(function(route) {
-                return {
-                    routeId: route.route_id,
-                    routeNum: route.route_name,
-                    st: route.start_stop_name,
-                    en: route.end_stop_name,
-					serviced: route.serviced
-
-                };
-            }),
-						
-			calendars: results[3].map(function(calendar) {
-			return {
-                serviceId: calendar.calendar_id,
-                serviceName: calendar.calendar_name,
-                mon: calendar.mon,
-                tue: calendar.tue,
-                wed: calendar.wed,
-                thu: calendar.thu,
-                fri: calendar.fri,
-                sat: calendar.sat,
-                sun: calendar.sun,
-                startDate: calendar.start_date,
-                endDate: calendar.end_date
-				};
-            }),
-           
-        };
-        res.json(fleetDetail);
-    });
-
+	admin.getFleetDetail(fleetId, function(fleetDetail){
+		res.json(fleetDetail);
+	});
 });
 app.get('/api/fleets/:fleetgroup_id', function(req, res) {
     db.query("call list_fleets();", function(results) {

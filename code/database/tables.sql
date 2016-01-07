@@ -145,7 +145,7 @@ FOREIGN KEY (route_id) REFERENCES route(route_id)
 CREATE TABLE if not exists routestop
 (
 stop_id int,
-peer_stop_id int comment 'Stop in the reverse direction',
+peer_stop_id int comment 'Stop in the reverse direction. This is nulable',
 route_id int,
 stage_id int,
 sequence int,
