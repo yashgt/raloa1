@@ -10,6 +10,8 @@ var express = require('express');
 var app = express();
 var util = require('util');
 var moment = require('moment');
+var _s = require('underscore.string');
+var admin = require('admin');
 
 nconf.argv().env();
 nconf.file({ //Search for this file in this directory and use it as my config file
@@ -26,30 +28,97 @@ var dbConfig = {
 };
 db.createPool(dbConfig);
 
-var readWB = function(file){
-	var wb = XLSX.readFile('KTCL-TT.xlsx');
-	
-	wb.SheetNames.forEach(function(sheetName){
-		console.log(sheetName);
-		var ws = wb.Sheets[sheetName];
-		console.log(ws);
-		console.log(ws["C2"]);
-	});
-	XLSX.writeFile(wb,"TT1.xlsx");
-};
 
-var readWBNew = function(filename){
+var readWBNew = function(filename, cb){
+	console.log(filename);
+	var fleetId = parseInt(_s.words(filename)[0]) ;
 	var wb = new Excel.Workbook();
 	wb.xlsx.readFile(filename)
     .then(function() {
-        wb.xlsx.writeFile("TT1.xlsx")
-		.then(function() {
-			// done
-		});
-    });
+		console.log("Read");
+		var routes = [] ;
+		wb.eachSheet(function(worksheet, sheetId) {		
+			//var routeId = worksheet.
+			//console.log(worksheet.name);
+			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
+			var meta = { lastCellNum: 1};
+			var route = {
+				st: '',
+				en: '',
+				routeId: routeId,
+				fleetId: fleetId,
+				stages: [],
+				trips: [
+					[],
+					[]
+				]
+			};
+			
+			worksheet.eachRow(function(row, rowNumber) {
+				
+				if(rowNumber==1){
+					
+				}	
+				else if(rowNumber==2){ //Onward Stop ID
+					
+					row.eachCell(function(cell, colNumber) {
+						//console.log("Cell " + colNumber + " = " + cell.value);
+						meta[colNumber] = { onwardStopId : cell.value };
+						meta.lastCellNum = colNumber;
+					});
+					
+				}
+				else if(rowNumber==3){ //Return Stop ID
+					row.eachCell(function(cell, colNumber) {
+						//console.log("Cell " + colNumber + " = " + cell.value);
+						meta[colNumber].returnStopId = cell.value ;	
+					});
+					
+				}
+					
+				else if(_s.isBlank(row.getCell(1).value) ){
+					//console.log(row.getCell(3).value);
+					if(_s.isBlank(row.getCell(3).value)) {
+						return;
+					}
+					else {
+						var dir = (row.getCell(2).value == "Onward") ? 0 : 1;
+						
+						var trip = {stops: {}, fleetId: fleetId, tripId: -1, direction: dir, serviceId: 1}; //TODO set service ID based on chosen service
+						
+						for(i=3; i<= meta.lastCellNum; i++){
+							var time;
+							if(i==3){
+								time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+							}
+							else {
+								time = moment(row.getCell(i).value.result, 'hh:mm a').format('HH:mm');
+							}
+							console.log(time);
 
+							//console.log(moment(time,'hh:mm a').format('hh:mm a'));
+							//console.log(time.result || time);
+							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
+							trip.stops[ '' + stopId ] = time ;
+							
+						}
+						
+						//console.log(trip);
+						route.trips[dir].push(trip);
+					}
+				}
+				
+			});
+			//console.log(route);
+			routes.push(route);
+		});
+		console.log(routes);
+		cb(routes);
+        
+    });
+	
 };
-var writeWBNew = function(routes){
+var writeWBNew = function(filename, routes){
 	var wb = new Excel.Workbook();
 	routes.forEach(function(route){
 		//route = routes[0];
@@ -61,7 +130,7 @@ var writeWBNew = function(routes){
 		
 		worksheet.addRow({});
 		var stopRow = worksheet.lastRow;
-		stopRow.alignment = { textRotation: 90 };
+		stopRow.alignment = { textRotation: 80 };
 		stopRow.font = {bold: true};
 		stopRow.getCell(1).value = "Stop";
 		
@@ -142,7 +211,7 @@ var writeWBNew = function(routes){
 				cell.type = 6;
 				var distCellCol = cell.address.replace(/[0-9\.]+/g, "");
 				
-				var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm a/p\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
+				var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
 
 				cell.value = { formula: fml };
 			
@@ -157,10 +226,88 @@ var writeWBNew = function(routes){
 	var options = {
 		dateFormat: "HH:mm:ss"
 	};
-	wb.xlsx.writeFile("TT1.xlsx", options)
+	wb.xlsx.writeFile(filename, options)
 		.then(function() {
 			// done
 	});
+};
+
+
+
+var generateTripSheet = function(fleetId){
+	console.log("Gen");
+	admin.getFleetDetail(fleetId, function(fleetDetail){
+		//console.log("%j",fleetDetail);
+		var wsSeries = [];
+		fleetDetail.routes.forEach(function(route){
+			console.log(route);
+			wsSeries.push( function(cb){
+				admin.getRouteDetail(route.routeId, function(routeDetail){
+					//Add route to workbook
+					//console.log("Route %j processed as %j", route.routeId, routeDetail);
+					cb(null, routeDetail);
+				});	
+			});
+			
+		});
+		
+		async.series(wsSeries, function(err,routeDetails){
+			
+			writeWBNew(fleetId+ "-TimeTable.xlsx", routeDetails);			
+		});
+		
+		
+		
+		
+	});
+	console.log("Generated routes of fleet");
+
+};
+
+var updateTrips = function(fleetId){
+	
+	var routes = readWBNew(fleetId + "-TimeTable.xlsx", function(routes){
+		routes.forEach(function(route){
+			admin.saveRoute(route
+				,function(){
+					console.log("Saved route %j", route);
+				}
+				,function(){
+					console.log("Could not save route %j", route);
+				}
+			)
+		});
+	});
+	
+};
+
+exports.generateTripSheet = generateTripSheet;
+exports.updateTrips = updateTrips;
+
+/*
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question("What do you think of Node.js? ", function(answer) {
+  // TODO: Log the answer in a database
+  console.log("Thank you for your valuable feedback:", answer);
+
+  rl.close();
+});
+
+
+var readWB = function(file){
+	var wb = XLSX.readFile('KTCL-TT.xlsx');
+	
+	wb.SheetNames.forEach(function(sheetName){
+		console.log(sheetName);
+		var ws = wb.Sheets[sheetName];
+		console.log(ws);
+		console.log(ws["C2"]);
+	});
+	XLSX.writeFile(wb,"TT1.xlsx");
 };
 
 var writeWB= function(routes){
@@ -193,52 +340,4 @@ var writeWB= function(routes){
 
 //writeWBNew([{routeId:1}]);
 //readWBNew("KTCL-TT.xlsx");
-
-var generateTripSheet = function(){
-	console.log("Gen");
-	admin.getFleetDetail(3, function(fleetDetail){
-		//console.log("%j",fleetDetail);
-		var wsSeries = [];
-		fleetDetail.routes.forEach(function(route){
-			wsSeries.push( function(cb){
-				admin.getRouteDetail(route.routeId, function(routeDetail){
-					//Add route to workbook
-					//console.log("Route %j processed as %j", route.routeId, routeDetail);
-					cb(null, routeDetail);
-				});	
-			});
-			
-		});
-		
-		async.series(wsSeries, function(err,routeDetails){
-			writeWBNew(routeDetails);			
-		});
-		
-		
-		
-		
-	});
-	console.log("Generated routes of fleet");
-
-};
-
-exports.generateTripSheet = generateTripSheet;
-
-
-
-
-//app.listen(5000);
-generateTripSheet();
-/*
-var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-
-rl.question("What do you think of Node.js? ", function(answer) {
-  // TODO: Log the answer in a database
-  console.log("Thank you for your valuable feedback:", answer);
-
-  rl.close();
-});
 */

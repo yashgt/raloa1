@@ -216,6 +216,11 @@ app.post('/api/route/', function(req, res) {
     logger.info("Saving route {0}", route);
     route.fleetId = req.session.passport.user.rootFleetId; // Routes and stops belong to Root fleet
 	var currentFleetId = req.session.passport.user.fleetId; // The trip belongs to the currently chosen fleet
+	route.trips.forEach(function(tripList) {
+        tripList.forEach(function(trip) {
+			trip.fleetId = currentFleetId; //Set the fleet only for new trips
+		});
+	});	
 
     route.startStopId = route.stages[0].stops[0].onwardStop.id;
 	var start_stop_name = route.stages[0].stops[0].onwardStop.name;

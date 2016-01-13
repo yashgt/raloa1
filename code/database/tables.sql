@@ -161,10 +161,10 @@ CREATE TABLE if not exists trip
 (
 trip_id int AUTO_INCREMENT,
 trip_name varchar(255) comment 'trip_id in GTFS',
-fleet_id int,
-calendar_id int comment 'Calendar followed by this trip',
+fleet_id int not null,
+calendar_id int not null comment 'Calendar followed by this trip',
 direction boolean,
-route_id int,
+route_id int not null,
 frequency_trip boolean default false comment 'True if this entry represents multiple trips spread at a given frequency',
 frequency_start_time time comment 'Time at which the trips operate on a frequency',
 frequency_end_time time,

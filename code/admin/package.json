@@ -18,13 +18,14 @@
     "express": "3.4.8",
     "googlemaps": "^0.1.9",
     "log4js": "*",
+    "moment": "*",
     "morgan": "~1.6.1",
     "mysql": "*",
     "nconf": "^0.6.9",
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
     "underscore": "^1.7.0",
-    "xlsx": "^0.8.0",
-	"moment": "*"
+    "underscore.string": "^3.2.2",
+    "xlsx": "^0.8.0"
   }
 }
