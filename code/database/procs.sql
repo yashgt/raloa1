@@ -361,7 +361,7 @@ begin
 	where R.route_id = in_route_id
 	order by T.trip_id;
 	
-	select T.trip_id, CASE T.direction WHEN 0 THEN RS.stop_id ELSE RS.peer_stop_id END as stop_id, RST.time
+	select T.trip_id, CASE T.direction WHEN 0 THEN RS.stop_id ELSE coalesce(RS.peer_stop_id,RS.stop_id) END as stop_id, RST.time
 	from 
 	route as R
 	inner join trip as T on (R.route_id = T.route_id)
