@@ -185,6 +185,17 @@ exports.getRouteDetail = function(route_id, callback){
 				}
 			}
 		);
+		
+		var onStop1Id = routeDetail.stages[0].stops[0].onwardStop.id ;
+		var reStop1Id = (_.last((_.last(routeDetail.stages)).stops)).returnStop.id;
+		
+		[0,1].forEach(function(dir){
+			routeDetail.trips[dir] = _.sortBy( routeDetail.trips[dir] , function(trip){
+				return (dir==0) ? trip.stops[''+onStop1Id] : trip.stops[''+reStop1Id] ;
+			});
+		});
+		
+		
 
 		callback(routeDetail);
     });

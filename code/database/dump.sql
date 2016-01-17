@@ -1,6 +1,6 @@
 -- MySQL dump 10.14  Distrib 5.5.41-MariaDB, for Linux (x86_64)
 --
--- Host: ny-prod-db.cvoo5nr5votw.ap-southeast-1.rds.amazonaws.com    Database: avishkar
+-- Host: ny-prod-db.cvoo5nr5votw.ap-southeast-1.rds.amazonaws.com    Database: raloa2
 -- ------------------------------------------------------
 -- Server version	5.6.22-log
 
@@ -16,14 +16,14 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `avishkar`
+-- Current Database: `raloa2`
 --
 
-/*!40000 DROP DATABASE IF EXISTS `avishkar`*/;
+/*!40000 DROP DATABASE IF EXISTS `raloa2`*/;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `avishkar` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `raloa2` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `avishkar`;
+USE `raloa2`;
 
 --
 -- Table structure for table `calendar`
@@ -584,10 +584,10 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Current Database: `avishkar`
+-- Current Database: `raloa2`
 --
 
-USE `avishkar`;
+USE `raloa2`;
 
 --
 -- Final view structure for view `stop_detail`

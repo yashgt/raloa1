@@ -200,18 +200,26 @@ var writeWBNew = function(filename, routes){
 		});
 		
 		//=IF(OR(ISBLANK(C7),LEN(C7)=0),"",TEXT(TIME(HOUR(C7), MINUTE(C7), SECOND(C7)+(D$4/(1000*30))*60*60),"hh:mm a/p"))
+		//=IF(A15="Onward", IF(OR(ISBLANK(AL15),LEN(AL15)=0),"",TEXT(TIME(HOUR(AL15), MINUTE(AL15), SECOND(AL15)+(AM$4/(1000*30))*60*60),"hh:mm am/pm")), IF(OR(ISBLANK(AN15),LEN(AN15)=0),"",TEXT(TIME(HOUR(AN15), MINUTE(AN15), SECOND(AN15)+(AN$4/(1000*30))*60*60),"hh:mm am/pm")))
 		var rowsToAdd = 50;
 		for(cnt = 0 ; cnt<rowsToAdd; cnt++){
 			worksheet.addRow({});
 			newTripRow = worksheet.lastRow;
-			for(i=4; i<scnt+3; i++){ //columns
+			for(i=3; i<scnt+3; i++){ //columns
 				cell = newTripRow.getCell(i) ;
 				pcell = newTripRow.getCell(i-1) ;
+				ncell = newTripRow.getCell(i+1) ;
 				
 				cell.type = 6;
 				var distCellCol = cell.address.replace(/[0-9\.]+/g, "");
+				var distCellRow = cell.address.replace(/[A-Z\.]+/g, "");
 				
-				var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
+				//var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
+				var fml = util.format("IF(%s%d=\"Onward\", IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s%d/(1000*30))*60*60),\"hh:mm am/pm\")), IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s%d/(1000*30))*60*60),\"hh:mm am/pm\")))"
+				, "B", distCellRow
+, pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum
+, ncell.address,ncell.address,ncell.address,ncell.address,ncell.address,distCellCol,onDistRowNum+1 
+				)
 
 				cell.value = { formula: fml };
 			
