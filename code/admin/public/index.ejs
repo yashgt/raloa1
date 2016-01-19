@@ -194,7 +194,7 @@
                                         <div ng-disabled="routeDetail.routeId<0" class="stagetree">
                                             <tabset>
                                                 <tab heading="Onward">
-                                                    <div ui-tree="stageTreeOptions">
+                                                    <div ui-tree="stageTreeOptions" >
                                                         <!-- for existing stages -->
                                                         <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
                                                             <li ng-repeat="stage in routeDetail.stages" ui-tree-node data-type="stage">
@@ -241,7 +241,7 @@
                                                     </div>
                                                 </tab>
                                                 <tab heading="Return">
-                                                    <div ui-tree="stageTreeOptions">
+                                                    <div ui-tree="stageTreeOptions" >
                                                         <!-- for existing stages -->
                                                         <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
                                                             <li ng-repeat="stage in routeDetail.stages | reverse" ui-tree-node>
