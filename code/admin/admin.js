@@ -30,7 +30,6 @@ exports.generate_kml = function(fleetId, host, cb){
 };
 
 exports.getFleetDetail = function(fleetId, callback){
-	console.log("GFD");
 	    db.query("call get_fleet_detail(?);", [fleetId], function(results) {
         var fleetDetail = {
             fleetId: fleetId,
@@ -341,7 +340,7 @@ exports.saveRoute = function(route, sCB, fCB){
                     });
                 },
                 function(tran, route, callback) {
-                    //console.log("Saving trips for route %j", route);
+                    logger.debug("Saving trips for route {0}", route);
 
                     var tripSeries = [];
 					
