@@ -245,6 +245,12 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 	};
 	
     $scope.saveRoute = function() {
+		if($scope.isSavingRoute){
+			console.log("Already saving");
+			return;
+		}	
+		$scope.isSavingRoute = true;
+		
 		var tripIncomplete = false;
 		$scope.forAllStopTimes(function(trip, stopId){
 			var stopTime = trip.stops[''+ stopId];
@@ -257,6 +263,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			return ;
 		}
 		
+		
 		$scope.forAllStopTimes(function(trip, stopId){
 			var tm = moment(trip.stops[''+ stopId], 'hh:mm a');
 			trip.stops[''+ stopId] = tm.format('HH:mm');
@@ -265,6 +272,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			$scope.routeDetail.stages.splice(0,1);
         }
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
+			$scope.isSavingRoute = false;
 
             flash.success = 'Route saved successully';
 			console.log("%j",route);
@@ -278,6 +286,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 			clearRouteDetail();
 			showRouteDetail(route);
         }, function(error) {
+			$scope.isSavingRoute = false;
             flash.error = 'Route could not be saved';
         });
     };

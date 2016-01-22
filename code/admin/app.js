@@ -307,7 +307,7 @@ app.post('/api/route/', function(req, res) {
                     });
                 },
                 function(tran, route, callback) {
-                    console.log("Saving trips for route %j", route);
+                    logger.debug("Saving trips for route {0}", route);
 
                     var tripSeries = [];
 					
@@ -375,7 +375,7 @@ app.post('/api/route/', function(req, res) {
 							admin.getRouteDetail(route_id, function(routeDetail){
 								routeDetail.st = start_stop_name;
 								routeDetail.en = end_stop_name;
-
+								logger.info("Saved route {0}", routeDetail);
         						res.json(routeDetail);
 							});	
 							/*

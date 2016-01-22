@@ -237,7 +237,8 @@ begin
 		else R.route_name 
 		end as route_name
 		*/
-	, R.route_name as route_name	
+	/*, R.route_name as route_name	*/
+	, convert(route_id, char(10)) as route_name
 	, S1.name as start_stop_name
 	, S2.name as end_stop_name
 	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) as serviced
@@ -246,7 +247,7 @@ begin
 	inner join stop S2 on (R.end_stop_id=S2.stop_id)
 	where R.fleet_id = root_fleet_id
 	and R.is_deleted=0
-	order by serviced desc, start_stop_name asc, end_stop_name asc
+	order by serviced desc, start_stop_name asc, end_stop_name asc, route_name asc
 	;
 	
 	select * from calendar
@@ -353,9 +354,9 @@ begin
 	inner join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))
 	
 	
-	left outer join routestop PRS on (PRS.route_id=in_route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
+	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
 	left outer join segment BS on (BS.from_stop_id=PRS.stop_id and BS.to_stop_id=S.stop_id) 
-	left outer join routestop NRS on (NRS.route_id=in_route_id and RS.sequence + 1 = NRS.sequence)/* last routestop does not have an NRS*/
+	left outer join routestop NRS on (NRS.route_id=R.route_id and RS.sequence + 1 = NRS.sequence)/* last routestop does not have an NRS*/
 	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
 	
 	where R.route_id=in_route_id
@@ -398,7 +399,7 @@ left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=S
 where SegOn.from_stop_id is null
 and (RS1.route_id=in_route_id or in_route_id is null)
 
-union all 
+union  
 
 select S1.stop_id as from_stop_id, S1.latitude as from_lat, S1.longitude as from_lon
 , S2.stop_id as to_stop_id, S2.latitude as to_lat, S2.longitude as to_lon
