@@ -1,6 +1,13 @@
 UPDATE stop
-SET name = REPLACE (name, ' Bus Stop', '')
-, name = REPLACE (name, ' Bus stop', '')
-, name = REPLACE (name, ' bus stop', '')
-, name = REPLACE (name, ' BUS STOP', '')
-WHERE name LIKE '%Bus Stop';
+SET 
+name = substr(name from 1 for instr(lower(name), ' bus stop')-1)
+WHERE 
+lower(name) REGEXP '[[:space:]]*bus[[:space:]]*stop'
+;
+
+UPDATE stop
+SET 
+name = substr(name from 1 for instr(lower(name), '  bus  stop')-1)
+WHERE 
+lower(name) REGEXP '[[:space:]]*bus  stop'
+;
