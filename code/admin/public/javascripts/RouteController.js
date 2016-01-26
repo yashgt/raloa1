@@ -260,6 +260,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 		});
 		if(tripIncomplete){
 			flash.error = 'Some trips are incomplete';
+			$scope.isSavingRoute = true;
 			return ;
 		}
 		
@@ -696,7 +697,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
             frequencyTrip: false,
             frequencyStartTime: '00:00',
             frequencyEndTime: '00:00',
-			frequency_gap : '00:00',
+			frequencyGap : '00:00',
             stops: {}
         };
 
