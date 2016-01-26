@@ -260,6 +260,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 		});
 		if(tripIncomplete){
 			flash.error = 'Some trips are incomplete';
+			$scope.isSavingRoute = true;
 			return ;
 		}
 		
