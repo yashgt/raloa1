@@ -251,7 +251,7 @@ begin
 	;
 	
 	select * from calendar
-	where fleet_id=root_fleet_id;
+	where fleet_id=root_fleet_id or fleet_id=1;
 	
 end//
 
@@ -551,5 +551,5 @@ IN in_fleet_id int
 )
 begin
 select * from calendar
-where fleet_id=in_fleet_id;
+where fleet_id=in_fleet_id or fleet_id=1;
 end//
