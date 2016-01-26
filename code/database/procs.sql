@@ -431,13 +431,25 @@ create procedure save_trip(
 	, IN in_frequency_trip boolean
 	, IN in_frequency_start_time time
 	, IN in_frequency_end_time time
-	, IN in_frequency_gap int
+	, IN in_frequency_gap time
 )
 begin
 if id < 0 then
-INSERT INTO trip(trip_name, calendar_id, route_id, fleet_id, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) 
-VALUES ('trip', in_calendar_id, in_route_id, in_fleet_id, in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, in_frequency_gap);
-set id = LAST_INSERT_ID() ;
+	INSERT INTO trip(trip_name, calendar_id, route_id, fleet_id, direction, frequency_trip, frequency_start_time, frequency_end_time, frequency_gap) 
+	VALUES ('trip', in_calendar_id, in_route_id, in_fleet_id, in_direction, in_frequency_trip, in_frequency_start_time, in_frequency_end_time, in_frequency_gap);
+	set id = LAST_INSERT_ID() ;
+else
+	UPDATE trip
+	set trip_name = 'trip'
+	, calendar_id = in_calendar_id
+	, route_id = in_route_id
+	, fleet_id = in_fleet_id
+	, direction = in_direction
+	, frequency_trip = in_frequency_trip
+	, frequency_start_time = in_frequency_start_time
+	, frequency_end_time = in_frequency_end_time
+	, frequency_gap = in_frequency_gap
+	where trip_id=id;
 end if;
 end//
 
