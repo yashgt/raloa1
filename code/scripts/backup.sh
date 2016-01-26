@@ -8,9 +8,9 @@ mysqldump --ignore-table=avishkar.sessions  --host=${DBHOST} --user=${DBUSER} --
 
 sed 's/avishkar/raloa2/' $BKPFILE > $STG_BKPFILE
 
-mutt -s 'Backup on ${TS}' yashgt@gmail.com -a $STG_BKPFILE < /dev/null
+mutt -s "Auto-backup on ${TS}" yashgt@gmail.com -c chaitanyamalik1993@gmail.com -a $STG_BKPFILE  < /dev/null
 
-cp $STG_BKPFILE ../database/dump.sql
-git add ../database/dump.sql
+BASEDIR=$(dirname $0)
+cp $STG_BKPFILE ${BASEDIR}/../database/dump.sql
 #git commit -m "Dump taken on ${TS}"
 
