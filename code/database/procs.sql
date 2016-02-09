@@ -140,6 +140,16 @@ begin
 	delete from stop where stop_id = id;	
 end//
 
+drop procedure if exists delete_route//
+create procedure delete_route(
+	IN in_route_id int
+)
+begin
+	delete from trip where route_id = in_route_id;
+	delete from routestop where route_id = in_route_id;
+	delete from route where route_id=in_route_id;
+end//
+
 drop procedure if exists csvtodb//
 create procedure csvtodb(
 	  IN stop_id int

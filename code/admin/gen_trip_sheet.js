@@ -12,6 +12,8 @@ var util = require('util');
 var moment = require('moment');
 var _s = require('underscore.string');
 var admin = require('admin');
+var sheetLoc = "..//..//schedules//";
+var rowsToAdd = 500;
 
 nconf.argv().env();
 nconf.file({ //Search for this file in this directory and use it as my config file
@@ -124,8 +126,10 @@ var writeWBNew = function(filename, routes){
 		//route = routes[0];
 		
 		var sheetName = route.routeId+"-"+route.st.substr(0,5)+" to "+route.en.substr(0,5) ; 
-		console.log("%j", sheetName);
-		var worksheet = wb.addWorksheet(sheetName);
+		
+		var color = (route.serviced == 1) ? "F0000FF" : "" ;
+		console.log("%j %j", sheetName, color);
+		var worksheet = wb.addWorksheet(sheetName, color);
 		//var worksheet = wb.addWorksheet(route.routeId+"-");
 		
 		worksheet.addRow({});
@@ -201,7 +205,7 @@ var writeWBNew = function(filename, routes){
 		
 		//=IF(OR(ISBLANK(C7),LEN(C7)=0),"",TEXT(TIME(HOUR(C7), MINUTE(C7), SECOND(C7)+(D$4/(1000*30))*60*60),"hh:mm a/p"))
 		//=IF(A15="Onward", IF(OR(ISBLANK(AL15),LEN(AL15)=0),"",TEXT(TIME(HOUR(AL15), MINUTE(AL15), SECOND(AL15)+(AM$4/(1000*30))*60*60),"hh:mm am/pm")), IF(OR(ISBLANK(AN15),LEN(AN15)=0),"",TEXT(TIME(HOUR(AN15), MINUTE(AN15), SECOND(AN15)+(AN$4/(1000*30))*60*60),"hh:mm am/pm")))
-		var rowsToAdd = 50;
+		
 		for(cnt = 0 ; cnt<rowsToAdd; cnt++){
 			worksheet.addRow({});
 			newTripRow = worksheet.lastRow;
@@ -215,7 +219,7 @@ var writeWBNew = function(filename, routes){
 				var distCellRow = cell.address.replace(/[A-Z\.]+/g, "");
 				
 				//var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
-				var fml = util.format("IF(%s%d=\"Onward\", IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s%d/(1000*30))*60*60),\"hh:mm am/pm\")), IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s%d/(1000*30))*60*60),\"hh:mm am/pm\")))"
+				var fml = util.format("IF(%s%d=\"Onward\", IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\")), IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\")))"
 				, "B", distCellRow
 , pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum
 , ncell.address,ncell.address,ncell.address,ncell.address,ncell.address,distCellCol,onDistRowNum+1 
@@ -261,7 +265,7 @@ var generateTripSheet = function(fleetId){
 		
 		async.series(wsSeries, function(err,routeDetails){
 			
-			writeWBNew(fleetId+ "-TimeTable.xlsx", routeDetails);			
+			writeWBNew(sheetLoc + fleetId+ "-TimeTable.xlsx", routeDetails);			
 		});
 		
 		
@@ -274,7 +278,7 @@ var generateTripSheet = function(fleetId){
 
 var updateTrips = function(fleetId){
 	
-	var routes = readWBNew(fleetId + "-TimeTable.xlsx", function(routes){
+	var routes = readWBNew(sheetLoc + fleetId + "-TimeTable.xlsx", function(routes){
 		routes.forEach(function(route){
 			admin.saveRoute(route
 				,function(){
