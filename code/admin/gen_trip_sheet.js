@@ -12,8 +12,16 @@ var util = require('util');
 var moment = require('moment');
 var _s = require('underscore.string');
 var admin = require('admin');
+var path = require('path');
 var sheetLoc = "..//..//schedules//";
-var rowsToAdd = 500;
+var rowsToAdd = 300;
+
+var nameRowNum = 1;
+var stationRowNum = 2;
+var onStopIDRowNum = 3;
+var reStopIDRowNum = 4;
+var onDistRowNum = 5;
+var reDistRowNum = 6;
 
 nconf.argv().env();
 nconf.file({ //Search for this file in this directory and use it as my config file
@@ -33,13 +41,14 @@ db.createPool(dbConfig);
 
 var readWBNew = function(filename, cb){
 	console.log(filename);
-	var fleetId = parseInt(_s.words(filename)[0]) ;
+	var rawFileName = path.basename(filename);
+	var fleetId = parseInt(_s.words(rawFileName)[0]) ;
 	var wb = new Excel.Workbook();
 	wb.xlsx.readFile(filename)
     .then(function() {
 		console.log("Read");
 		var routes = [] ;
-		wb.eachSheet(function(worksheet, sheetId) {		
+		wb.eachSheet(function(worksheet, sheetId) {
 			//var routeId = worksheet.
 			//console.log(worksheet.name);
 			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
@@ -58,10 +67,10 @@ var readWBNew = function(filename, cb){
 			
 			worksheet.eachRow(function(row, rowNumber) {
 				
-				if(rowNumber==1){
+				if(rowNumber==nameRowNum || rowNumber==stationRowNum || rowNumber==onDistRowNum || rowNumber==reDistRowNum){
 					
 				}	
-				else if(rowNumber==2){ //Onward Stop ID
+				else if(rowNumber==onStopIDRowNum){ //Onward Stop ID
 					
 					row.eachCell(function(cell, colNumber) {
 						//console.log("Cell " + colNumber + " = " + cell.value);
@@ -70,7 +79,7 @@ var readWBNew = function(filename, cb){
 					});
 					
 				}
-				else if(rowNumber==3){ //Return Stop ID
+				else if(rowNumber==reStopIDRowNum){ //Return Stop ID
 					row.eachCell(function(cell, colNumber) {
 						//console.log("Cell " + colNumber + " = " + cell.value);
 						meta[colNumber].returnStopId = cell.value ;	
@@ -78,28 +87,34 @@ var readWBNew = function(filename, cb){
 					
 				}
 					
-				else if(_s.isBlank(row.getCell(1).value) ){
+				else if(_s.isBlank(row.getCell(1).value) ){ //Its a new trip
+					
 					//console.log(row.getCell(3).value);
-					if(_s.isBlank(row.getCell(3).value)) {
+					var timeCellVal = row.getCell(3).value ;	
+					console.log(timeCellVal);
+					if(_s.isBlank(timeCellVal) || timeCellVal.formula != undefined && _s.isBlank(timeCellVal.result) ) { //Check if start time is given
 						return;
 					}
 					else {
+						console.log("Row %j", rowNumber);
 						var dir = (row.getCell(2).value == "Onward") ? 0 : 1;
 						
 						var trip = {stops: {}, fleetId: fleetId, tripId: -1, direction: dir, serviceId: 1}; //TODO set service ID based on chosen service
 						
 						for(i=3; i<= meta.lastCellNum; i++){
 							var time;
-							if(i==3){
-								time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+							console.log(typeof(row.getCell(i).value));
+							if( row.getCell(i).value.formula != undefined ) {
+								time = moment(row.getCell(i).value.result, 'hh:mm:ss a').format('HH:mm');
 							}
 							else {
-								time = moment(row.getCell(i).value.result, 'hh:mm a').format('HH:mm');
+								console.log(row.getCell(i).value);
+								console.log(moment(row.getCell(i).value).utcOffset());
+								time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
 							}
 							console.log(time);
-
-							//console.log(moment(time,'hh:mm a').format('hh:mm a'));
-							//console.log(time.result || time);
+							
+							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
 							trip.stops[ '' + stopId ] = time ;
 							
@@ -114,7 +129,7 @@ var readWBNew = function(filename, cb){
 			//console.log(route);
 			routes.push(route);
 		});
-		console.log(routes);
+		//console.log(routes);
 		cb(routes);
         
     });
@@ -139,6 +154,11 @@ var writeWBNew = function(filename, routes){
 		stopRow.getCell(1).value = "Stop";
 		
 		worksheet.addRow({});
+		var stationRow = worksheet.lastRow;
+		stationRow.font = {bold: true};
+		stationRow.getCell(1).value = "Bus station";
+		
+		worksheet.addRow({});
 		var onStopIDRow = worksheet.lastRow;
 		onStopIDRow.getCell(1).value = "Onward Stop ID";
 		
@@ -149,7 +169,7 @@ var writeWBNew = function(filename, routes){
 		worksheet.addRow({});
 		var onDistance = worksheet.lastRow;
 		onDistance.getCell(1).value = "Onward Distance";
-		var onDistRowNum = 4;
+		
 		
 		worksheet.addRow({});
 		var reDistance = worksheet.lastRow;
@@ -175,6 +195,7 @@ var writeWBNew = function(filename, routes){
 				stopCellMap[1][stop.returnStop.id] = i ;
 				onDistance.getCell(i).value = stop.onwardStop.distance ;
 				reDistance.getCell(i).value = stop.returnStop.distance ;
+				stationRow.getCell(i).value = stop.isStation
 				scnt++;
 				i++;
 			});
@@ -194,7 +215,7 @@ var writeWBNew = function(filename, routes){
 				Object.keys(trip.stops).forEach(function(stopId){
 					var cellId = stopCellMap[dir][stopId] ;
 					
-					var time = moment(trip.stops[''+ stopId], 'HH:mm').format('hh:mm a');
+					var time = moment(trip.stops[''+ stopId], 'HH:mm').format('hh:mm:ss a');
 										
 					var cell = tripRow.getCell(cellId);
 					cell.type = 3;
@@ -219,7 +240,7 @@ var writeWBNew = function(filename, routes){
 				var distCellRow = cell.address.replace(/[A-Z\.]+/g, "");
 				
 				//var fml = util.format("IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\"))", pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum);
-				var fml = util.format("IF(%s%d=\"Onward\", IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\")), IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm am/pm\")))"
+				var fml = util.format("IF(%s%d=\"Onward\", IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm:ss am/pm\")), IF(OR(ISBLANK(%s),LEN(%s)=0),\"\",TEXT(TIME(HOUR(%s), MINUTE(%s), SECOND(%s)+(%s$%d/(1000*30))*60*60),\"hh:mm:ss am/pm\")))"
 				, "B", distCellRow
 , pcell.address,pcell.address,pcell.address,pcell.address,pcell.address,distCellCol,onDistRowNum
 , ncell.address,ncell.address,ncell.address,ncell.address,ncell.address,distCellCol,onDistRowNum+1 

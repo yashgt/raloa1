@@ -142,7 +142,8 @@ exports.getRouteDetail = function(route_id, callback){
                         id: routeStop.return_stop_id,
 						name: routeStop.return_stop_name,
                         distance: routeStop.return_distance
-                    }
+                    },
+					isStation: routeStop.is_station
                 };
                 stage.stops.push(rs);
 
