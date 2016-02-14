@@ -147,6 +147,7 @@ create procedure delete_route(
 begin
 	delete from trip where route_id = in_route_id;
 	delete from routestop where route_id = in_route_id;
+	delete from stage where route_id=in_route_id;
 	delete from route where route_id=in_route_id;
 end//
 
@@ -357,6 +358,7 @@ begin
 	, PS.stop_id as return_stop_id
 	, PS.name as return_stop_name
 	, coalesce(FS.distance, 0) as return_distance
+	, S.is_station as is_station
 	from route R
 	inner join routestop RS on (RS.route_id=R.route_id )	
 	inner join stop S on (RS.stop_id=S.stop_id)	

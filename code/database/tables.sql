@@ -66,6 +66,7 @@ fleet_id int comment 'Fleet to which the stop belongs. This is always the Root F
 latitude float(10),
 longitude float(10),
 name varchar(255),
+is_station boolean DEFAULT 0,
 alias_name1 varchar(255),
 alias_name2 varchar(255),
 locality varchar(500),
