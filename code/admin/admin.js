@@ -232,7 +232,15 @@ exports.generateSegments = function(routeId, segCallback)
 								db.query("call add_segment(?,?,?); ", [ seg.from_stop_id , seg.to_stop_id , distance]
 								,function(results){
 									logger.trace("Distance data {0} saved as segment", data);
-									callback(null, distance);									
+									if(routeId==null){
+										setTimeout(function() {
+									    	console.log('Blah blah blah blah extra-blah');
+											callback(null, distance);									
+										}, 3000);
+									}
+									else{
+										callback(null, distance);									
+									}
 								});								
 							}
 							else{
