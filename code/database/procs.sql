@@ -116,6 +116,10 @@ begin
 		update stop
 		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
 		where stop_id=id;
+
+		update segment 
+		set is_stale=1
+		where to_stop_id=id or from_stop_id=id;
 		
 	else /*New or peer stop is being created*/
 		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id, user_id) 
@@ -422,6 +426,14 @@ inner join stop S2 on (coalesce(RS1.peer_stop_id, RS1.stop_id)=S2.stop_id)
 left outer join segment SegOn on (S1.stop_id=SegOn.from_stop_id and S2.stop_id=SegOn.to_stop_id)
 where SegOn.from_stop_id is null
 and (RS1.route_id=in_route_id or in_route_id is null)
+
+union 
+select S1.stop_id as from_stop_id, S1.latitude as from_lat, S1.longitude as from_lon
+, S2.stop_id as to_stop_id, S2.latitude as to_lat, S2.longitude as to_lon
+from segment SG
+inner join stop S1 on (SG.from_stop_id=S1.stop_id)
+inner join stop S2 on (SG.to_stop_id=S2.stop_id)
+where SG.is_stale=1
 ;
 end//
 
@@ -429,7 +441,9 @@ drop procedure if exists add_segment//
 create procedure add_segment(in in_from_stop_id int, in in_to_stop_id int, in_distance float)
 begin
 	insert into segment(from_stop_id, to_stop_id, distance)
-	values(in_from_stop_id, in_to_stop_id, in_distance);
+	values(in_from_stop_id, in_to_stop_id, in_distance)
+	on duplicate key update distance=in_distance, is_stale=0
+	;
 end//
 
 
