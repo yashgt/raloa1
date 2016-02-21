@@ -1,5 +1,6 @@
 
 	select 
+	distinct
 
 	S.stop_id as my_onward_stop_id
 	, S.name as my_onward_stop_name
