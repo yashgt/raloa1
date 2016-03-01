@@ -510,7 +510,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 	};
     $scope.addStopToScheduleGrid = function(dir, fleetstop) {
         var def = {
-            name: fleetstop.name
+            name: fleetstop.name + fleetstop.id //Make the name unique
             ,displayName: fleetstop.name
             ,field: "stops." + fleetstop.id
 			,type: 'string'
@@ -555,7 +555,21 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
     };
 
 	$scope.resetSchedules = function(){
-		[0, 1].forEach(function(dir) {
+		[0,1].forEach(function(dir) {
+				var stopCols = [];
+
+				$scope.scheduleOptions[dir].columnDefs.forEach(function(def){
+					if(def.field.startsWith("stops.")){
+						stopCols.push(def.field);
+					}
+				});
+				$scope.routeDetail.trips[dir].forEach(function(trip){
+					Object.keys(trip.stops).forEach(function(stopId){
+						if(_.indexOf(stopCols,"stops."+stopId)==-1){
+							console.log(stopId);
+						}
+					});
+				});
                 $scope.scheduleOptions[dir].data = $scope.routeDetail.trips[dir];
         });
 	};
@@ -633,6 +647,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
     $scope.getRoute = function(routeId) {
         getthereAdminService.getRoute(routeId, function(routeDetail) {
 			$log.debug("Got route detail");
+			console.log("Route is %j", routeDetail);
             $scope.routeDetail.routeId = routeId;
 			showRoute(routeDetail);
 
