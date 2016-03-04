@@ -1,9 +1,15 @@
 sudo yum update
 
-sudo yum install g++ curl libssl-dev apache2-utils
-sudo yum install git-core
-
+#sudo yum install g++ curl libssl-dev apache1-utils
+#sudo yum install git-core
+sudo yum install git-all
 sudo yum install wget
+wget https://nodejs.org/dist/v4.3.2/node-v4.3.2-linux-x64.tar.xz
+sudo yum -y install xz
+unxz node-v4.3.2-linux-x64.tar.xz
+tar xvf node-v4.3.2-linux-x64.tar
+
+
 wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 sudo rpm -ivh epel-release-7-5.noarch.rpm
 
