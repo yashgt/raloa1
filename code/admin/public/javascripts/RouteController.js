@@ -1219,12 +1219,16 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 	$scope.mapOptions = {
 		panControl    : true,
 		zoomControl   : true,
+		zoomControlOptions: {
+        		position: google.maps.ControlPosition.RIGHT_TOP
+    		},
 		scaleControl  : true,
-		mapTypeControl: false,
+		mapTypeControl: true,
 		mapTypeControlOptions: {
 			style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
 			mapTypeIds: [
 				google.maps.MapTypeId.ROADMAP
+				,google.maps.MapTypeId.SATELLITE
 			]
 		},
 		streetViewControl: false		
@@ -1717,7 +1721,7 @@ RouteHelpChannelService = function($log) {
 	};
 	this.directionsDisplay = new google.maps.DirectionsRenderer({
 		draggable: false
-		,hideRouteList: true
+		,hideRouteList: false
 		,polylineOptions: polyLineOpts
 	});
     this.directionsService = new google.maps.DirectionsService();
@@ -1727,7 +1731,8 @@ RouteHelpChannelService = function($log) {
         var request = {
             origin: this.From,
             destination: this.To,
-            travelMode: google.maps.TravelMode.DRIVING
+            travelMode: google.maps.TravelMode.DRIVING,
+		provideRouteAlternatives : true
         };
 
 		this.showDisplay(request);
