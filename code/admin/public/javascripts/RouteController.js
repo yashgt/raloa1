@@ -7,7 +7,8 @@ var STOP_ICON = "/images/bus_stop.png";
 var DEL_STOP_ICON = "/images/del_bus_stop.jpg";
 var PEER_STOP_ICON = "/images/peer_bus_stop.png";
 var ROUTE_STOP_ICON = "/images/route_bus_stop.png";
-var ROUTE_STOP_REV_ICON = "/images/route_bus_stop.png";
+var RET_ROUTE_STOP_ICON = "/images/ret_route_bus_stop.png";
+var ONRET_ROUTE_STOP_ICON = "/images/onret_route_bus_stop.png";
 var ACTIVE_STOP_ICON = "/images/bus_stop.png";
 var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 
@@ -149,6 +150,22 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
     };
 
+	switchStop = function(stop) {
+
+        
+		$scope.forAllStops(function(rs){
+			if((rs.onwardStop.id === stop.id || rs.returnStop.id === stop.id) && (rs.onwardStop.id != rs.returnStop.id) ){
+				//swap
+				console.log("Switching stop %j", stop);
+				console.log("Onward stop %j - Return stop %j", rs.onwardStop, rs.returnStop);
+				//var temp = rs.returnStop ;
+				//rs.returnStop = rs.onwardStop;
+				//rs.onwardStop = temp; 		
+				console.log("Onward stop %j - Return stop %j", rs.onwardStop, rs.returnStop);
+			}
+		});
+
+    };
 	clearRouteOnMap = function(){
 		$scope.forAllStops( function(rs){
 			if (rs.onwardStop) rs.onwardStop.icon = STOP_ICON;
@@ -357,6 +374,11 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
             eventName: 'edit_stop',
             label: 'Edit stop',
             handler: editStop
+        }, {
+            className: 'context_menu_item',
+            eventName: 'switch_stop',
+            label: 'Switch stop',
+            handler: switchStop
         }]);
 
     };
@@ -480,13 +502,14 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
     $scope.addStopsToStage = function(onwardStop, returnStop, stage) {
         var routeStop = {};
         if (onwardStop != undefined) {
-            onwardStop.icon = ROUTE_STOP_ICON;
+            onwardStop.icon = (onwardStop.id===returnStop.id) ? ONRET_ROUTE_STOP_ICON : ROUTE_STOP_ICON;
             $scope.addStopToScheduleGrid(0, onwardStop);
         }
         if (returnStop != undefined) {
-            returnStop.icon = ROUTE_STOP_ICON;
+            returnStop.icon = (onwardStop.id===returnStop.id) ? ONRET_ROUTE_STOP_ICON : RET_ROUTE_STOP_ICON;
             $scope.addStopToScheduleGrid(1, returnStop);
         }
+
 
         routeStop.onwardStop = onwardStop;
         routeStop.returnStop = returnStop;
