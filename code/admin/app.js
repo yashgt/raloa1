@@ -166,7 +166,7 @@ app.delete('/api/stop/:id', function(req, res) {
 	db.query("set @id := ? ; call delete_stop(@id,?) ; select @id; ", [stop_id, user_id], function(results) {
         logger.info("Stop {0} deleted", stop_id);
         res.json({
-            id: id
+            id: stop_id
         });
     }, function(error) {
         res.send(500, 'Failed to delete stop: ' + error);
