@@ -1,0 +1,346 @@
+stop_id,stop_name,stop_lat,stop_lon,location_type
+1,"Panaji",15.4953,73.837,0
+2,"Teen Building",15.5199,73.8285,0
+3,"Teen Building",15.5206,73.8292,0
+4,"Training College",15.5243,73.827,0
+5,"Training College",15.5244,73.8278,0
+6,"Gulyakade",15.5312,73.825,0
+7,"Gulyakade",15.5319,73.8246,0
+8,"Copel",15.534,73.8239,0
+9,"Copel",15.5344,73.824,0
+10,"Vadakade",15.5414,73.8215,0
+11,"Vadakade",15.5415,73.8216,0
+12,"Porvorim Tisk",15.5525,73.8174,0
+13,"Porvorim Tisk",15.5524,73.8176,0
+14,"Guirim Cross",15.5655,73.8083,0
+15,"Guirim Cross",15.5656,73.8084,0
+16,"Green Park",15.5729,73.8064,0
+17,"Green Park",15.573,73.8067,0
+18,"Guirim Copel",15.5791,73.8061,0
+19,"Guirim Copel",15.579,73.8062,0
+20,"Mapusa",15.5891,73.8101,0
+21,"Dhuler",15.602,73.8157,0
+22,"Dhuler",15.602,73.8156,0
+23,"Karaswada",15.6087,73.8237,0
+24,"Karaswada",15.6087,73.824,0
+25,"Madel",15.6187,73.8356,0
+26,"Madel",15.6186,73.8355,0
+27,"Thivim",15.6225,73.8552,0
+28,"Thivim",15.6224,73.8554,0
+29,"Cansa Bodiem",15.6264,73.8673,0
+30,"Cansa Bodiem",15.6263,73.8672,0
+31,"Sirsaim",15.6268,73.8755,0
+32,"Sirsaim",15.6267,73.8755,0
+33,"Zarapkar Petrol Pump",15.6222,73.8857,0
+34,"Zarapkar Petrol Pump",15.6221,73.8856,0
+35,"Assnoda Bus Stand",15.6192,73.9014,0
+36,"Assnoda Paar",15.6202,73.9066,0
+37,"Assnoda Paar",15.6201,73.9065,0
+38,"Tamda Rasta",15.618,73.9211,0
+39,"Tamda Rasta",15.6179,73.921,0
+40,"Mulgao",15.6147,73.9268,0
+41,"Mulgao",15.6146,73.9268,0
+42,"Vaalshi",15.6054,73.9341,0
+43,"Vaalshi",15.6054,73.934,0
+44,"ITI Bicholim",15.6036,73.9356,0
+45,"ITI Bicholim",15.6035,73.9356,0
+46,"Bordem",15.5932,73.945,0
+47,"Bordem",15.5932,73.9449,0
+48,"Shantadurga Highschool",15.5915,73.9462,0
+49,"Shantadurga Highschool",15.5913,73.9461,0
+50,"Bicholim Bus Stand",15.5886,73.9497,0
+51,"Bicholim Hospital",15.5847,73.9597,0
+52,"Bicholim Hospital",15.5846,73.9597,0
+53,"Sarvan Cross",15.5789,73.9738,0
+54,"Sarvan Cross",15.5788,73.9737,0
+55,"Karapur Tisk",15.568,74.0028,0
+56,"Karapur Tisk",15.5678,74.0028,0
+57,"Datt Mandir",15.5651,74.0092,0
+58,"Datt Mandir",15.565,74.009,0
+59,"Sakhali Bus Stand",15.5615,74.0099,0
+84,"Pundalik Nagar",15.5158,73.8345,0
+85,"Pundalik Nagar",15.5159,73.8346,0
+86,"Mapusa Court",15.5938,73.8142,0
+87,"Mapusa Court",15.5936,73.8142,0
+88,"Karaswada IDC",15.6137,73.8228,0
+89,"Karaswada IDC",15.6137,73.8229,0
+90,"Colvale Housing Board",15.628,73.8256,0
+91,"Colvale Housing Board",15.6278,73.8256,0
+92,"Binani",15.6358,73.8303,0
+93,"Binani",15.6358,73.8304,0
+94,"Colvale Char Rasta",15.6451,73.8348,0
+95,"Colvale Char Rasta",15.6451,73.8349,0
+97,"Don Khambe",15.6657,73.8386,0
+98,"Suke Kuran",15.6824,73.8339,0
+99,"Suke Kuran",15.6825,73.834,0
+100,"Valpe",15.6993,73.823,0
+101,"Valpe",15.69931,73.8231,0
+102,"Govt College",15.703,73.8196,0
+103,"Govt College",15.7031,73.8197,0
+104,"Malpe",15.7113,73.812,0
+105,"Malpe",15.7114,73.8121,0
+106,"Pedne Bus Stand",15.7163,73.7992,0
+107,"St. Cruz",15.4787,73.8486,0
+108,"St. Cruz",15.4788,73.8484,0
+109,"GMC Bambolim",15.4654,73.8583,0
+110,"GMC Bambolim",15.4647,73.8581,0
+111,"Military Camp",15.465,73.8657,0
+112,"Military Camp",15.465,73.8656,0
+113,"Curca",15.4617,73.8663,0
+114,"Workshop Bambolim",15.454,73.8651,0
+115,"Workshop Bambolim",15.4542,73.8651,0
+116,"CPWD",15.4505,73.8626,0
+117,"CPWD",15.4506,73.8625,0
+118,"Shirdon",15.4444,73.8646,0
+119,"Shirdon",15.4443,73.8646,0
+120,"Goa Velha",15.4419,73.8808,0
+121,"Goa Velha",15.4418,73.8799,0
+122,"Sojikade",15.4416,73.8855,0
+123,"Sojikade",15.4415,73.8855,0
+124,"Pillar",15.4395,73.8909,0
+125,"Pillar",15.4395,73.8907,0
+126,"Chichekade",15.4326,73.897,0
+127,"Chichekade",15.4325,73.8969,0
+128,"Agacaim Mkt",15.4279,73.8984,0
+129,"Agacaim Mkt",15.4278,73.8983,0
+130,"Agacaim Police Station",15.4188,73.9036,0
+131,"Agacaim Police Station",15.4188,73.9034,0
+132,"Hanuman Mandir Cortalim",15.4086,73.9068,0
+133,"Hanuman Mandir Cortalim",15.4086,73.9067,0
+134,"Cortalim Junction",15.4023,73.9077,0
+135,"Cortalim Junction",15.4029,73.9078,0
+136,"Sankvale",15.402,73.8992,0
+137,"Sankvale",15.4021,73.8993,0
+138,"Jacinto Island",15.4016,73.8646,0
+139,"Jacinto Island",15.4017,73.8649,0
+140,"Dabolim",15.3981,73.8598,0
+141,"Dabolim",15.3982,73.8597,0
+142,"Chikalim post",15.3982,73.8485,0
+143,"Chikalim post",15.3983,73.8484,0
+144,"Chikalim Panchayat",15.3976,73.8456,0
+145,"Chikalim Panchayat",15.3979,73.8457,0
+146,"Chikalim Junction",15.3991,73.8325,0
+147,"Chikalim Junction",15.3992,73.8325,0
+148,"Vaddem Lake",15.3988,73.8281,0
+149,"Vaddem Lake",15.3989,73.8282,0
+150,"Goa Shipyard",15.4002,73.8249,0
+151,"Goa Shipyard",15.4001,73.8249,0
+152,"Vasco Kadamba Busstand",15.4002,73.821,0
+153,"Vasco Church",15.3992,73.8168,0
+154,"Vasco Church",15.3992,73.8173,0
+155,"El Monte",15.4001,73.8045,0
+156,"El Monte",15.4001,73.8046,0
+157,"Sada Vasco",15.4095,73.7948,0
+158,"Sada Vasco",15.4095,73.795,0
+159,"Harbour Vasco",15.4129,73.7897,0
+160,"Harbour Vasco",15.4129,73.7898,0
+161,"Vasco I.O.C.",15.3968,73.8067,0
+162,"Vasco I.O.C.",15.397,73.8066,0
+163,"Vasco Market",15.398,73.811,0
+164,"Vasco Market",15.3981,73.8108,0
+165,"Vasco Chicalim Church",15.3993,73.841,0
+166,"Vasco Chicalim Church",15.3994,73.8411,0
+168,"Agacaim Bypass",15.4224,73.901,0
+169,"Agacaim Bypass",15.4223,73.9009,0
+170,"Sankvale Convent",15.4009,73.8886,0
+171,"Sankvale Convent",15.4011,73.8886,0
+172,"Sankvale Bakery",15.4033,73.8929,0
+173,"Sankvale Bakery",15.4034,73.8928,0
+174,"Cortalim Junction",15.4021,73.9082,0
+175,"Kesarval Garden Cortalim",15.3809,73.9258,0
+176,"Kesarval Garden Cortalim",15.3812,73.9255,0
+177,"Verna Birla Bypass",15.3762,73.9259,0
+178,"Verna Birla Bypass",15.3758,73.9255,0
+179,"Verna Titan",15.3714,73.9268,0
+180,"Verna Titan",15.3711,73.9266,0
+181,"Verna Hotel Maharaja",15.3643,73.9261,0
+182,"Verna Hotel Maharaja",15.3643,73.9259,0
+183,"Verna Pirni",15.3578,73.9273,0
+184,"Verna Pirni",15.3561,73.928,0
+185,"Verna Panchayat",15.3543,73.9306,0
+186,"Verna Panchayat",15.3538,73.9307,0
+187,"Verna Holy Church",15.3499,73.9311,0
+188,"Verna Holy Church",15.3496,73.9311,0
+189,"Verna Agnel Ashram",15.3255,73.9367,0
+190,"Verna Agnel Ashram",15.3253,73.9366,0
+191,"Verna Carmel College",15.3116,73.9442,0
+192,"Verna Carmel College",15.3116,73.9443,0
+193,"Nuvem Church",15.308,73.9468,0
+194,"Nuvem Church",15.3079,73.9468,0
+195,"Margao Kadamba Busstand",15.2874,73.9558,0
+196,"Margao Kadamba Busstand",15.2877,73.9549,0
+197,"Ribandar Patto",15.5039,73.8623,0
+198,"Ribandar Patto",15.5037,73.8625,0
+199,"Chodna Ferry",15.5058,73.8642,0
+200,"Divar Ferry",15.5005,73.8775,0
+201,"Divar Ferry",15.5003,73.8776,0
+202,"Old Goa Baingini",15.5005,73.9014,0
+203,"Old Goa Baingini",15.5003,73.9018,0
+206,"Corlim Industrial Estate",15.4966,73.9313,0
+207,"Corlim Industrial Estate",15.4965,73.9314,0
+210,"Corlim Ciba",15.4935,73.9407,0
+211,"Corlim Ciba",15.4934,73.9407,0
+213,"Banastari",15.49,73.9573,0
+214,"Banastari",15.4899,73.9576,0
+215,"Boma",15.47531,73.96371,0
+216,"Boma",15.4753,73.9637,0
+217,"Kundaim Industrial Estate",15.4557,73.9644,0
+218,"Kundaim Industrial Estate",15.457,73.9644,0
+220,"Mangeshi Temple",15.4466,73.9718,0
+222,"Mardol",15.4414,73.975,0
+223,"Farmagudi",15.4136,73.9885,0
+224,"Farmagudi",15.4132,73.9883,0
+225,"ponda Kadamba Busstand",15.406,73.9976,0
+226,"Ponda Market",15.4004,74.0047,0
+227,"Xelpem Duler",15.6079,73.8124,0
+228,"Xelpem Duler",15.608,73.8126,0
+244,"Panjim Ferry",15.499,73.8383,0
+245,"Panjim Ferry",15.4989,73.8384,0
+246,"Ribandar Police Sation",15.502,73.8723,0
+251,"Old Goa",15.5021,73.9098,0
+252,"Old Goa",15.502,73.9098,0
+265,"Posrare",15.57,73.8067,0
+266,"Posrare",15.57,73.8069,0
+275,"Marna",15.6162,73.7907,0
+276,"Marna",15.6163,73.7906,0
+277,"Siolim Church",15.6142,73.77,0
+278,"Siolim Church",15.6143,73.77,0
+279,"SFX HIGH SCHOOL",15.6218,73.7684,0
+280,"SFX HIGH SCHOOL",15.6219,73.7685,0
+281,"Siolim Bus Stop",15.6266,73.7661,0
+282,"Siolim Bus Stop",15.6267,73.7662,0
+283,"Chopdem",15.6411,73.759,0
+284,"Chopdem",15.6409,73.759,0
+295,"Mandrem",15.6588,73.717,0
+296,"Mandrem",15.6588,73.7171,0
+299,"Siolim Fish Market",15.6318,73.7643,0
+364,"DHULAPER",15.493,73.9473,0
+365,"DHULAPER",15.4929,73.9473,0
+374,"Ashwem",15.6411,73.7222,0
+375,"Ashwem",15.641,73.7222,0
+405,"Patyekade",15.4342,73.9851,0
+406,"Patyekade",15.4341,73.9851,0
+407,"Dhavli Ponda",15.3945,74.0022,0
+408,"Dhavli Ponda",15.3947,74.0021,0
+409,"Borim Brigde",15.3547,74.003,0
+410,"Borim Brigde",15.3546,74.0028,0
+411,"Top Cola",15.3666,74.0046,0
+412,"Top Cola",15.3667,74.0045,0
+413,"Bori Sanquar",15.3646,73.9997,0
+414,"Bori Sanquar",15.3646,73.9998,0
+427,"Satarda Bridge",15.7354,73.8033,0
+428,"Satarda Bridge",15.7356,73.804,0
+429,"Patradevi",15.7939,73.8633,0
+441,"Dabolim Airport",15.3861,73.839,0
+442,"Dabolim Airport",15.3862,73.8386,0
+489,"Dharmapur",15.2369,73.9762,0
+490,"Dharmapur",15.2368,73.9762,0
+550,"Uguem",15.7518,73.8346,0
+551,"Uguem",15.7517,73.8347,0
+555,"Torxem",15.7806,73.8613,0
+556,"Torxem",15.7805,73.8613,0
+557,"Patradevi",15.7938,73.8636,0
+559,"Poroscodem",15.7397,73.8125,0
+560,"Poroscodem",15.7395,73.8124,0
+566,"Morjim",15.6201,73.7371,0
+567,"Morjim",15.6201,73.737,0
+639,"Kadamba Busstand Cancona",15.0084,74.044,0
+640,"Cancona Market",15.0074,74.0468,0
+641,"Cancona Market",15.0072,74.0468,0
+644,"Polem Goa Border",14.9094,74.0929,0
+645,"Polem Goa Border",14.9093,74.0928,0
+646,"lOLIEM",14.9416,74.0705,0
+647,"Mashem",14.9594,74.0549,0
+648,"Mashem",14.9593,74.0548,0
+649,"Poigunim",14.9739,74.0922,0
+650,"Poigunim",14.9737,74.0922,0
+659,"Batpal",15.0018,74.0819,0
+660,"Batpal",15.0017,74.0818,0
+661,"Sristhal",15.0062,74.0623,0
+662,"Sristhal",15.006,74.0623,0
+663,"Gullem",15.011,74.0364,0
+664,"Gullem",15.0109,74.0363,0
+665,"Balli Bus Stop",15.1568,74.0144,0
+666,"Balli Bus Stop",15.1567,74.0144,0
+667,"Cuncolim Bus Stand",15.1822,73.9977,0
+668,"Pazorkoni",15.2016,73.9959,0
+669,"Pazorkoni",15.2017,73.9958,0
+670,"Danewadi",15.2149,73.9844,0
+671,"Danewadi",15.2148,73.9842,0
+674,"Chinchinim\, Cuncolim Junction Bus Stop",15.2189,73.9785,0
+697,"Barcem Market Bus stop",15.0783,74.0324,0
+698,"Barcem Market Bus stop",15.0783,74.0323,0
+727,"Paddi",15.0926,74.0313,0
+728,"Paddi",15.0927,74.0311,0
+729,"Pisornem",15.082,74.0301,0
+730,"Pisornem",15.0819,74.0303,0
+731,"Colva Circle Bus Stand",15.2833,73.9565,0
+732,"Colva Circle Bus Stand",15.2834,73.9565,0
+733,"Margao Session Court Bus Stand",15.281,73.9572,0
+734,"Margao Session Court Bus Stand",15.2811,73.9573,0
+737,"Balli Railway Station",15.1516,74.0188,0
+738,"Balli Railway Station",15.1516,74.0187,0
+745,"Pernem Railway Station Bus Stop",15.7081,73.815,0
+746,"Pernem Railway Station Bus Stop",15.7082,73.8151,0
+751,"Fatorda Bus Stand",15.2861,73.9635,0
+752,"Fatorda Bus Stand",15.2861,73.9638,0
+753,"Arlem Bus Stand",15.2982,73.9714,0
+754,"Arlem Bus Stand",15.2982,73.9717,0
+755,"Raia Bus Stand",15.3138,73.9837,0
+756,"Raia Bus Stand",15.3137,73.9838,0
+757,"Tember Bus Stop",15.3239,73.989,0
+758,"Tember Bus Stop",15.3238,73.9891,0
+759,"Borim Bridge Bus Stop",15.3516,74.0035,0
+760,"Borim Bridge Bus Stop",15.3516,74.0029,0
+774,"Gorvootti  Bus  Stand",15.3019,73.9492,0
+775,"Gorvootti  Bus  Stand",15.30191,73.94921,0
+776,"Cortalim Sancoale  Crossing Bus Stand",15.3977,73.9108,0
+777,"Cortalim Sancoale  Crossing Bus Stand",15.3976,73.9106,0
+801,"City Bus Stop Margao",15.2733,73.9594,0
+804,"Margoa Holy Spirit Church & School Bus Stop",15.2815,73.9599,0
+805,"Margao Hospicio Bus Stand",15.2795,73.9601,0
+806,"Margao Kamat Bus Stop",15.273,73.9586,0
+807,"Railway Station Foot Overbridge Bus Stand",15.2696,73.9589,0
+903,"Shelin",14.9262,74.0714,0
+904,"Shelin",14.9261,74.0713,0
+905,"Verna Pirni",15.3578,73.9272,0
+906,"Metastrip Bus Stop",15.3756,73.904,0
+907,"Metastrip Bus Stop",15.3754,73.9041,0
+908,"Upasnager Bus Stop",15.3726,73.8922,0
+909,"Upasnager Bus Stop",15.3723,73.892,0
+910,"Zuarinager Bus Stop",15.3848,73.8676,0
+911,"Zuarinager Bus Stop",15.38481,73.86761,0
+912,"MES College Bus Stop",15.3874,73.864,0
+913,"MES College Bus Stop",15.3873,73.864,0
+933,"Dhavli",15.3873,73.9992,0
+934,"Dhavli",15.3871,73.9991,0
+950,"Uzro Junction Bus Stop",15.3199,73.9838,0
+951,"Uzro Junction Bus Stop",15.3197,73.9839,0
+959,"Canacona IDC",15.0083,74.0709,0
+960,"Canacona IDC",15.0081,74.0709,0
+969,"Old Bus Stand Ponda",15.4007,74.0041,0
+1044,"Dhapot",14.951,74.0552,0
+1045,"Dhapot",14.9509,74.0551,0
+1046,"Bendordem",15.1281,74.034,0
+1047,"Bendordem",15.128,74.0338,0
+1048,"Godeval",15.1058,74.0315,0
+1049,"Godeval",15.1057,74.0309,0
+1067,"Camorlim\, Ambora Bus Stop",15.3317,73.9908,0
+1068,"Camorlim\, Ambora Bus Stop",15.3317,73.9909,0
+1069,"Saibaba Temple Bus Stop",15.3597,74.0007,0
+1070,"Saibaba Temple Bus Stop",15.3598,74.0008,0
+1139,"Cortalim Bus Stand",15.391,73.9165,0
+1140,"Cortalim Bus Stand",15.3911,73.9165,0
+1260,"Don Khambe",15.6658,73.8389,0
+1266,"Morjim Tem Bus Stop",15.6184,73.7337,0
+1267,"Morjim Tem Bus Stop",15.6183,73.7338,0
+1294,"Valshi Bus Stop",15.6093,73.9317,0
+1295,"Valshi Bus Stop",15.6092,73.9316,0
+1383,"St Cruz 2nd",15.4717,73.8503,0
+1384,"St Cruz 2nd",15.4718,73.8502,0
+1390,"Sancoale Zareer",15.3969,73.8705,0
+1391,"Sancoale Zareer",15.397,73.8706,0
+1392,"Sancoale 5Star",15.3994,73.8845,0
+1393,"Sancoale 5Star",15.3993,73.8846,0
+1394,"Mardol",15.442,73.976,0
+1395,"Mangeshi Temple",15.4486,73.9717,0

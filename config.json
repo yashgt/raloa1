@@ -1,0 +1,22 @@
+{
+	"database" : {
+		"host": "localhost",
+		"user": "root",
+		"password": "goatrans",
+		"database": "raloa2"
+	},
+	"gmap" : {
+		"key" : "AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q"
+	},
+	"admin" : {
+		"port" : 3000
+		,"sslport": 4000
+	},
+	"mobapp" : {
+		"port" : 8000
+	},
+	"txtapp" : {
+		"port" : 5000
+	}
+	
+}

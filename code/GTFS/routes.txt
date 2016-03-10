@@ -1,0 +1,10 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+1,ktc,,Panaji to Mapusa,3
+2,ktc,,Panaji to Margao Kadamba Busstand,3
+3,ktc,,Panaji to Vasco Market,3
+4,ktc,,Panaji to Harbour Vasco,3
+5,ktc,,Panaji to Margao KTC Busstand,3
+6,ktc,,Vasco Kadamba Busstand to Polem Goa Border,3
+7,ktc,,Panaji to Patradevi,3
+9,ktc,,Panaji to Mandrem,3
+10,ktc,,Panaji to Sakhali Bus Stand,3
