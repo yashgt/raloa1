@@ -19,7 +19,8 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
     //, messageCenterService
     , flash, GoogleMapApi, IsReady, uiGridConstants) {
 
-
+	$scope.markersControl = {};
+	
     $scope.fleet = {
         selected: undefined
     };
@@ -158,10 +159,26 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 				//swap
 				console.log("Switching stop %j", stop);
 				console.log("Onward stop %j - Return stop %j", rs.onwardStop, rs.returnStop);
-				//var temp = rs.returnStop ;
-				//rs.returnStop = rs.onwardStop;
-				//rs.onwardStop = temp; 		
+				var temp = rs.returnStop ;
+				rs.returnStop = rs.onwardStop;
+				rs.onwardStop = temp; 		
+				rs.onwardStop.icon = (rs.onwardStop.id===rs.returnStop.id) ? ONRET_ROUTE_STOP_ICON : ROUTE_STOP_ICON;
+				rs.returnStop.icon = (rs.onwardStop.id===rs.returnStop.id) ? ONRET_ROUTE_STOP_ICON : RET_ROUTE_STOP_ICON;
 				console.log("Onward stop %j - Return stop %j", rs.onwardStop, rs.returnStop);
+				/*var st = [];
+				$scope.fleetDetail.stops.forEach(function(stop){ 
+					st.push(stop);
+				});
+				$scope.fleetDetail.stops = [];
+				st.forEach(function(stop){ 
+					$scope.fleetDetail.stops.push(stop);
+				});
+				*/
+				
+				//removeFromStops(rs.onwardStop); pushToStops(rs.onwardStop);
+				//removeFromStops(rs.returnStop); pushToStops(rs.returnStop);
+				//$scope.markersControl.newModels($scope.fleetDetail.stops);
+				$scope.routeDetail.isDirty = true;
 			}
 		});
 
@@ -1069,7 +1086,7 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
                     return rs.onwardStop.id == stop.peerStopId;
                 });
                 if (routestop) {
-                    stop.icon = ROUTE_STOP_ICON;
+                    stop.icon = RET_ROUTE_STOP_ICON;
                     routestop.returnStop = stop;
                     return;
                 }
@@ -2008,25 +2025,25 @@ function UnpairedStopsFilter() {
 }
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', "google-maps".ns(), "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
+    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', 'uiGmapgoogle-maps', "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
 	//, 'ui.grid.pinning'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
 		, 'DecoratedLogWithLineNumber'
     ]);
-    adminApp.config(['GoogleMapApiProvider'.ns(),
-        function(GoogleMapApi) {
-            GoogleMapApi.configure({
+    adminApp.config(
+        function(uiGmapGoogleMapApiProvider) {
+            uiGmapGoogleMapApiProvider.configure({
                 //    key: 'your api key',
                 v: '3.16',
                 libraries: 'weather,geometry,visualization,places'
             });
         }
-    ]);
+    );
     adminApp.run(initializeApp);
     adminApp.controller('RouteController', ['$scope', '$timeout', '$log', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
-        , 'flash', 'GoogleMapApi'.ns(), 'uiGmapIsReady', 'uiGridConstants', RouteController
+        , 'flash', 'uiGmapGoogleMapApi', 'uiGmapIsReady', 'uiGridConstants', RouteController
     ]);
 
     adminApp.filter('service', ServiceFilter);
