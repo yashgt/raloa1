@@ -320,18 +320,19 @@ create procedure save_route_stop(
 	, IN in_sequence int
 )
 begin
-/*
-delete RS, RST
-from routestop RS
-left outer join routestoptrip RST on RS.route_stop_id=RST.route_stop_id
-where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
-*/
+	delete RS, RST
+	from routestop RS
+	left outer join routestoptrip RST on RS.route_stop_id=RST.route_stop_id
+	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
 
+/*
 if exists (SELECT * FROM routestop WHERE stop_id = in_return_stop_id AND route_id=in_route_id) then
-update routestop
-set stage_id=in_stage_id, sequence=in_sequence, stop_id=in_stop_id, peer_stop_id=in_return_stop_id
-where stop_id = in_return_stop_id AND route_id=in_route_id;
+	update routestop
+	set stage_id=in_stage_id, sequence=in_sequence, stop_id=in_stop_id, peer_stop_id=in_return_stop_id
+	where stop_id = in_return_stop_id AND route_id=in_route_id;
+else
 end if;
+*/
 
 if exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id) then
 update routestop
