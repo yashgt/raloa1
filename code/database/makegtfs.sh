@@ -1,3 +1,7 @@
+sdir=`dirname $0`
+echo $sdir
+cd $sdir
+
 fleet_id=$1
 echo ${fleet_id}
 folder=gtfs_${fleet_id}
@@ -25,5 +29,5 @@ find ${folder} -name *.txt -empty -type f -delete
 
 zip -r ${folder}.zip ${folder}/*.txt
 
-feedvalidator ${folder}
+feedvalidator.py ${folder} -o ../admin/public/gtfs_validation_results_${fleet_id}.html
 
