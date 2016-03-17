@@ -9,6 +9,11 @@ sudo yum -y install xz
 unxz node-v4.3.2-linux-x64.tar.xz
 tar xvf node-v4.3.2-linux-x64.tar
 
+sudo yum install -y gcc
+sudo yum install -y zip
+
+wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
+sudo easy_install --upgrade pytz
 
 wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 sudo rpm -ivh epel-release-7-5.noarch.rpm

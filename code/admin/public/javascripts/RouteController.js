@@ -226,6 +226,14 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
             stop.options.draggable = false;
         });
     };
+	//Make GTFS
+	$scope.makegtfs = function(){
+		getthereAdminService.makegtfs(function(res){
+			var iframe = document.getElementById('gtfsiframe');
+			iframe.src = iframe.src;
+		});
+		
+	};
 
     //Route creation region
     $scope.closeRoute = function() {
@@ -1731,6 +1739,9 @@ GetThereAdminService = function($http, $log) {
                 break;
         }
     });
+	service.makegtfs = function(callback){
+                    return $http.get('/api/gtfs').success(getSuccess(callback));
+	};
     return service;
 };
 StopChannelService = function() {

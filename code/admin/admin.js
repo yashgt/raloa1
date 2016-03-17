@@ -5,10 +5,18 @@ var gm = require('googlemaps');
 var fs = require('fs');
 var ejs = require('ejs');
 var _ = require('underscore');
+var spawn = require('child_process').spawn;
 
 //gm.setProxy("http://yash_ganthe:(0pspl1)@goaproxy.persistent.co.in:8080");
 
 var formingSegments = false;
+
+exports.makegtfs = function(fleetId, cb){
+	var makegtfs = spawn('sh', [ '../database/makegtfs.sh', ''+fleetId ], {});
+	makegtfs.on('exit', (code) => {
+		cb(code);
+	});
+}
 
 exports.saveStops = function saveStops(stops)
 {
@@ -404,35 +412,23 @@ exports.saveRoute = function(route, sCB, fCB){
                 }
             ];
             async.waterfall(routesWF, function(err, result) {
-				if(!err){
-                tran.commit(function() {                    
+		if(!err){
+                	tran.commit(function() {                    
 					exports.generateSegments(
 						route.routeId, 
-					/*(function(route){
-					 * 						return */
 						function(){
-
 							sCB();	
-							/*
-							route.routeNum = "";
-							route.st = route.stages[0].stops[0].onwardStop.name;
-							route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
-							res.json(route);
-							*/
 						}
-																				
-					/*})(route)*/
 					);
 
-                }, function() {
-                    fCB()
-                });
-				}
-				else{
-					tran.rollback();
-					fCB()
-				}
-
+                			}, function() {
+                    				fCB();
+                			});
+		}
+		else{
+			tran.rollback();
+			fCB();
+		}
             });
         }
         //;		

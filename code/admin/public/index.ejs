@@ -99,7 +99,7 @@
 		<table><tr>
 		<td><ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets"></ny-fleet-choice></td>
 		<td># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.allstops.length}}  # Trips: {{fleetDetail.trip_cnt}}</td>
-		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td>
+		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td><td><button type="button" ng-click="makegtfs()" class="btn btn-primary btn-xs">Make GTFS</button></td>
 		
 		</tr></table>        
 		
@@ -183,8 +183,11 @@
                                             <tab heading="Fares" select="showFares()" disabled="routeDetail.routeId<0">
                                                 <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns></div>
                                             </tab>
-                                            <tab heading="Object">
+                                            <tab heading="Object" >
                                                 <pre class="code">{{ routeDetail | json }}</pre>
+                                            </tab>
+                                            <tab heading="GTFS" >
+						<iframe id="gtfsiframe" src="gtfs_validation_results_3.html" height="600" width="100%"></iframe>
                                             </tab>
                                         </tabset>
 									</div>	

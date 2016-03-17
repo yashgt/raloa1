@@ -160,6 +160,12 @@ app.post('/api/stop', function(req, res) {
     });
 });
 
+app.get('/api/gtfs', function(req, res) {
+	admin.makegtfs(req.session.passport.user.fleetId, function(code){
+		res.json({code:code});
+	});
+});
+
 app.delete('/api/stop/:id', function(req, res) {
 	var stop_id = req.params.id ;
 	var user_id = req.session.passport.user.userId;
