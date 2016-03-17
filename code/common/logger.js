@@ -21,7 +21,8 @@ slf4j.loadConfig({
     level: 5,
     appenders:
         [{
-            appender: binfordLogger.getDefaultAppender()
+            //appender: binfordLogger.getDefaultAppender()
+            appender: new (binfordLogger.getAppender('color-console'))({useLocalTime: true})
         }]
 });
 var logger = slf4j.getLogger('app.js',{useLocalTime:true});
