@@ -46,11 +46,11 @@ var readWBNew = function(filename, cb){
 	var wb = new Excel.Workbook();
 	wb.xlsx.readFile(filename)
     .then(function() {
-		console.log("Read");
+		
 		var routes = [] ;
 		wb.eachSheet(function(worksheet, sheetId) {
 			//var routeId = worksheet.
-			//console.log(worksheet.name);
+			console.log(worksheet.name);
 			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
 			var meta = { lastCellNum: 1};
 			var route = {
@@ -91,7 +91,7 @@ var readWBNew = function(filename, cb){
 					
 					//console.log(row.getCell(3).value);
 					var timeCellVal = row.getCell(3).value ;	
-					console.log(timeCellVal);
+					//console.log(timeCellVal);
 					if(_s.isBlank(timeCellVal) || timeCellVal.formula != undefined && _s.isBlank(timeCellVal.result) ) { //Check if start time is given
 						return;
 					}
@@ -103,16 +103,24 @@ var readWBNew = function(filename, cb){
 						
 						for(i=3; i<= meta.lastCellNum; i++){
 							var time;
-							console.log(typeof(row.getCell(i).value));
+							//console.log(typeof(row.getCell(i).value));
 							if( row.getCell(i).value.formula != undefined ) {
-								time = moment(row.getCell(i).value.result, 'hh:mm:ss a').format('HH:mm');
+                                if(moment(row.getCell(i).value.result, 'hh:mm:ss a').isValid())
+                                    time = moment(row.getCell(i).value.result, 'hh:mm:ss a').format('HH:mm');
+                                else
+                                    time = moment(row.getCell(i).value.result, 'hh:mm:ss A').format('HH:mm');
+                                
 							}
 							else {
-								console.log(row.getCell(i).value);
-								console.log(moment(row.getCell(i).value).utcOffset());
-								time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+								//console.log(row.getCell(i).value);
+								//console.log(moment(row.getCell(i).value).utcOffset());
+                                //It thinks 06:00:00 am is a UTC value and gives back 11:30 am
+                                if(moment(row.getCell(i).value).isValid())
+                                    time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+                                else
+                                    time = moment(row.getCell(i).value, 'hh:mm:ss A').add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
 							}
-							console.log(time);
+							//console.log(time);
 							
 							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
@@ -126,7 +134,8 @@ var readWBNew = function(filename, cb){
 				}
 				
 			});
-			//console.log(route);
+            //console.log(moment("6:00:00 am").format());
+			console.log(route);
 			routes.push(route);
 		});
 		//console.log(routes);
