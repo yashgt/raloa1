@@ -37,7 +37,8 @@ var dbConfig = {
     user: nconf.get('database:user'),
     password: nconf.get('database:password'),
     database: nconf.get('database:database'),
-    multipleStatements: true
+    multipleStatements: true,
+	waitForConnections: false
 };
 /*
 var db = mysql.createConnection({
