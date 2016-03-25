@@ -29,11 +29,11 @@ from table2 T
 inner join stop S on (T.peer_stop_id=S.stop_id)
 order by T.peer_stop_id
 ;
-
+select * from stop where stop_id in (221,222,1394,1567,1568);
 select RS.stop_id, RS.peer_stop_id, R.route_id
 from route R
 inner join routestop RS on (R.route_id=RS.route_id)
-inner join table2 S on (RS.stop_id=S.stop_id or RS.peer_stop_id=S.stop_id)
+inner join table2 T on (RS.stop_id=T.stop_id or RS.peer_stop_id=T.stop_id or RS.peer_stop_id=T.peer_stop_id or RS.stop_id=T.peer_stop_id)
 order by R.route_id
 ;
 
@@ -42,6 +42,8 @@ from stop S1
 inner join stop S2 on (S1.peer_stop_id = S2.stop_id and S1.stop_id=S2.peer_stop_id)
 where S1.name <> S2.name
 ;
+
+delete from stop_loc where stop_id not in (select stop_id from stop);
 
 select stop_id, count(*)
 from
@@ -57,7 +59,7 @@ group by stop_id
 having count(*)>2
 ; 
 
-select *
+select RS.route_id, RS.stop_id, RS.peer_stop_id, S1.name, S1.stop_id, S1.peer_stop_id, S2.name, S2.stop_id, S2.peer_stop_id  
 from routestop RS
 inner join stop S1 on (RS.stop_id=S1.stop_id)
 inner join stop S2 on (S1.peer_stop_id=S2.stop_id)
