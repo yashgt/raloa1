@@ -53,7 +53,6 @@ function execute(connection, qryStr, arg2, arg3, arg4){
 	logger.trace("Executing {0} with {1}", qryStr, args);
 	connection.query(qryStr, args, 
 		function(err, results) {
-			connection.release();
 			if(!err)
 			{
 				logger.trace("Results are : {0}", results);

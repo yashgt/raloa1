@@ -28,7 +28,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
     $scope.valurl = $sce.trustAsResourceUrl('');
 
     $scope.changeIt = function () {
-        $scope.valurl = $sce.trustAsResourceUrl('gtfs_validation_results_'+fleetDetail.fleetId+'.html');
+        $scope.valurl = $sce.trustAsResourceUrl('gtfs_validation_results_'+$scope.fleetDetail.fleetId+'.html');
     }
     
 	$scope.$watch('routeDetail', function(newVal, oldVal, scope){		
@@ -971,6 +971,14 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
     });
 
 
+	var numericSortFn = function(sa,sb){
+		var a = parseInt(sa);
+		var b = parseInt(sb);
+
+        if (a == b) return 0;
+        if (a < b) return -1;
+        return 1;
+    };
 
     //ROUTELIST REGION
 
@@ -991,6 +999,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 			, cellTooltip: true
 			, minWidth: 40
 			, maxWidth: 40
+			,sortingAlgorithm : numericSortFn
         }, {
             name: 'From',
             field: 'st'
