@@ -15,7 +15,7 @@ var LINKABLE_STOP_ICON = "/images/bus_stop.png";
 var HOST = window.location.protocol + "//" + window.location.host;
 console.log(HOST);
 
-function RouteController($scope, $timeout, $log, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
+function RouteController($scope, $timeout, $log, $sce, getthereAdminService, stopChannel, locationChannel, routeHelpChannel
     //, messageCenterService
     , flash, GoogleMapApi, IsReady, uiGridConstants) {
 
@@ -25,6 +25,12 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
         selected: undefined
     };
 	
+    $scope.valurl = $sce.trustAsResourceUrl('');
+
+    $scope.changeIt = function () {
+        $scope.valurl = $sce.trustAsResourceUrl('gtfs_validation_results_'+fleetDetail.fleetId+'.html');
+    }
+    
 	$scope.$watch('routeDetail', function(newVal, oldVal, scope){		
 		if(newVal!=undefined && newVal.routeId!=-1){	//Either new route or existing route is getting changed
 			if(oldVal!=undefined && oldVal.routeId!=newVal.routeId) {
@@ -229,8 +235,9 @@ function RouteController($scope, $timeout, $log, getthereAdminService, stopChann
 	//Make GTFS
 	$scope.makegtfs = function(){
 		getthereAdminService.makegtfs(function(res){
+            $scope.changeIt();
 			var iframe = document.getElementById('gtfsiframe');
-			iframe.src = iframe.src;
+			iframe.src = $scope.valurl;
 		});
 		
 	};
@@ -2053,7 +2060,7 @@ function UnpairedStopsFilter() {
         }
     );
     adminApp.run(initializeApp);
-    adminApp.controller('RouteController', ['$scope', '$timeout', '$log', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
+    adminApp.controller('RouteController', ['$scope', '$timeout', '$log', '$sce', 'getthereAdminService', 'stopChannel', 'locationChannel', 'routeHelpChannel'
         //, messageCenterService
         , 'flash', 'uiGmapGoogleMapApi', 'uiGmapIsReady', 'uiGridConstants', RouteController
     ]);
