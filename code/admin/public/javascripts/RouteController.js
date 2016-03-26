@@ -1434,7 +1434,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             model: stop,
             icon: stop.icon,
             draggable: true,
-			title: stop.name
+			title: stop.id+ ':' + stop.name
         };
         var marker = addMarker(markerOptions);
         stop.marker = marker;
@@ -1455,6 +1455,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                     title: stop.name
                     //zIndex: 1000
                 };
+		console.log(stop.options.title);
 
             });
             fleetDetail.stops = [];
