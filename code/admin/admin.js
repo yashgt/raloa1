@@ -171,7 +171,6 @@ exports.getRouteDetail = function(route_id, callback){
 					,stops: {}
 				};
 				
-				console.log("Direction %j", trip.direction);
 				routeDetail.trips[trip.direction].push(routeTrip);
 			}
 		);

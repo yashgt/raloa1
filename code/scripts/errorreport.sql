@@ -45,7 +45,11 @@ where S1.name <> S2.name
 
 delete from stop_loc where stop_id not in (select stop_id from stop);
 
-select stop_id, count(*)
+select S.stop_id, S.name, S.peer_stop_id, L.cnt
+from stop S
+inner join
+(
+select stop_id, count(*) as cnt
 from
 (
 select 
@@ -57,6 +61,7 @@ st_distance(S1.location, S2.location) < 0.0002
 ) as T
 group by stop_id
 having count(*)>2
+) L on (S.stop_id=L.stop_id)
 ; 
 
 select RS.route_id, RS.stop_id, RS.peer_stop_id, S1.name, S1.stop_id, S1.peer_stop_id, S2.name, S2.stop_id, S2.peer_stop_id  

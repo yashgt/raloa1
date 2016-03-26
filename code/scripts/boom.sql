@@ -29,7 +29,21 @@ update stop set peer_stop_id=null where stop_id=1479;
 
 update stop set peer_stop_id=null where stop_id=226;
 
+/* Bogarves */
+update routestop set peer_stop_id=1449 where peer_stop_id=1177 and stop_id=1178 ;
+
+/* Chodna */
+update routestop set peer_stop_id=1564 where peer_stop_id=1448 and stop_id=199 ;
+
+/* Ribander Copel */
+update routestop set peer_stop_id=1565 where peer_stop_id=199 and stop_id=1448 ;
+
+/* Mardol */
+update routestop set peer_stop_id=1394 where peer_stop_id=221 and stop_id=222 ;
+update routestop set stop_id=1394 where stop_id=221 and peer_stop_id=222 ;
+
+
 delete from segment;
-delete from stop where stop_id in (76, 1566, 219,  297) ;
+delete from stop where stop_id in (76, 1566, 219, 221, 297) ;
 
 delete from stop where stop_id in (1570, 1571, 1572, 1573, 1574);
