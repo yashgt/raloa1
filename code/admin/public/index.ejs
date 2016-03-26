@@ -187,7 +187,8 @@
                                                 <pre class="code">{{ routeDetail | json }}</pre>
                                             </tab>
                                             <tab heading="GTFS" >
-						<iframe id="gtfsiframe" src="gtfs_validation_results_3.html" height="600" width="100%"></iframe>
+                                            {{fleetDetail.fleetId}}
+						<iframe id="gtfsiframe" ng-src={{valurl}} height="600" width="100%"></iframe>
                                             </tab>
                                         </tabset>
 									</div>	
