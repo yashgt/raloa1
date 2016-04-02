@@ -6,6 +6,7 @@ var fs = require('fs');
 var ejs = require('ejs');
 var _ = require('underscore');
 var spawn = require('child_process').spawn;
+var googleTransliterate = require('google-transliterate');
 
 //gm.setProxy("http://yash_ganthe:(0pspl1)@goaproxy.persistent.co.in:8080");
 
@@ -34,6 +35,13 @@ exports.generate_kml = function(fleetId, host, cb){
 		});
 
 	})
+	
+};
+
+exports.translit = function(stop, lang, cb){
+	googleTransliterate.transliterate('Panaji','en',lang, function(err,tr){
+		console.log(tr);
+	});
 	
 };
 
