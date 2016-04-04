@@ -29,7 +29,7 @@ from table2 T
 inner join stop S on (T.peer_stop_id=S.stop_id)
 order by T.peer_stop_id
 ;
-select * from stop where stop_id in (221,222,1394,1567,1568);
+/*select * from stop where stop_id in (221,222,1394,1567,1568); */
 select RS.stop_id, RS.peer_stop_id, R.route_id
 from route R
 inner join routestop RS on (R.route_id=RS.route_id)
@@ -45,7 +45,7 @@ where S1.name <> S2.name
 
 delete from stop_loc where stop_id not in (select stop_id from stop);
 
-select S.stop_id, S.name, S.peer_stop_id, L.cnt
+select S.stop_id, S.name, S.latitude, S.longitude, S.peer_stop_id, L.cnt
 from stop S
 inner join
 (
@@ -62,6 +62,7 @@ st_distance(S1.location, S2.location) < 0.0002
 group by stop_id
 having count(*)>2
 ) L on (S.stop_id=L.stop_id)
+order by S.latitude, S.longitude
 ; 
 
 select RS.route_id, RS.stop_id, RS.peer_stop_id, S1.name, S1.stop_id, S1.peer_stop_id, S2.name, S2.stop_id, S2.peer_stop_id  

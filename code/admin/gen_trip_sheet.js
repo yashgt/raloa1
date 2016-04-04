@@ -296,13 +296,13 @@ var generateTripSheet = function(fleetId){
 		async.series(wsSeries, function(err,routeDetails){
 			
 			writeWBNew(sheetLoc + fleetId+ "-TimeTable.xlsx", routeDetails);			
+			console.log("Generated routes of fleet");
 		});
 		
 		
 		
 		
 	});
-	console.log("Generated routes of fleet");
 
 };
 
