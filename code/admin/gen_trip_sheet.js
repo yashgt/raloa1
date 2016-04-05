@@ -145,7 +145,12 @@ var readWBNew = function(filename, cb){
 	
 };
 var writeWBNew = function(filename, routes){
-	var wb = new Excel.Workbook();
+	var options = {
+	    filename: filename,
+	    useStyles: true,
+	    useSharedStrings: true
+	};
+	var wb = new Excel.stream.xlsx.WorkbookWriter(options);
 	routes.forEach(function(route){
 		//route = routes[0];
 		
@@ -261,17 +266,21 @@ var writeWBNew = function(filename, routes){
 		}
 		
 		
-		
+		worksheet.commit();	
 		
 	});
 	
 	var options = {
 		dateFormat: "HH:mm:ss"
 	};
+	wb.commit();
+
+	/*
 	wb.xlsx.writeFile(filename, options)
 		.then(function() {
 			// done
 	});
+	*/
 };
 
 
