@@ -72,6 +72,19 @@ inner join stop S2 on (S1.peer_stop_id=S2.stop_id)
 where RS.peer_stop_id<>S2.stop_id and RS.peer_stop_id<>RS.stop_id
 ;
 
+select RS.route_id, RS.stop_id, RS.peer_stop_id, S1.name, S1.stop_id, S1.peer_stop_id, S2.name, S2.stop_id, S2.peer_stop_id  
+from routestop RS
+inner join stop S1 on (RS.stop_id=S1.stop_id)
+inner join stop S2 on (S1.peer_stop_id=S2.stop_id)
+where RS.peer_stop_id<>S2.stop_id 
+;
+select RS.route_id, RS.stop_id, RS.peer_stop_id, S1.name, S1.stop_id, S1.peer_stop_id, S2.name, S2.stop_id, S2.peer_stop_id  
+from routestop RS
+inner join stop S1 on (RS.peer_stop_id=S1.stop_id)
+inner join stop S2 on (S1.peer_stop_id=S2.stop_id)
+where RS.stop_id<>S2.stop_id 
+;
+
 /*
 select S1.*
 from segment S1

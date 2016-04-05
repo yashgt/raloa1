@@ -138,6 +138,10 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		}
     };
     linkStop = function(stop) {
+		if(stop.peerStopId) {
+        	flash.error = 'Stop already has a peer stop';
+			return;
+		}
 
         console.log("Linking stop %j", stop);
 
