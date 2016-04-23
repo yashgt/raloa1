@@ -317,6 +317,17 @@ app.post('/api/route/', function(req, res) {
                     logger.debug("Saving trips for route {0}", route);
 
                     var tripSeries = [];
+					//TODO add thi part to admin version
+					route.deletedTrips.forEach( function(trip){
+						console.log("%j",trip);
+						tripSeries.push( function(cb){
+							delTripEntity(tran, trip, function() {
+								cb(null, trip);
+							}
+							, function(){cb("Unable to delete trip", null); }
+							);
+						});
+					});
 					
                     route.trips.forEach(function(tripList) {
                         tripList.forEach(function(trip) {
@@ -456,6 +467,15 @@ saveTripEntity = function(tran, trip, cb, fcb) {
 	,function(err){	logger.error("Failed due to {0}", err); fcb();	}
 	);
 
+};
+delTripEntity = function(tran, trip, cb, fcb) {
+	tran.query("call delete_trips(?);" , [ trip.tripId]
+		, function(results) { 
+        	logger.debug('Deleted trip record {0}', trip);
+			cb();
+		} 
+		, function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);	
 };
 
 saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {

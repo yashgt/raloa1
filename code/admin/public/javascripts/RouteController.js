@@ -316,7 +316,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		});
 		if(tripIncomplete){
 			flash.error = 'Some trips are incomplete';
-			$scope.isSavingRoute = true;
+			$scope.isSavingRoute = false;
 			return ;
 		}
 		
@@ -438,7 +438,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         routeHelpChannel.gmap = $scope.gmap;
         $log.debug("GMap ready");
 
-        //$scope.showStops();
+        $scope.showStops();
 
 
         $scope.setContextMenu();
@@ -808,7 +808,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 				delTrips.forEach(function(trip){
 					$scope.routeDetail.deletedTrips.push(trip);
 				});
-				//$scope.routeDetail.isDirty = true;
+				$scope.routeDetail.isDirty = true;
 		});
 		$scope.scheduleOptions[dir].selectedRows = [];
     };
