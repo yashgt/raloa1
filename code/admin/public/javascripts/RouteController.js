@@ -152,7 +152,10 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         peerStop.icon = PEER_STOP_ICON;
         peerStop.peerStopId = stop.id;
 		peerStop.options.draggable = true;
-
+ 		var p1 = new LatLon(stop.latitude, stop.longitude);
+		var p2 = p1.destinationPoint(20, 90); // 51.5135°N, 000.0983°W
+		peerStop.latitude = p2.lat;
+		peerStop.longitude = p2.lon;
         console.log("Peer stop %j", peerStop);
         pushToStops(peerStop);
         //$scope.fleetDetail.stops.push(peerStop);

@@ -1,5 +1,5 @@
 SELECT distinct R.route_id
-,'ktc' as agency_id
+,F.gtfs_agency_id as agency_id
 ,'' as route_short_name
 ,concat(S1.name, ' to ', S2.name) as route_long_name
 ,3 as route_type
