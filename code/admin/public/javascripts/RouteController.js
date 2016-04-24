@@ -986,6 +986,41 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         if (a < b) return -1;
         return 1;
     };
+    //STOPLIST REGION
+    $scope.stopListOptions = {
+        enableSorting: true,
+        enableCellEdit: false,
+        enableColumnMenus: false,
+        enableFiltering: true,
+		enableScrollBars: true,
+        enableRowHeaderSelection: false,
+		enableColumnResizing: false,
+        multiSelect: false,
+        columnDefs: [{
+            name: 'ID',
+            field: 'id'
+			, cellClass: 'routeNum'
+			, cellTooltip: true
+			, minWidth: 40
+			, maxWidth: 40
+			,sortingAlgorithm : numericSortFn
+        }, {
+            name: 'Name',
+            field: 'name'
+			,cellClass: 'stopName'
+			, cellTooltip: true
+        }]
+        ,onRegisterApi: function(gridApi) {
+            $scope.gridStopsApi = gridApi;
+
+            gridApi.selection.on.rowSelectionChanged($scope, function(row) {
+				$log.debug("Row selection changed for ", row.entity);
+                $scope.fleetDetail.zoom = 18;
+                $scope.fleetDetail.center = { latitude: row.entity.latitude, longitude: row.entity.longitude };
+            });
+        }
+    };    
+    //STOPLIST REGION Ends
 
     //ROUTELIST REGION
 
@@ -1471,7 +1506,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                     title: stop.name
                     //zIndex: 1000
                 };
-		console.log(stop.options.title);
+		//console.log(stop.options.title);
 
             });
             fleetDetail.stops = [];
@@ -1491,6 +1526,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             });
             calendars = $scope.fleetDetail.calendars;
             $scope.routeListOptions.data = $scope.fleetDetail.routes;
+            $scope.stopListOptions.data = $scope.fleetDetail.allstops;
         });
     };
 
