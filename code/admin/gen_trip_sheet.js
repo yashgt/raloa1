@@ -267,6 +267,7 @@ var writeWBNew = function(filename, routes){
 		
 		
 		worksheet.commit();	
+		console.log("Committed");
 		
 	});
 	
