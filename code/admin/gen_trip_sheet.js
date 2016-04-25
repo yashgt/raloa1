@@ -144,14 +144,8 @@ var readWBNew = function(filename, cb){
     });
 	
 };
-var writeWBNew = function(filename, routes){
-	var options = {
-	    filename: filename,
-	    useStyles: true,
-	    useSharedStrings: true
-	};
-	var wb = new Excel.stream.xlsx.WorkbookWriter(options);
-	routes.forEach(function(route){
+
+var addToSheet = function(route, wb){
 		//route = routes[0];
 		
 		var sheetName = route.routeId+"-"+route.st.substr(0,5)+" to "+route.en.substr(0,5) ; 
@@ -269,7 +263,25 @@ var writeWBNew = function(filename, routes){
 		worksheet.commit();	
 		console.log("Committed");
 		
-	});
+	};
+var getWB = function(filename){
+	var options = {
+	    filename: filename,
+	    useStyles: true,
+	    useSharedStrings: true
+	};
+	var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+	return wb;
+
+};
+var writeWBNew = function(filename, routes){
+	var options = {
+	    filename: filename,
+	    useStyles: true,
+	    useSharedStrings: true
+	};
+	var wb = new Excel.stream.xlsx.WorkbookWriter(options);
+	routes.forEach();
 	
 	var options = {
 		dateFormat: "HH:mm:ss"
@@ -288,6 +300,7 @@ var writeWBNew = function(filename, routes){
 
 var generateTripSheet = function(fleetId){
 	console.log("Gen");
+	var wb = getWB(sheetLoc + fleetId+ "-TimeTable.xlsx");
 	admin.getFleetDetail(fleetId, function(fleetDetail){
 		//console.log("%j",fleetDetail);
 		var wsSeries = [];
@@ -297,15 +310,17 @@ var generateTripSheet = function(fleetId){
 				admin.getRouteDetail(route.routeId, function(routeDetail){
 					//Add route to workbook
 					//console.log("Route %j processed as %j", route.routeId, routeDetail);
-					cb(null, routeDetail);
+					addToSheet(routeDetail, wb);
+					cb(null, 1);
 				});	
 			});
 			
 		});
 		
-		async.series(wsSeries, function(err,routeDetails){
+		async.series(wsSeries, function(err,vec){
+			wb.commit();
 			
-			writeWBNew(sheetLoc + fleetId+ "-TimeTable.xlsx", routeDetails);			
+			//writeWBNew(sheetLoc + fleetId+ "-TimeTable.xlsx", routeDetails);			
 			console.log("Generated routes of fleet");
 		});
 		
