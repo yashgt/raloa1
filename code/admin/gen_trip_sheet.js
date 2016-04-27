@@ -312,16 +312,20 @@ var generateTripSheet = function(fleetId){
 					//console.log("Route %j processed as %j", route.routeId, routeDetail);
 					addToSheet(routeDetail, wb);
 					cb(null, 1);
+					routeDetail = {};
 				});	
 			});
 			
 		});
 		
 		async.series(wsSeries, function(err,vec){
+			if(err){
+				console.log("Error %j",err);
+			}
 			wb.commit();
 			
 			//writeWBNew(sheetLoc + fleetId+ "-TimeTable.xlsx", routeDetails);			
-			console.log("Generated routes of fleet");
+			console.log("Generated routes of fleet for %j routes", vec.length);
 		});
 		
 		
