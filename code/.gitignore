@@ -7,3 +7,4 @@ node_modules
 admin/node.pid
 admin/nohup.out
 admin/nohup.out.bak
+database/*.sftp

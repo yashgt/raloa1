@@ -99,25 +99,28 @@
         </div>
 		<table><tr>
 		<td><ny-fleet-choice ny-fleet="fleet" ny-fleets="fleets"></ny-fleet-choice></td>
-		<td># Routes: {{fleetDetail.routes.length}} # Stops: {{fleetDetail.allstops.length}}  # Trips: {{fleetDetail.trip_cnt}}</td>
-		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td><td><button type="button" ng-click="makegtfs()" class="btn btn-primary btn-xs">Make GTFS</button></td>
+		<td>{{fleetDetail.routes.length}} routes | {{fleetDetail.allstops.length}} stops | {{fleetDetail.trip_cnt}} trips</td>
+		<td><div align="right">Logged in as <%= user.username %>, <% if(user.role==1 ) { %>Fleet Administrator<% } else { %>Super Admin <% }%> <a href='/logout'>Logout</a></div></td>
 		
 		</tr></table>        
 		
                     <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
 
                     <tabset vertical="false" justified="false">
-                        <tab heading="Routes">
-						<!--
-                            <table border="1" width=100% height=100%>
-                                <tr>
-                                    <td width=15% valign="top"> -->
+                        <tab heading="Plan">
+                            
 									<div class="col-md-2">
-                                        <b>Routes</b>
+                                    <tabset vertical="false" justified="false">
+                                        <tab heading="Routes">
                                         <div ui-grid="routeListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
-									</div>	
-                                    <!-- </td> -->
-                                    <!-- <td width=70% valign="top"> -->
+                                        </tab>
+                                            <tab heading="Stops">
+                                        <div ui-grid="stopListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
+                                        </tab>
+                                    </tabset>  
+									</div>
+                                  
+
 									<div class="col-md-8">
                                         <div id="route" style="width:100%">
 
@@ -187,15 +190,10 @@
                                             <tab heading="Object" >
                                                 <pre class="code">{{ routeDetail | json }}</pre>
                                             </tab>
-                                            <tab heading="GTFS" >
-                                            {{fleetDetail.fleetId}}
-						<iframe id="gtfsiframe" ng-src={{valurl}} height="600" width="100%"></iframe>
-                                            </tab>
+                                            
                                         </tabset>
 									</div>	
-                                    <!--</td>-->
-
-                                    <!-- <td width=15% valign="top"> -->
+                                    
 									<div class="col-md-2">
                                         <div ng-disabled="routeDetail.routeId<0" class="stagetree">
                                             <tabset>
@@ -296,16 +294,16 @@
                                             </tabset>
                                         </div>
 									</div>
-									<!--
-                                    </td>
-                                </tr>
-                            </table>
-							-->
+									
                         </tab>
                         <tab heading="Calendars">
                             <button ng-click="addCalendar()" class="btn btn-default">Add</button>
                             <button ng-click="saveCalendars()" class="btn btn-default">Save</button>
                             <div ui-grid="calendarOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize></div>
+                        </tab>
+                        <tab heading="GTFS" >
+                        <button type="button" ng-click="makegtfs()" class="btn btn-primary btn-xs">Make GTFS</button>
+                        <iframe id="gtfsiframe" ng-src={{valurl}} height="600" width="100%"></iframe>
                         </tab>
                     </tabset>
     </div>

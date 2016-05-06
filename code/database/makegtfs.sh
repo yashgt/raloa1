@@ -25,9 +25,11 @@ mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop.sql;" | tr '\t' ',' > 
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trip.sql;" | tr '\t' ',' > ${folder}/trips.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t' ',' > ${folder}/frequencies.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
+cp feed_info.txt ${folder}/feed_info.txt
 find ${folder} -name *.txt -empty -type f -delete
 
-zip -r ${folder}.zip ${folder}/*.txt
+zip -j -r ${folder}.zip ${folder}/*.txt
+unzip -v ${folder}.zip
 
 feedvalidator.py ${folder} -o ../admin/public/gtfs_validation_results_${fleet_id}.html
 
