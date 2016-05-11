@@ -311,8 +311,8 @@ var generateTripSheet = function(fleetId){
 					//Add route to workbook
 					//console.log("Route %j processed as %j", route.routeId, routeDetail);
 					addToSheet(routeDetail, wb);
-					cb(null, 1);
 					routeDetail = {};
+					cb(null, 1);
 				});	
 			});
 			

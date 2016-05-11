@@ -55,13 +55,17 @@ from
 select 
 S1.stop_id stop_id, st_distance(S1.location, S2.location) d
 from stop_loc S1 
-inner join stop_loc S2 on S1.stop_id<>S2.stop_id 
+inner join stop_loc S2 on S1.stop_id<>S2.stop_id
+inner join stop St1 on (S1.stop_id=St1.stop_id)
+inner join stop St2 on (S2.stop_id=St2.stop_id)
 where 
-st_distance(S1.location, S2.location) < 0.0002
+st_distance(S1.location, S2.location)*111195 < 20
+and St1.fleet_id=St2.fleet_id
 ) as T
 group by stop_id
-having count(*)>2
+having count(*)>1
 ) L on (S.stop_id=L.stop_id)
+where S.stop_id not in (124,21,22,1611,1612,303,1770)
 order by S.latitude, S.longitude
 ; 
 
