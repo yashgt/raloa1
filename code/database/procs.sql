@@ -604,7 +604,8 @@ select * from calendar
 where fleet_id=in_fleet_id or fleet_id=1;
 end//
 
-drop procedure if exists get_route_by_trips(
+drop procedure if exists get_route_by_trips//
+create procedure get_route_by_trips(
 IN in_fleet_id int
 )
 begin
@@ -612,5 +613,5 @@ begin
 	from trip
 	where fleet_id=in_fleet_id	
 	group by route_id
-	order by count(*)
+	order by count(*);
 end//
