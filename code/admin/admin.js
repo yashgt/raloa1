@@ -38,8 +38,27 @@ exports.generate_kml = function(fleetId, host, cb){
 	
 };
 
-exports.translit = function(stop, lang, cb){
-	googleTransliterate.transliterate('Panaji','en',lang, function(err,tr){
+exports.generateFleetTranslits = function(fleetId) {
+	this.getFleetDetail(fleetId, function(fleet){
+		//console.log(fleet);
+		fleet.allstops.forEach(function(stop){
+			//console.log(stop);
+			fleet.langs.forEach(function(lang){
+				(function(stop, lang) {
+				exports.translit(stop.name,lang, function(tr){
+					logger.info("Translit {0} {1} {2} {3}",fleetId, stop.name, tr, lang);
+					
+					//db.query("call add_translit(?,?,?,?);", [fleetId, stop.name, tr, lang], function(results){ });
+				});
+				})(stop, lang);
+			});
+		});
+	});
+};
+
+exports.translit = function(name, lang, cb){
+	googleTransliterate.transliterate(name,'en',lang, function(err,tr){
+		cb(tr);
 		console.log(tr);
 	});
 	
@@ -102,6 +121,7 @@ exports.getFleetDetail = function(fleetId, callback){
                 endDate: calendar.end_date
 				};
             }),
+			langs: ['mr']
            
         };
 		

@@ -86,8 +86,8 @@ app.configure(function() {
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
-    app.use(app.router);
 	app.use(express.compress());
+    app.use(app.router);
 	
 	var oneDay = 86400000;
 	var staticOptions = {
@@ -459,6 +459,7 @@ saveRouteStopEntity = function(tran, routeStop, cb, fcb) {
 };
 
 saveTripEntity = function(tran, trip, cb, fcb) {
+	logger.debug("Saving trip {0}", trip);
     tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.serviceId, trip.direction, trip.routeId,  trip.fleetId, trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
         var trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
