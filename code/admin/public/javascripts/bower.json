@@ -20,21 +20,20 @@
     "jquery-ui": "~1.11.0",
     "underscore": "~1.6.0",
     "angular-google-maps": "2.0.13",
-    "ng-table": "~0.3.1",    
-	"angular-bootstrap": "~0.12.0",
+    "ng-table": "~0.3.1",
+    "angular-bootstrap": "~0.12.0",
     "angular-ui-select": "~0.8.2",
     "selectize": "~0.8.5",
     "angular-flash-messages": "*",
-    
     "angular-flash": "~0.1.13",
     "angular-animate": "~1.2.26",
-	"angular-sanitize": "~1.2.26",
+    "angular-sanitize": "~1.2.26",
     "angular-ui-grid": "~3.0.0-rc.20",
     "angular-ui-tree": "~2.1.5",
     "angular-busy": "~4.1.2",
     "angular-ui-layout": "~1.0.5",
-	"moment": "~2.9.0"
-	
+    "moment": "~2.9.0",
+    "js-marker-clusterer": "*"
   },
   "devDependencies": {
     "angular-ui-grid": "~3.0.0-rc.12",

@@ -1395,7 +1395,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
     var mcOptions = {
         gridSize: 20,
         maxZoom: 13,
-		imagePath: "//google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclustererplus/images/m"
+		imagePath: "javascripts/bower_components/js-marker-clusterer/images/m"
     };
     var markerclusterer;
     var markers = [];

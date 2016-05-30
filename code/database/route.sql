@@ -1,7 +1,7 @@
 SELECT distinct R.route_id
 ,F.gtfs_agency_id as agency_id
 ,'' as route_short_name
-,concat(S1.name, ' to ', S2.name) as route_long_name
+,concat(replace(S1.name, ' Ferry Terminal',''), ' to ', replace(S2.name,' Ferry Terminal','')) as route_long_name
 ,F.fleet_type as route_type
 from route R
 inner join stop S1 on S1.stop_id=R.start_stop_id
