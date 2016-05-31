@@ -9,7 +9,7 @@ case ${fleet_id} in
 esac
 sftp_batch=batch_${fleet_id}.sftp
 echo "Sending ${gtfs_file} to ${sftuser} using ${sftp_batch}"
-cat <<'EOF' > '${sftp_batch}'
+cat <<EOF > ${sftp_batch}
 	put ${gtfs_file}
 	bye
 EOF
