@@ -91,6 +91,8 @@ app.configure(function() {
 	
 	var oneDay = 86400000;
 	var staticOptions = {
+		etag: false,
+		eTag: false,
 		maxAge: oneDay
 	};
 
