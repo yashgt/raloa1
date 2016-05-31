@@ -33,7 +33,10 @@
     "angular-busy": "~4.1.2",
     "angular-ui-layout": "~1.0.5",
     "moment": "~2.9.0",
+<<<<<<< Updated upstream
     "js-marker-clusterer": "*",
+=======
+>>>>>>> Stashed changes
     "Geolib": "geolib#^2.0.18"
   },
   "devDependencies": {
