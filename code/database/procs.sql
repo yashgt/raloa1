@@ -238,7 +238,7 @@ begin
 		,vtrip_cnt as trip_cnt;
 	
 	
-	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id 
+	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id, location_status
 	from stop 
 	where fleet_id=root_fleet_id
 	order by stop_id;

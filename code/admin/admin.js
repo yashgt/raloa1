@@ -6,7 +6,7 @@ var fs = require('fs');
 var ejs = require('ejs');
 var _ = require('underscore');
 var spawn = require('child_process').spawn;
-var googleTransliterate = require('google-transliterate');
+//var googleTransliterate = require('google-transliterate');
 
 //gm.setProxy("http://yash_ganthe:(0pspl1)@goaproxy.persistent.co.in:8080");
 
@@ -91,7 +91,8 @@ exports.getFleetDetail = function(fleetId, callback){
                     latitude: stop.latitude,
                     longitude: stop.longitude,
                     name: stop.name,
-                    peerStopId: stop.peer_stop_id
+                    peerStopId: stop.peer_stop_id,
+                    location_status: stop.location_status
                 };
             }),
             

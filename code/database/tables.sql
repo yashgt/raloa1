@@ -63,6 +63,8 @@ CREATE TABLE if not exists stop
 (
 stop_id int AUTO_INCREMENT,
 fleet_id int comment 'Fleet to which the stop belongs. This is always the Root Fleet',
+code varchar(255),
+location_status int default 2,
 latitude float(10),
 longitude float(10),
 name varchar(255),
