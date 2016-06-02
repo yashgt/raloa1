@@ -242,6 +242,7 @@ app.post('/api/route/', function(req, res) {
     route.stages.forEach(function(stage) {
         stage.stops.forEach(function(stop) {
             stop.sequence = stop_sequence++;
+			route.stop_cnt= stop.sequence;
         });
     });
 
@@ -428,10 +429,9 @@ app.post('/api/route/', function(req, res) {
 });
 
 
-//CBM TO ADD STORED PROCS
 
 saveRouteEntity = function(tran, route, cb, fcb) {
-    tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.startStopId, route.endStopId, 0], function(results) {
+    tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.startStopId, route.endStopId, 0,route.stop_cnt], function(results) {
         //console.log(results);
         route_id = results[2][0]["@id"];
         logger.debug('Saved route record. ID is {0}', route_id);
