@@ -278,19 +278,24 @@ create procedure save_route(
 	, IN in_start_stop int
 	, IN in_end_stop int
 	, IN in_gtfs_id int
+	, IN in_sequence int
 )
 begin
 if id = 0 then
-INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) 
-VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
-set id = LAST_INSERT_ID() ;
+	INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) 
+	VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
+	set id = LAST_INSERT_ID() ;
 else
-update route
-set route_name=in_route_name
-, start_stop_id=in_start_stop
-, end_stop_id=in_end_stop
-, gtfs_route_id=in_gtfs_id
-where route_id=id;
+	update route
+	set route_name=in_route_name
+	, start_stop_id=in_start_stop
+	, end_stop_id=in_end_stop
+	, gtfs_route_id=in_gtfs_id
+	where route_id=id;
+
+	delete from routestop
+	where sequence > in_sequence 
+	and route_id=id;
 end if;
 end//
 
@@ -325,9 +330,9 @@ begin
 	left outer join routestoptrip RST on RS.route_stop_id=RST.route_stop_id
 	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
 	
-	delete 
-	from routestop
-	where stop_id<>in_stop_id and route_id=in_route_id and sequence=in_sequence;
+	delete RS
+	from routestop RS
+	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
 
 /*
 if exists (SELECT * FROM routestop WHERE stop_id = in_return_stop_id AND route_id=in_route_id) then
