@@ -26,7 +26,8 @@ mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trip.sql;" | tr '\t' ',' > 
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t' ',' > ${folder}/frequencies.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
 cp feed_info.txt ${folder}/feed_info.txt
-find ${folder} -name *.txt -empty -type f -delete
+#find ${folder} -name *.txt -empty -type f -delete
+wc -l ${folder}/*.txt | sed -n 's/^[[:space:]]*0 \(.*\)/\1/p' | xargs rm
 
 zip -j -r ${folder}.zip ${folder}/*.txt
 unzip -v ${folder}.zip
