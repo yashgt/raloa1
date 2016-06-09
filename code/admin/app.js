@@ -321,16 +321,18 @@ app.post('/api/route/', function(req, res) {
 
                     var tripSeries = [];
 					//TODO add thi part to admin version
-					route.deletedTrips.forEach( function(trip){
-						console.log("%j",trip);
-						tripSeries.push( function(cb){
-							delTripEntity(tran, trip, function() {
-								cb(null, trip);
-							}
-							, function(){cb("Unable to delete trip", null); }
-							);
+					if(route.deletedTrips){
+						route.deletedTrips.forEach( function(trip){
+							console.log("%j",trip);
+							tripSeries.push( function(cb){
+								delTripEntity(tran, trip, function() {
+									cb(null, trip);
+								}
+								, function(){cb("Unable to delete trip", null); }
+								);
+							});
 						});
-					});
+					}
 					
                     route.trips.forEach(function(tripList) {
                         tripList.forEach(function(trip) {
