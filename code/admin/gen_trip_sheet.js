@@ -52,6 +52,9 @@ var readWBNew = function(filename, cb){
 			//var routeId = worksheet.
 			console.log(worksheet.name);
 			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
+            if(isNaN(routeId)){
+                return;
+            }
 			var meta = { lastCellNum: 1};
 			var route = {
 				st: '',
@@ -135,7 +138,7 @@ var readWBNew = function(filename, cb){
 				
 			});
             //console.log(moment("6:00:00 am").format());
-			console.log(route);
+			console.log(JSON.stringify(route));
 			routes.push(route);
 		});
 		//console.log(routes);
