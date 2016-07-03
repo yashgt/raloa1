@@ -325,6 +325,35 @@ create procedure save_route_stop(
 	, IN in_sequence int
 )
 begin
+
+/*Do any change only if needed */
+if not exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id and stage_id=in_stage_id and sequence=in_sequence) then
+    /* If somebody else is in my place, remove him */
+    delete RST
+	from routestop RS
+	left outer join routestoptrip RST on RS.route_stop_id=RST.route_stop_id
+	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
+	
+	delete RS
+	from routestop RS
+	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
+    
+    if exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id and sequence<in_sequence) 
+        or not exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id)
+        then
+        /* I am being re-added AFTER myself. If I am moved later in the sequence, I would not exist in the table */
+        INSERT INTO routestop(stop_id, peer_stop_id, route_id, stage_id, sequence) 
+        VALUES (in_stop_id, in_return_stop_id, in_route_id, in_stage_id, in_sequence);
+    else
+        if exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id) then
+            update routestop
+            set stage_id=in_stage_id, sequence=in_sequence
+            where stop_id = in_stop_id AND route_id=in_route_id;
+        end if;        
+    end if;    
+end if;
+
+/*
 	delete RST
 	from routestop RS
 	left outer join routestoptrip RST on RS.route_stop_id=RST.route_stop_id
@@ -334,23 +363,17 @@ begin
 	from routestop RS
 	where RS.stop_id<>in_stop_id and RS.route_id=in_route_id and RS.sequence=in_sequence;
 
-/*
-if exists (SELECT * FROM routestop WHERE stop_id = in_return_stop_id AND route_id=in_route_id) then
-	update routestop
-	set stage_id=in_stage_id, sequence=in_sequence, stop_id=in_stop_id, peer_stop_id=in_return_stop_id
-	where stop_id = in_return_stop_id AND route_id=in_route_id;
-else
-end if;
-*/
 
 if exists (SELECT * FROM routestop WHERE stop_id = in_stop_id AND route_id=in_route_id) then
 update routestop
 set stage_id=in_stage_id, sequence=in_sequence
 where stop_id = in_stop_id AND route_id=in_route_id;
 else
+
 INSERT INTO routestop(stop_id, peer_stop_id, route_id, stage_id, sequence) 
 VALUES (in_stop_id, in_return_stop_id, in_route_id, in_stage_id, in_sequence);
 end if;
+*/
 end//
 
 drop procedure if exists get_route_detail//

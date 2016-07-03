@@ -164,6 +164,10 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         //Allow user to click another stop. Once done, the two stops are brothers of each other.
     };
 
+    reAddStop = function(stop) {
+        $scope.addStopToRoute(stop);
+    };
+    
 	switchStop = function(stop) {
 
         
@@ -418,6 +422,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             eventName: 'switch_stop',
             label: 'Switch stop',
             handler: switchStop
+        }, {
+            className: 'context_menu_item',
+            eventName: 're_add_stop',
+            label: 'Add stop again',
+            handler: reAddStop
         }]);
 
     };
