@@ -1160,7 +1160,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                 var routestop = $scope.findRouteStop(function(rs) {
                     return rs.onwardStop.id == stop.peerStopId;
                 });
-                if (routestop) {
+                if (routestop && routestop.returnStop != stop) {
                     stop.icon = RET_ROUTE_STOP_ICON;
                     routestop.returnStop = stop;
                     return;
