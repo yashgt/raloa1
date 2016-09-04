@@ -108,6 +108,7 @@ var readWBNew = function(filename, cb){
 							var time;
 							//console.log(typeof(row.getCell(i).value));
 							if( row.getCell(i).value.formula != undefined ) {
+                                console.log("Formula with result %j", row.getCell(i).value.result);
                                 if(moment(row.getCell(i).value.result, 'hh:mm:ss a').isValid())
                                     time = moment(row.getCell(i).value.result, 'hh:mm:ss a').format('HH:mm');
                                 else
@@ -115,15 +116,25 @@ var readWBNew = function(filename, cb){
                                 
 							}
 							else {
+                                
+                                console.log("No formula with value %j and text %j and type %j and cell %j" , row.getCell(i).value, row.getCell(i).text, row.getCell(i).type, row.getCell(i));
+                                if(row.getCell(i).type == 2 && row.getCell(i).value <= 1.0 ){ //Numeric
+                                    var secs = row.getCell(i).value * 86400;
+                                    time = moment().startOf('day').add(secs, 'second').format('HH:mm');
+                                }
+                                else {
+                                    if(moment(row.getCell(i).value).isValid())
+                                        time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+                                    else
+                                        time = moment(row.getCell(i).value, 'hh:mm:ss A').add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+                                }
+                                
 								//console.log(row.getCell(i).value);
 								//console.log(moment(row.getCell(i).value).utcOffset());
                                 //It thinks 06:00:00 am is a UTC value and gives back 11:30 am
-                                if(moment(row.getCell(i).value).isValid())
-                                    time = moment(row.getCell(i).value).add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
-                                else
-                                    time = moment(row.getCell(i).value, 'hh:mm:ss A').add( -moment(row.getCell(i).value).utcOffset(), 'minute').format('HH:mm') ;
+
 							}
-							//console.log(time);
+							console.log(time);
 							
 							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
@@ -138,7 +149,7 @@ var readWBNew = function(filename, cb){
 				
 			});
             //console.log(moment("6:00:00 am").format());
-			console.log(JSON.stringify(route));
+			//console.log(JSON.stringify(route));
 			routes.push(route);
 		});
 		//console.log(routes);
@@ -308,7 +319,7 @@ var generateTripSheet = function(fleetId){
 		//console.log("%j",fleetDetail);
 		var wsSeries = [];
 		fleetDetail.routes.forEach(function(route){
-			console.log(route);
+			//console.log(route);
 			wsSeries.push( function(cb){
 				admin.getRouteDetail(route.routeId, function(routeDetail){
 					//Add route to workbook
@@ -342,6 +353,8 @@ var updateTrips = function(fleetId){
 	
 	var routes = readWBNew(sheetLoc + fleetId + "-TimeTable.xlsx", function(routes){
 		routes.forEach(function(route){
+            console.log("Saving route %j", route);
+            
 			admin.saveRoute(route
 				,function(){
 					console.log("Saved route %j", route);
@@ -349,7 +362,8 @@ var updateTrips = function(fleetId){
 				,function(){
 					console.log("Could not save route %j", route);
 				}
-			)
+			);
+            
 		});
 	});
 	
