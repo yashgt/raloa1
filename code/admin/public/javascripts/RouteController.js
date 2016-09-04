@@ -873,6 +873,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                     trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('hh:mm a');
                 }
             }
+			trip.isDirty = true;
 			$scope.routeDetail.isDirty = true;
 		});
 		$scope.scheduleOptions[dir].gridApi.selection.clearSelectedRows(null);
