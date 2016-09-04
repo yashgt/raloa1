@@ -189,7 +189,7 @@
                                                 <div ui-grid="fareGridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav ui-grid-auto-resize ui-grid-resize-columns></div>
                                             </tab>
                                             <tab heading="Object" >
-                                                <pre class="code">{{ fleetDetail | json }}</pre>
+                                                <pre class="code">{{ routeDetail | json }}</pre>
                                             </tab>
                                             
                                         </tabset>
@@ -224,6 +224,7 @@
                                                                             <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
                                                                             <div>
                                                                                 {{stop.onwardStop.name}}
+																				<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeRouteStop(stop)" ><i class="glyphicon glyphicon-remove"></i></a>
                                                                             </div>
                                                                         </div>
                                                                     </li>

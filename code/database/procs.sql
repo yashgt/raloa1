@@ -403,6 +403,7 @@ begin
 	, PS.name as return_stop_name
 	, coalesce(FS.distance, 0) as return_distance
 	, S.is_station as is_station
+	, RS.sequence
 	from route R
 	inner join routestop RS on (RS.route_id=R.route_id )	
 	inner join stop S on (RS.stop_id=S.stop_id)	
