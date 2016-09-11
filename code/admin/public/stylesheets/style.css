@@ -136,8 +136,9 @@ color: #009900 !important;
 }
 
 .chosen_stage {
-    /*background-color: #99FF66 !important;*/
-    animation-name: chosen_stage;
+    background-color: yellow !important;
+    color: black !important;
+    /*animation-name: chosen_stage;*/
 }
 
 .newtrip {
