@@ -97,9 +97,11 @@ exports.getFleetDetail = function(fleetId, callback){
             }),
             
             routes: results[2].map(function(route) {
+                console.log(_.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','));
                 return {
                     routeId: route.route_id,
                     routeNum: route.route_name,
+                    internalRouteCode: _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
                     st: route.start_stop_name,
                     en: route.end_stop_name,
 					serviced: route.serviced
@@ -148,6 +150,7 @@ exports.getRouteDetail = function(route_id, callback){
             function(route) {
 				routeDetail.st = route.start_stop_name;
 				routeDetail.en = route.end_stop_name;
+                routeDetail.internalRouteCode = _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
 				routeDetail.serviced = route.serviced;
 			
 			}
@@ -388,6 +391,19 @@ exports.saveRoute = function(route, sCB, fCB){
                     logger.debug("Saving trips for route {0}", route);
 
                     var tripSeries = [];
+					//TODO add thi part to admin version
+					if(route.deletedTrips){
+						route.deletedTrips.forEach( function(trip){
+							console.log("%j",trip);
+							tripSeries.push( function(cb){
+								delTripEntity(tran, trip, function() {
+									cb(null, trip);
+								}
+								, function(){cb("Unable to delete trip", null); }
+								);
+							});
+						});
+					}
 					
                     route.trips.forEach(function(tripList) {
                         tripList.forEach(function(trip) {
@@ -468,7 +484,7 @@ exports.saveRoute = function(route, sCB, fCB){
 };
 
 saveRouteEntity = function(tran, route, cb, fcb) {
-    tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.startStopId, route.endStopId, 0], function(results) {
+    tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.internalRouteCode==undefined ? "" : route.internalRouteCode.join(), route.startStopId, route.endStopId, 0,route.stop_cnt], function(results) {
         //console.log(results);
         route_id = results[2][0]["@id"];
         logger.debug('Saved route record. ID is {0}', route_id);
@@ -508,6 +524,15 @@ saveTripEntity = function(tran, trip, cb, fcb) {
 
 };
 
+delTripEntity = function(tran, trip, cb, fcb) {
+	tran.query("call delete_trips(?);" , [ trip.tripId]
+		, function(results) { 
+        	logger.debug('Deleted trip record {0}', trip);
+			cb();
+		} 
+		, function(err){	logger.error("Failed due to {0}", err); fcb();	}
+	);	
+};
 saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
     tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time], function(results) {
         logger.debug('Saved RStrip record {0}', routestoptrip);

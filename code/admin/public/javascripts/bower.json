@@ -13,7 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.26",
+    "angular": "~1.5",
     "bootstrap": "~3.0.0",
     "ngModal": "~1.2.0",
     "jquery": "~2.1.1",
@@ -22,22 +22,21 @@
     "angular-google-maps": "2.0.13",
     "ng-table": "~0.3.1",
     "angular-bootstrap": "~0.12.0",
-    "angular-ui-select": "~0.8.2",
+    "angular-ui-select": "^0.19.4",
     "selectize": "~0.8.5",
     "angular-flash-messages": "*",
     "angular-flash": "~0.1.13",
-    "angular-animate": "~1.2.26",
-    "angular-sanitize": "~1.2.26",
+    "angular-animate": "~1.5",
+    "angular-sanitize": "~1.5",
     "angular-ui-grid": "~3.0.0-rc.20",
     "angular-ui-tree": "~2.1.5",
     "angular-busy": "~4.1.2",
     "angular-ui-layout": "~1.0.5",
     "moment": "~2.9.0",
-<<<<<<< Updated upstream
     "js-marker-clusterer": "*",
-=======
->>>>>>> Stashed changes
     "Geolib": "geolib#^2.0.18"
+    ,"angular-chips": "*"
+    ,"angular-material" : "*"
   },
   "devDependencies": {
     "angular-ui-grid": "~3.0.0-rc.12",

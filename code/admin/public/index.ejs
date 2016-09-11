@@ -24,10 +24,10 @@
 	<script src="javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
 	-->
 	
-	<script src="javascripts/angular.min.js"></script>
-	<script src="javascripts/angular-sanitize.min.js"></script>
-	<script src="javascripts/angular-animate.min.js"></script>
-	
+	<script src="javascripts/bower_components/angular/angular.min.js"></script>
+	<script src="javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+	<script src="javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
+	<script src="javascripts/bower_components/angular-aria/angular-aria.js"></script>
 	
 	<!-- CDN LIBS  
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -49,6 +49,7 @@
 	-->
 	
 	<!-- LOCAL LIBS -->
+    
 	<script type="text/javascript" src="javascripts/bower_components/jquery/dist/jquery.min.js" ></script>
 	<script type="text/javascript" src="javascripts/lodash.min.js"></script>
 	<script type="text/javascript" src="javascripts/latlon-spherical.js"></script>
@@ -63,13 +64,21 @@
 	<link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-busy/dist/angular-busy.min.css" />
     
     <link rel="stylesheet" href="javascripts/bower_components/selectize/dist/css/selectize.default.css">
-	<!--<script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>-->
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.13/angular-google-maps.min.js"></script>
+	<script type="text/javascript" src="javascripts/bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+		<!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.0.13/angular-google-maps.min.js"></script>-->
 	
     <script type="text/javascript" src="javascripts/bower_components/angular-flash/dist/angular-flash.min.js"></script>
 	
     <script src="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.js"></script>
     <link rel="stylesheet" href="javascripts/bower_components/angular-ui-tree/dist/angular-ui-tree.min.css">   
+    <!--
+    <script type="text/javascript" src="https://cdn.rawgit.com/mohbasheer/angular-chips/master/dist/angular-chips.min.js"></script>
+    <script type="text/javascript" src="javascripts/bower_components/angular-chips/dist/angular-chips.js"></script>
+    <link rel="stylesheet" type="text/css" href="javascripts/bower_components/angular-chips/dist/main.css">
+    -->
+    <script src="javascripts/bower_components/angular-material/angular-material.js"></script>
+    <link rel="stylesheet" href="javascripts/bower_components/angular-material/angular-material.min.css" />
+    
 	
 	<!-- libs not found on CDN -->
 	<link rel="stylesheet" href="javascripts/bower_components/angular-ui-grid/ui-grid.min.css" />
@@ -107,6 +116,7 @@
 		
                     <!-- Subscribe to all flash messages. TODO : Do what is done at http://embed.plnkr.co/zXGEKw/preview -->
 
+
                     <tabset vertical="false" justified="false">
                         <tab heading="Plan">
                             
@@ -131,7 +141,11 @@
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!isRouteDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
 											
-                                            <input class="route_num" type="number" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
+                                            <input class="route_num" type="text" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
+                                            
+                                            
+                                            <md-chips class="custom-chips" placeholder="Names of routes" ng-model="routeDetail.internalRouteCode" readonly="false" md-removable="true" md-enable-chip-edit="true" md-on-add="routeDetail.isDirty = true;" md-on-remove="routeDetail.isDirty = true;" ></md-chips>
+
 											<div style="vertical-align:top"><font size="0.5">Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})</font></div>
                                         </div>
                                         <tabset vertical="false" justified="false">
@@ -202,8 +216,9 @@
                                                     <div ui-tree="stageTreeOptions" >
                                                         <!-- for existing stages -->
                                                         <ol ui-tree-nodes ng-model="routeDetail.stages" data-type="group">
-                                                            <li ng-repeat="stage in routeDetail.stages" ui-tree-node data-type="stage">
-                                                                <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing">
+                                                            <li ng-repeat="stage in routeDetail.stages" ui-tree-node data-type="stage" >
+                                                                <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing"  ng-class="{'chosen_stage':currentStage==stage}">
+                                                                    <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="chooseStage(stage);"><i class="glyphicon glyphicon-pushpin"></i></a>
                                                                     <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeStage(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true; routeDetail.isDirty = true;"><i class="glyphicon glyphicon-pencil"></i></a>
                                                                     <div>{{stage.title}}</div>

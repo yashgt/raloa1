@@ -527,6 +527,13 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 
     };
 
+    $scope.chooseStage = function(stage){
+        if($scope.currentStage==stage)
+            $scope.currentStage = _.last($scope.routeDetail.stages);
+        else    
+            $scope.currentStage = stage;
+        
+	};
 	$scope.removeStage = function(stage){
 		//$scope.routeDetail.stages.splice(
 		//TODO
@@ -674,9 +681,12 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 			//var wayPoints = [];
 			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
 	};
-	showRouteDetail = function(routeDetail){
+	showRouteDetail = function(routeDetail){ //TODO Check if this function can be simplified by just assigning routedetail to $scope.routedetail
+            $scope.clearScheduleGrid();
+            //$scope.routeDetail = routeDetail;
+            
 			$scope.routeDetail.routeId = routeDetail.routeId ;
-			$scope.clearScheduleGrid();
+            $scope.routeDetail.internalRouteCode = routeDetail.internalRouteCode ;			
 
             routeDetail.stages.forEach(function(stage) {
 
@@ -699,11 +709,13 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             });
 		
             $scope.routeDetail.trips = routeDetail.trips;
+            
 			
 			$scope.forAllStopTimes(function(trip, stopId){
 					var tm = moment(trip.stops[''+ stopId], 'HH:mm');
 					trip.stops[''+ stopId] = tm.format('hh:mm a');
 			});
+            
 			
 			$scope.resetSchedules();
 			$scope.routeDetail.deletedTrips = [];
@@ -1174,8 +1186,8 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                 //$scope.routeDetail.stages[$scope.routeDetail.stages.length -1].title = stop.name ; //TODO capture the village name
             }
 
-            var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1];
-            $scope.addStopToStage(stop, lastStage);
+            //var lastStage = $scope.routeDetail.stages[$scope.routeDetail.stages.length - 1];
+            $scope.addStopToStage(stop, $scope.currentStage || _.last($scope.routeDetail.stages));
 
         }
     };
@@ -2110,7 +2122,9 @@ function UnpairedStopsFilter() {
 	//, 'ui.grid.pinning'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'
-		, 'DecoratedLogWithLineNumber'
+		, 'DecoratedLogWithLineNumber' 
+        //, 'angular.chips'
+        , 'ngMaterial'
     ]);
     adminApp.config(
         function(uiGmapGoogleMapApiProvider) {

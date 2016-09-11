@@ -245,193 +245,28 @@ app.post('/api/route/', function(req, res) {
 			route.stop_cnt= stop.sequence;
         });
     });
-
-    db.getTransaction(
-
-        //(function(route) {
-        //return 
-        function(tran) {
-            var routesWF = [
-
-                function(callback) {
-                    saveRouteEntity(tran, route, function(routeId) {
-                        route.routeId = routeId;
-                        route.stages.forEach(function(stage) {
-                            stage.routeId = routeId;
-                        });
-                        callback(null, tran, route);
-                    }
-					, function(){callback("Unable to save route", null); }
-					);
-                },
-
-                function(tran, route, callback) {
-                    console.log("Saving stages for route %j", route);
-
-                    var stageSeries = [];
-                    route.stages.forEach(function(stage) {
-                        stageSeries.push(
-                            function(callback) {
-                                var stageWF = [
-                                    function(callback) {
-                                        saveStageEntity(tran, stage, function(stageId) {
-                                            stage.stageId = stageId;
-                                            stage.stops.forEach(function(stop) { //This is a routestop
-                                                stop.stageId = stageId;
-                                                stop.routeId = stage.routeId;
-                                            });
-                                            callback(null, stageId);
-                                        }
-										, function(){callback("Unable to save stage", null); }
-										);
-                                    },
-                                    function(stageId, callback) {
-                                        var stopSeries = [];
-                                        stage.stops.forEach(function(stop) {
-                                            stopSeries.push(
-                                                function(callback) {
-                                                    saveRouteStopEntity(tran, stop, function() {
-                                                        callback(null, 1);
-                                                    }
-													, function(){callback("Unable to save route-stop", null); }
-													);
-                                                }
-                                            );
-                                        });
-
-                                        async.series(stopSeries, function(err, results) {
-                                            callback(err || null, stage);
-                                        });
-                                    }
-                                ];
-                                async.waterfall(stageWF, function(err, result) {
-                                    callback(err || null, stage);
-                                });
-
-                            }
-                        );
-                    });
-
-                    async.series(stageSeries, function(err, results) {
-                        callback(err || null, tran, route);
-                    });
-                },
-                function(tran, route, callback) {
-                    logger.debug("Saving trips for route {0}", route);
-
-                    var tripSeries = [];
-					//TODO add thi part to admin version
-					if(route.deletedTrips){
-						route.deletedTrips.forEach( function(trip){
-							console.log("%j",trip);
-							tripSeries.push( function(cb){
-								delTripEntity(tran, trip, function() {
-									cb(null, trip);
-								}
-								, function(){cb("Unable to delete trip", null); }
-								);
-							});
-						});
-					}
-					
-                    route.trips.forEach(function(tripList) {
-                        tripList.forEach(function(trip) {
-							if(trip.tripId<0 || trip.isDirty){
-								trip.routeId = route.routeId;
-								if(trip.tripId<0)
-									trip.fleetId = currentFleetId; //Set the fleet only for new trips
-								tripSeries.push(function(callback) {
-									var tripWF = [
-										function(callback) {
-											saveTripEntity(tran, trip, function(tripId) {
-												trip.tripId = tripId;                                            
-												callback(null, trip);
-											}
-											, function(){callback("Unable to save trip", null); }
-											);
-										},
-										function(trip, callback) { //Save RSTs
-											var RSTSeries = [];
-											Object.keys(trip.stops).forEach(function(stopId) {
-												RSTSeries.push(function(callback) {
-													var RST = {
-														routeId: route.routeId,
-														stopId: parseInt(stopId),
-														tripId: trip.tripId,
-														time: '' + trip.stops['' + stopId + ''] + ''
-													};
-													saveRouteStopTripEntity(tran, RST, function() {
-														callback(null, 1);
-													}
-													, function(){callback("Unable to save route-stop-trip", null); }
-													);
-												});
-											});
-											async.series(RSTSeries, function(err, results) {
-												callback(err || null, trip);
-											});
-										}
-									];
-
-									async.waterfall(tripWF, function(err, result) {
-										callback(err || null, trip);
-									});
-								});
-							}
-                        });
-                    });
-
-                    async.series(tripSeries, function(err, results) {
-                        callback(err || null, route);
-                    });
-                }
-            ];
-            async.waterfall(routesWF, function(err, result) {
-				if(!err){
-                tran.commit(function() {                    
-					admin.generateSegments(
-						route.routeId, 
-					/*(function(route){
-					 * 						return */
-						function(){
-
-							admin.getRouteDetail(route_id, function(routeDetail){
-								routeDetail.st = start_stop_name;
-								routeDetail.en = end_stop_name;
-								logger.info("Saved route {0}", routeDetail);
-        						res.json(routeDetail);
-							});	
-							/*
-							route.routeNum = "";
-							route.st = route.stages[0].stops[0].onwardStop.name;
-							route.en = route.stages[stageLength].stops[stopLength].onwardStop.name;
-							res.json(route);
-							*/
-						}
-																				
-					/*})(route)*/
-					);
-
-                }, function() {
-                    res.send(500, 'Failed to create route');
-                });
-				}
-				else{
-					tran.rollback();
-					res.send(500, 'Failed to create route');
-				}
-
-            });
+    
+    admin.saveRoute(route
+        , function(){
+            admin.getRouteDetail(route_id, function(routeDetail){
+				routeDetail.st = start_stop_name;
+				routeDetail.en = end_stop_name;
+				logger.info("Saved route {0}", routeDetail);
+        		res.json(routeDetail);
+			});	
         }
-        //;		
-        //})(route);
-
+        , function() {
+            res.send(500, 'Failed to create route');
+        }
     );
+
+
+
 
 });
 
 
-
+/*
 saveRouteEntity = function(tran, route, cb, fcb) {
     tran.query("set @id := ? ; call save_route(@id,?,?,?,?,?,?) ; select @id; ", [route.routeId, route.fleetId, 'ABC', route.startStopId, route.endStopId, 0,route.stop_cnt], function(results) {
         //console.log(results);
@@ -492,6 +327,7 @@ saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
 	);
 
 };
+*/
 
 /*
 app.get('/api/route/:route_id', function(req, res) {

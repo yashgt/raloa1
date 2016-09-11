@@ -61,6 +61,10 @@ input.ng-valid {
 	border: 1px solid green;
 }
 
+.custom-chips {
+    align: right;
+}
+
 .myGrid {
     width: 500px;
     height: 250px;
@@ -113,12 +117,27 @@ input.ng-valid {
 }
 
 .svcd_route {
-font-weight:bold;
+/*font-weight:bold;*/
 color:blue;
 }
 
 .unsvcd_route {
 color:black;
+}
+
+.linked_route {
+font-weight:bold !important;
+color: #009900 !important;
+}
+
+@keyframes chosen_stage {
+    from {background-color: red;}
+    to {background-color: yellow;}
+}
+
+.chosen_stage {
+    /*background-color: #99FF66 !important;*/
+    animation-name: chosen_stage;
 }
 
 .newtrip {

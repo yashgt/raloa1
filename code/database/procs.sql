@@ -1,5 +1,17 @@
 delimiter //
 
+drop function if exists SPLIT_STR //
+CREATE FUNCTION SPLIT_STR(
+  x VARCHAR(255),
+  delim VARCHAR(12),
+  pos INT
+)
+RETURNS VARCHAR(255)
+RETURN REPLACE(SUBSTRING(SUBSTRING_INDEX(x, delim, pos),
+       LENGTH(SUBSTRING_INDEX(x, delim, pos -1)) + 1),
+       delim, '');
+//       
+       
 
 drop procedure if exists get_location//
 create procedure get_location(
@@ -245,21 +257,23 @@ begin
 	
 	select 
 	R.route_id as route_id
-	/*
-	, case 
-		R.route_name 
-		when 'ABC' then convert(route_id, char(10)) 
-		else R.route_name 
-		end as route_name
-		*/
-	/*, R.route_name as route_name	*/
-	, convert(route_id, char(10)) as route_name
-	, S1.name as start_stop_name
-	, S2.name as end_stop_name
+	, convert(R.route_id, char(10)) as route_name
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
+	, coalesce(S1.name
+                , (select SG.stage_name 
+                from stage SG 
+                where SG.route_id=R.route_id 
+                and SG.stage_id=(select min(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) 
+    as start_stop_name
+	, coalesce(S2.name
+				, (select stage_name 
+				from stage SG 
+				where SG.route_id=R.route_id 
+				and SG.stage_id=(select max(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
 	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) as serviced
 	from route R
-	inner join stop S1 on (R.start_stop_id= S1.stop_id)
-	inner join stop S2 on (R.end_stop_id=S2.stop_id)
+    left outer join stop S1 on (R.start_stop_id=S1.stop_id)
+	left outer join stop S2 on (R.end_stop_id=S2.stop_id)    
 	where R.fleet_id = root_fleet_id
 	and R.is_deleted=0
 	order by serviced desc, start_stop_name asc, end_stop_name asc, route_name asc
@@ -275,12 +289,17 @@ create procedure save_route(
 	  INOUT id int
 	, IN in_fleet_id int
 	, IN in_route_name varchar(255)
+    , IN in_internal_route_cd varchar(255)
 	, IN in_start_stop int
 	, IN in_end_stop int
 	, IN in_gtfs_id int
 	, IN in_sequence int
 )
 begin
+    declare position int ;
+    declare route_cd varchar(255) ;
+    set position = 1;
+    
 if id = 0 then
 	INSERT INTO route(fleet_id, route_name, start_stop_id, end_stop_id, gtfs_route_id) 
 	VALUES (in_fleet_id, in_route_name, in_start_stop, in_end_stop, in_gtfs_id);
@@ -292,11 +311,27 @@ else
 	, end_stop_id=in_end_stop
 	, gtfs_route_id=in_gtfs_id
 	where route_id=id;
+    
+
+    
 
 	delete from routestop
 	where sequence > in_sequence 
 	and route_id=id;
 end if;
+
+    delete from internal_route_map where route_id=id;
+    
+    l1: LOOP
+        select SPLIT_STR(in_internal_route_cd, ',', position) into route_cd ;
+        if(route_cd = '') then
+            leave l1;
+        end if;
+            
+        
+        insert into internal_route_map values(id, route_cd);
+        set position = position + 1;
+    END LOOP l1;
 end//
 
 drop procedure if exists save_stage//
@@ -384,6 +419,7 @@ begin
 	select 
 	R.route_id as route_id
 	, R.route_name as route_name
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
 	, S1.name as start_stop_name
 	, S2.name as end_stop_name
 	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id ) as serviced
