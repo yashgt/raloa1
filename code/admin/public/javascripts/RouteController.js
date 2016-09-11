@@ -527,12 +527,38 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 
     };
 
+
     $scope.chooseStage = function(stage){
         if($scope.currentStage==stage)
             $scope.currentStage = _.last($scope.routeDetail.stages);
         else    
             $scope.currentStage = stage;
         
+    };
+    
+	$scope.findStageOfRouteStopObj= function(routestop){
+		console.log("Finding stage for ", routestop);
+       var stg = _.find($scope.routeDetail.stages, function(stage) {
+
+                var i = _.find(stage.stops, function(rs) {
+                    return rs == routestop ; 
+                });
+				if(i != undefined)
+					return true;
+		});
+		console.log("Found stage ", stg);
+		return stg;	
+
+	};
+
+	$scope.removeRouteStop = function(routestop){
+	    if ($scope.routeDetail.routeId >= 0) {
+			var stg = $scope.findStageOfRouteStopObj(routestop);
+			if(stg!=undefined) {
+     			_.remove(stg.stops, function(rs){ return rs==routestop;});
+            	$scope.routeDetail.isDirty = true;
+			}
+		}
 	};
 	$scope.removeStage = function(stage){
 		//$scope.routeDetail.stages.splice(
@@ -587,6 +613,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		return tma - tmb;
 	};
     $scope.addStopToScheduleGrid = function(dir, fleetstop) {
+		console.log("Adding stop %j", fleetstop);
         var def = {
             name: fleetstop.name + fleetstop.id //Make the name unique
             ,displayName: fleetstop.name
@@ -1191,6 +1218,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 
         }
     };
+
     $scope.delStopFromRoute = function(stop) {
         if ($scope.routeDetail.routeId >= 0) {
             var stg = _.find($scope.routeDetail.stages, function(stage) {
@@ -1359,7 +1387,10 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 				,google.maps.MapTypeId.SATELLITE
 			]
 		},
-		streetViewControl: false		
+		tilt : 45,
+		rotateControl : true,
+		rotateControlOptions : {position: google.maps.ControlPosition.RIGHT_BOTTOM},
+		streetViewControl: true		
 	};
 
 
