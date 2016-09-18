@@ -104,7 +104,7 @@ exports.getFleetDetail = function(fleetId, callback){
                     internalRouteCode: _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
                     st: route.start_stop_name,
                     en: route.end_stop_name,
-					serviced: route.serviced
+					status: route.status
 
                 };
             }),
@@ -167,6 +167,7 @@ exports.getRouteDetail = function(route_id, callback){
                     stage = {
                         title: routeStop.stage_name,
                         stageId: routeStop.stage_id,
+                        isVia: routeStop.is_via,
                         stops: []
                     };
                     routeDetail.stages.push(stage);
@@ -233,7 +234,8 @@ exports.getRouteDetail = function(route_id, callback){
 				return (dir==0) ? trip.stops[''+onStop1Id] : trip.stops[''+reStop1Id] ;
 			});
 		});
-		
+        
+
 		
 
 		callback(routeDetail);
@@ -495,7 +497,7 @@ saveRouteEntity = function(tran, route, cb, fcb) {
 };
 
 saveStageEntity = function(tran, stage, cb, fcb) {
-    tran.query("set @id := ? ; call save_stage(@id,?,?) ; select @id; ", [stage.stageId, stage.routeId, stage.title], function(results) {
+    tran.query("set @id := ? ; call save_stage(@id,?,?,?) ; select @id; ", [stage.stageId, stage.routeId, stage.title, stage.isVia], function(results) {
         stage_id = results[2][0]["@id"];
         logger.debug('Saved stage record {0}', stage_id);
         cb(stage_id);

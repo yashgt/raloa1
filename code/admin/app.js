@@ -244,6 +244,9 @@ app.post('/api/route/', function(req, res) {
             stop.sequence = stop_sequence++;
 			route.stop_cnt= stop.sequence;
         });
+        
+        
+
     });
     
     admin.saveRoute(route

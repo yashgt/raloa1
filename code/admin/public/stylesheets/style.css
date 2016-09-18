@@ -116,18 +116,35 @@ input.ng-valid {
 .stretch {
 }
 
-.svcd_route {
-/*font-weight:bold;*/
-color:blue;
-}
-
 .unsvcd_route {
 color:black;
 }
 
+.svcd_route {
+color:blue;
+}
+
 .linked_route {
 font-weight:bold !important;
-color: #009900 !important;
+}
+
+.stglinked_route {
+    border: 2px #00ff00;
+}
+
+.stopsaddded_route {
+    background-color: #007700 !important;
+}
+
+.rd {
+    float:right;
+    display: inline-block;
+}
+.md-input-container {
+    display: inline-block;
+}
+.md-chips {
+    display: inline-block;
 }
 
 @keyframes chosen_stage {

@@ -332,6 +332,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		while(_.isEmpty($scope.routeDetail.stages[0].stops)){
 			$scope.routeDetail.stages.splice(0,1);
         }
+        
+        $scope.routeDetail.stages.forEach(function(stage) {
+            stage.isVia = !(_.find($scope.routeDetail.viaStages, function(vstageid) { return vstageid == stage.stageId; })==undefined);    
+        });
+        
         $scope.hangOn.promise = getthereAdminService.saveRoute($scope.routeDetail, function(route) {
 			$scope.isSavingRoute = false;
 
@@ -715,6 +720,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 			$scope.routeDetail.routeId = routeDetail.routeId ;
             $scope.routeDetail.internalRouteCode = routeDetail.internalRouteCode ;			
 
+            $scope.routeDetail.viaStages = [];
             routeDetail.stages.forEach(function(stage) {
 
                 var routestage = {
@@ -732,6 +738,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                     newroutestop.segments = [routestop.onwardStop.distance, routestop.returnStop.distance];
                 });
 
+        
+        
+                if(stage.isVia){
+                    $scope.routeDetail.viaStages.push(stage.stageId);
+                }        
 
             });
 		
@@ -2148,6 +2159,13 @@ function UnpairedStopsFilter() {
     };
 }
 
+function BitwiseAndFilter () {
+    return function (firstNumber, secondNumber) {
+        return ((parseInt(firstNumber, 10) & parseInt(secondNumber, 10)) === parseInt(secondNumber, 10));
+    // return firstNumber % secondNumber > 0
+    };
+}
+
 (function() {
     var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', 'uiGmapgoogle-maps', "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
 	//, 'ui.grid.pinning'
@@ -2173,6 +2191,7 @@ function UnpairedStopsFilter() {
     ]);
 
     adminApp.filter('service', ServiceFilter);
+    adminApp.filter('bitwiseAnd', BitwiseAndFilter);
     adminApp.controller('RouteHelpController', RouteHelpController);
     adminApp.controller('StopController', StopController);
     adminApp.service('stopChannel', StopChannelService);

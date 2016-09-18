@@ -140,13 +140,23 @@
                                             <button type="button" ng-click="extendRoute()" class="btn btn-primary btn-xs" ng-disabled="isRouteDirty || routeDetail.routeId<=e0">Extend</button>
                                             <button type="submit" ng-click="saveRoute()" class="btn btn-primary btn-xs" ng-disabled="!isRouteDirty">Save</button>
                                             <button type="submit" ng-click="closeRoute()" class="btn btn-primary btn-xs" ng-disabled="routeDetail.routeId < 0 ">Close</button>
-											
-                                            <input class="route_num" type="text" placeholder="Route Number" ng-model="routeDetail.routeNum" ng-show="routeDetail.routeId>=0" ng-disabled="true" />
-                                            
-                                            
-                                            <md-chips class="custom-chips" placeholder="Names of routes" ng-model="routeDetail.internalRouteCode" readonly="false" md-removable="true" md-enable-chip-edit="true" md-on-add="routeDetail.isDirty = true;" md-on-remove="routeDetail.isDirty = true;" ></md-chips>
 
-											<div style="vertical-align:top"><font size="0.5">Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})</font></div>
+                                            <div ng-show="routeDetail.routeId>=0" >
+                                            
+                                            <md-input-container>
+                                            <label>Via</label>
+        <md-select md-on-close="routeDetail.isDirty=true;" ng-model="routeDetail.viaStages" multiple>
+            <md-option ng-value="stage.stageId" ng-repeat="stage in routeDetail.stages">{{stage.title}}</md-option>
+        </md-select>
+         </md-input-container>
+                                                   
+                                            
+ <md-chips class="custom-chips" placeholder="Names of routes" ng-model="routeDetail.internalRouteCode" readonly="false" md-removable="true" md-enable-chip-edit="true" md-on-add="routeDetail.isDirty = true;" md-on-remove="routeDetail.isDirty = true;" class="md-no-underline"></md-chips>
+
+                                            
+                                            </div>
+<!--
+											<div style="vertical-align:top"><font size="0.5">Zoom: {{fleetDetail.zoom}} Center: {{fleetDetail.center.latitude}},{{fleetDetail.center.longitude}} Bounds: NE({{fleetDetail.bounds.northeast.latitude}},{{fleetDetail.bounds.northeast.longitude}}) SW({{fleetDetail.bounds.southwest.latitude}},{{fleetDetail.bounds.southwest.longitude}})</font></div>-->
                                         </div>
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
@@ -221,7 +231,7 @@
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="chooseStage(stage);"><i class="glyphicon glyphicon-pushpin"></i></a>
                                                                     <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeStage(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true; routeDetail.isDirty = true;"><i class="glyphicon glyphicon-pencil"></i></a>
-                                                                    <div>{{stage.title}}{{currentStage==stage}}</div>
+                                                                    <div>{{stage.title}}</div>
                                                                 </div>
                                                                 <div class="group-title angular-ui-tree-handle" data-nodrag ng-show="stage.editing">
                                                                     <form class="form-inline" role="form" name="stage_{{stage.stageId}}">
