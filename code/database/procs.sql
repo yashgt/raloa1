@@ -431,11 +431,21 @@ begin
 	, S2.name as end_stop_name
 	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id ) as serviced
 	from route R
-	inner join stop S1 on (R.start_stop_id= S1.stop_id)
-	inner join stop S2 on (R.end_stop_id=S2.stop_id)
+	left outer join stop S1 on (R.start_stop_id= S1.stop_id)
+	left outer join stop S2 on (R.end_stop_id=S2.stop_id)
 	where R.route_id = in_route_id
 	and R.is_deleted=0
 	;
+    
+    
+    /*select 
+    SG.stage_id as stage_id
+	, SG.stage_name as stage_name
+    , SG.is_via as is_via
+    from route R
+    inner join stage SG on (SG.route_id=R.route_id)
+    where R.route_id=in_route_id;
+    */
 	
 	select SG.stage_id as stage_id
 	, SG.stage_name as stage_name
@@ -449,10 +459,10 @@ begin
 	, S.is_station as is_station
 	, RS.sequence
 	from route R
-	inner join routestop RS on (RS.route_id=R.route_id )	
-	inner join stop S on (RS.stop_id=S.stop_id)	
-	inner join stage SG on (SG.route_id=R.route_id and RS.stage_id=SG.stage_id)
-	inner join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
+	left outer join routestop RS on (RS.route_id=R.route_id )	
+	left outer join stop S on (RS.stop_id=S.stop_id)	
+	inner join stage SG on (SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
 	
 	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
 	left outer join segment BS on (BS.from_stop_id=PRS.stop_id and BS.to_stop_id=S.stop_id) 
@@ -460,7 +470,7 @@ begin
 	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
 	
 	where R.route_id=in_route_id
-	order by RS.sequence;
+	order by SG.stage_id*1000 + coalesce(RS.sequence, 0);
 	
 	select T.trip_id
 	, T.fleet_id as fleet_id
