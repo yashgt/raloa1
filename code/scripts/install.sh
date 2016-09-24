@@ -4,10 +4,10 @@ sudo yum update
 #sudo yum install git-core
 sudo yum install git-all
 sudo yum install wget
-wget https://nodejs.org/dist/v4.3.2/node-v4.3.2-linux-x64.tar.xz
+wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-x64.tar.xz
 sudo yum -y install xz
-unxz node-v4.3.2-linux-x64.tar.xz
-tar xvf node-v4.3.2-linux-x64.tar
+unxz node-v4.5.0-linux-x64.tar.xz
+tar xvf node-v4.5.0-linux-x64.tar
 
 sudo yum install -y gcc
 sudo yum install -y zip

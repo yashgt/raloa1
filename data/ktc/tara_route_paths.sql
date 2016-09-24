@@ -5,11 +5,6 @@
     , SG.is_via as is_via
 	, S.stop_id as onward_stop_id
 	, S.name as onward_stop_name
-	, coalesce(BS.distance, 0) as onward_distance
-	, PS.stop_id as return_stop_id
-	, PS.name as return_stop_name
-	, coalesce(FS.distance, 0) as return_distance
-	, S.is_station as is_station
 	, RS.sequence
 	from route R
 	left outer join routestop RS on (RS.route_id=R.route_id )	
