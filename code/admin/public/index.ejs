@@ -5,7 +5,7 @@
 
     <title>Transit Agency Route Administrator - TARA</title>
 	
-    <script type="text/javascript" src="//maps-api-ssl.google.com/maps/api/js?libraries=places&sensor=false&language=en&v=3.exp" ></script>
+    <script type="text/javascript" src="//maps-api-ssl.google.com/maps/api/js?key=AIzaSyD86iOKI-m9XIq_5X9FDqjQpzCVHBiUY2Q&libraries=places&sensor=false&language=en&v=3.exp" ></script>
 	<script type="text/javascript" src="javascripts/bower_components/js-marker-clusterer/src/markerclusterer_compiled.js"></script>
 	
 	<!--
@@ -161,7 +161,7 @@
                                         <tabset vertical="false" justified="false">
                                             <tab heading="Map">
                                                 
-                                                <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="fleetDetail.bounds" pan="true" control="map.control" options="mapOptions">
+                                                <ui-gmap-google-map class="span7" events="mapEvents" zoom="fleetDetail.zoom" center="fleetDetail.center" draggable="true" bounds="map.bounds" pan="true" control="map.control" options="mapOptions">
 
                                                     <ny-ui-gmap-control gmap="gmap" bounds="fleetDetail.bounds"></ny-ui-gmap-control>
 

@@ -154,7 +154,19 @@ exports.getRouteDetail = function(route_id, callback){
 				routeDetail.serviced = route.serviced;
 			
 			}
-		);
+		);/*
+        results[1].forEach(
+            function(routeStage) {
+
+                    stage = {
+                        title: routeStage.stage_name,
+                        stageId: routeStage.stage_id,
+                        isVia: routeStage.is_via,
+                        stops: []
+                    };
+                    routeDetail.stages.push(stage);
+            });    
+            */
         results[1].forEach(
             function(routeStop) {
                 //Find the stage
@@ -173,20 +185,22 @@ exports.getRouteDetail = function(route_id, callback){
                     routeDetail.stages.push(stage);
                 }
 
-                var rs = {
-                    onwardStop: {
-                        id: routeStop.onward_stop_id,
-						name: routeStop.onward_stop_name,
-                        distance: routeStop.onward_distance
-                    },
-                    returnStop: {
-                        id: routeStop.return_stop_id,
-						name: routeStop.return_stop_name,
-                        distance: routeStop.return_distance
-                    },
-					isStation: routeStop.is_station
-                };
-                stage.stops.push(rs);
+                if(routeStop.onward_stop_id != undefined){
+                    var rs = {
+                        onwardStop: {
+                            id: routeStop.onward_stop_id,
+                            name: routeStop.onward_stop_name,
+                            distance: routeStop.onward_distance
+                        },
+                        returnStop: {
+                            id: routeStop.return_stop_id,
+                            name: routeStop.return_stop_name,
+                            distance: routeStop.return_distance
+                        },
+                        isStation: routeStop.is_station
+                    };
+                    stage.stops.push(rs);
+                }
 
             });
 			
@@ -226,14 +240,16 @@ exports.getRouteDetail = function(route_id, callback){
 			}
 		);
 		
-		var onStop1Id = routeDetail.stages[0].stops[0].onwardStop.id ;
-		var reStop1Id = (_.last((_.last(routeDetail.stages)).stops)).returnStop.id;
-		
-		[0,1].forEach(function(dir){
-			routeDetail.trips[dir] = _.sortBy( routeDetail.trips[dir] , function(trip){
-				return (dir==0) ? trip.stops[''+onStop1Id] : trip.stops[''+reStop1Id] ;
-			});
-		});
+        if(routeDetail.stages[0].stops.length >0 ){
+            var onStop1Id = routeDetail.stages[0].stops[0].onwardStop.id ;
+            var reStop1Id = (_.last((_.last(routeDetail.stages)).stops)).returnStop.id;
+            
+            [0,1].forEach(function(dir){
+                routeDetail.trips[dir] = _.sortBy( routeDetail.trips[dir] , function(trip){
+                    return (dir==0) ? trip.stops[''+onStop1Id] : trip.stops[''+reStop1Id] ;
+                });
+            });
+        }
         
 
 		

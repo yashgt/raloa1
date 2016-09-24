@@ -693,7 +693,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 					bounds.extend(new google.maps.LatLng(returnStop.latitude, returnStop.longitude));
                 });
             });
-			$scope.fleetDetail.bounds = {
+            if(bounds.isEmpty()){
+                $scope.map.bounds = $scope.fleetDetail.bounds;
+            }
+            else {
+			$scope.map.bounds = {
                 northeast: {
                     latitude: bounds.getNorthEast().lat(),
                     longitude: bounds.getNorthEast().lng()
@@ -703,15 +707,18 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                     longitude: bounds.getSouthWest().lng()
                 }
             };
+            }
 			
-			var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
-			var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
-			var allStops = [];
-			$scope.forAllStops(function(rs){ allStops.push(rs); });
-			var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
-			//var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
-			//var wayPoints = [];
-			routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+            if($scope.routeDetail.stages[0].stops.length > 0) {
+                var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
+                var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
+                var allStops = [];
+                $scope.forAllStops(function(rs){ allStops.push(rs); });
+                var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
+                //var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
+                //var wayPoints = [];
+                routeHelpChannel.showRoute(firstStop,lastStop, wayPoints); 
+            }
 	};
 	showRouteDetail = function(routeDetail){ //TODO Check if this function can be simplified by just assigning routedetail to $scope.routedetail
             $scope.clearScheduleGrid();
@@ -1046,6 +1053,14 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         if (a < b) return -1;
         return 1;
     };
+    var caseInsensitiveSortFn = function(sa,sb){
+		var a = sa.toLowerCase();
+		var b = sb.toLowerCase();
+
+        if (a == b) return 0;
+        if (a < b) return -1;
+        return 1;
+    };
     //STOPLIST REGION
     $scope.stopListOptions = {
         enableSorting: true,
@@ -1107,6 +1122,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             field: 'st'
 			,cellClass: 'stopName'
 			, cellTooltip: true
+            , sortingAlgorithm : caseInsensitiveSortFn
 			//,celltemplate: 'templates/routelistStopName.html'
 			//,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.st }}">{{ row.entity.st }}</div>'
         }, {
@@ -1114,6 +1130,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             field: 'en'
 			,cellClass: 'stopName'
 			, cellTooltip: true
+            , sortingAlgorithm : caseInsensitiveSortFn
 			//,cellTemplate: '<div class="stopName" ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}" title="{{ row.entity.en }}">{{ row.entity.en }}</div>'
         }]
 		//,rowTemplate: '<div ng-class="{\'svcd_route\':row.entity.serviced,  \'unsvcd_route\':!row.entity.serviced}"><div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }" ui-grid-cell></div></div>'
@@ -1576,6 +1593,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             fleetDetail.stops = [];
             
             $scope.fleetDetail = fleetDetail;
+            $scope.map.bounds = fleetDetail.bounds;
 			
 			$scope.closeRoute();
 
