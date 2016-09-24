@@ -271,7 +271,7 @@ begin
 				where SG.route_id=R.route_id 
 				and SG.stage_id=(select max(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
 	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) * 8  
-	| (select case internal_route_cd is not null when true then 1 else 0 end) * 4
+	| (select case (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) is not null when true then 1 else 0 end) * 4 
     | (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id) * 2 
     | (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id) 
     as status
