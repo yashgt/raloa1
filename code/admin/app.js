@@ -437,6 +437,7 @@ app.get('/', authentication.ensureLogin, function(req, res) {
     logger.info("Session is {0}", req.session);
     res.render('index', {
         user: req.session.passport.user
+        ,gkey : nconf.get('gmap:key')
     });
 
 }); //Unless logged in, user should be restricted from using this path
