@@ -167,6 +167,24 @@ begin
 	delete from route where route_id=in_route_id;
 end//
 
+drop procedure if exists delete_trips_for_route//
+create procedure delete_trips_for_route(
+	IN in_route_id int
+)
+begin
+    delete RST
+    from routestoptrip RST
+    inner join trip T on (RST.trip_id=T.trip_id)
+    where T.route_id = in_route_id;
+
+	delete T
+    from trip T
+    where T.route_id = in_route_id;
+	
+	
+end//
+
+
 drop procedure if exists csvtodb//
 create procedure csvtodb(
 	  IN stop_id int
