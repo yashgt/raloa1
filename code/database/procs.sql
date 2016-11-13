@@ -114,6 +114,7 @@ drop procedure if exists save_stop//
 create procedure save_stop(
 	INOUT id int
 	, IN stop_name varchar(200)
+    , IN in_internal_stop_cd varchar(200)
 	, IN lat float
 	, IN lon float
 	, IN in_fleet_id int
@@ -134,8 +135,8 @@ begin
 		where to_stop_id=id or from_stop_id=id;
 		
 	else /*New or peer stop is being created*/
-		insert into stop(fleet_id, latitude, longitude, name, peer_stop_id, user_id) 
-		values ( root_fleet_id, lat, lon, stop_name, in_peer_stop_id, in_user_id) ;
+		insert into stop(fleet_id, latitude, longitude, name, code, peer_stop_id, user_id) 
+		values ( root_fleet_id, lat, lon, stop_name, in_internal_stop_cd, in_peer_stop_id, in_user_id) ;
 		set id = LAST_INSERT_ID() ;
 		
 		if in_peer_stop_id > 0 then
@@ -195,6 +196,49 @@ create procedure csvtodb(
 begin
 		insert into stop(stop_id, latitude, longitude, name) 
 		values ( stop_id, lat, lon, stop_name) ;
+end//
+
+drop procedure if exists get_time_report//
+create procedure get_time_report(in in_fleet_id int, in depot varchar(200))
+begin
+	declare root_fleet_id int;
+	select get_root_fleet(in_fleet_id) into root_fleet_id;
+	select 
+	R.route_id as route_id
+	, convert(R.route_id, char(10)) as route_name
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
+	, coalesce(S1.name
+                , (select SG.stage_name 
+                from stage SG 
+                where SG.route_id=R.route_id 
+                and SG.stage_id=(select min(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) 
+    as start_stop_name
+	, coalesce(S2.name
+				, (select stage_name 
+				from stage SG 
+				where SG.route_id=R.route_id 
+				and SG.stage_id=(select max(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) 
+	as end_stop_name
+	, case when T.direction=0 then 'Onward' else 'Return' end as direction
+	, case when T.direction=0 then RST1.time else RST2.time end as departure_time
+	, case when T.direction=0 then RST2.time else RST1.time end as arrival_time
+	from route R
+    left outer join stop S1 on (R.start_stop_id=S1.stop_id)
+	left outer join stop S2 on (R.end_stop_id=S2.stop_id) 
+	left outer join trip T on (R.route_id=T.route_id and T.fleet_id=in_fleet_id)
+	left outer join routestop RS1 on (R.start_stop_id=RS1.stop_id and R.route_id=RS1.route_id)
+	left outer join routestop RS2 on (R.end_stop_id=RS2.stop_id and R.route_id=RS2.route_id)
+	left outer join routestoptrip RST1 on (RS1.route_stop_id=RST1.route_stop_id and RST1.trip_id=T.trip_id)
+	left outer join routestoptrip RST2 on (RS2.route_stop_id=RST2.route_stop_id and RST2.trip_id=T.trip_id)
+
+	where R.fleet_id = root_fleet_id
+	and R.is_deleted=0
+	/*and locate(depot, (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id)) > 0
+*/
+	order by (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) desc
+	, start_stop_name asc, end_stop_name asc, R.route_id asc, T.direction asc, departure_time asc
+	;
+
 end//
 
 drop procedure if exists get_fleet_detail//
@@ -276,7 +320,7 @@ begin
 	select 
 	R.route_id as route_id
 	, convert(R.route_id, char(10)) as route_name
-    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
+    /*, (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd*/
 	, coalesce(S1.name
                 , (select SG.stage_name 
                 from stage SG 
@@ -288,10 +332,10 @@ begin
 				from stage SG 
 				where SG.route_id=R.route_id 
 				and SG.stage_id=(select max(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
-	, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) * 8  
-	| (select case (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) is not null when true then 1 else 0 end) * 4 
-    | (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id) * 2 
-    | (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id) 
+, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=7 limit 1) * 8
+| (select case count(*) when 0 then 0 else 1 end from internal_route_map where route_id=R.route_id limit 1) * 4 
+| (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id limit 1) * 2 
+| (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id limit 1)
     as status
 	from route R
     left outer join stop S1 on (R.start_stop_id=S1.stop_id)

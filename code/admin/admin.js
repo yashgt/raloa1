@@ -101,7 +101,7 @@ exports.getFleetDetail = function(fleetId, callback){
                 return {
                     routeId: route.route_id,
                     routeNum: route.route_name,
-                    internalRouteCode: _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
+                    //internalRouteCode: _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
                     st: route.start_stop_name,
                     en: route.end_stop_name,
 					status: route.status
@@ -269,7 +269,7 @@ exports.generateSegments = function(routeId, segCallback)
 	db.query("call get_missing_segments(?);", [routeId], 
 	function(results){
 		var segSeries = [];
-		results[0].forEach( function(seg){
+		results[0].forEach( function(seg){ //This itself is acting like a closure
 			console.log("Segment %j", seg);
 			segSeries.push(
 				function(callback){
