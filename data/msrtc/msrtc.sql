@@ -1,5 +1,5 @@
-create database if not exists msrtc;
-use msrtc;
+create database if not exists msrtc1;
+use msrtc1;
 create table if not exists listofstops
 (
 BUS_STOP_CD varchar(255)
@@ -40,46 +40,6 @@ TRIP_NO varchar(255)
 ,foreign key(route_no) references listofroutes(route_no)
 ,foreign key(bus_stop_cd) references listofstops(bus_stop_cd)
 );
-
-create view routesummary as
-select 
-
-route_name
-, R.route_no
-, R.FROM_STOP_CD
-, R.TILL_STOP_CD
-, null as via_stop_cd
-
-from 
-msrtc.listofroutes R
-where 
-(case instr(R.route_name, ' via') 
-		when 0 then null 
-		else substr(R.route_name from instr(R.route_name, ' via') + 5) 
-	end) is null
-union all
-select 
-distinct
-route_name
-, R.route_no
-, R.FROM_STOP_CD
-, R.TILL_STOP_CD
-, S.bus_stop_cd as via_stop_cd
-
-from 
-msrtc.listofroutes R
-inner join msrtc.listofstopsonroutes RS on (RS.route_no=R.route_no)
-inner join msrtc.listofstops S on 
-(
-	RS.bus_stop_cd=S.bus_stop_cd 
-)
-where
-	S.bus_stop_nm=(case instr(R.route_name, ' via') 
-		when 0 then null 
-		else substr(R.route_name from instr(R.route_name, ' via') + 5) 
-	end)
-
-;
 
 select 26111 + 35325
 

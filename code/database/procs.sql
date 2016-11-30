@@ -523,7 +523,11 @@ begin
 	from route R
 	left outer join routestop RS on (RS.route_id=R.route_id )	
 	left outer join stop S on (RS.stop_id=S.stop_id)	
-	inner join stage SG on (SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+	inner join stage SG on (
+		(SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+		or
+		(RS.stage_id =0 and SG.stage_id=0)
+	)
 	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
 	
 	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
@@ -532,7 +536,7 @@ begin
 	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
 	
 	where R.route_id=in_route_id
-	order by SG.stage_id*1000 + coalesce(RS.sequence, 0);
+	order by coalesce(SG.stage_id,0)*1000 + coalesce(RS.sequence, 0);
 	
 	select T.trip_id
 	, T.fleet_id as fleet_id

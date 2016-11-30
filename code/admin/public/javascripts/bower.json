@@ -36,7 +36,8 @@
     "js-marker-clusterer": "*",
     "Geolib": "geolib#^2.0.18",
     "angular-chips": "*",
-    "angular-material": "*"
+    "angular-material": "*",
+    "routeboxer": "*"
   },
   "devDependencies": {
     "angular-ui-grid": "~3.0.0-rc.12",

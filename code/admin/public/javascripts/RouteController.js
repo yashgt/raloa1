@@ -1935,22 +1935,103 @@ RouteHelpChannelService = function($log) {
 		this.showDisplay(request);
 
     };
+
+	this.clearPlaces = function(){
+if (this.boxpolys != null) {
+        for (var i = 0; i < this.boxpolys.length; i++) {
+          this.boxpolys[i].setMap(null);
+        }
+      }
+      this.boxpolys = null;
+};
+	this.markPlaces = function(boxes){
+
+     		for (var i = 0; i < boxes.length; i++) {
+         		var bounds = boxes[i];
+         		// Perform search over this bounds
+         		this.boxpolys = new Array(boxes.length);
+      for (var i = 0; i < boxes.length; i++) {
+        this.boxpolys[i] = new google.maps.Rectangle({
+          bounds: boxes[i],
+          fillOpacity: 0,
+          strokeOpacity: 1.0,
+          strokeColor: '#000000',
+          strokeWeight: 1,
+          map: this.gmap
+        });
+      }
+     		}
+
+		//searchBounds(boxes);
+	};
 	this.resetDisplay = function(){
 		//this.directionsDisplay.setMap(null);
 		this.directionsDisplay.setDirections({ routes: [] }); 
-        this.directionsDisplay.setMap(this.gmap);
+      		this.directionsDisplay.setMap(this.gmap);
 	};
 	this.showDisplay = function(request){
 		this.directionsService.route(request, 
-			function(display){
+			function(display, helper){
 			return function(result, status) {
 				if (status == google.maps.DirectionsStatus.OK) {
 					display.setDirections(result);                
+					// Box the overview path of the first route
+					this.rb = new RouteBoxer();
+     					var path = result.routes[0].overview_path;
+     					var boxes = this.rb.box(path, 0.100);
+					helper.markPlaces(boxes);
 				}
-			}
-			}(this.directionsDisplay)
+			};
+			}(this.directionsDisplay, this)
 		);
 	};
+
+function searchBounds(bound) {
+   for (var i = 0; i < bound; i++) {
+     (function(i) {
+       setTimeout(function() {
+
+         
+         performSearch(bound[i]);
+
+         
+         if ((bound.length - 1) === i) {
+           addAllMarkers(bound);
+         }
+       }, 400 * i);
+     }(i));
+   }
+ }
+
+
+ function performSearch(bound) {
+   var request = {
+     bounds: bound,
+     keyword: 'bars'
+   };
+
+
+   currentBound = bound;
+	var service = new google.maps.places.PlacesService(map);
+   service.radarSearch(request, callback);
+ }
+
+ 
+
+ function callback(results, status) {
+   if (status !== google.maps.places.PlacesServiceStatus.OK) {
+     console.error(status);
+     return;
+   }
+
+   for (var i = 0, result; result = results[i]; i++) {
+     
+     if (!placeExists(result.id)) {
+       this.allPlaces.push(result);
+     }
+   }
+ }
+
 	this.showRoute = function(fromStop, toStop, intermedStops) {
 		$log.debug("Showing route on map");
 		
@@ -2189,7 +2270,7 @@ function BitwiseAndFilter () {
 }
 
 (function() {
-    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', 'uiGmapgoogle-maps', "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
+    var adminApp = angular.module('adminApp', ['ngSanitize', 'ui.bootstrap', 'uiGmapgoogle-maps', "ui.tree", "ui.select", 'ngAnimate', 'ui.grid', 'ui.grid.expandable', 'ui.grid.edit', 'ui.grid.pagination', 'ui.grid.rowEdit', 'ui.grid.cellNav', 'ui.grid.autoResize', 'ui.grid.selection'
 	//, 'ui.grid.pinning'
         //, 'MessageCenterModule'
         , 'ui.layout', 'ui.grid.resizeColumns', 'angular-flash.service', 'angular-flash.flash-alert-directive', 'cgBusy'

@@ -28,6 +28,8 @@
 	<script src="javascripts/bower_components/angular-sanitize/angular-sanitize.min.js"></script>
 	<script src="javascripts/bower_components/angular-animate/angular-animate.min.js"></script>
 	<script src="javascripts/bower_components/angular-aria/angular-aria.js"></script>
+
+	<script src="javascripts/bower_components/routeboxer/src/RouteBoxer.js"></script>
 	
 	<!-- CDN LIBS  
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -123,7 +125,7 @@
 									<div class="col-md-2">
                                     <tabset vertical="false" justified="false">
                                         <tab heading="Routes">
-                                        <div ui-grid="routeListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
+                                        <div ui-grid="routeListOptions" ui-grid-pagination ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
                                         </tab>
                                             <tab heading="Stops">
                                         <div ui-grid="stopListOptions" ui-grid-selection ui-grid-resize-columns ui-grid-auto-resize class="routelist"></div>
