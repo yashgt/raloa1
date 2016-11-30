@@ -16,6 +16,7 @@
     "ejs": "*",
     "exceljs": "^0.2.3",
     "express": "3.4.8",
+    "geolib": "^2.0.21",
     "google-transliterate": "^0.1.0",
     "googlemaps": "^0.1.9",
     "log4js": "*",

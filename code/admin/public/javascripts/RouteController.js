@@ -1755,6 +1755,10 @@ geocoder.geocode($scope.stopDetail, function(formatted_address){
     $scope.saveStop = function() {
         stopChannel.publishStop($scope.stopDetail);
     };
+    
+    $scope.test = function() {
+        console.log("Test complete");
+    };
 }
 
 
