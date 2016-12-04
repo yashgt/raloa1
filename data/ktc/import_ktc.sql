@@ -57,7 +57,7 @@ begin
                 
 
 
-            	set @stqry = CONCAT('insert into stage(stage_name, route_id, internal_stage_cd, is_via, sequence) select distinct T.ert_stage_name,', @id ,', T.ERT_STAGE_CODE, (T.ert_stage_name=T.ERT_ROUTE_VIA), @rownum := @rownum +1 as rank from ', depotdb, '.etm_route_tran T, (select @rownum :=0) r where ert_route_no=\'',route_cd, '\' order by cast(T.ert_stage_no as unsigned)') ;
+            	set @stqry = CONCAT('insert into stage(stage_name, route_id, internal_stage_cd, is_via, sequence) select distinct T.ert_stage_name,', @id ,', T.ERT_STAGE_CODE, (T.ert_stage_name=T.ERT_ROUTE_VIA), @rownum := @rownum +1 as rank from ', depotdb, '.etm_route_tran T, (select @rownum :=0) r where ert_route_no=\'',route_cd, '\' group by T.ert_stage_name, T.ERT_STAGE_CODE, (T.ert_stage_name=T.ERT_ROUTE_VIA) order by rank') ;
         	select @stqry; 
 
         	PREPARE stmt from @stqry; 

@@ -238,13 +238,17 @@ app.post('/api/route/', function(req, res) {
 		return !(_.isEmpty(sg.stops)) ;
 	});
 
+	if(firstFilledStage) {
     route.startStopId = (_.first(firstFilledStage.stops)).onwardStop.id;
     var start_stop_name = (_.first(firstFilledStage.stops)).onwardStop.name;
+	}
 	//var start_stop_name = route.stages[0].stops[0].onwardStop.name;
     //var stageLength = route.stages.length - 1
     //var stopLength = route.stages[stageLength].stops.length - 1
+    	if(lastFilledStage) {
     route.endStopId = (_.last(lastFilledStage.stops)).onwardStop.id;
     var end_stop_name = (_.last(lastFilledStage.stops)).onwardStop.name;
+	}
 //route.stages[stageLength].stops[stopLength].onwardStop.id;
 	//var end_stop_name = route.stages[stageLength].stops[stopLength].onwardStop.name;
 
