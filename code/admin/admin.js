@@ -4,7 +4,7 @@ var async = require('async');
 var gm = require('googlemaps');
 var fs = require('fs');
 var ejs = require('ejs');
-var _ = require('underscore');
+var _ = require('lodash');
 var spawn = require('child_process').spawn;
 //var googleTransliterate = require('google-transliterate');
 
@@ -241,8 +241,15 @@ exports.getRouteDetail = function(route_id, callback){
 		);
 		
         if(routeDetail.stages[0].stops.length >0 ){
-            var onStop1Id = routeDetail.stages[0].stops[0].onwardStop.id ;
-            var reStop1Id = (_.last((_.last(routeDetail.stages)).stops)).returnStop.id;
+		var firstFilledStage = _.find(routeDetail.stages,function(sg){
+			return !(_.isEmpty(sg.stops)) ;
+		});
+            var onStop1Id = _.first(firstFilledStage.stops).onwardStop.id ;
+
+		var lastFilledStage = _.findLast(routeDetail.stages,function(sg){
+			return !(_.isEmpty(sg.stops)) ;
+		});
+            var reStop1Id = (_.last(lastFilledStage.stops)).returnStop.id;
             
             [0,1].forEach(function(dir){
                 routeDetail.trips[dir] = _.sortBy( routeDetail.trips[dir] , function(trip){
@@ -330,6 +337,11 @@ exports.generateSegments = function(routeId, segCallback)
 }; 
 
 exports.saveRoute = function(route, sCB, fCB){
+	var i = 1;
+	route.stages.forEach(function(stg){
+		stg.sequence = i++;
+	});
+        logger.trace("Saving route {0}", JSON.stringify(route));
 	    db.getTransaction(
 
         //(function(route) {
@@ -356,6 +368,7 @@ exports.saveRoute = function(route, sCB, fCB){
 
                 function(tran, route, callback) {
                     //console.log("Saving stages for route %j", route);
+                    logger.debug("Saving stages");
 
                     var stageSeries = [];
                     route.stages.forEach(function(stage) {
@@ -513,9 +526,9 @@ saveRouteEntity = function(tran, route, cb, fcb) {
 };
 
 saveStageEntity = function(tran, stage, cb, fcb) {
-    tran.query("set @id := ? ; call save_stage(@id,?,?,?) ; select @id; ", [stage.stageId, stage.routeId, stage.title, stage.isVia], function(results) {
+    tran.query("set @id := ? ; call save_stage(@id,?,?,?,?) ; select @id; ", [stage.stageId, stage.routeId, stage.title, stage.isVia, stage.sequence], function(results) {
         stage_id = results[2][0]["@id"];
-        logger.debug('Saved stage record {0}', stage_id);
+        logger.debug('Saved stage record {0}', stage);
         cb(stage_id);
     }
 	,function(err){	logger.error("Failed due to {0}", err); fcb();	}

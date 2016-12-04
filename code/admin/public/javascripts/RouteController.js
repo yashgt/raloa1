@@ -329,9 +329,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 			var tm = moment(trip.stops[''+ stopId], 'hh:mm a');
 			trip.stops[''+ stopId] = tm.format('HH:mm');
 		});
+		/*remove empty stages from the start 
 		while(_.isEmpty($scope.routeDetail.stages[0].stops)){
 			$scope.routeDetail.stages.splice(0,1);
-        }
+        	}
+*/
         
         $scope.routeDetail.stages.forEach(function(stage) {
             stage.isVia = !(_.find($scope.routeDetail.viaStages, function(vstageid) { return vstageid == stage.stageId; })==undefined);    
@@ -1945,6 +1947,7 @@ if (this.boxpolys != null) {
       this.boxpolys = null;
 };
 	this.markPlaces = function(boxes){
+		this.clearPlaces();
 
      		for (var i = 0; i < boxes.length; i++) {
          		var bounds = boxes[i];

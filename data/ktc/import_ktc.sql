@@ -24,7 +24,7 @@ begin
 			when 4 then select 'prv' into depotdb ;
 		end case;
 
-        SET @query = CONCAT('CREATE or replace VIEW vw_missing_route as select erm_route_no from ', depotdb,  '.etm_route_master R	left outer join internal_route_map RM on (','concat(\'', depotdb, '\',R.erm_route_no)=RM.internal_route_cd)	where RM.route_id is null' ); 
+        SET @query = CONCAT('CREATE or replace VIEW vw_missing_route as select erm_route_no from ', depotdb,  '.etm_route_master R	left outer join internal_route_map RM on (','concat(\'', depotdb, '\',R.erm_route_no)=RM.internal_route_cd) inner join etmtoload L on (concat(\'',depotdb, '\',R.erm_route_no)=L.etmroute)	where RM.route_id is null' ); 
         select @query; 
 
         PREPARE stmt from @query; 
@@ -43,7 +43,7 @@ begin
             END IF;
             set @id = 0;
             
-            /*select depot_cd, route_cd;*/
+            select depot_cd, depotdb, route_cd;
             
             call save_route(
                 @id
@@ -57,11 +57,12 @@ begin
                 
 
 
-            insert into stage(stage_name, route_id, internal_stage_cd)
-            select T.ert_stage_name, @id, T.ERT_STAGE_CODE
-            from etm_route_tran T 
-            where ert_route_no=route_cd
-            order by cast(T.ert_stage_no as unsigned);
+            	set @stqry = CONCAT('insert into stage(stage_name, route_id, internal_stage_cd, is_via, sequence) select distinct T.ert_stage_name,', @id ,', T.ERT_STAGE_CODE, (T.ert_stage_name=T.ERT_ROUTE_VIA), @rownum := @rownum +1 as rank from ', depotdb, '.etm_route_tran T, (select @rownum :=0) r where ert_route_no=\'',route_cd, '\' order by cast(T.ert_stage_no as unsigned)') ;
+        	select @stqry; 
+
+        	PREPARE stmt from @stqry; 
+        	EXECUTE stmt; 
+		DEALLOCATE PREPARE stmt; 
             
             
         end loop get_missing_route;

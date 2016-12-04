@@ -13,7 +13,7 @@ var db = require('db');
 var admin = require('admin');
 var logger = require('logger').getLogger();
 var async = require('async');
-var _ = require('underscore');
+var _ = require('lodash');
 var gm = require('googlemaps');
 var fs = require('fs');
 var morgan = require('morgan');
@@ -231,12 +231,22 @@ app.post('/api/route/', function(req, res) {
 		});
 	});	
 
-    route.startStopId = route.stages[0].stops[0].onwardStop.id;
-	var start_stop_name = route.stages[0].stops[0].onwardStop.name;
-    var stageLength = route.stages.length - 1
-    var stopLength = route.stages[stageLength].stops.length - 1
-    route.endStopId = route.stages[stageLength].stops[stopLength].onwardStop.id;
-	var end_stop_name = route.stages[stageLength].stops[stopLength].onwardStop.name;
+	var firstFilledStage = _.find(route.stages,function(sg){
+		return !(_.isEmpty(sg.stops)) ;
+	});
+	var lastFilledStage = _.findLast(route.stages,function(sg){
+		return !(_.isEmpty(sg.stops)) ;
+	});
+
+    route.startStopId = (_.first(firstFilledStage.stops)).onwardStop.id;
+    var start_stop_name = (_.first(firstFilledStage.stops)).onwardStop.name;
+	//var start_stop_name = route.stages[0].stops[0].onwardStop.name;
+    //var stageLength = route.stages.length - 1
+    //var stopLength = route.stages[stageLength].stops.length - 1
+    route.endStopId = (_.last(lastFilledStage.stops)).onwardStop.id;
+    var end_stop_name = (_.last(lastFilledStage.stops)).onwardStop.name;
+//route.stages[stageLength].stops[stopLength].onwardStop.id;
+	//var end_stop_name = route.stages[stageLength].stops[stopLength].onwardStop.name;
 
     var stop_sequence = 1;
     route.stages.forEach(function(stage) {

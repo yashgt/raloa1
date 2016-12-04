@@ -408,14 +408,15 @@ create procedure save_stage(
 	, IN in_route_id int
 	, IN in_stage_name varchar(255)
     , in in_is_via int
+	, in in_sequence int
 )
 begin
 if id > 0 then
 update stage
-set stage_name=in_stage_name, is_via=in_is_via
+set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
 where stage_id=id;
 else
-INSERT INTO stage(stage_name, route_id) VALUES (in_stage_name, in_route_id);
+INSERT INTO stage(stage_name, route_id,sequence) VALUES (in_stage_name, in_route_id, in_sequence);
 set id = LAST_INSERT_ID() ;
 end if;
 end//
@@ -519,15 +520,25 @@ begin
 	, PS.name as return_stop_name
 	, coalesce(FS.distance, 0) as return_distance
 	, S.is_station as is_station
+	, SG.sequence
 	, RS.sequence
 	from route R
-	left outer join routestop RS on (RS.route_id=R.route_id )	
+	inner join stage SG on (
+		SG.route_id=R.route_id
+		or
+		SG.stage_id=0 and exists (select 1 from routestop where stage_id=SG.stage_id and route_id=R.route_id)
+		)
+        left outer join routestop RS on (RS.route_id=R.route_id and RS.stage_id=SG.stage_id )
+
+/*	left outer join routestop RS on (RS.route_id=R.route_id )	*/
 	left outer join stop S on (RS.stop_id=S.stop_id)	
+/*
 	inner join stage SG on (
 		(SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
 		or
 		(RS.stage_id =0 and SG.stage_id=0)
 	)
+*/
 	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
 	
 	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
@@ -537,7 +548,8 @@ begin
 	
 	where R.route_id=in_route_id
 	/*order by coalesce(SG.stage_id,0)*1000 + coalesce(RS.sequence, 0);*/
-        order by coalesce(RS.sequence,SG.stage_id*1000);
+        /*order by coalesce(RS.sequence,SG.stage_id*1000);*/
+        order by SG.sequence, coalesce(RS.sequence,0);
 	
 	select T.trip_id
 	, T.fleet_id as fleet_id
