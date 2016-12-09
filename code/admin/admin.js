@@ -145,6 +145,7 @@ exports.getRouteDetail = function(route_id, callback){
                 []
             ]
         };
+	logger.trace("Results {0}",JSON.stringify(results));
 
         results[0].forEach(
             function(route) {
@@ -223,6 +224,13 @@ exports.getRouteDetail = function(route_id, callback){
 		);
 		results[3].forEach(
 			function(rst){
+				[0,1].forEach( function(dir) {
+					var trip = _.find(routeDetail.trips[dir], function(tr){ return tr.tripId==rst.trip_id; })
+					if(trip) {
+						trip.stops[''+rst.stop_id+''] = rst.time;
+					}
+				});
+/*
 				rst.tripId = rst.trip_id;
 				//Check if this is onward trip
 				var idx = _.sortedIndex(routeDetail.trips[0], rst,'tripId');
@@ -237,6 +245,7 @@ exports.getRouteDetail = function(route_id, callback){
 						trip.stops[''+rst.stop_id+''] = rst.time;					
 					}
 				}
+*/
 			}
 		);
 		
