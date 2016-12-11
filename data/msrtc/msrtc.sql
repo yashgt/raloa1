@@ -81,5 +81,8 @@ where
 
 ;
 
-select 26111 + 35325
+create index idx_r_r on msrtc.listofroutes(route_no);
+create index idx_sor_rn on msrtc.listofstopsonroutes(route_no);
+create index idx_sor_sc on msrtc.listofstopsonroutes(bus_stop_cd);
+create index idx_s_sc on msrtc.listofstops(bus_stop_cd);
 
