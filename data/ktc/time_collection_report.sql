@@ -1,7 +1,7 @@
 	select 
 	R.route_id as route_id
 	, convert(R.route_id, char(10)) as route_name
-    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
+    , concat('"',(select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id),'"') as internal_route_cd
 	, coalesce(S1.name
                 , (select SG.stage_name 
                 from stage SG 
