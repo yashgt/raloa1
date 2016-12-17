@@ -19,6 +19,7 @@
     "geolib": "^2.0.21",
     "google-transliterate": "^0.1.0",
     "googlemaps": "^0.1.9",
+    "lodash": "^4.17.2",
     "log4js": "*",
     "moment": "*",
     "morgan": "~1.6.1",

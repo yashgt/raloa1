@@ -332,7 +332,7 @@ begin
 				from stage SG 
 				where SG.route_id=R.route_id 
 				and SG.stage_id=(select max(SG1.stage_id) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
-, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=7 limit 1) * 8
+, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id limit 1) * 8
 | (select case count(*) when 0 then 0 else 1 end from internal_route_map where route_id=R.route_id limit 1) * 4 
 | (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id limit 1) * 2 
 | (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id limit 1)
@@ -408,14 +408,15 @@ create procedure save_stage(
 	, IN in_route_id int
 	, IN in_stage_name varchar(255)
     , in in_is_via int
+	, in in_sequence int
 )
 begin
 if id > 0 then
 update stage
-set stage_name=in_stage_name, is_via=in_is_via
+set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
 where stage_id=id;
 else
-INSERT INTO stage(stage_name, route_id) VALUES (in_stage_name, in_route_id);
+INSERT INTO stage(stage_name, route_id,sequence) VALUES (in_stage_name, in_route_id, in_sequence);
 set id = LAST_INSERT_ID() ;
 end if;
 end//
@@ -519,11 +520,25 @@ begin
 	, PS.name as return_stop_name
 	, coalesce(FS.distance, 0) as return_distance
 	, S.is_station as is_station
+	, SG.sequence
 	, RS.sequence
 	from route R
-	left outer join routestop RS on (RS.route_id=R.route_id )	
+	inner join stage SG on (
+		SG.route_id=R.route_id
+		or
+		SG.stage_id=0 and exists (select 1 from routestop where stage_id=SG.stage_id and route_id=R.route_id)
+		)
+        left outer join routestop RS on (RS.route_id=R.route_id and RS.stage_id=SG.stage_id )
+
+/*	left outer join routestop RS on (RS.route_id=R.route_id )	*/
 	left outer join stop S on (RS.stop_id=S.stop_id)	
-	inner join stage SG on (SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+/*
+	inner join stage SG on (
+		(SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+		or
+		(RS.stage_id =0 and SG.stage_id=0)
+	)
+*/
 	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
 	
 	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
@@ -532,7 +547,9 @@ begin
 	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
 	
 	where R.route_id=in_route_id
-	order by SG.stage_id*1000 + coalesce(RS.sequence, 0);
+	/*order by coalesce(SG.stage_id,0)*1000 + coalesce(RS.sequence, 0);*/
+        /*order by coalesce(RS.sequence,SG.stage_id*1000);*/
+        order by SG.sequence, coalesce(RS.sequence,0);
 	
 	select T.trip_id
 	, T.fleet_id as fleet_id
