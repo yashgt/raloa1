@@ -1,0 +1,1116 @@
+route_id,route_name,internal_route_cd,start_stop_name,end_stop_name,direction,departure_time,arrival_time
+1,1,prv33,Panaji KTC Bus Stand,Satre,return,07:00:00,09:22:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,08:35:00,09:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,08:40:00,09:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,08:50:00,09:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,08:55:00,09:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:00:00,10:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:10:00,10:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:15:00,10:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:15:00,10:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:15:00,10:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:20:00,10:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:25:00,10:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:25:00,10:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:30:00,10:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:35:00,10:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:35:00,10:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:40:00,10:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:40:00,10:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:45:00,10:48:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:50:00,10:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,09:55:00,10:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:00:00,11:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:05:00,11:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:05:00,11:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:10:00,11:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:15:00,11:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:15:00,11:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:20:00,11:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:25:00,11:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:30:00,11:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:30:00,11:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:40:00,11:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:45:00,11:48:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:50:00,11:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,10:55:00,11:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:00:00,12:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:10:00,12:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:20:00,12:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:25:00,12:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:25:00,12:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:30:00,12:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:40:00,12:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:45:00,12:48:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,11:50:00,12:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:00:00,13:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:10:00,13:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:20:00,13:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:25:00,13:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:30:00,13:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:35:00,13:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:40:00,13:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,12:50:00,13:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:00:00,14:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:05:00,14:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:10:00,14:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:15:00,14:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:20:00,14:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:25:00,14:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:25:00,14:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:35:00,14:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:40:00,14:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:45:00,14:48:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:50:00,14:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,13:55:00,14:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:00:00,15:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:10:00,15:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:15:00,15:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:15:00,15:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:20:00,15:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:20:00,15:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:30:00,15:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:40:00,15:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:45:00,15:48:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:50:00,15:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,14:55:00,15:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:00:00,16:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:05:00,16:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:05:00,16:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:10:00,16:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:15:00,16:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:20:00,16:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:25:00,16:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:30:00,16:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:35:00,16:38:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:40:00,16:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:50:00,16:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,15:55:00,16:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:00:00,17:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:05:00,17:08:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:10:00,17:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:15:00,17:18:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:20:00,17:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:25:00,17:28:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:30:00,17:33:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:40:00,17:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,16:50:00,17:53:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,17:00:00,18:03:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,17:10:00,18:13:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,17:20:00,18:23:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,17:40:00,18:43:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,17:55:00,18:58:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,05:40:00,06:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,06:00:00,07:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,06:20:00,07:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,06:30:00,07:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,06:40:00,07:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,06:50:00,07:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,07:00:00,08:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,07:10:00,08:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,07:20:00,08:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,07:30:00,08:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,07:40:00,08:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:00:00,09:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:20:00,09:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:30:00,09:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:40:00,09:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:50:00,09:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,08:55:00,09:55:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:00:00,10:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:05:00,10:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:10:00,10:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:15:00,10:15:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:20:00,10:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:20:00,10:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:25:00,10:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:30:00,10:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:35:00,10:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:40:00,10:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:45:00,10:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,09:50:00,10:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:00:00,11:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:05:00,11:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:10:00,11:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:10:00,11:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:20:00,11:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:30:00,11:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:35:00,11:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:35:00,11:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:40:00,11:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:45:00,11:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:45:00,11:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,10:50:00,11:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:00:00,12:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:10:00,12:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:10:00,12:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:20:00,12:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:30:00,12:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:40:00,12:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,11:50:00,12:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:00:00,13:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:10:00,13:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:15:00,13:15:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:20:00,13:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:25:00,13:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:25:00,13:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:30:00,13:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:40:00,13:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:45:00,13:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,12:50:00,13:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:00:00,14:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:10:00,14:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:20:00,14:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:25:00,14:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:25:00,14:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:30:00,14:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:40:00,14:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,13:50:00,14:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:00:00,15:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:05:00,15:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:10:00,15:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:20:00,15:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:25:00,15:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:30:00,15:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:35:00,15:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:40:00,15:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:40:00,15:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:45:00,15:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:50:00,15:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,14:55:00,15:55:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:00:00,16:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:05:00,16:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:10:00,16:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:15:00,16:15:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:20:00,16:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:25:00,16:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:30:00,16:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:35:00,16:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:40:00,16:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:45:00,16:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:45:00,16:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:50:00,16:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,15:55:00,16:55:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:00:00,17:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:05:00,17:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:10:00,17:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:15:00,17:15:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:20:00,17:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:25:00,17:25:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:30:00,17:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:35:00,17:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:40:00,17:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:50:00,17:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,16:55:00,17:55:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:00:00,18:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:05:00,18:05:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:10:00,18:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:20:00,18:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:30:00,18:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:40:00,18:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:45:00,18:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,17:50:00,18:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:00:00,19:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:10:00,19:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:20:00,19:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:30:00,19:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:40:00,19:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:45:00,19:45:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,18:50:00,19:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:00:00,20:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:10:00,20:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:15:00,20:15:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:20:00,20:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:30:00,20:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:35:00,20:35:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:40:00,20:40:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:50:00,20:50:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,19:55:00,20:55:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,20:00:00,21:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,20:10:00,21:10:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,20:20:00,21:20:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,20:30:00,21:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,21:00:00,22:00:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,21:30:00,22:30:00
+2,2,pnj20,prv57,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,22:00:00,23:00:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,06:30:00,07:27:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,06:45:00,07:42:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,07:00:00,07:57:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,07:15:00,08:12:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,07:40:00,08:37:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,08:15:00,09:12:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,08:25:00,09:22:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,08:30:00,09:27:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,18:05:00,19:02:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,18:25:00,19:22:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,18:35:00,19:32:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,18:45:00,19:42:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,19:00:00,19:57:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,19:15:00,20:12:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,19:30:00,20:27:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,19:45:00,20:42:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,20:00:00,20:57:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,20:15:00,21:12:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,20:35:00,21:32:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,20:55:00,21:52:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,21:40:00,22:37:00
+3,3,pnj55,Panaji KTC Bus Stand,Vasco Market,onward,22:00:00,22:57:00
+4,4,pnj22,prv62,Panaji KTC Bus Stand,Harbour Vasco,return,,
+5,5,pnj12,prv7,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,20:45:00,22:14:00
+6,6,vsg51,Vasco KTC Bus Stand,Polem Goa-K'tak Border,onward,19:00:00,21:58:00
+6,6,vsg51,Vasco KTC Bus Stand,Polem Goa-K'tak Border,return,05:40:00,08:38:00
+7,7,prv147,Panaji KTC Bus Stand,Banda,return,,
+8,8,prv37,Panaji KTC Bus Stand,Zarme,onward,11:15:00,13:01:00
+9,9,,Panaji KTC Bus Stand,Mandrem,return,,
+10,10,pnj105,prv80,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,return,,
+11,11,vsg6,Sada Vasco,Akhada,return,,
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,06:45:00,08:06:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,07:35:00,08:56:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,07:45:00,09:06:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,08:25:00,09:46:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,11:00:00,12:21:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,11:15:00,12:36:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,11:30:00,12:51:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,11:45:00,13:06:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,12:15:00,13:36:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,12:45:00,14:06:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,13:45:00,15:06:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,15:15:00,16:36:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,16:25:00,17:46:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,17:00:00,18:21:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,17:20:00,18:41:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,17:40:00,19:01:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,17:50:00,19:11:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,19:10:00,20:31:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,onward,19:50:00,21:11:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,06:15:00,07:27:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,07:00:00,08:12:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,07:20:00,08:32:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,07:50:00,09:02:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,08:10:00,09:22:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,09:05:00,10:17:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,09:30:00,10:42:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,12:15:00,13:27:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,13:00:00,14:12:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,13:15:00,14:27:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,14:00:00,15:12:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,14:55:00,16:07:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,15:40:00,16:52:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,17:45:00,18:57:00
+12,12,vsg29,Vasco KTC Bus Stand,Ponda KTC Bus Stand,return,19:00:00,20:12:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,onward,08:15:00,09:19:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,onward,16:50:00,17:54:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,onward,17:30:00,18:34:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,15:05:00,16:10:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,15:20:00,16:25:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,15:45:00,16:50:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,15:50:00,16:55:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,19:20:00,20:25:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,20:05:00,21:10:00
+13,13,vsg1,prv1,Harbour Vasco,Panaji KTC Bus Stand,return,20:10:00,21:15:00
+14,14,vsg19,Harbour Vasco,Devsu,onward,17:05:00,19:33:00
+14,14,vsg19,Harbour Vasco,Devsu,return,07:00:00,09:27:00
+15,15,,Vasco KTC Bus Stand,Pedne  KTC Bus Stand,return,,
+16,16,,Vasco KTC Bus Stand,Hedode,return,,
+17,17,vsg43,Panaji KTC Bus Stand,Sonal,return,,
+18,18,vsg23,Vasco KTC Bus Stand,Sonal,onward,11:30:00,13:51:00
+18,18,vsg23,Vasco KTC Bus Stand,Sonal,return,14:15:00,16:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,06:00:00,07:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,06:15:00,07:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,06:30:00,07:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,07:00:00,08:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,07:20:00,08:26:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,07:45:00,08:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,08:15:00,09:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,08:30:00,09:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,09:00:00,10:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,09:15:00,10:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,09:30:00,10:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,10:00:00,11:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,10:15:00,11:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,10:30:00,11:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,10:45:00,11:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,10:45:00,11:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,11:00:00,12:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,11:30:00,12:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,11:45:00,12:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,12:00:00,13:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,12:30:00,13:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,13:00:00,14:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,13:15:00,14:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,13:45:00,14:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,14:15:00,15:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,14:45:00,15:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,15:00:00,16:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,15:30:00,16:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,16:00:00,17:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,16:30:00,17:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,18:00:00,19:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,18:30:00,19:36:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,19:00:00,20:06:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,19:20:00,20:26:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,19:45:00,20:51:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,20:15:00,21:21:00
+19,19,vsg22,Vasco KTC Bus Stand,Margao KTC Bus Stand,onward,20:40:00,21:46:00
+20,20,vsg34,Vasco KTC Bus Stand,Assolda ,onward,16:25:00,17:42:00
+20,20,vsg34,Vasco KTC Bus Stand,Assolda ,return,07:00:00,08:44:00
+21,21,vsg31,Harbour Vasco,Margao City,onward,16:45:00,17:53:00
+21,21,vsg31,Harbour Vasco,Margao City,onward,17:10:00,18:18:00
+22,22,vsg7,Vasco KTC Bus Stand,Belgaum Bus Stand,onward,15:20:00,21:08:00
+22,22,vsg7,Vasco KTC Bus Stand,Belgaum Bus Stand,onward,17:30:00,23:18:00
+22,22,vsg7,Vasco KTC Bus Stand,Belgaum Bus Stand,return,08:30:00,14:19:00
+22,22,vsg7,Vasco KTC Bus Stand,Belgaum Bus Stand,return,10:45:00,16:34:00
+23,23,vsg20,Vasco KTC Bus Stand,Hedode,onward,11:15:00,13:31:00
+23,23,vsg20,Vasco KTC Bus Stand,Hedode,return,14:15:00,16:31:00
+24,24,vsg36,Vasco KTC Bus Stand,Sawantwadi Bus stand,onward,14:25:00,17:22:00
+24,24,vsg36,Vasco KTC Bus Stand,Sawantwadi Bus stand,onward,19:00:00,21:57:00
+24,24,vsg36,Vasco KTC Bus Stand,Sawantwadi Bus stand,return,06:35:00,09:41:00
+24,24,vsg36,Vasco KTC Bus Stand,Sawantwadi Bus stand,return,18:00:00,21:06:00
+25,25,prv159,Panaji KTC Bus Stand,Usap,onward,18:15:00,20:09:00
+25,25,prv159,Panaji KTC Bus Stand,Usap,return,06:30:00,08:23:00
+26,26,prv4,Panaji KTC Bus Stand,Quitla,return,,
+27,27,prv6,Panaji KTC Bus Stand,Miramar,return,,
+28,28,prv8,Panaji KTC Bus Stand,Madel ferry,return,,
+29,29,prv10,Panaji KTC Bus Stand,Calvi,return,,
+30,30,prv11,Panaji KTC Bus Stand,Goljuem,return,,
+32,32,prv12,Panaji KTC Bus Stand,Amadi,return,,
+34,34,pnj95,prv68,Panaji KTC Bus Stand,Harambol,onward,13:30:00,15:00:00
+34,34,pnj95,prv68,Panaji KTC Bus Stand,Harambol,onward,19:30:00,21:00:00
+34,34,pnj95,prv68,Panaji KTC Bus Stand,Harambol,return,06:40:00,08:10:00
+34,34,pnj95,prv68,Panaji KTC Bus Stand,Harambol,return,16:00:00,17:30:00
+35,35,prv16,Panaji KTC Bus Stand,Morjim Tem,onward,12:15:00,13:43:00
+35,35,prv16,Panaji KTC Bus Stand,Morjim Tem,onward,18:15:00,19:43:00
+35,35,prv16,Panaji KTC Bus Stand,Morjim Tem,return,07:15:00,08:43:00
+35,35,prv16,Panaji KTC Bus Stand,Morjim Tem,return,15:15:00,16:43:00
+36,36,prv18,Panaji KTC Bus Stand,Keri,onward,10:40:00,12:27:00
+36,36,prv18,Panaji KTC Bus Stand,Keri,onward,18:00:00,19:47:00
+36,36,prv18,Panaji KTC Bus Stand,Keri,return,07:05:00,08:51:00
+36,36,prv18,Panaji KTC Bus Stand,Keri,return,13:15:00,15:01:00
+37,37,prv20,Panaji KTC Bus Stand,Virdi,return,,
+38,38,prv21,Panaji KTC Bus Stand,Hivrem,return,07:10:00,09:52:00
+41,41,,Panaji KTC Bus Stand,Hivrem,return,,
+44,44,prv28,Panaji KTC Bus Stand,Dhumashe,onward,18:50:00,20:10:00
+44,44,prv28,Panaji KTC Bus Stand,Dhumashe,return,07:15:00,08:33:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,onward,08:15:00,09:15:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,onward,12:30:00,13:30:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,onward,15:45:00,16:45:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,return,09:25:00,10:25:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,return,12:50:00,13:50:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,return,14:05:00,15:05:00
+45,45,pnj37,vsg24,prv78,Panaji KTC Bus Stand,Sakhali KTC Bus Stand,return,17:00:00,18:00:00
+46,46,prv29,Panaji KTC Bus Stand,Morlem,onward,18:30:00,19:45:00
+46,46,prv29,Panaji KTC Bus Stand,Morlem,return,07:30:00,08:45:00
+47,47,prv90,Panaji KTC Bus Stand,Velguem,return,,
+49,49,,Panaji KTC Bus Stand,Shigne,return,,
+51,51,prv42,Panaji KTC Bus Stand,Hivrem,return,10:45:00,12:47:00
+52,52,prv101,Valpoi Bazaar,Ustem,onward,14:05:00,14:23:00
+52,52,prv101,Valpoi Bazaar,Ustem,onward,20:00:00,20:18:00
+52,52,prv101,Valpoi Bazaar,Ustem,return,06:50:00,07:08:00
+52,52,prv101,Valpoi Bazaar,Ustem,return,15:00:00,15:18:00
+54,54,prv111,Ponda KTC Bus Stand,Margao KTC Bus Stand,onward,07:45:00,09:02:00
+55,55,prv119,Ponda KTC Bus Stand,Bicholim KTC Bus Stand,onward,16:50:00,17:58:00
+55,55,prv119,Ponda KTC Bus Stand,Bicholim KTC Bus Stand,return,14:40:00,16:01:00
+56,56,prv30,Panaji KTC Bus Stand,Caranzol,onward,11:00:00,13:20:00
+56,56,prv30,Panaji KTC Bus Stand,Caranzol,return,15:00:00,17:18:00
+57,57,prv155,Panaji KTC Bus Stand,Ibrampur,onward,12:20:00,14:02:00
+57,57,prv155,Panaji KTC Bus Stand,Ibrampur,onward,18:10:00,19:52:00
+57,57,prv155,Panaji KTC Bus Stand,Ibrampur,return,07:15:00,08:55:00
+57,57,prv155,Panaji KTC Bus Stand,Ibrampur,return,15:00:00,16:23:00
+59,59,pnj104,mrg140,prv114,Panaji KTC Bus Stand,Valpoi KTC Bus Stand,return,,
+60,60,prv157,Panaji KTC Bus Stand,Nanora,onward,11:45:00,13:39:00
+60,60,prv157,Panaji KTC Bus Stand,Nanora,return,14:30:00,16:24:00
+61,61,pnj84,prv158,Mapusa  KTC Bus Stand,Fatorpa,onward,08:30:00,10:24:00
+61,61,pnj84,prv158,Mapusa  KTC Bus Stand,Fatorpa,return,11:30:00,13:24:00
+62,62,prv121,Panaji KTC Bus Stand,Quitla,return,18:50:00,19:38:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,onward,07:35:00,07:49:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,onward,11:35:00,11:49:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,onward,13:10:00,13:24:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,onward,18:15:00,18:29:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,onward,20:30:00,20:44:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,return,07:00:00,07:14:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,return,08:25:00,08:39:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,return,12:30:00,12:44:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,return,14:30:00,14:44:00
+64,64,pnj56,prv123,Mapusa  KTC Bus Stand,Badem,return,18:40:00,18:54:00
+65,65,pnj65,mrg102,prv55,Panaji KTC Bus Stand,Karwar Bus Stand,onward,12:30:00,16:03:00
+65,65,pnj65,mrg102,prv55,Panaji KTC Bus Stand,Karwar Bus Stand,return,16:45:00,20:25:00
+66,66,,Panaji KTC Bus Stand,Advoi,onward,18:20:00,19:43:00
+66,66,,Panaji KTC Bus Stand,Advoi,return,06:45:00,08:08:00
+67,67,prv79,Panaji KTC Bus Stand,Ashwem Beach,onward,17:30:00,19:15:00
+67,67,prv79,Panaji KTC Bus Stand,Ashwem Beach,return,07:30:00,09:15:00
+68,68,prv73,Panaji KTC Bus Stand,Betul,onward,18:30:00,20:11:00
+68,68,prv73,Panaji KTC Bus Stand,Betul,return,07:30:00,09:16:00
+69,69,mrg54,Ponda KTC Bus Stand,Savoi,return,,
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,08:55:00,09:14:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,10:00:00,10:19:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,11:45:00,12:04:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,13:15:00,13:34:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,14:45:00,15:04:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,16:45:00,17:04:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,onward,18:00:00,18:19:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,return,08:30:00,08:49:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,return,09:20:00,09:39:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,return,12:15:00,12:34:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,return,13:45:00,14:04:00
+70,70,prv128,Mapusa  KTC Bus Stand,Baga,return,17:15:00,17:34:00
+71,71,prv63,Panaji KTC Bus Stand,Curchorem - Savordem KTC Bus Stand,return,,
+72,72,vsg12,Panaji KTC Bus Stand,Shiroda Market,return,,
+73,73,vsg37,Ponda KTC Bus Stand,Kudchire,return,,
+74,74,,Bicholim KTC Bus Stand,Ponda KTC Bus Stand,onward,07:30:00,08:51:00
+74,74,,Bicholim KTC Bus Stand,Ponda KTC Bus Stand,onward,14:40:00,16:01:00
+74,74,,Bicholim KTC Bus Stand,Ponda KTC Bus Stand,return,09:10:00,10:18:00
+74,74,,Bicholim KTC Bus Stand,Ponda KTC Bus Stand,return,17:15:00,18:23:00
+75,75,prv15,Panaji KTC Bus Stand,Harambol,onward,13:35:00,15:12:00
+75,75,prv15,Panaji KTC Bus Stand,Harambol,return,16:00:00,17:37:00
+76,76,prv17,Panaji KTC Bus Stand,Keri,Vijaydurga,onward,18:00:00,19:43:00
+76,76,prv17,Panaji KTC Bus Stand,Keri,Vijaydurga,return,08:20:00,09:34:00
+78,78,prv23,Kala Academy,Nanora,onward,17:50:00,20:34:00
+78,78,prv23,Kala Academy,Nanora,return,07:00:00,09:42:00
+79,79,prv25,Panaji KTC Bus Stand,Sinquirem,return,09:50:00,11:10:00
+80,80,prv26,Panaji KTC Bus Stand,Madel ferry,return,,
+81,81,prv27,Panaji KTC Bus Stand,Saptakoteshwar, Narve,return,,
+83,83,prv34,Panaji Market,Mapusa  KTC Bus Stand,return,,
+84,84,pnj5,Panaji KTC Bus Stand,Badem,return,08:25:00,09:08:00
+85,85,prv36,Panaji KTC Bus Stand,Kumbharwada,onward,18:20:00,20:26:00
+85,85,prv36,Panaji KTC Bus Stand,Kumbharwada,return,06:45:00,08:51:00
+86,86,prv38,Panaji Market,Naneli,onward,11:50:00,13:56:00
+86,86,prv38,Panaji Market,Naneli,onward,18:00:00,20:06:00
+86,86,prv38,Panaji Market,Naneli,return,06:45:00,08:55:00
+86,86,prv38,Panaji Market,Naneli,return,14:15:00,16:25:00
+87,87,prv40,Kala Academy,Surla,onward,18:00:00,20:27:00
+87,87,prv40,Kala Academy,Surla,return,06:45:00,09:16:00
+88,88,prv41,Panaji KTC Bus Stand,Sal,onward,13:00:00,14:24:00
+88,88,prv41,Panaji KTC Bus Stand,Sal,onward,19:20:00,20:44:00
+88,88,prv41,Panaji KTC Bus Stand,Sal,return,07:30:00,08:53:00
+88,88,prv41,Panaji KTC Bus Stand,Sal,return,15:00:00,16:23:00
+89,89,prv43,Panaji KTC Bus Stand,Keri,return,,
+90,90,prv54,Panaji KTC Bus Stand,Ker,onward,10:15:00,12:30:00
+90,90,prv54,Panaji KTC Bus Stand,Ker,return,12:45:00,14:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,08:35:00,09:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,08:40:00,09:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,08:45:00,09:57:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,08:50:00,10:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,08:55:00,10:07:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:05:00,10:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:10:00,10:22:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:15:00,10:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:20:00,10:32:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:25:00,10:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:30:00,10:42:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:35:00,10:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:40:00,10:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:50:00,11:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,09:55:00,11:07:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:00:00,11:12:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:15:00,11:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:20:00,11:32:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:25:00,11:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:40:00,11:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:45:00,11:57:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,10:50:00,12:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:00:00,12:12:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:15:00,12:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:25:00,12:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:30:00,12:42:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:45:00,12:57:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,11:55:00,13:07:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:00:00,12:54:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:10:00,13:22:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:15:00,13:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:25:00,13:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:35:00,13:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,12:45:00,13:57:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:05:00,14:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:15:00,14:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:25:00,14:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:35:00,14:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:40:00,14:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,13:55:00,15:07:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:00:00,15:12:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:05:00,15:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:10:00,15:22:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:15:00,15:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:20:00,15:32:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:40:00,15:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:50:00,16:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,14:55:00,16:07:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:05:00,16:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:05:00,16:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:15:00,16:27:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:25:00,16:37:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:30:00,16:42:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:30:00,16:42:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:35:00,16:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:35:00,16:47:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:40:00,16:52:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:50:00,17:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,15:50:00,17:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,17:05:00,18:17:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,17:20:00,18:32:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,17:30:00,18:42:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,onward,17:50:00,19:02:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,06:00:00,07:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,06:20:00,07:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,06:40:00,07:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,07:00:00,08:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,07:20:00,08:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,07:25:00,08:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,07:35:00,08:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,07:45:00,08:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,08:00:00,09:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,08:05:00,09:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,08:20:00,09:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,08:40:00,09:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,08:45:00,09:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:00:00,10:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:05:00,10:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:10:00,10:14:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:15:00,10:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:25:00,10:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:30:00,10:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:40:00,10:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:50:00,10:54:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,09:55:00,10:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:00:00,11:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:05:00,11:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:10:00,11:14:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:15:00,11:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:25:00,11:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:35:00,11:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:45:00,11:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,10:50:00,11:54:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,11:00:00,12:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,11:20:00,12:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,11:30:00,12:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,11:40:00,12:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,11:55:00,12:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:05:00,13:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:15:00,13:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:25:00,13:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:35:00,13:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:45:00,13:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,12:55:00,13:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:05:00,14:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:15:00,14:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:25:00,14:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:35:00,14:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:45:00,14:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,13:55:00,14:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:05:00,15:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:15:00,15:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:25:00,15:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:35:00,15:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:45:00,15:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,14:55:00,15:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:05:00,16:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:10:00,16:14:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:20:00,16:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:30:00,16:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:40:00,16:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,15:50:00,16:54:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,16:00:00,17:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,16:25:00,17:29:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,16:30:00,17:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,16:35:00,17:39:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,16:45:00,17:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,17:15:00,18:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,17:30:00,18:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,17:50:00,18:54:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,18:00:00,19:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,18:20:00,19:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,18:30:00,19:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,18:40:00,19:44:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,18:55:00,19:59:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,19:05:00,20:09:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,19:20:00,20:24:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,19:30:00,20:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,19:45:00,20:49:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,20:00:00,21:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,20:15:00,21:19:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,20:30:00,21:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,21:00:00,22:04:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,21:30:00,22:34:00
+92,92,pnj58,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,22:00:00,23:04:00
+94,94,pnj51,prv61,Panaji KTC Bus Stand,Verna Titan,onward,16:30:00,17:21:00
+94,94,pnj51,prv61,Panaji KTC Bus Stand,Verna Titan,onward,16:40:00,17:31:00
+94,94,pnj51,prv61,Panaji KTC Bus Stand,Verna Titan,return,17:15:00,17:56:00
+94,94,pnj51,prv61,Panaji KTC Bus Stand,Verna Titan,return,17:30:00,18:11:00
+95,95,pnj10,prv59,Panaji KTC Bus Stand,Kalay,onward,17:55:00,20:25:00
+95,95,pnj10,prv59,Panaji KTC Bus Stand,Kalay,return,07:00:00,09:15:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,onward,08:25:00,10:27:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,onward,09:45:00,11:47:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,onward,12:45:00,14:47:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,onward,17:45:00,19:47:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,return,06:45:00,08:56:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,return,11:30:00,13:41:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,return,12:30:00,14:41:00
+96,96,pnj1,prv66,Panaji KTC Bus Stand,Sawantwadi Bus stand,return,15:30:00,17:41:00
+97,97,pnj103,prv67,Panaji KTC Bus Stand,Valpoi KTC Bus Stand,return,,
+98,98,mrg66,Panaji KTC Bus Stand,Mollem,return,,
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,07:45:00,08:13:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,09:30:00,09:58:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,11:40:00,12:08:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,13:40:00,14:08:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,15:40:00,16:08:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,17:10:00,17:38:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,onward,19:05:00,19:33:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,08:40:00,09:09:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,10:50:00,11:19:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,12:40:00,13:09:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,14:40:00,15:09:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,16:20:00,16:49:00
+99,99,prv83,Mapusa  KTC Bus Stand,Calvi,return,18:30:00,18:59:00
+100,100,prv39,Panaji KTC Bus Stand,Advoi,onward,11:20:00,13:15:00
+100,100,prv39,Panaji KTC Bus Stand,Advoi,onward,17:00:00,18:55:00
+101,101,prv71,Panaji KTC Bus Stand,Advoi,return,,
+102,102,prv72,Panaji Market,Mapusa  KTC Bus Stand,return,,
+104,104,prv75,Panaji KTC Bus Stand,Mandrem,onward,17:15:00,18:46:00
+104,104,prv75,Panaji KTC Bus Stand,Mandrem,return,06:45:00,08:17:00
+105,105,prv77,Panaji KTC Bus Stand,Valpoi KTC Bus Stand,return,07:40:00,09:27:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,onward,07:50:00,08:14:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,onward,11:30:00,11:54:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,onward,12:50:00,13:14:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,onward,18:05:00,18:29:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,onward,19:45:00,20:09:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,return,07:00:00,07:24:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,return,08:25:00,08:49:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,return,12:10:00,12:34:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,return,13:30:00,13:54:00
+106,106,prv82,Mapusa  KTC Bus Stand,Camurlim Khairat,return,18:50:00,19:14:00
+109,109,prv85,Panaji Market,Camurlim Khairat,return,08:25:00,09:22:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,07:15:00,07:30:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,08:15:00,08:30:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,09:30:00,09:45:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,13:45:00,14:00:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,14:45:00,15:00:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,15:45:00,16:00:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,16:35:00,16:50:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,17:25:00,17:40:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,18:15:00,18:30:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,onward,20:05:00,20:20:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,06:45:00,07:00:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,07:35:00,07:50:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,08:35:00,08:50:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,09:50:00,10:05:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,14:05:00,14:20:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,15:05:00,15:20:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,15:05:00,15:20:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,17:45:00,18:00:00
+110,110,prv87,Bicholim KTC Bus Stand,Poira,return,18:35:00,18:50:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,07:00:00,07:26:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,08:30:00,08:56:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,10:30:00,10:56:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,12:10:00,12:36:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,15:30:00,15:56:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,onward,17:30:00,17:56:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,07:30:00,07:57:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,09:00:00,09:27:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,11:35:00,12:02:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,12:45:00,13:12:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,16:35:00,17:02:00
+111,111,prv89,Mapusa  KTC Bus Stand,Amadi,return,18:10:00,18:37:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,16:05:00,17:12:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,16:25:00,17:32:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,18:30:00,19:37:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,19:30:00,20:37:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,20:15:00,21:22:00
+113,113,pnj24,prv91,Panaji KTC Bus Stand,Ponda KTC Bus Stand,onward,21:40:00,22:47:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,06:30:00,06:54:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,08:50:00,09:14:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,12:20:00,12:44:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,14:45:00,15:09:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,15:35:00,15:59:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,onward,17:50:00,18:14:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,07:45:00,08:10:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,10:10:00,10:35:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,13:30:00,13:55:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,15:40:00,16:05:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,16:40:00,17:05:00
+114,114,prv94,Bicholim KTC Bus Stand,Madel ferry,return,20:00:00,20:25:00
+123,123,prv96,Panaji KTC Bus Stand,Bicholim KTC Bus Stand,onward,13:45:00,14:57:00
+123,123,prv96,Panaji KTC Bus Stand,Bicholim KTC Bus Stand,return,10:50:00,12:02:00
+124,124,prv32,Panaji KTC Bus Stand,Hivrem,return,,
+125,125,prv99,Valpoi KTC Bus Stand,Caranzol,onward,13:15:00,13:50:00
+125,125,prv99,Valpoi KTC Bus Stand,Caranzol,return,15:00:00,15:35:00
+126,126,pnj38,Sakhali KTC Bus Stand,Keri,onward,13:25:00,14:30:00
+127,127,prv103,Ponda KTC Bus Stand,Verna Cipla,onward,07:45:00,08:42:00
+127,127,prv103,Ponda KTC Bus Stand,Verna Cipla,return,17:45:00,18:42:00
+128,128,prv104,Ponda KTC Bus Stand,Volvoi,onward,19:30:00,20:22:00
+128,128,prv104,Ponda KTC Bus Stand,Volvoi,return,06:30:00,07:28:00
+129,129,,Valpoi KTC Bus Stand,Advoi,onward,13:45:00,14:09:00
+129,129,,Valpoi KTC Bus Stand,Advoi,return,06:45:00,07:09:00
+130,130,prv109,Valpoi KTC Bus Stand,Satre,onward,17:00:00,17:48:00
+130,130,prv109,Valpoi KTC Bus Stand,Satre,return,17:30:00,18:18:00
+131,131,prv112,Valpoi KTC Bus Stand,Hivrem,onward,15:30:00,16:12:00
+131,131,prv112,Valpoi KTC Bus Stand,Hivrem,onward,19:00:00,19:42:00
+131,131,prv112,Valpoi KTC Bus Stand,Hivrem,return,14:15:00,14:57:00
+131,131,prv112,Valpoi KTC Bus Stand,Hivrem,return,16:15:00,16:57:00
+132,132,prv113,Valpoi KTC Bus Stand,Zarme,onward,13:45:00,14:02:00
+132,132,prv113,Valpoi KTC Bus Stand,Zarme,onward,18:45:00,19:02:00
+132,132,prv113,Valpoi KTC Bus Stand,Zarme,return,08:00:00,08:17:00
+132,132,prv113,Valpoi KTC Bus Stand,Zarme,return,13:55:00,14:12:00
+133,133,prv116,Valpoi KTC Bus Stand,Panaji Market,onward,07:40:00,09:46:00
+134,134,prv117,Valpoi KTC Bus Stand,Velguem,onward,20:00:00,20:17:00
+134,134,prv117,Valpoi KTC Bus Stand,Velguem,return,06:45:00,07:03:00
+134,134,prv117,Valpoi KTC Bus Stand,Velguem,return,07:10:00,07:28:00
+135,135,prv118,Panaji KTC Bus Stand,Margao KTC Bus Stand,onward,07:30:00,09:50:00
+138,138,pnj134,Bicholim KTC Bus Stand,Varpal,onward,13:45:00,14:03:00
+138,138,pnj134,Bicholim KTC Bus Stand,Varpal,return,06:55:00,07:13:00
+138,138,pnj134,Bicholim KTC Bus Stand,Varpal,return,14:05:00,14:23:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,09:30:00,09:46:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,09:40:00,09:56:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,10:15:00,10:31:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,10:30:00,10:46:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,10:50:00,11:06:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,11:00:00,11:16:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,13:30:00,13:46:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,15:25:00,15:41:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,16:00:00,16:16:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,16:20:00,16:36:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,16:50:00,17:06:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,17:35:00,17:51:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,18:00:00,18:16:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,18:05:00,18:21:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,onward,21:30:00,21:46:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,10:20:00,10:35:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,11:20:00,11:35:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,11:30:00,11:45:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,16:00:00,16:15:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,16:50:00,17:05:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,17:00:00,17:15:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,17:25:00,17:40:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,18:30:00,18:45:00
+141,141,,Panaji KTC Bus Stand,Mapusa  KTC Bus Stand,return,18:35:00,18:50:00
+142,142,prv129,Narve Ferry,Ponda KTC Bus Stand,onward,08:10:00,09:50:00
+143,143,prv132,Mapusa  KTC Bus Stand,Bicholim KTC Bus Stand,onward,12:55:00,13:33:00
+143,143,prv132,Mapusa  KTC Bus Stand,Bicholim KTC Bus Stand,onward,13:05:00,13:43:00
+143,143,prv132,Mapusa  KTC Bus Stand,Bicholim KTC Bus Stand,return,19:30:00,20:08:00
+144,144,prv133,Panaji KTC Bus Stand,Bicholim KTC Bus Stand,return,08:40:00,09:42:00
+144,144,prv133,Panaji KTC Bus Stand,Bicholim KTC Bus Stand,return,09:20:00,10:22:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,onward,07:20:00,07:58:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,onward,09:20:00,09:58:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,onward,14:30:00,15:08:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,onward,16:40:00,17:18:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,onward,18:30:00,19:08:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,return,08:25:00,09:04:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,return,12:25:00,13:04:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,return,15:35:00,16:14:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,return,17:40:00,18:19:00
+145,145,prv135,Bicholim KTC Bus Stand,Mapusa  KTC Bus Stand,return,20:30:00,21:09:00
+146,146,prv136,Mapusa  KTC Bus Stand,Varpal,onward,19:55:00,20:41:00
+148,148,prv84,Panaji KTC Bus Stand,Madlamaz,onward,10:20:00,11:50:00
+148,148,prv84,Panaji KTC Bus Stand,Madlamaz,return,12:30:00,13:58:00
+149,149,prv144,Panaji KTC Bus Stand,Ozari,return,,
+150,150,prv146,Panaji KTC Bus Stand,Korgao,return,09:05:00,10:37:00
+151,151,prv151,Panaji KTC Bus Stand,Zarme,return,14:00:00,16:06:00
+152,152,prv56,Panaji KTC Bus Stand,Vijaydurg,return,,
+153,153,prv31,Panaji KTC Bus Stand,Shigne,onward,17:50:00,19:59:00
+153,153,prv31,Panaji KTC Bus Stand,Shigne,return,06:50:00,08:59:00
+167,167,vsg64,Calangute,Dabolim Airport,onward,10:30:00,11:44:00
+167,167,vsg64,Calangute,Dabolim Airport,return,14:00:00,15:14:00
+168,168,pnj55,mrg86,vsg60,prv88,Panaji KTC Bus Stand,Vasco KTC Bus Stand,return,,
+169,169,,Panaji KTC Bus Stand,Margao KTC Bus Stand,return,,
+170,170,prv38,Vasco KTC Bus Stand,Harambol,return,,
+171,171,,Panaji KTC Bus Stand,Margao City,onward,05:40:00,06:47:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,06:00:00,07:07:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,06:10:00,07:17:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,06:30:00,07:37:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,06:40:00,07:47:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,06:50:00,07:57:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:00:00,08:07:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:10:00,08:17:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:20:00,08:27:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:30:00,08:37:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:40:00,08:47:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,07:50:00,08:57:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:00:00,09:07:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:05:00,09:12:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:05:00,09:12:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:10:00,09:17:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:15:00,09:22:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:15:00,09:22:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:20:00,09:27:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:25:00,09:32:00
+171,171,,Panaji KTC Bus Stand,Margao City,onward,08:30:00,09:37:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,18:20:00,19:24:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,18:30:00,19:34:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,18:40:00,19:44:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,18:50:00,19:54:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,18:55:00,19:59:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:00:00,20:04:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:05:00,20:09:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:10:00,20:14:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:15:00,20:19:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:20:00,20:24:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:30:00,20:34:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:40:00,20:44:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,19:50:00,20:54:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,20:00:00,21:04:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,20:15:00,21:19:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,21:00:00,22:04:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,21:30:00,22:34:00
+171,171,,Panaji KTC Bus Stand,Margao City,return,22:00:00,23:04:00
+172,172,pnj13,vsg7,Panaji KTC Bus Stand,Belgavi CBT,return,,
+173,173,pnj11,Panaji KTC Bus Stand,Belgavi CBT,return,,
+174,174,pnj3,Panaji KTC Bus Stand,Polytechnic,return,,
+175,175,pnj27,Panaji KTC Bus Stand,Shemecheadvan,return,,
+176,176,pnj94,vsg30,Panaji KTC Bus Stand,Harambol,return,,
+182,182,pnj42,Panaji KTC Bus Stand,Vengurla Bus Stand,return,,
+183,183,pnj21,Panaji KTC Bus Stand,Kudchire,return,,
+184,184,pnj93,Panaji KTC Bus Stand,Bicholim KTC Bus Stand,return,,
+185,185,pnj48,Panaji KTC Bus Stand,Rivem,return,,
+186,186,pnj39,vsg30,Panaji KTC Bus Stand,Harambol,return,,
+187,187,pnj65,Panaji KTC Bus Stand,Tiracol,return,,
+188,188,pnj9,Panaji KTC Bus Stand,Akhada,return,,
+189,189,pnj18,Harambol,Mapusa  KTC Bus Stand,return,,
+190,190,pnj33,Panaji KTC Bus Stand,Calangute,return,,
+191,191,pnj43,Panaji KTC Bus Stand,Surla,return,,
+192,192,pnj44,Panaji KTC Bus Stand,Volvoi,return,,
+193,193,pnj45,Panaji KTC Bus Stand,Ponda KTC Bus Stand,return,,
+194,194,pnj46,Panaji KTC Bus Stand,Vagurme,return,,
+195,195,pnj59,Volvoi,Marcel KTC Bus Stand,return,,
+196,196,pnj62,Ponda KTC Bus Stand,Codli Tisk,return,,
+197,197,pnj63,Panaji KTC Bus Stand,Pethecha Wada,return,,
+198,198,pnj67,Panaji KTC Bus Stand,Amthane,return,,
+199,199,pnj68,Panaji KTC Bus Stand,Virdi,return,,
+200,200,pnj78,Panaji KTC Bus Stand,Malvan Bus Stand,return,,
+201,201,pnj87,Panaji KTC Bus Stand,Saptakoteshwar, Narve,return,,
+202,202,pnj111,prv49,Panaji KTC Bus Stand,Belgavi CBT,return,,
+203,203,pnj68,Panaji KTC Bus Stand,Virdi,return,,
+204,204,pnj41,Panaji KTC Bus Stand,Mopa,return,,
+205,205,,Panaji KTC Bus Stand,Verna Titan,return,,
+206,206,pnj53,Panaji KTC Bus Stand,Rivem,return,,
+207,207,pnj60,Panaji KTC Bus Stand,Tambdi Surla,return,,
+208,208,pnj64,Panaji KTC Bus Stand,Pedne  KTC Bus Stand,return,,
+209,209,pnj73,Amthane,Panaji KTC Bus Stand,return,,
+210,210,pnj82,Panaji KTC Bus Stand,Malpon,return,,
+211,211,pnj86,Virdi,Panaji KTC Bus Stand,return,,
+212,212,pnj90,Panaji KTC Bus Stand,Calangute,return,,
+213,213,pnj91,Calangute,Mapusa  KTC Bus Stand,return,,
+214,214,,Panaji KTC Bus Stand,Keri,return,,
+215,215,,Panaji KTC Bus Stand,Harambol,return,,
+216,216,pnj102,Ponda KTC Bus Stand,Shirshire,return,,
+217,217,pnj109,prv5,Bicholim KTC Bus Stand,Ponda KTC Bus Stand,return,,
+218,218,pnj110,Bicholim KTC Bus Stand,Margao KTC Bus Stand,return,,
+219,219,pnj124,Raj Bhavan,Malpon,return,,
+220,220,pnj125,prv44,Panaji KTC Bus Stand,Ponda KTC Bus Stand,return,,
+221,221,pnj25,Ponda KTC Bus Stand,Agastipur Shimer,return,,
+222,222,pnj26,mrg121,Ponda KTC Bus Stand,Undir,return,,
+223,223,pnj71,Curchorem - Savordem KTC Bus Stand,Solye,return,,
+224,224,,Panaji KTC Bus Stand,Usap,return,,
+225,225,,Panaji KTC Bus Stand,Nanachipani,return,,
+226,226,,Panaji Market,Keri,return,,
+227,227,,Panaji KTC Bus Stand,Pissurlem,return,,
+228,228,,Panaji Market,Ustem,return,,
+229,229,,Panaji Market,Mapusa  KTC Bus Stand,return,,
+441,441,pnj70,CODLI TISK,PANJIM,return,,
+442,442,pnj85,FATORPHA,PANAJI,return,,
+443,443,pnj61,PANAJI,TAMDI SURLA,return,,
+444,444,pnj19,PANJIM,BADAMI,return,,
+445,445,pnj98,HOSPET,T.B.DAM JUN,return,,
+446,446,pnj14,PANJIM,LOLYEM,return,,
+447,447,pnj99,PANJIM,MANGALORE,return,,
+448,448,pnj36,PANJIM,VIRDI,return,,
+449,449,mrg91,PARVEM,KARASHIMOLL,return,,
+450,450,mrg128,BETUL,CUNCOLIM,return,,
+451,451,mrg87,BICHOLIM,TITAN IND,return,,
+452,452,mrg19,CAB-DE-RAM,CANACONA,return,,
+453,453,mrg75,CAB-DE-RAM,PANAJI,return,,
+454,454,mrg112,CANACONA,CAJUMOL,return,,
+455,455,mrg113,CANACONA,DHAPOT,return,,
+456,456,mrg47,CANACONA,KUSKEM,return,,
+457,457,mrg94,MATAMOL,VAGON,return,,
+458,458,mrg92,AGONDA,DEVBAG,return,,
+459,459,mrg41,CANACONA,POPAIDANDA,return,,
+460,460,mrg48,CANACONA,TUDAL,return,,
+461,461,mrg60,CANACONA,VAL,return,,
+462,462,mrg145,TILAMOL,TUDLA,return,,
+463,463,mrg90,COTTA,PANAJI,return,,
+464,464,mrg129,CUNCOLIM,VELHIM,return,,
+465,465,mrg11,CURCHOREM,KARWAR,return,,
+466,466,mrg52,CURCHOREM,MOLLEM,return,,
+467,467,mrg155,G. M. C,PILLAR,return,,
+468,468,mrg148,CURCHOREM,PANAJI,return,,
+469,469,mrg120,CURCHOREM,PONDA,return,,
+470,470,mrg40,CURCHOREM,SALJINI,return,,
+471,471,mrg83,TILAMOL,TANKI,return,,
+472,472,mrg143,CURCHOREM P,SHRISTAL,return,,
+473,473,mrg111,DHUMANE,DEVBAG,return,,
+474,474,mrg95,POLAKADE,GULE,return,,
+475,475,mrg119,GPLYTCURCHO,PONDA,return,,
+476,476,mrg88,IND EST,MARGAO,return,,
+477,477,mrg80,SHIRIDAO,AGNEL ASHRA,return,,
+478,478,mrg69,NAKERI,KHANGINNI,return,,
+479,479,mrg151,KARMALI RLY,BAINGINIM,return,,
+480,480,mrg81,KHARGAL,MARGAO,return,,
+481,481,mrg127,KOLHAPUR,S.WADI,return,,
+482,482,mrg108,KUSKEM,MARGAO,return,,
+483,483,mrg6,MARGAO,SANVORDEM,return,,
+484,484,mrg68,MARGAO,BELGAUM CBT,return,,
+485,485,mrg131,MARGAO,BETUL,return,,
+486,486,mrg33,SARVAN,BICHOLIM,return,,
+487,487,mrg20,MARGAO,CAB-DE-RAM,return,,
+488,488,mrg49,MARGAO,CANACONA,return,,
+489,489,mrg107,MARGAO,CANACONA,return,,
+490,490,mrg85,MARGAO,CANACONA,return,,
+491,491,mrg7,MARGAO,CBT BELGAUM,return,,
+492,492,mrg96,MARGAO,CIPLA,return,,
+493,493,mrg89,MARGAO,COTTA,return,,
+494,494,mrg118,CURCH/GPLYT,CURCHOREM,return,,
+495,495,mrg31,MARGAO,CURCHOREM,return,,
+496,496,mrg154,MARGAO,CURCHOREM,return,,
+497,497,mrg17,MARGAO,CURCHOREM,return,,
+498,498,mrg45,MARGAO,CURCHOREM,return,,
+499,499,mrg110,CUNCOLIM,PANZORKONI,return,,
+500,500,mrg97,MARGAO,DHARMAPUR,return,,
+501,501,mrg98,MARGAO,DIKARPAL,return,,
+502,502,mrg99,MARGAO,DON CROSS,return,,
+503,503,mrg9,MARGAO,TORKI,return,,
+504,504,mrg36,SHIPYARD,CHICALIM,return,,
+505,505,mrg37,TITAN,PERINI,return,,
+506,506,mrg5,MARGAO,HUBLI,return,,
+507,507,mrg23,MARGAO,KALAY,return,,
+508,508,mrg50,MARGAO,KALAY,return,,
+509,509,mrg25,MARGAO,KAMARKHAN,return,,
+510,510,mrg10, MARGAO,KARWAR,return,,
+511,511,mrg14,MARGAO,KHARGAL,return,,
+512,512,mrg4,MARGAO,KHANAPUR,return,,
+513,513,mrg126,MARGAO,KOLHAPUR,return,,
+514,514,mrg3,MARGAO,KOLHAPUR,return,,
+515,515,mrg18,MARGAO,KUSKEM,return,,
+516,516,mrg141,MARGAO,LOLYEM,return,,
+517,517,mrg114,MARGAO,MACAZAN,return,,
+518,518,mrg70,MARGAO,MALVAN,return,,
+519,519,mrg2,MARGAO,MIRAJ,return,,
+520,520,mrg13,MARGAO,MOLKOPON,return,,
+521,521,mrg15,MARGAO,MOLLEM,return,,
+522,522,mrg22,NETURLIM,VICHUNDRE X,return,,
+523,523,mrg135,MARGAO,OLD GOA,return,,
+524,524,mrg35,MARGAO,PANAJI,return,,
+525,525,mrg147,MARGAO,PANAJI,return,,
+526,526,mrg67,MARGAO,PANAJI,return,,
+527,527,mrg34,MARGAO,PANAJI,return,,
+528,528,mrg109,MARGAO,PANAJI,return,,
+529,529,mrg39,MARGAO,PANJIM,return,,
+530,530,mrg38,MARGAO,PANJIM,return,,
+531,531,mrg29,MARGAO,PANJIM,return,,
+532,532,mrg21,MARGAO,PIRLA,return,,
+533,533,mrg24,MARGAO,PONDA,return,,
+534,534,mrg153,MARGAO,PONDA,return,,
+535,535,mrg44,MARGAO,POPAIDANDO,return,,
+536,536,mrg115,ILKAL,BAGALKOT,return,,
+537,537,mrg12,MARGAO,RAJBAG,return,,
+538,538,mrg28,MARGAO,SAL,return,,
+539,539,mrg62,MARGAO,SALJINI,return,,
+540,540,mrg26,MARGAO,SAVAI S.BHT,return,,
+541,541,mrg8,MARGAO,NALA,return,,
+542,542,mrg32,MARGAO,SHIRODA,return,,
+543,543,mrg55,MARGAO,SULKARNA,return,,
+544,544,mrg63,MARGAO,TIRVAN,return,,
+545,545,mrg30,MARGAO,TUDAL,return,,
+546,546,mrg104,MARGAO,FAJENTAR,return,,
+547,547,mrg82,AQUEM,VADDEM,return,,
+548,548,mrg144,MARGAO,VAIPOI,return,,
+549,549,mrg64,MARGAO,VAL,return,,
+550,550,mrg61,AGONDA CHRC,KARASHUMOL,return,,
+551,551,mrg100,MARGAO,VASCO,return,,
+552,552,mrg117,MARGAO,VASCO,return,,
+553,553,mrg71,MARGAO,VASCO,return,,
+554,554,mrg42,MARGAO,VASCO,return,,
+555,555,mrg43,MARGAO,VASCO,return,,
+556,556,mrg156,MARGAO,VELLIM,return,,
+557,557,mrg101,MARGAO,VELSAO,return,,
+558,558,mrg65,MARGAO,VP BETALBAT,return,,
+559,559,mrg103,MOLKOPON,DONBOSCO,return,,
+560,560,mrg73,MOLKOPON,PANAJI,return,,
+561,561,mrg78,MOLLEM,PANAJI,return,,
+562,562,mrg76,VALKINI,BARAJANTISK,return,,
+563,563,mrg142,BAMBOLIM,CANACONA,return,,
+564,564,mrg146,MARGAO,LOLYE,return,,
+565,565,mrg138,PANAJI,OLD GOA,return,,
+566,566,mrg16,PANJIM,CUNCOLIEN,return,,
+567,567,mrg58,PANJIM,SHIRODA,return,,
+568,568,mrg105,PANJIM,UNIVERCITY,return,,
+569,569,mrg27,PANJIM,ZARME,return,,
+570,570,mrg74,PIRLA,MARGAO,return,,
+571,571,mrg51,PONDA,CURCHUREM,return,,
+572,572,mrg157,PONDA,GMFC DAYANA,return,,
+573,573,mrg53,VAGONA,CODLI TISK,return,,
+574,574,mrg137,PONDA,OLD GOA,return,,
+575,575,mrg93,RAJBAG,KARWAR,return,,
+576,576,mrg106,PIRNI,NUVEM,return,,
+577,577,mrg59,SANVORDEM,SALJINI,return,,
+578,578,mrg77,TIRVAN,PANAJI,return,,
+579,579,mrg46,TT IND.EST.,CUNCOLIEN,return,,
+580,580,mrg57,TT IND.ESTE,SHIRODA,return,,
+581,581,mrg79,TUDAL,PANAJI,return,,
+582,582,mrg84,VADDEM,ASHRAM,return,,
+583,583,mrg72,VAL,PANAJI,return,,
+584,584,mrg1,VASCO,MUDDEBEHAL,return,,
+585,585,mrg136,VASCO,OLD GOA,return,,
+586,586,mrg125,ILKAL,HUNGUND,return,,
+587,587,mrg123,MOLLEM,VASCO,return,,
+588,588,mrg116,SIRVAL,SAKHALIM,return,,
+589,589,mrg130,VELHIM,MARGAO,return,,
+590,590,vsg46,ASSOLDA,BHUTNATH,return,,
+591,591,vsg66,BELGAVI,VASCO,return,,
+592,592,vsg5,HARBOUR,PONDA,return,,
+593,593,vsg32,BAMBOLI GMC,BAMBOLI W/S,return,,
+594,594,vsg41,MARGAO,ASSOLDA,return,,
+595,595,vsg33,MARGAO,BHARADE,return,,
+596,596,vsg49,MARGAO,BICHOLIM,return,,
+597,597,vsg53,PANAJI,LOUTLIM,return,,
+598,598,vsg26,PANAJI,MAPUSA,return,,
+599,599,vsg44,PANAJI,R. COLLEGE,return,,
+600,600,vsg13,VANTE/SWRS,BHIRONDA,return,,
+601,601,vsg55,PANJIM,ALTINOH,return,,
+602,602,vsg14,PONDA,PANAJI,return,,
+603,603,vsg27,SADA,FARMAGUDI,return,,
+604,604,vsg8,SADA,HONNAWAR,return,,
+605,605,vsg40,SADA,VENGURLA,return,,
+606,606,vsg17,SADA,MALWAN,return,,
+607,607,vsg42,SADA,R/COLLEGE,return,,
+608,608,vsg39,SADA,VENGURLA,return,,
+609,609,vsg65,BANDA,CHICALIM,return,,
+610,610,vsg61,VASCO,BHATNA,return,,
+611,611,vsg38,VASCO,BHUTWADI,return,,
+612,612,vsg28,VASCO,CBT BELGAUM,return,,
+613,613,vsg52,VASCO,CIPLA,return,,
+614,614,vsg18,VASCO,HEDODE(TITN,return,,
+615,615,vsg15,VASCO,GOGHALI,return,,
+616,616,vsg45,TAVARGATTI,KUMBHARDA,return,,
+617,617,vsg16,VASCO,KARWAR,return,,
+618,618,vsg35,VASCO,MANDREM,return,,
+619,619,vsg4,VASCO,MARGAOCITY,return,,
+620,620,vsg11,VASCO,KALARE,return,,
+621,621,vsg3,VASCO,MRG(SHUTTLE,return,,
+622,622,vsg21,VASCO,PANAJI,return,,
+623,623,vsg2,VASCO,PNJ(SHUTTLE,return,,
+624,624,vsg47,LONDA,VASCO,return,,
+625,625,vsg10,SANGLI,SHIPYARD,return,,
+626,626,prv3,BICHOLIM,NARVA FERRY,return,,
+627,627,prv126,BOSTORA,PANJIM,return,,
+628,628,prv164,MARKET,HALARNA,return,,
+629,629,prv19,MARKET,KERI,return,,
+630,630,prv24,SONAL TISK,USTE,return,,
+631,631,prv167,MPS/PNJ,HYDERABAD,return,,
+632,632,prv169,PANAJI,BAINGINI PE,return,,
+633,633,prv48,PANAJI,PRV CHAPEL,return,,
+634,634,prv161,PANAJI,BICHOLIM,return,,
+635,635,prv149,PEDNE,PANAJI,return,,
+636,636,prv47,GULBARGABA,PANAJI,return,,
+637,637,prv162,PANAJI,BORALWADA,return,,
+638,638,prv106,GIRI CROSS,HIVRE,return,,
+639,639,prv51,MOLLEM,DHATFARM,return,,
+640,640,prv50,KOLHAPUR,KALE,return,,
+641,641,prv145,PANAJI,KORGAON,return,,
+642,642,prv22,PANAJI,MHADAI,return,,
+643,643,prv46,BHADRAVATI,TALAGUPPA,return,,
+644,644,prv13,VARKHAND,NANACHEPANI,return,,
+645,645,prv35,PANAJI,PIPLAk/BADE,return,,
+646,646,prv14,PANAJI,HARAMBOL,return,,
+647,647,prv52,PANAJI,SAUNDATTI,return,,
+648,648,prv53,PANAJI,GULAKODE,return,,
+649,649,prv2,PANAJI,USAP,return,,
+650,650,prv58,PANAJI,VASCO,return,,
+651,651,prv69,PANJIM,BELGAUM,return,,

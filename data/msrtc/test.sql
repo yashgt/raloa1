@@ -19,21 +19,55 @@ where route_no=288
 order by DEPARTURE_TM;
 
 select * from msrtc.listofroutes;
-select ROUTE_NO, count(*) 
+select ROUTE_NO, BUS_STOP_CD, count(*) 
 from msrtc.listofstopsonroutes
-group by route_no
+group by route_no, BUS_STOP_CD
 order by count(*) desc
 ;
 
 select * from msrtc.listofroutes R 
 left outer join msrtc.listofstopsonroutes RS on R.route_no=RS.ROUTE_NO
-where RS.ROUTE_NO = 107119
+left outer join msrtc.listofstops S on (RS.bus_stop_cd=S.bus_stop_cd)
+where RS.ROUTE_NO = 15390
 order by stop_seq
 ;
 
+desc routestop;
+
+select *
+from routestop RS
+inner join route R on (RS.route_id=R.route_id and R.fleet_id=7);
+
+insert into routestop (stop_id, peer_stop_id, route_id, stage_id, sequence)
+select 
+count(*)
+/*
+St.stop_id
+,null
+,Rt.route_id
+,Sg.stage_id
+,RS.stop_seq
+*/
+from msrtc.listofroutes R
+inner join msrtc.listofstopsonroutes RS on (R.route_no=RS.route_no)
+inner join msrtc.listofstops S on (RS.bus_stop_cd=S.bus_stop_cd)
+inner join stop St on (St.code=S.bus_stop_cd)
+inner join internal_route_map M on (M.internal_route_cd=R.route_no)
+inner join route Rt on (M.route_id=Rt.route_id)
+inner join stage Sg on (Sg.route_id is null)
+/*order by Rt.route_id, RS.stop_seq*/
+
+;
+create index idx_sor_rn on msrtc.listofstopsonroutes(route_no);
+create index idx_sor_sc on msrtc.listofstopsonroutes(bus_stop_cd);
+create index idx_s_sc on msrtc.listofstops(bus_stop_cd);
+
+insert into stage(stage_name) values('Stages');
+
+
 select *
 from msrtc.listofstops S 
-where bus_stop_cd='RNKDMN'
+where bus_stop_cd='RNKDMN';
 select R.* from msrtc.listofroutes R 
 left outer join msrtc.listoftrips T on R.route_no=T.ROUTE_NO
 where T.ROUTE_NO is null

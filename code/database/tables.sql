@@ -63,8 +63,8 @@ CREATE TABLE if not exists stop
 (
 stop_id int AUTO_INCREMENT,
 fleet_id int comment 'Fleet to which the stop belongs. This is always the Root Fleet',
-code varchar(255),
-location_status int default 2,
+code varchar(255) comment 'Internal code of the stop',
+location_status int default 2 comment 'Bitmap for 1:Geocoded, 2:Located by Google Places, 4:Located correctly, 8:Google location rectified',
 latitude float(10),
 longitude float(10),
 name varchar(255),
@@ -75,7 +75,9 @@ locality varchar(500),
 stop_loc_id int,
 peer_stop_id int,
 user_id int,
-PRIMARY KEY (stop_id)
+g_place_id varchar(255) comment 'ID of the place indexed by Google',
+g_place_name varchar(255) comment 'Name of the place given by Google'
+,PRIMARY KEY (stop_id)
 ,FOREIGN KEY (fleet_id) REFERENCES fleet(fleet_id)
 ,FOREIGN KEY (peer_stop_id) REFERENCES stop(stop_id)
 ,foreign key (user_id) references user(user_id)
