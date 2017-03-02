@@ -235,7 +235,7 @@
                                                             <li ng-repeat="stage in routeDetail.stages" ui-tree-node data-type="stage" >
                                                                 <div class="group-title angular-ui-tree-handle" ng-show="!stage.editing"  ng-class="{'chosen_stage':currentStage==stage}">
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="chooseStage(stage);"><i class="glyphicon glyphicon-pushpin"></i></a>
-                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeStage(stage)" ng-show="stage.stops.length>0"><i class="glyphicon glyphicon-remove"></i></a>
+                                                                    <a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeStage(stage)" ng-show="stage.stops.length==0"><i class="glyphicon glyphicon-remove"></i></a>
                                                                     <a href="" class="btn btn-primary btn-xs pull-right" data-nodrag ng-click="stage.editing=true; routeDetail.isDirty = true;"><i class="glyphicon glyphicon-pencil"></i></a>
                                                                     <div>{{stage.title}}</div>
                                                                 </div>
