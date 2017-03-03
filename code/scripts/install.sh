@@ -31,3 +31,17 @@ sudo npm install minify -g
 sudo yum install unzip
 #unzip google_appengine_1.9.6.zip
 #chmod 755 google_appengine/appcfg.py
+
+sudo yum install perl-devel
+sudo yum install perl-CPAN
+cpan App::cpanminus
+
+wget http://search.cpan.org/CPAN/authors/id/K/KE/KEN/xls2csv-1.06.tar.gz
+gunzip xls2csv-1.06.tar.gz
+tar xvf xls2csv-1.06.tar
+cd xls2csv-1.06
+perl Makefile.PL
+make
+sudo make install
+
+cpanm Locale::Recode Unicode::Map Spreadsheet::ParseExcel Text::CSV_XS
