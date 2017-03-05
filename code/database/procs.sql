@@ -115,8 +115,8 @@ create procedure save_stop(
 	INOUT id int
 	, IN stop_name varchar(200)
     , IN in_internal_stop_cd varchar(200)
-	, IN lat float
-	, IN lon float
+	, IN lat decimal(15,10)
+	, IN lon decimal(15,10)
 	, IN in_fleet_id int
 	, IN in_peer_stop_id int
 	, IN in_user_id int
