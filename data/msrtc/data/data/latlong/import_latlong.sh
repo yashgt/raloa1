@@ -12,6 +12,6 @@ for i in ./*.xls
 do
 	echo "Importing from ${i}"
 	xls2csv -x "${i}" -c a.csv 
-	cat a.csv | sed -n -e '/,[A-Z]\+$/p' | grep -i "Bus terminus" | sed "s/^[0-9]\+\([^,]*,\)\{2\}\"\{0,1\}\([^,\"]*\)\"\{0,1\},[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
+	cat a.csv | sed -n -e '/,[A-Z]\+$/p' | grep -i "Bus terminus" | sed "s/\([^,]*,\)\{2\}\"\{0,1\}\([^,\"]*\)\"\{0,1\},[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
 done
 
