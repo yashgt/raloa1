@@ -115,8 +115,8 @@ create procedure save_stop(
 	INOUT id int
 	, IN stop_name varchar(200)
     , IN in_internal_stop_cd varchar(200)
-	, IN lat float
-	, IN lon float
+	, IN lat decimal(15,10)
+	, IN lon decimal(15,10)
 	, IN in_fleet_id int
 	, IN in_peer_stop_id int
 	, IN in_user_id int
@@ -133,17 +133,20 @@ begin
 		update segment 
 		set is_stale=1
 		where to_stop_id=id or from_stop_id=id;
-		
+	elseif(exists (select 1 from stop where code=in_internal_stop_cd and fleet_id=root_fleet_id)) then
+		update stop
+		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
+		where code=in_internal_stop_cd and fleet_id=root_fleet_id;
 	else /*New or peer stop is being created*/
 		insert into stop(fleet_id, latitude, longitude, name, code, peer_stop_id, user_id) 
 		values ( root_fleet_id, lat, lon, stop_name, in_internal_stop_cd, in_peer_stop_id, in_user_id) ;
 		set id = LAST_INSERT_ID() ;
-		
+	
 		if in_peer_stop_id > 0 then
 			update stop
 			set peer_stop_id=id
 			where stop_id=in_peer_stop_id;		
-		
+	
 		end if;
 	end if;
 end//

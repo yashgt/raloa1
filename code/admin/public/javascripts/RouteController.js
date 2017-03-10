@@ -568,6 +568,8 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		}
 	};
 	$scope.removeStage = function(stage){
+		_.pull($scope.routeDetail.stages, stage);
+            	$scope.routeDetail.isDirty = true;
 		//$scope.routeDetail.stages.splice(
 		//TODO
 	};

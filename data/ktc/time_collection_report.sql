@@ -30,4 +30,3 @@
 	order by R.route_id, direction, departure_time
 limit 100000 ;
 	
-
