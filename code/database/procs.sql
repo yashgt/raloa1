@@ -626,6 +626,7 @@ end//
 drop procedure if exists save_trip//
 create procedure save_trip(
 	  INOUT id int
+	, IN in_trip_name varchar(255)
 	, IN in_calendar_id int  
 	, IN in_direction boolean
 	, IN in_route_id int

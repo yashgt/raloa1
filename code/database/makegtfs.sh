@@ -18,6 +18,16 @@ echo ${database}
 myopts="--user=${user} --password=${password} --database=${database} --host=${host}"
 echo $myopts
 
+if [ ${fleet_id} -eq 7 ] 
+then
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source calendar.sql;" | tr '\t' ',' > ${folder}/calendar.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_route.sql;" | tr '\t' ',' > ${folder}/routes.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_stop.sql;" | tr '\t' ',' > ${folder}/stops.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_trip.sql;" | tr '\t' ',' > ${folder}/trips.txt
+#mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t' ',' > ${folder}/frequencies.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
+else
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source calendar.sql;" | tr '\t' ',' > ${folder}/calendar.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source route.sql;" | tr '\t' ',' > ${folder}/routes.txt
@@ -25,6 +35,7 @@ mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop.sql;" | tr '\t' ',' > 
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trip.sql;" | tr '\t' ',' > ${folder}/trips.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t' ',' > ${folder}/frequencies.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
+fi
 cp feed_info.txt ${folder}/feed_info.txt
 #find ${folder} -name *.txt -empty -type f -delete
 wc -l ${folder}/*.txt | sed -n 's/^[[:space:]]*0 \(.*\)/\1/p' | xargs rm
