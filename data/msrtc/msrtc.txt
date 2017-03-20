@@ -1,0 +1,58 @@
+
+------
+
+data entry
+latlon
+depot
+stop as depot
+Does one stop have many codes?
+
+----
+Hello,
+
+We have analyzed the data and have identified the following issues:
+1: Some routes have no stops
+These are listed in 1_route_with_no_stops.html
+2: Some routes have no trip.
+These are listed in 2_routes_with_no_trips.html
+3: Some routes have the same stop ocurring multiple times in the sequence
+These are listed in 3_route_with_stop_multiple_times.html
+4: Some routes are defined in the orward direction but not in the reverse direction
+These are listed in 4_routes_with_onward_direction_and_no_return.html
+
+Kindly let us know the reason behind the above issues.
+
+Thanks
+---------
+Geocoding
+
+Import only onward routes.
+Geocode endpoints and via points.
+Geocode peer stops.
+Import return routes where endpoints are geocoded.
+
+---------
+Does every trip operate at the same time everyday or are there trips that do not operate on holidays?
+Does each stop on a route mean a single stopping point or can there be multiple stopping points?
+How many bus depots does MSRTC have?
+Does every route belong to one of the depots? We are asking this so that the data entry can be performed from one depot at a time to gradually cover all the routes.
+Is it possible to determine whether a trip is operated by a Luxury Bus or an Ordinary bus?
+------
+Hi,
+
+We have a question regarding the route names:
+
+A route from Panjim to Margao operates trips in onward and return directions. The route has been listed in our GTFS as "Panjim to Margao". If a passenger searches for travel from Margao to Panjim, the Google Map shows him a bus titled "Panjim to Margao". This is confusing for the passenger. He should ideally see "Margao to Panjim" as the trip he is about to take is in the reverse direction.
+
+How do you suggest we handle such a case?
+
+Thanks
+-----
+The data we have received is in a good format for us to start the project. We would be shortly visiting the MSRTC office with our proposal. For the visit to be fruitful, we are listing down the questions we have. We can dicuss these questions over phone with a suitable official of MSRTC.
+
+Does the data contain all routes that are served by MSRTC? We just want to be sure that every route of MSRTC is covered.
+Does every trip operate at the same time everyday or are there trips that do not operate on holidays?
+Does each stop on a route mean a single stopping point or can there be mutiple stopping points?
+How many bus depots does MSRTC have?
+Does every route belong to one of the depots? We are asking this so that the data entry can be performed from one depot at a time to gradually cover all the routes.
+

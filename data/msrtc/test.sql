@@ -68,9 +68,14 @@ insert into stage(stage_name) values('Stages');
 select *
 from msrtc.listofstops S 
 where bus_stop_cd='RNKDMN';
-select R.* from msrtc.listofroutes R 
-left outer join msrtc.listoftrips T on R.route_no=T.ROUTE_NO
-where T.ROUTE_NO is null
+
+select R.* 
+from msrtc1.listofroutes R
+inner join msrtc1.listofstopsonroutes RS on (R.route_no=R.route_no)
+left outer join msrtc1.listoftrips T on (R.route_no=T.ROUTE_NO and RS.bus_stop_cd=T.bus_stop_cd)
+/*where T.ROUTE_NO is null*/
+order by RS.route_no,T.trip_no,RS.stop_seq
+limit 1000
 ;
 
 
@@ -182,3 +187,11 @@ where S.BUS_STOP_NM=case instr(route_name, ' via') when 0 then null else substr(
 ;
 
 select * from stop where fleet_id=7 and name is not null;
+
+select *
+from segment SG
+inner join stop S on ( SG.from_stop_id=S.stop_id or SG.to_stop_id=S.stop_id)
+where S.fleet_id=7
+
+call get_missing_segments(null);
+

@@ -1,0 +1,70 @@
+"name","lat","lon","alt","acc","time","desc","attachments","custom_coords"
+"name","lat","lon","alt","acc","time","desc","attachments","custom_coords"
+"Point 1","18.507292","73.783852","594.53","3.30","2016-12-06T04:03:09Z","<font color=""black""><table width=""100%""><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Length</b></small></td><td align=""center"" valign=""center"">905 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Points</b></small></td><td align=""center"" valign=""center"">4</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Created</b></small></td><td align=""center"" valign=""center"">2016-12-06 09:32:40</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. speed</b></small></td><td align=""center"" valign=""center"">27.5 mi/h</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">All</td><td align=""center"" valign=""center"">Speed > 0</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Avg. speed</b></small></td><td align=""center"" valign=""center"">23.8 mi/h</td><td align=""center"" valign=""center"">23.8 mi/h</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Track time</b></small></td><td align=""center"" valign=""center"">00m:26s</td><td align=""center"" valign=""center"">00m:26s</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Min. altitude</b></small></td><td align=""center"" valign=""center"">1951 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. altitude</b></small></td><td align=""center"" valign=""center"">1952 ft</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">Elevation</td><td align=""center"" valign=""center"">Distance</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Uphill</b></small></td><td align=""center"" valign=""center"">1 ft</td><td align=""center"" valign=""center"">0 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Downhill</b></small></td><td align=""center"" valign=""center"">-1 ft</td><td align=""center"" valign=""center"">0 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Flat</b></small></td><td align=""center"" valign=""center"">0 ft</td><td align=""center"" valign=""center"">905 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Total</b></small></td><td align=""center"" valign=""center"">2 ft</td><td align=""center"" valign=""center"">905 ft</td></tr>
+</table></td></tr></table></font>","",""
+"Point 2","18.508445","73.778140","606.79","3.10","2016-12-06T04:03:43Z","<font color=""black""><table width=""100%""><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Length</b></small></td><td align=""center"" valign=""center"">0.47 mi</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Points</b></small></td><td align=""center"" valign=""center"">8</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Created</b></small></td><td align=""center"" valign=""center"">2016-12-06 09:32:40</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. speed</b></small></td><td align=""center"" valign=""center"">35.4 mi/h</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">All</td><td align=""center"" valign=""center"">Speed > 0</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Avg. speed</b></small></td><td align=""center"" valign=""center"">29.5 mi/h</td><td align=""center"" valign=""center"">29.5 mi/h</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Track time</b></small></td><td align=""center"" valign=""center"">00m:58s</td><td align=""center"" valign=""center"">00m:58s</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Min. altitude</b></small></td><td align=""center"" valign=""center"">1951 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. altitude</b></small></td><td align=""center"" valign=""center"">1991 ft</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">Elevation</td><td align=""center"" valign=""center"">Distance</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Uphill</b></small></td><td align=""center"" valign=""center"">39 ft</td><td align=""center"" valign=""center"">659 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Downhill</b></small></td><td align=""center"" valign=""center"">-1 ft</td><td align=""center"" valign=""center"">0 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Flat</b></small></td><td align=""center"" valign=""center"">0 ft</td><td align=""center"" valign=""center"">1846 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Total</b></small></td><td align=""center"" valign=""center"">40 ft</td><td align=""center"" valign=""center"">2505 ft</td></tr>
+</table></td></tr></table></font>","",""
+"Bavdhan","18.511770","73.771005","611.30","2.70","2016-12-06T04:04:53Z","<font color=""black""><table width=""100%""><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Length</b></small></td><td align=""center"" valign=""center"">1.1 mi</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Points</b></small></td><td align=""center"" valign=""center"">15</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Created</b></small></td><td align=""center"" valign=""center"">2016-12-06 09:32:40</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. speed</b></small></td><td align=""center"" valign=""center"">40.9 mi/h</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">All</td><td align=""center"" valign=""center"">Speed > 0</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Avg. speed</b></small></td><td align=""center"" valign=""center"">31.2 mi/h</td><td align=""center"" valign=""center"">31.2 mi/h</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Track time</b></small></td><td align=""center"" valign=""center"">02m:04s</td><td align=""center"" valign=""center"">02m:04s</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b>Min. altitude</b></small></td><td align=""center"" valign=""center"">1951 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Max. altitude</b></small></td><td align=""center"" valign=""center"">2017 ft</td></tr>
+</table></td></tr><tr><td colspan=""1""><hr></td></tr><tr><td><table width=""100%""><tr><td align=""left"" valign=""center""><small><b></b></small></td><td align=""center"" valign=""center"">Elevation</td><td align=""center"" valign=""center"">Distance</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Uphill</b></small></td><td align=""center"" valign=""center"">67 ft</td><td align=""center"" valign=""center"">1125 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Downhill</b></small></td><td align=""center"" valign=""center"">-13 ft</td><td align=""center"" valign=""center"">0 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Flat</b></small></td><td align=""center"" valign=""center"">0 ft</td><td align=""center"" valign=""center"">4549 ft</td></tr>
+<tr><td align=""left"" valign=""center""><small><b>Total</b></small></td><td align=""center"" valign=""center"">80 ft</td><td align=""center"" valign=""center"">5674 ft</td></tr>
+</table></td></tr></table></font>","",""
+
+"pos","lat","lon","alt","time","speed","bearing","acc","heartRate","cadence","temperature","strides","speed_sensor","custom_coords"
+"1","18.507300","73.785243","594.77","2016-12-06T04:02:42.345Z","0.00","289.19","4.60","","","","","",""
+"2","18.507282","73.784525","594.90","2016-12-06T04:02:51.382Z","9.01","269.30","3.10","","","","","",""
+"3","18.507292","73.783852","594.53","2016-12-06T04:02:58.255Z","10.10","273.55","3.30","","","","","",""
+"4","18.507438","73.782638","594.70","2016-12-06T04:03:08.264Z","12.28","282.88","4.80","","","","","",""
+"5","18.507755","73.781472","595.73","2016-12-06T04:03:17.272Z","15.59","281.57","3.60","","","","","",""
+"6","18.508082","73.780003","598.57","2016-12-06T04:03:27.272Z","15.53","283.72","3.10","","","","","",""
+"7","18.508368","73.778575","604.08","2016-12-06T04:03:37.335Z","15.83","283.21","3.00","","","","","",""
+"8","18.508445","73.778140","606.80","2016-12-06T04:03:40.283Z","15.78","280.41","3.10","","","","","",""
+"9","18.508717","73.776825","612.24","2016-12-06T04:03:49.355Z","16.09","279.32","3.00","","","","","",""
+"10","18.509035","73.775205","612.47","2016-12-06T04:03:59.282Z","18.27","285.15","2.70","","","","","",""
+"11","18.509605","73.773823","614.90","2016-12-06T04:04:08.302Z","16.43","300.58","2.80","","","","","",""
+"12","18.510373","73.772730","612.87","2016-12-06T04:04:17.307Z","14.85","309.23","2.50","","","","","",""
+"13","18.511050","73.771870","611.31","2016-12-06T04:04:26.312Z","11.71","309.81","2.40","","","","","",""
+"14","18.511770","73.771005","611.30","2016-12-06T04:04:36.297Z","13.07","313.71","2.70","","","","","",""
+"15","18.512520","73.770357","610.31","2016-12-06T04:04:46.282Z","6.99","323.82","3.00","","","","","",""
+"16","18.512873","73.770123","609.93","2016-12-06T04:04:56.243Z","3.83","328.27","3.40","","","","","",""
+"17","18.513117","73.770020","609.85","2016-12-06T04:05:05.284Z","4.80","330.63","2.90","","","","","",""
+"18","18.513730","73.769688","609.48","2016-12-06T04:05:15.274Z","9.54","332.55","2.70","","","","","",""
+"19","18.514568","73.769330","610.34","2016-12-06T04:05:25.275Z","10.09","341.87","2.60","","","","","",""
+"20","18.515373","73.769118","614.43","2016-12-06T04:05:35.282Z","8.81","349.57","2.50","","","","","",""
+"21","18.515840","73.769027","616.92","2016-12-06T04:05:41.275Z","7.93","347.86","2.40","","","","","",""

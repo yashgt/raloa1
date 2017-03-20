@@ -4,6 +4,7 @@ create procedure import_msrtc()
 begin
 	declare done integer;
 	declare id integer;
+	declare trip_id integer;
     declare bus_stop_cd varchar(255);
     declare bus_stop_nm varchar(255);
 	declare route_no, route_name, from_stop_cd, till_stop_cd varchar(255);
@@ -14,8 +15,10 @@ begin
 	select S1.bus_stop_cd, S1.bus_stop_nm 
 	from msrtc1.listofstops S1
 	/*import ones that are not already present */
-	left outer join stop S2 use index (idx_stop_code) on (S2.code=S1.bus_stop_cd and S2.fleet_id=7)
-	where S2.stop_id is null   	
+	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)
+	and 1=0
+	/*left outer join stop S2 use index (idx_stop_code) on (S2.code=S1.bus_stop_cd and S2.fleet_id=7)
+	where S2.stop_id is null   	*/
 	;
 
 	declare c_routes cursor for
@@ -38,20 +41,14 @@ begin
 	where R1.from_stop_cd<=R1.till_stop_cd
 */
 	and exists (select 1 from msrtc1.listofstopsonroutes SOR where SOR.route_no=R1.route_no)
-	left outer join route R on ( R.fleet_id=7)
-	left outer join internal_route_map M on (M.route_id=R.route_id and R1.route_no=M.internal_route_cd)
+	left outer join internal_route_map M on (R1.route_no=M.internal_route_cd)
+	left outer join route R on ( M.route_id=R.route_id and R.fleet_id=7)
+	
 	where R.route_id is null
 	limit 500
 	;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
-/*
-	delete 
-	from internal_route_map 
-	where route_id in (select route_id from route where fleet_id=7);
-	delete from route where fleet_id=7;
-    	delete from stop where fleet_id=7;
-*/
 
 
     open c_stops;
@@ -59,7 +56,7 @@ begin
 	set done = false;
         
     get_stops : loop
-
+			select bus_stop_cd, bus_stop_nm;
             fetch c_stops into bus_stop_cd, bus_stop_nm;
             IF done THEN 
                 LEAVE get_stops;
@@ -90,7 +87,7 @@ begin
     IF done THEN 
 		LEAVE get_routes;
     END IF;
-/*	select route_no, route_name, from_stop_cd, till_stop_cd; */
+	select route_no, route_name, from_stop_cd, till_stop_cd; 
 	set @id = 0;
 	call save_route(
 	  @id
@@ -126,6 +123,22 @@ begin
 	and M.internal_route_cd=route_no
 	order by RS.stop_seq
 	;
+
+/*
+	call save_trip(@trip_id, T.trip_no, 1, 0, @id, 7, 0, null, null, null);
+
+	insert into routestoptrip(route_stop_id, trip_id, arrival_tm, departure_tm)
+	select route_stop_id, @trip_id, arrival_tm, departure_tm
+	from route Rt
+	inner join routestop rtst on (Rt.route_id=rtst.route_id)
+	inner join 
+	inner join internal_route_map M on (M.route_id=Rt.route_id)
+	inner join msrtc1.listoftrips T on (M.internal_route_cd=T.route_no and T.bus_stop_cd=St.code)
+	where Rt.route_id=@id
+	;
+*/
+
+
         
 	end loop get_routes;
 
@@ -135,4 +148,5 @@ begin
 	
 end//
 
-/*call import_msrtc()// */
+delimiter //
+call import_msrtc()//
