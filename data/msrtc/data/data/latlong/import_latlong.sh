@@ -2,16 +2,18 @@
 
 rm latlong.sql
 
-for i in ./*.xlsx
+for i in *.xlsx
 do
-	echo "Importing from ${i}"
-	xlsx2csv -s 1 "${i}" | sed -n -e '/,[A-Z]\+$/p' | grep -i "Bus terminus" | sed "s/^\([^,]*,\)\{2\}\([^,]*\),[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
+	j=`echo $i | cut -d'.' -f1`
+	echo "Importing from ${j}"
+	xlsx2csv -s 1 "${i}" | sed -n -e '/,[A-Z]\+$/p' | grep -i "^[^,]*,${j}" | grep -i "Bus terminus" | sed "s/^\([^,]*,\)\{2\}\([^,]*\),[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
 done
 
-for i in ./*.xls
+for i in *.xls
 do
-	echo "Importing from ${i}"
+	j=`echo $i | cut -d'.' -f1`
+	echo "Importing from ${j}"
 	xls2csv -x "${i}" -c a.csv 
-	cat a.csv | sed -n -e '/,[A-Z]\+$/p' | grep -i "Bus terminus" | sed "s/\([^,]*,\)\{2\}\"\{0,1\}\([^,\"]*\)\"\{0,1\},[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
+	cat a.csv | sed -n -e '/,[A-Z]\+$/p' | grep -i "^[^,]*,${j}" | grep -i "Bus terminus" | sed "s/\([^,]*,\)\{2\}\"\{0,1\}\([^,\"]*\)\"\{0,1\},[^,]*,\([^,]*\),\([^,]*\),.*,\([A-Z]\+\)$/set @id=0; call save_stop(@id, '\2', '\5', \3,\4, 7, null, 3);/" >> latlong.sql
 done
 
