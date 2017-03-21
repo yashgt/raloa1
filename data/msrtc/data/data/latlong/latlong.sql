@@ -258,8 +258,8 @@ set @id=0; call save_stop(@id, 'Kalwan', 'KWN', 20.4919833,74.028035, 7, null, 3
 set @id=0; call save_stop(@id, 'Malegaon (Nashik)', 'MLG', 20.5525216,74.5305116, 7, null, 3);
 set @id=0; call save_stop(@id, 'Malegaon(New)', 'MLGAMW', 20.5546733,74.534585, 7, null, 3);
 set @id=0; call save_stop(@id, 'Surgana', 'SRGN', 20.5589232,73.6371631, 7, null, 3);
-set @id=0; call save_stop(@id, 'Satana', 'STNA', 20.5927983,74.2029649, 7, null, 3);
-set @id=0; call save_stop(@id, 'Taharabad', 'TARD', 20.5927983,74.2029649, 7, null, 3);
+set @id=0; call save_stop(@id, 'Satana', 'STNA', 20.595272999999999,74.202734000000007, 7, null, 3);
+set @id=0; call save_stop(@id, 'Taharabad', 'TARD', 20.780732,74.138575000000003, 7, null, 3);
 set @id=0; call save_stop(@id, 'Ravalgaon', 'RVLGN', 20.6156416,74.4024166, 7, null, 3);
 set @id=0; call save_stop(@id, 'Nampur', 'NMUMN', 20.617695,74.402165, 7, null, 3);
 /* Stops provided by osmanabad */
@@ -475,7 +475,7 @@ set @id=0; call save_stop(@id, 'Vairag', 'VRG', 18.0588891,75.7988794, 7, null, 
 set @id=0; call save_stop(@id, 'Kurduvadi', 'KWD', 18.0894613,75.4122444, 7, null, 3);
 set @id=0; call save_stop(@id, 'Barshi', 'BRS', 18.2330335,75.6971435, 7, null, 3);
 set @id=0; call save_stop(@id, 'Jeur', 'JEUR', 18.4038373,75.1955412, 7, null, 3);
-set @id=0; call save_stop(@id, 'Karmala', 'KML', 18.4038373,75.1955412, 7, null, 3);
+set @id=0; call save_stop(@id, 'Karmala', 'KML', 18.403825000000001,75.195537000000002, 7, null, 3);
 /* Stops provided by yavatmal */
 set @id=0; call save_stop(@id, 'Dhanki', 'DNK', 19.5663078,77.8494599, 7, null, 3);
 set @id=0; call save_stop(@id, 'Umarkhed', 'UKHD', 19.6003286,77.6878536, 7, null, 3);
