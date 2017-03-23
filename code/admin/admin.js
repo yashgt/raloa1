@@ -97,11 +97,11 @@ exports.getFleetDetail = function(fleetId, callback){
             }),
             
             routes: results[2].map(function(route) {
-                console.log(_.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','));
+                //console.log(_.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','));
                 return {
                     routeId: route.route_id,
-                    routeNum: route.route_name,
-                    //internalRouteCode: _.isEmpty(route.internal_route_cd) ? [] : route.internal_route_cd.split(','),
+                    routeName: route.route_name,
+                    routeNum: route.internal_route_cd, 
                     st: route.start_stop_name,
                     en: route.end_stop_name,
 					status: route.status
