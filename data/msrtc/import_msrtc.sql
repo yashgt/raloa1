@@ -41,11 +41,12 @@ begin
 	where R1.from_stop_cd<=R1.till_stop_cd
 */
 	and exists (select 1 from msrtc1.listofstopsonroutes SOR where SOR.route_no=R1.route_no)
+	and exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
 	left outer join internal_route_map M on (R1.route_no=M.internal_route_cd)
 	left outer join route R on ( M.route_id=R.route_id and R.fleet_id=7)
 	
 	where R.route_id is null
-	limit 500
+	/*limit 500*/
 	;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
@@ -110,7 +111,7 @@ begin
 	St.stop_id
 	,null
 	,Rt.route_id
-	,0
+	, -1
 	,RS.stop_seq
 	from  
 	route Rt

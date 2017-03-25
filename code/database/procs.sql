@@ -322,8 +322,11 @@ begin
 	
 	select 
 	R.route_id as route_id
-	, convert(R.route_id, char(10)) as route_name
-    /*, (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd*/
+	, case R.route_name='ABC' or R.route_name is null 
+		when true then convert(R.route_id, char(10)) 
+		else R.route_name
+	end as route_name
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
 	, coalesce(S1.name
                 , (select SG.stage_name 
                 from stage SG 
@@ -529,7 +532,7 @@ begin
 	inner join stage SG on (
 		SG.route_id=R.route_id
 		or
-		SG.stage_id=0 and exists (select 1 from routestop where stage_id=SG.stage_id and route_id=R.route_id)
+		SG.stage_id in (0,-1) and exists (select 1 from routestop where stage_id=SG.stage_id and route_id=R.route_id)
 		)
         left outer join routestop RS on (RS.route_id=R.route_id and RS.stage_id=SG.stage_id )
 
