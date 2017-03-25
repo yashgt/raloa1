@@ -43,5 +43,5 @@ wc -l ${folder}/*.txt | sed -n 's/^[[:space:]]*0 \(.*\)/\1/p' | xargs rm
 zip -j -r ${folder}.zip ${folder}/*.txt
 unzip -v ${folder}.zip
 
-feedvalidator.py ${folder} -o ../admin/public/gtfs_validation_results_${fleet_id}.html
+feedvalidator.py ${folder} -l 10000 -o ../admin/public/gtfs_validation_results_${fleet_id}.html
 
