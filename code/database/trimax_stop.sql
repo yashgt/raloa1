@@ -11,7 +11,8 @@ where
 exists 
 	(select 1 
 		from msrtc1.listofstopsonroutes sor 
-		inner join msrtc1.listoftrips Tr on (Tr.route_no=sor.route_no)
+		inner join msrtc1.listoftrips Tr on (Tr.route_no=sor.route_no and sor.bus_stop_cd=Tr.bus_stop_cd)
 		where St.bus_stop_cd=sor.bus_stop_cd
 	)	
+	
 order  by (St.bus_stop_nm) asc;

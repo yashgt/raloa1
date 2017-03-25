@@ -1,3 +1,54 @@
+select T.*,S.stop_id, S.name, St.*, concat(S.latitude,",",S.longitude)
+from msrtc1.listoftrips T
+inner join msrtc1.listofstopsonroutes SOR on (T.bus_stop_cd=SOR.bus_stop_cd and T.route_no=SOR.route_no)
+inner join msrtc1.listofstops St on (SOR.bus_stop_cd=St.bus_stop_cd)
+inner join stop S on (T.bus_stop_cd=S.code)
+where T.trip_no = 'O53909'
+order by T.trip_no, SOR.stop_seq
+;
+
+SELECT 
+distinct
+M.internal_route_cd as route_id
+,'FULLW' as service_id 
+,Tr.trip_no as trip_id
+,'' as trip_short_name
+,0 as direction_id
+FROM route R
+inner join internal_route_map M on (R.route_id=M.route_id)
+inner join msrtc1.listoftrips Tr on (M.internal_route_cd=Tr.route_no)
+where R.fleet_id=7
+and Tr.trip_no='L8357'
+;
+
+select *
+from internal_route_map where internal_route_cd=38545
+
+delete from internal_route_map where internal_route_cd= 90637
+select *
+		from msrtc1.listofstopsonroutes sor 
+		inner join msrtc1.listoftrips Tr on (Tr.route_no=sor.route_no and sor.bus_stop_cd=Tr.bus_stop_cd)
+		/*where sor.route_no=90637*/
+		where 'PLDHID'=sor.bus_stop_cd
+order by Tr.trip_no
+
+
+select R.*
+from msrtc1.listofroutes R
+
+where R.route_no=1836
+
+select *
+from msrtc1.listofroutes R
+where from_stop_cd='AWBCBS' and till_stop_cd='KND';
+
+select SOR.*, S.*, St.latitude, St.longitude
+from msrtc1.listofstopsonroutes SOR
+inner join msrtc1.listofstops S on (SOR.bus_stop_cd=S.bus_stop_cd)
+left outer join stop St on (St.code=S.bus_stop_cd)
+where SOR.route_no=83845
+order by SOR.stop_seq
+;
 /* route with stop multiple times */
 select *
 from msrtc.listofstopsonroutes RS
@@ -19,19 +70,25 @@ left outer join msrtc.listoftrips T on R.route_no=T.ROUTE_NO
 where T.ROUTE_NO is null
 ;
 
+select route_no
+from msrtc1.listofroutes R
+group by route_no
+having count(*)>1
+;
+select count(distinct route_no)
+from msrtc1.listoftrips T;
+
+
+
 /* trips that have the same stop twice at the start or end of route */
-select T1.trip_no, count(*)
+select T1.trip_no, min(T1.route_no) as route_no, SOR1.stop_seq, count(*)
 from
-(
-select trip_no, min(stop_seq) as  min_stop_seq , max(stop_seq)  as max_stop_seq
-from msrtc1.listoftrips T 
-inner join msrtc1.listofstopsonroutes SOR on (T.route_no=SOR.route_no and T.bus_stop_cd=SOR.BUS_STOP_CD)
-group by trip_no
-) as Tr 
+msrtc1.tripsummary as Tr 
 inner join msrtc1.listoftrips T1 on (T1.TRIP_NO=Tr.trip_no)
 inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.BUS_STOP_CD)
-where SOR1.stop_seq=Tr.max_stop_seq 
-group by T1.trip_no
+inner join stop S on (S.code=SOR1.bus_stop_cd and S.fleet_id=7)
+where SOR1.stop_seq=Tr.max_stop_seq or SOR1.stop_seq=Tr.min_stop_seq
+group by T1.trip_no, SOR1.stop_seq
 having count(*) > 1
 ;
 
@@ -39,19 +96,15 @@ having count(*) > 1
 select T1.*, SOR1.stop_seq
 from msrtc1.listoftrips T1
 inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.BUS_STOP_CD)
-where
-T1.trip_no='S568'
-order by SOR1.stop_seq
+inner join stop S on (SOR1.bus_stop_cd=S.code and S.fleet_id=7)
+where T1.IS_BOARDING_STOP=0 and T1.IS_ALIGHTING=0
+order by T1.route_no, T1.trip_no, SOR1.stop_seq
 ;
 
 
-select S1.stop_id, S1.name, S1.latitude, S1.longitude, S2.stop_id, S2.name
-from stop S1
-inner join stop S2 on (S1.latitude=S2.latitude and S1.longitude=S2.longitude and S1.stop_id<>S2.stop_id)
-where S1.fleet_id=0 
-;
-
-select S1.code as stop_1_code, S1.name as stop_1_name
+/*multiple stops at same location */
+select S1.code as stop_1_code
+, S1.name as stop_1_name
 , S2.code as stop_2_code
 , S2.name as stop_2_name
 , st_distance(point(S1.longitude, S1.latitude), point(S2.longitude, S2.latitude)) as distance
@@ -63,22 +116,18 @@ where st_distance(point(S1.longitude, S1.latitude), point(S2.longitude, S2.latit
 and S1.fleet_id=S2.fleet_id
 and S1.fleet_id=7
 and S1.name <= S2.name
+order by S1.latitude, S1.longitude
 ;
 
 
-
-select *,  timediff(T.arrival_tm, T.departure_tm)
+/* departure earlier than arrival */
+select T.*,  timediff(T.arrival_tm, T.departure_tm) time_diff
 from msrtc1.listoftrips T
 inner join stop S on (S.code=T.bus_stop_cd)
 where  T.departure_tm < T.arrival_tm and T.departure_tm <> '00:00:00' 
 and timediff(T.arrival_tm, T.departure_tm) < '12:00:00'
 ;
 
-select *
-from msrtc1.listoftrips T
-where T.trip_no in ('S239893', 'S240182', 'M6124')
-and T.IS_ALIGHTING<0 or T.IS_BOARDING_STOP<0
-;
 
 
 
