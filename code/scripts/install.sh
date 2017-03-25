@@ -2,15 +2,12 @@ sudo yum update
 
 #sudo yum install g++ curl libssl-dev apache1-utils
 #sudo yum install git-core
-sudo yum install git-all
-sudo yum install wget
+sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN
+
 wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-x64.tar.xz
-sudo yum -y install xz
 unxz node-v4.5.0-linux-x64.tar.xz
 tar xvf node-v4.5.0-linux-x64.tar
 
-sudo yum install -y gcc
-sudo yum install -y zip
 
 wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 sudo easy_install --upgrade pytz
@@ -20,28 +17,18 @@ sudo rpm -ivh epel-release-7-5.noarch.rpm
 
 #git clone https://github.com/joyent/node.git
 #sudo yum install mysql-server-core-5.5
-sudo yum install mysql
-sudo yum install ruby
-sudo gem install bundler
-sudo gem install capistrano
-sudo gem install capistrano-node-deploy
 sudo npm install bower -g
 sudo npm install minify -g
 #wget https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.6.zip
-sudo yum install unzip
 #unzip google_appengine_1.9.6.zip
 #chmod 755 google_appengine/appcfg.py
 
-sudo yum install perl-devel
-sudo yum install perl-CPAN
 cpan App::cpanminus
 
-wget http://search.cpan.org/CPAN/authors/id/K/KE/KEN/xls2csv-1.06.tar.gz
-gunzip xls2csv-1.06.tar.gz
-tar xvf xls2csv-1.06.tar
-cd xls2csv-1.06
-perl Makefile.PL
-make
-sudo make install
+wget http://search.cpan.org/CPAN/authors/id/K/KE/KEN/xls2csv-1.06.tar.gz && gunzip xls2csv-1.06.tar.gz && tar xvf xls2csv-1.06.tar
+cd xls2csv-1.06 && perl Makefile.PL && make && sudo make install
 
 cpanm Locale::Recode Unicode::Map Spreadsheet::ParseExcel Text::CSV_XS
+sudo easy_install xlsx2csv
+
+wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 sudo ln -s $HOME/jq-linux64 /usr/bin/jq
