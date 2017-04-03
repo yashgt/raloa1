@@ -2,7 +2,7 @@ sudo yum update
 
 #sudo yum install g++ curl libssl-dev apache1-utils
 #sudo yum install git-core
-sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN
+sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN java-1.8.0-openjdk.x86_64
 
 wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-x64.tar.xz
 unxz node-v4.5.0-linux-x64.tar.xz
@@ -32,3 +32,6 @@ cpanm Locale::Recode Unicode::Map Spreadsheet::ParseExcel Text::CSV_XS
 sudo easy_install xlsx2csv
 
 wget https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 sudo ln -s $HOME/jq-linux64 /usr/bin/jq
+
+cd $HOME
+git clone https://github.com/google/transitfeed.git

@@ -1,4 +1,5 @@
-wget http://maven.conveyal.com.s3.amazonaws.com/org/opentripplanner/otp/0.20.0-SNAPSHOT/otp-0.20.0-20160422.165451-50-shaded.jar
+wget https://repo1.maven.org/maven2/org/opentripplanner/otp/1.1.0/otp-1.1.0-shaded.jar
+#wget http://maven.conveyal.com.s3.amazonaws.com/org/opentripplanner/otp/0.20.0-SNAPSHOT/otp-0.20.0-20160422.165451-50-shaded.jar
 
 #sudo yum update
 #sudo yum install tomcat6 maven2 subversion default-jdk wget iptables tomcat6-examples tomcat6-admin

@@ -17,7 +17,7 @@ echo ${database}
 
 myopts="--user=${user} --password=${password} --database=${database} --host=${host}"
 echo $myopts
-
+date
 if [ ${fleet_id} -eq 7 ] 
 then
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
@@ -37,6 +37,7 @@ mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t'
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
 fi
 cp feed_info.txt ${folder}/feed_info.txt
+date
 #find ${folder} -name *.txt -empty -type f -delete
 wc -l ${folder}/*.txt | sed -n 's/^[[:space:]]*0 \(.*\)/\1/p' | xargs rm
 
