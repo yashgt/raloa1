@@ -133,7 +133,9 @@ begin
 		update segment 
 		set is_stale=1
 		where to_stop_id=id or from_stop_id=id;
-	elseif(exists (select 1 from stop where code=in_internal_stop_cd and fleet_id=root_fleet_id)) then
+	elseif(in_internal_stop_cd is not null
+		and in_internal_stop_cd<>''
+		and exists (select 1 from stop where code=in_internal_stop_cd and fleet_id=root_fleet_id)) then
 		update stop
 		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
 		where code=in_internal_stop_cd and fleet_id=root_fleet_id;
