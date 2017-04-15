@@ -12,10 +12,11 @@ mysql %MYOPTS% -D msrtc1 -e "load data local infile 'data\\data\\ListOfRoutes.cs
 mysql %MYOPTS% -D msrtc1 -e "load data local infile 'data\\data\\ListOfStopsonRoutes.csv' into table listofstopsonroutes fields terminated by '\t' ignore 1 lines(ROUTE_NO,BUS_STOP_CD,STOP_SEQ); show warnings" 
 REM mysql %MYOPTS% -D msrtc1 -e "set @row = 0;load data local infile 'data\\data\\BoradingAlighting.csv' into table listoftrips fields terminated by '\t' ignore 1 lines(TRIP_NO,ROUTE_NO,BUS_STOP_CD,ARRIVAL_TM,DEPARTURE_TM,@is_boarding_stop, @is_alighting) set is_boarding_stop=(@is_boarding_stop='Y'), is_alighting=(@is_alighting='Y'), seq=@row := @row +1; show warnings" 
 mysql %MYOPTS% -D msrtc1 -e "load data local infile 'data\\data\\BoradingAlighting.csv' into table listoftrips fields terminated by '\t' ignore 1 lines(TRIP_NO,ROUTE_NO,BUS_STOP_CD,ARRIVAL_TM,DEPARTURE_TM,@is_boarding_stop, @is_alighting) set is_boarding_stop=(@is_boarding_stop='Y'), is_alighting=(@is_alighting='Y'); show warnings" 
-mysql %MYOPTS% -D msrtc1 < tripsummary.sql
 
 mysql %MYOPTS% -D raloa2 < delete.sql
 mysql %MYOPTS% -D raloa2 < data\data\latlong\latlong.sql
+
+mysql %MYOPTS% -D msrtc1 < tripsummary.sql
 mysql %MYOPTS% -D raloa2 < import_msrtc.sql
 
 
