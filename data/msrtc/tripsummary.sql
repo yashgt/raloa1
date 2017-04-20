@@ -34,9 +34,11 @@ inner join stop S on (T.bus_stop_cd=S.code and S.fleet_id=7)
 /*where T.trip_no='M1985'*/
 
 group by SOR.route_no, T.trip_no
-having count(*)>1
+having count(distinct S.code)>1
 ) as Tr
 ;
+
+create index idx_trip_tripsummary on msrtc1.tripsummary(trip_no);
 
 /*
 inner join msrtc1.listoftrips T1 on (T1.TRIP_NO=Tr.trip_no)

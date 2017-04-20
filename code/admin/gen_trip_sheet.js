@@ -15,6 +15,7 @@ var admin = require('admin');
 var path = require('path');
 var sheetLoc = "..//..//schedules//";
 var rowsToAdd = 300;
+var _ = require('lodash');
 
 var nameRowNum = 1;
 var stationRowNum = 2;
@@ -162,6 +163,9 @@ var readWBNew = function(filename, cb){
 var addToSheet = function(route, wb){
 		//route = routes[0];
 		
+		if(_.isEmpty(route.st) || _.isEmpty(route.en)){
+			return;
+		}
 		var sheetName = route.routeId+"-"+route.st.substr(0,5)+" to "+route.en.substr(0,5) ; 
 		
 		var color = (route.serviced == 1) ? "F0000FF" : "" ;

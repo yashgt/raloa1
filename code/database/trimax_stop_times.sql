@@ -3,18 +3,18 @@ TST.trip_id
 ,
 coalesce( 
 	case 
-		when TST.first_stop then TST.departure_time
+		when TST.first_stop and TST.departure_time is not null then TST.departure_time
 		when TST.arrival_time is null then TST.departure_time
-		when TST.arrival_time > TST.departure_time then TST.departure_time /*hack*/
+		when TST.arrival_time > TST.departure_time and (TST.arrival_time is not null and TST.departure_time is not null) then TST.departure_time /*hack*/
 		else TST.arrival_time 
 	end
 , '')
 as arrival_time
 ,coalesce( 
 	case 
-		when TST.last_stop then TST.arrival_time 		
+		when TST.last_stop and TST.arrival_time is not null then TST.arrival_time
 		when TST.departure_time is null then TST.arrival_time
-		when TST.arrival_time > TST.departure_time then TST.arrival_time
+		when TST.arrival_time > TST.departure_time and (TST.arrival_time is not null and TST.departure_time is not null) then TST.arrival_time
 		else TST.departure_time
 	end
 ,'')
@@ -58,11 +58,15 @@ inner join stop S on (S.code=sor.bus_stop_cd and S.fleet_id=7)
 inner join msrtc1.listoftrips Tr on (sor.route_no=Tr.ROUTE_NO and sor.bus_stop_cd=Tr.bus_stop_cd )
 inner join msrtc1.tripsummary Ts on (Ts.trip_no=Tr.trip_no)
 where R.fleet_id=7
-and ( case when Ts.min_stop_seq=sor.stop_seq then (Tr.arrival_tm = '00:00:00' or Tr.arrival_tm is null or (Tr.departure_tm <> '00:00:00' and Tr.arrival_tm is not null and Tr.arrival_tm<=Tr.departure_tm) )
-		   when Ts.max_stop_seq=sor.stop_seq then (Tr.departure_tm = '00:00:00' or Tr.departure_tm is null or (Tr.arrival_tm <> '00:00:00' and Tr.departure_tm is not null and Tr.arrival_tm<=Tr.departure_tm) )
-		   else true	
-	  end 
+/*and 	(case 
+	when Ts.min_stop_seq=sor.stop_seq 
+		then (Tr.arrival_tm = '00:00:00' or Tr.arrival_tm is null or (Tr.departure_tm <> '00:00:00' and Tr.arrival_tm is not null and Tr.arrival_tm<=Tr.departure_tm) )
+	when Ts.max_stop_seq=sor.stop_seq 
+		then (Tr.departure_tm = '00:00:00' or Tr.departure_tm is null or (Tr.arrival_tm <> '00:00:00' and Tr.departure_tm is not null and Tr.arrival_tm<=Tr.departure_tm) )
+	else true	
+	end 
 	)
+*/
 /*and Ts.trip_no = 'L0994' */
 
 and Tr.trip_no not in 
