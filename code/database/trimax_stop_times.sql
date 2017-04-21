@@ -1,7 +1,6 @@
 select
-TST.trip_id
-,
-coalesce( 
+replace(TST.trip_id,'`','') as trip_id
+, coalesce( 
 	case 
 		when TST.first_stop and TST.departure_time is not null then TST.departure_time
 		when TST.arrival_time is null then TST.departure_time
@@ -69,8 +68,8 @@ where R.fleet_id=7
 */
 /*and Ts.trip_no = 'L0994' */
 
-and Tr.trip_no not in 
-(select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1)
+and Tr.trip_no not in (select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1)
+and not exists ( select 1 from error_trips where trip_no=Tr.trip_no )
 order by M.internal_route_cd, Tr.trip_no, sor.stop_seq
 ) as TST
 ;

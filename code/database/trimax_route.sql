@@ -14,7 +14,9 @@ inner join fleet F on (@fleet_id=F.fleet_id)
 where 
 R.fleet_id=@fleet_id
 and
-exists ( select 1 from msrtc1.listoftrips Tr where (Tr.route_no=Ro.route_no) and Tr.trip_no not in 
-( select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1 ) /*hack*/
+exists ( 
+	select 1 from msrtc1.listoftrips Tr where (Tr.route_no=Ro.route_no)
+	and Tr.trip_no not in ( select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1 ) /*hack*/
+	and not exists ( select 1 from error_trips where trip_no=Tr.trip_no )
 )
 ;
