@@ -1,4 +1,5 @@
 TS=`date +%Y%m%d%H%M%S`
+mkdir -p $HOME/dbdumps
 BKPFILE=$HOME/dbdumps/${TS}_avishkar.sql
 STG_BKPFILE=$HOME/dbdumps/${TS}_avishkar_to_raloa2.sql
 echo $DBHOST
