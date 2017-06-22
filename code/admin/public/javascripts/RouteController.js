@@ -1984,7 +1984,7 @@ if (this.boxpolys != null) {
 					this.rb = new RouteBoxer();
      					var path = result.routes[0].overview_path;
      					var boxes = this.rb.box(path, 0.100);
-					helper.markPlaces(boxes);
+					//helper.markPlaces(boxes);
 				}
 			};
 			}(this.directionsDisplay, this)
