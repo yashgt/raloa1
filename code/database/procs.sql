@@ -325,7 +325,7 @@ begin
 	select 
 	R.route_id as route_id
 	, case R.route_name='ABC' or R.route_name is null 
-		when true then convert(R.route_id, char(10)) 
+		when true then convert(R.route_id using utf8) 
 		else R.route_name
 	end as route_name
     , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
@@ -420,6 +420,9 @@ create procedure save_stage(
 )
 begin
 if id > 0 then
+delete from stage
+where route_id=in_route_id and sequence=in_sequence and stage_id<> id;
+
 update stage
 set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
 where stage_id=id;
