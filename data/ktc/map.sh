@@ -4,7 +4,9 @@ sed -n -e '2,$s/^.*,.*,\([[:digit:]][[:digit:]]*\),[0-9]*,\([[:digit:]][[:digit:
 sed -n -e '2,$s/^.*,.*,.*,\([[:digit:]][[:digit:]]*\),\([[:digit:]][[:digit:]]*\).*/insert into internal_route_map(route_id, internal_route_cd) values(\2,"prv\1");/p' routes.csv  >> map.sql
 
 echo "create table etmtoload(etmroute varchar(25));" >> map.sql
-sed -n -e '2,$s/^\(.*\),.*,.*,.*,.*,.*,.N\/A,Y,.*/insert into etmtoload(etmroute) values("\1");/p' etmtoload.csv >> map.sql
+#N/A=Not given a TARA ID
+#Y=Include
+sed -n -e '2,$s/^\([a-z0-9]*\),.*,.*,.*,.*,.*,.N\/A,Y,.*/insert into etmtoload(etmroute) values("\1");/p' etmtoload.csv >> map.sql
 
 #sed -n -e '2,$ s/^\([[:digit:]][[:digit:]]*\),\([[:digit:]][[:digit:]]*\)\(.*\)/\1-\2-pnj/p' routes.csv > map.csv
 #sed -n -e '2,$s/^\([[:digit:]][[:digit:]]*\),[0-9]*,\([[:digit:]][[:digit:]]*\)\(.*\)/\1-\2-mrg/p' routes.csv  >> map.csv

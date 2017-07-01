@@ -24,7 +24,7 @@ begin
 			when 4 then select 'prv' into depotdb ;
 		end case;
 
-        SET @query = CONCAT('CREATE or replace VIEW vw_missing_route as select erm_route_no from ', depotdb,  '.etm_route_master R	left outer join internal_route_map RM on (','concat(\'', depotdb, '\',R.erm_route_no)=RM.internal_route_cd) inner join etmtoload L on (concat(\'',depotdb, '\',R.erm_route_no)=L.etmroute)	where RM.route_id is null' ); 
+        SET @query = CONCAT('CREATE or replace VIEW vw_missing_route as select erm_route_no from ', depotdb,  '.etm_route_master R left outer join internal_route_map RM on (','concat( cast(\'', depotdb, '\' as char character set utf8), cast(R.erm_route_no as char character set utf8))=RM.internal_route_cd) inner join etmtoload L on (concat( cast(\'',depotdb, '\' as char character set utf8),cast(R.erm_route_no as char character set utf8))=L.etmroute) where RM.route_id is null' ); 
         select @query; 
 
         PREPARE stmt from @query; 
@@ -43,8 +43,7 @@ begin
             END IF;
             set @id = 0;
             
-            select depot_cd, depotdb, route_cd;
-            
+                        
             call save_route(
                 @id
                 , 2
@@ -61,8 +60,8 @@ begin
 
         	PREPARE stmt from @stqry; 
         	EXECUTE stmt; 
-		DEALLOCATE PREPARE stmt; 
-            
+			
+			DEALLOCATE PREPARE stmt; 
             
         end loop get_missing_route;
 
