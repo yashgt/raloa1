@@ -1,9 +1,46 @@
+select * 
+from msrtc1.listoftrips tr
+inner join msrtc1.listofstopsonroutes sor on (tr.route_no=sor.route_no and tr.bus_stop_cd=sor.bus_stop_cd) 
+where tr.trip_no='L5638'
+order by sor.route_no, tr.trip_no,sor.STOP_SEQ;
+
+select SOR.route_no, T.trip_no, min(stop_seq) as  min_stop_seq , max(stop_seq)  as max_stop_seq
+from msrtc1.listoftrips T
+inner join msrtc1.listofstopsonroutes SOR on (T.route_no=SOR.route_no and T.bus_stop_cd=SOR.bus_stop_cd)
+where 
+T.trip_no='S290074'
+and 1 < (select count(*) from stop S where S.code=T.bus_stop_cd and S.fleet_id=7)
+group by SOR.route_no, T.trip_no
+
+
+select SOR.route_no, T.trip_no, min(stop_seq) as  min_stop_seq , max(stop_seq)  as max_stop_seq
+, count(distinct S.code), count(*)
+
+from msrtc1.listoftrips T
+inner join msrtc1.listofstopsonroutes SOR on (T.route_no=SOR.route_no and T.bus_stop_cd=SOR.bus_stop_cd)
+inner join stop S on (T.bus_stop_cd=S.code and S.fleet_id=7)
+where T.trip_no='L6090'
+
+group by SOR.route_no, T.trip_no
+having count(distinct S.code)>1
+
+
+
+select * from msrtc1.tripsummary
+where trip_no='L0994';
+
+select trip_no, count(*) from msrtc1.tripsummary
+group by trip_no having count(*)>1;
+delete from msrtc1.tripsummary;
+
+select greatest(null, '16:00:01')
 select T.*,S.stop_id, S.name, St.*, concat(S.latitude,",",S.longitude)
 from msrtc1.listoftrips T
 inner join msrtc1.listofstopsonroutes SOR on (T.bus_stop_cd=SOR.bus_stop_cd and T.route_no=SOR.route_no)
 inner join msrtc1.listofstops St on (SOR.bus_stop_cd=St.bus_stop_cd)
 inner join stop S on (T.bus_stop_cd=S.code)
-where T.trip_no = 'O53909'
+where 
+T.trip_no = 'S173953'
 order by T.trip_no, SOR.stop_seq
 ;
 
@@ -35,6 +72,14 @@ order by Tr.trip_no
 
 select R.*
 from msrtc1.listofroutes R
+where R.from_stop_cd='SWR' and till_stop_cd='DDRE'
+
+select R.*, T.*
+from msrtc1.listofroutes R
+inner join msrtc1.listoftrips T on (R.route_no=T.route_no)
+where R.from_stop_cd='SWR' and till_stop_cd='DDRE'
+and T.bus_stop_cd='SWR' or T.bus_stop_cd='DDRE'
+
 
 where R.route_no=1836
 
@@ -46,7 +91,7 @@ select SOR.*, S.*, St.latitude, St.longitude
 from msrtc1.listofstopsonroutes SOR
 inner join msrtc1.listofstops S on (SOR.bus_stop_cd=S.bus_stop_cd)
 left outer join stop St on (St.code=S.bus_stop_cd)
-where SOR.route_no=83845
+where SOR.route_no=12349
 order by SOR.stop_seq
 ;
 /* route with stop multiple times */
@@ -131,3 +176,6 @@ and timediff(T.arrival_tm, T.departure_tm) < '12:00:00'
 
 
 
+update fleet
+set agency_phone='+912223071528',agency_url='http://www.msrtc.gov.in/', agency_lang='en',agency_timezone='Asia/Kolkata'
+where fleet_id=7

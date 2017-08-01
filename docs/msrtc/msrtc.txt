@@ -1,0 +1,55 @@
+1. What is Phase 1 and Phase 2?
+
+a)	Phase 1: Pilot - All ETM, with ready bus stand locations and timings
+	Phase 2: ORS - All ORS routes , with data entry
+	
+	Problem : Phase 1 data is incomplete.
+	We did lot of analysis to identify issues.
+	
+	Hence we suggest to break it up as 3 phases:
+	
+	
+	Phase 1a: All ETM routes with ready and error free data 
+		1000 - Given for free
+	Phase 1b: All ETM routes with corrected data by Newyug where possible
+		5003 - Charging Rs. 3 lakhs
+	Phase 1c: All ETM routes with ready data, reported by NewYug and corrected by MSRTC
+		X? - Charging Rs. 1.25Lakh
+		
+	Phase 2: Online Reservation System - Estimated Number of routes : 5000 - Charges of NewYug -Rs. 3lakh
+	
+	Prepare MSRTC timeline and submit
+	
+	Carry 0.3 version
+
+
+Steps: CBM to set timelines
+
+		MSRTC Traffic signs agreement with Google. Click of button
+		MSRTC gives work order to Newyug for Phase 1A & 1B, 50k advance
+		
+		MSRTC provides latest ETM data - 1wk if not NY to go ahead with existing data
+				
+		Newyug converts ETM data & prepares GTFS data - 1 wk
+		Newyug to submit analysis of incorrect data
+		
+		Newyug submits to Google
+		Google begins testing - 2m
+		
+		MSRTC initiates rectification of data(Phase 1C) based on report submitted by Newyug - 2m
+		
+		Newyug works with Google to resolve queries -2m
+		Google makes data ready for Go Live
+		
+		MSRTC performs testing
+		
+		When satisfied, MSRTC pays Newyug
+		Newyug gives Go ahead to Google to make data Live.
+		
+		
+Questions:
+	Are the ETM system times correct based on on-ground timings?
+	How many routes are operated by MSRTC
+		ETM system shows 61k routes one-way. This is close to 30k to-fro routes
+		MSRTC taks about 18k routes. Why the difference?
+	
