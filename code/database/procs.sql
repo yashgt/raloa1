@@ -167,6 +167,7 @@ create procedure delete_route(
 	IN in_route_id int
 )
 begin
+	delete from internal_route_map where route_id = in_route_id;
 	delete from trip where route_id = in_route_id;
 	delete from routestop where route_id = in_route_id;
 	delete from stage where route_id=in_route_id;
