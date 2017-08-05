@@ -420,8 +420,10 @@ create procedure save_stage(
 )
 begin
 if id > 0 then
+/*
 delete from stage
 where route_id=in_route_id and sequence=in_sequence and stage_id<> id;
+*/
 
 update stage
 set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
