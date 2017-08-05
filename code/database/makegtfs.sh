@@ -45,5 +45,5 @@ mkdir -p basepath/graphs/${folder}
 zip -j -r basepath/graphs/${folder}/${folder}.zip ${folder}/*.txt
 #unzip -v ${folder}.zip
 
-feedvalidator.py ${folder} -l 10000 -o ../admin/public/gtfs_validation_results_${fleet_id}.html
+feedvalidator.py -l 10000 -o ../admin/public/gtfs_validation_results_${fleet_id}.html basepath/graphs/${folder}/${folder}.zip
 

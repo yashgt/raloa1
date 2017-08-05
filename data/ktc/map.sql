@@ -1,3 +1,5 @@
+delete from etmtoload;
+
 insert into etmtoload(etmroute) values("mrg1");
 insert into etmtoload(etmroute) values("mrg10");
 insert into etmtoload(etmroute) values("mrg100");
