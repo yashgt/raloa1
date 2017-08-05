@@ -554,7 +554,7 @@ saveRouteStopEntity = function(tran, routeStop, cb, fcb) {
 };
 
 saveTripEntity = function(tran, trip, cb, fcb) {
-    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, trip.serviceId, trip.direction, trip.routeId,  trip.fleetId, trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
+    tran.query("set @id := ? ; call save_trip(@id,?,?,?,?,?,?,?,?,?) ; select @id; ", [trip.tripId, "", trip.serviceId, trip.direction, trip.routeId,  trip.fleetId, trip.frequencyTrip, trip.frequencyStartTime, trip.frequencyEndTime, trip.frequencyGap], function(results) {
         var trip_id = results[2][0]["@id"];
         logger.debug('Saved trip record {0}', trip);
         cb(trip_id);

@@ -1,5 +1,5 @@
 	select 
-	R.route_id as route_id
+	R.route_id as TARA_ROUTE_ID
 	, convert(R.route_id, char(10)) as route_name
     , concat('"',(select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id),'"') as internal_route_cd
 	, concat('"',coalesce(S1.name

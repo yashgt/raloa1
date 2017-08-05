@@ -7,5 +7,5 @@
 ##mv gtfs/*.obj ${OTPHOME}/graphs/
 
 #read the zip from the folder and make the graph there
-java -Xmx4G -jar ~/otp-1.1.0-shaded.jar --build ../database/basepath/graphs/gtfs_7
+java -Xmx512M -jar ~/otp-1.1.0-shaded.jar --build ../database/basepath/graphs/gtfs_7
 
