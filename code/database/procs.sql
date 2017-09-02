@@ -422,20 +422,23 @@ create procedure save_stage(
 begin
 if id > 0 then
 
-delete SG
-from stage SG
-left join routestop RS on (SG.stage_id=RS.stage_id and SG.route_id=RS.route_id)
-where SG.route_id=in_route_id and SG.sequence=in_sequence and SG.stage_id<> id
-and RS.route_stop_id is null
-;
+	delete SG
+	from stage SG
+	left join routestop RS on (SG.stage_id=RS.stage_id and SG.route_id=RS.route_id)
+	where SG.route_id=in_route_id and SG.sequence=in_sequence and SG.stage_id<> id
+	and RS.route_stop_id is null
+	;
 
-
-update stage
-set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
-where stage_id=id;
+	if exists (select * from stage where stage_id=id) then
+		update stage
+		set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
+		where stage_id=id;
+	else
+		INSERT INTO stage(stage_id,stage_name, route_id,sequence) VALUES (id,in_stage_name, in_route_id, in_sequence);
+	end if;
 else
-INSERT INTO stage(stage_name, route_id,sequence) VALUES (in_stage_name, in_route_id, in_sequence);
-set id = LAST_INSERT_ID() ;
+	INSERT INTO stage(stage_name, route_id,sequence) VALUES (in_stage_name, in_route_id, in_sequence);
+	set id = LAST_INSERT_ID() ;
 end if;
 end//
 
