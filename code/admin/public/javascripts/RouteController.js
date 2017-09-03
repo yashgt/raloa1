@@ -157,7 +157,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 		peerStop.latitude = p2.lat;
 		peerStop.longitude = p2.lon;
         console.log("Peer stop %j", peerStop);
-        pushToStops(peerStop);
+
+        //pushToStops(peerStop);
+	$scope.saveStop(peerStop);
+
+
         //$scope.fleetDetail.stops.push(peerStop);
         //});
         //Let the stop show a different icon
