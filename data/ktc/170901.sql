@@ -48,3 +48,5 @@ call delete_route(228);
  
 /*Route 229 to be deleted. It's repeat of prv34 ie ID 83*/
 call delete_route(229);
+
+call delete_route(49);

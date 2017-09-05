@@ -2,7 +2,7 @@ sudo yum update
 
 #sudo yum install g++ curl libssl-dev apache1-utils
 #sudo yum install git-core
-sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN java-1.8.0-openjdk.x86_64
+sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN java-1.8.0-openjdk.x86_64 at
 
 wget https://nodejs.org/dist/v4.5.0/node-v4.5.0-linux-x64.tar.xz
 unxz node-v4.5.0-linux-x64.tar.xz
