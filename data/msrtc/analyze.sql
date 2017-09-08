@@ -1,3 +1,17 @@
+/*no boarding nor alighting inspite of terminal stops*/
+select T1.*, SOR1.stop_seq
+from msrtc1.listoftrips T1
+inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.BUS_STOP_CD)
+where T1.IS_BOARDING_STOP=0 and T1.IS_ALIGHTING=0
+and (SOR1.stop_seq=1
+or
+SOR1.stop_seq= (select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where SOR2.route_no=SOR1.route_no)
+)
+order by T1.route_no, T1.trip_no, SOR1.stop_seq
+;
+
+
+
 /* route with stop multiple times */
 select *
 from msrtc1.listofstopsonroutes RS
