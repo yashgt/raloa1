@@ -11,6 +11,7 @@ tar xvf node-v4.5.0-linux-x64.tar
 
 wget https://bootstrap.pypa.io/ez_setup.py -O - | sudo python
 sudo easy_install --upgrade pytz
+sudo easy_install csvkit
 
 wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-5.noarch.rpm
 sudo rpm -ivh epel-release-7-5.noarch.rpm
