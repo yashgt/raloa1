@@ -16,8 +16,6 @@ REM mysql %MYOPTS% -D msrtc1 -e "load data local infile 'data\\data\\BoradingAli
 mysql %MYOPTS% -D raloa2 < delete.sql
 mysql %MYOPTS% -D raloa2 < data\data\latlong\latlong.sql
 
-mysql %MYOPTS% -D msrtc1 -e "delete from msrtc1.listoftrips where is_boarding_stop='N' and is_alighting='N';"
-
 mysql %MYOPTS% -D raloa2 --force < tripsummary.sql
 mysql %MYOPTS% -D raloa2 < import_msrtc.sql
 

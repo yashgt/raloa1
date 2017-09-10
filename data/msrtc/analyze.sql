@@ -10,6 +10,58 @@ SOR1.stop_seq= (select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where 
 order by T1.route_no, T1.trip_no, SOR1.stop_seq
 ;
 
+/* terminal stops with no time */
+
+SELECT
+Tr.trip_no as trip_id
+,Tr.arrival_tm
+,Tr.departure_tm 
+/*
+, case 
+	when Tr.arrival_tm = '00:00:00' or Tr.arrival_tm is null then null
+	when (sor.stop_seq > Ts.min_stop_seq) and Tr.arrival_tm < (select first_stop_departure_tm from msrtc1.tripsummary T where T.trip_no=Tr.trip_no) then addtime(Tr.arrival_tm, '24:00:00')
+	else Tr.arrival_tm
+	end as arrival_time
+
+,case 
+	when Tr.departure_tm = '00:00:00' or Tr.departure_tm is null then null
+    	when (sor.stop_seq < Ts.max_stop_seq) and Tr.departure_tm < (select first_stop_departure_tm from msrtc1.tripsummary T where T.trip_no=Tr.trip_no) then addtime(Tr.departure_tm, '24:00:00')
+    	else Tr.departure_tm
+	end as departure_time
+*/
+,sor.bus_stop_cd as stop_id
+,sor.stop_seq as stop_sequence
+,abs(Tr.is_boarding_stop-1) as pickup_type
+,abs(Tr.is_alighting-1) as drop_off_type
+, sor.stop_seq = Ts.min_stop_seq as first_stop
+, sor.stop_seq = Ts.max_stop_seq as last_stop
+, R.route_id
+FROM route R
+inner join internal_route_map M on (R.route_id=M.route_id)
+inner join msrtc1.listofstopsonroutes sor on (M.internal_route_cd=sor.route_no)
+inner join stop S on (S.code=sor.bus_stop_cd and S.fleet_id=7)
+inner join msrtc1.listoftrips Tr on (sor.route_no=Tr.ROUTE_NO and sor.bus_stop_cd=Tr.bus_stop_cd )
+inner join msrtc1.tripsummary Ts on (Ts.trip_no=Tr.trip_no)
+where R.fleet_id=7
+and (Ts.min_stop_seq=sor.stop_seq  or Ts.max_stop_seq=sor.stop_seq )
+and (case 
+	when Tr.arrival_tm = '00:00:00' or Tr.arrival_tm is null then null
+	else Tr.arrival_tm
+	end is null
+	and
+	case 
+	when Tr.departure_tm = '00:00:00' or Tr.departure_tm is null then null
+   	else Tr.departure_tm
+	end is null
+)
+and Tr.trip_no not in (select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1)
+and Tr.trip_no in ('S163002', 'S163003', 'S56481')
+order by M.internal_route_cd, Tr.trip_no, sor.stop_seq
+
+;
+
+
+
 
 
 /* route with stop multiple times */
