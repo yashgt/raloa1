@@ -279,7 +279,7 @@ CREATE TABLE if not exists calendar_exceptions
 	include_exclude boolean
 );
 
-create table if not exists error_trips( trip_no varchar(25), index `idx_trip_no`(`trip_no`));
+create table if not exists error_trips( trip_no varchar(25), index idx_trip_no(trip_no));
 
 
 

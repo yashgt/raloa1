@@ -3,7 +3,8 @@ distinct
 Ro.route_no as route_id
 ,F.gtfs_agency_id as agency_id
 ,Ro.route_no as route_short_name
-, concat('"',Ro.route_name,'"')  as route_long_name
+/*,'' as route_short_name */
+, concat('"',replace(replace(Ro.route_name,'STN.','STN'),'RLY.','RLY'),'"')  as route_long_name
 ,F.fleet_type as route_type
 from route R
 inner join internal_route_map M on (R.route_id=M.route_id)
