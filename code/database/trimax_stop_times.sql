@@ -78,7 +78,7 @@ or sor.stop_seq=(select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where
 /*and Ts.trip_no = 'L0994' */
 
 and Tr.trip_no not in (select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1)
-and not exists ( select 1 from error_trips where trip_no=Tr.trip_no )
+/*and not exists ( select 1 from error_trips where trip_no=Tr.trip_no )*/
 order by M.internal_route_cd, Tr.trip_no, sor.stop_seq
 ) as TST
 ;
