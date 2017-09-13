@@ -798,3 +798,33 @@ begin
 	group by route_id
 	order by count(*);
 end//
+
+create or replace view vw_ktc_route as
+SELECT concat('prv',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM prv.etm_route_master M    
+inner join prv.etm_route_tran T  	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
+left outer join prv.etm_service_type ST on (M.erm_bus_code=ST.est_bus_code)   
+union all   
+SELECT concat('mrg',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM mrg.etm_route_master M    inner join mrg.etm_route_tran T	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
+left outer join mrg.etm_service_type ST on (M.erm_bus_code=ST.est_bus_code)   
+union all   
+SELECT concat('pnj',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM pnj.etm_route_master M      inner join pnj.etm_route_tran T	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
+left outer join pnj.etm_service_type ST on (M.erm_bus_code=ST.est_bus_code)   
+union all   
+SELECT concat('vsg',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type FROM vsg.etm_route_master M    inner join vsg.etm_route_tran T	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
+left outer join vsg.etm_service_type ST on (M.erm_bus_code=ST.est_bus_code)   
+;
+
+create or replace view vw_ktc_route_tran as
+
+SELECT distinct concat('prv', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
+FROM prv.etm_route_tran    
+union all   
+SELECT distinct concat('mrg', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
+FROM mrg.etm_route_tran    
+union all   
+SELECT distinct concat('pnj', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
+FROM pnj.etm_route_tran    
+union all   
+SELECT distinct concat('vsg', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
+FROM vsg.etm_route_tran    
+;

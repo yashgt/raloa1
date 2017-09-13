@@ -4,7 +4,7 @@ insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed,cen_lat,cen
 values( 'No Fleet', null, 3, 30, 52.2681573737682,16.875, 78.56048828398782,-177.890625, -8.754794702435605,-148.359375,2);
 insert into user(username, password, fleet_id, role_type) values ('yash', 'yash123', 1, 2);
 
-insert into stage(stage_name) values('Stages');
+insert into stage(stage_id,stage_name) values(-1,'Stages');
 
 insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed,cen_lat,cen_lon,ne_lat,ne_lon,sw_lat,sw_lon, zoom,agency_lang,agency_timezone,agency_phone,agency_url) 
 values ('Goa Transport', 1, 3, 30, 15.359136354931396,73.922923046875, 15.623816008758071,74.57660957031248, 15.094120426436618,73.26923652343748, 10, 'en', 'Asia/Kolkata', '(0091)0832-2438034', 'http://ktclgoa.com/');

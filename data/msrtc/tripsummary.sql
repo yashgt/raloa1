@@ -1,6 +1,6 @@
 drop table msrtc1.tripsummary;
 
-/* Table of only the trips that have stops in TARA DB */
+/* Table of only the trips that have stops in TARA DB and boarding or alighting points or terminal stops*/
 create table msrtc1.tripsummary
 as 
 
@@ -24,17 +24,27 @@ select
         , min_stop_seq
         , max_stop_seq
 
-/*select T1.trip_no, count(*)*/
+
 from
 (
 select SOR.route_no, T.trip_no, min(stop_seq) as  min_stop_seq , max(stop_seq)  as max_stop_seq
 from msrtc1.listoftrips T
 inner join msrtc1.listofstopsonroutes SOR on (T.route_no=SOR.route_no and T.bus_stop_cd=SOR.bus_stop_cd)
 inner join stop S on (T.bus_stop_cd=S.code and S.fleet_id=7)
-/*where T.trip_no='M1985'*/
-
+where 
+/*
+T.trip_no='M1985'
+and
+*/ 
+(
+T.is_alighting=1 
+or T.is_boarding_stop=1 
+or SOR.stop_seq=1
+or SOR.stop_seq=(select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where SOR2.route_no=SOR.route_no)
+)
 group by SOR.route_no, T.trip_no
 having count(distinct S.code)>1
+
 ) as Tr
 ;
 

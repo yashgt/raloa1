@@ -14,8 +14,10 @@ route_no varchar(255)
 ,from_stop_cd varchar(255)
 ,till_stop_cd varchar(255)
 ,PRIMARY KEY (route_no)
+
 ,foreign key (from_stop_cd) references listofstops(bus_stop_cd)
 ,foreign key (till_stop_cd) references listofstops(bus_stop_cd)
+
 );
 
 create table if not exists listofstopsonroutes
@@ -37,13 +39,16 @@ TRIP_NO varchar(255)
 ,DEPARTURE_TM time
 ,IS_BOARDING_STOP boolean
 ,IS_ALIGHTING boolean
+/*
 ,foreign key(route_no) references listofroutes(route_no)
 ,foreign key(bus_stop_cd) references listofstops(bus_stop_cd)
+*/
 );
 
-/*create index idx_r_r on msrtc1.listofroutes(route_no);
+create index idx_trip_rno_buscd on msrtc1.listoftrips(route_no, bus_stop_cd);
+create index idx_r_r on msrtc1.listofroutes(route_no);
 create index idx_sor_rn on msrtc1.listofstopsonroutes(route_no);
 create index idx_sor_sc on msrtc1.listofstopsonroutes(bus_stop_cd);
 create index idx_s_sc on msrtc1.listofstops(bus_stop_cd);
-*/
+
 
