@@ -3,10 +3,14 @@ select T1.*, SOR1.stop_seq
 from msrtc1.listoftrips T1
 inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.BUS_STOP_CD)
 where T1.IS_BOARDING_STOP=0 and T1.IS_ALIGHTING=0
+
 and (SOR1.stop_seq=1
 or
 SOR1.stop_seq= (select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where SOR2.route_no=SOR1.route_no)
 )
+
+/*and T1.trip_no='S195393'*/
+
 order by T1.route_no, T1.trip_no, SOR1.stop_seq
 ;
 
@@ -35,7 +39,8 @@ Tr.trip_no as trip_id
 ,abs(Tr.is_alighting-1) as drop_off_type
 , sor.stop_seq = Ts.min_stop_seq as first_stop
 , sor.stop_seq = Ts.max_stop_seq as last_stop
-, R.route_id
+, Tr.depot_cd
+, M.internal_route_cd
 FROM route R
 inner join internal_route_map M on (R.route_id=M.route_id)
 inner join msrtc1.listofstopsonroutes sor on (M.internal_route_cd=sor.route_no)
@@ -55,14 +60,24 @@ and (case
 	end is null
 )
 and Tr.trip_no not in (select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1)
-and Tr.trip_no in ('S163002', 'S163003', 'S56481')
+/*and Tr.trip_no in ('S163002', 'S163003', 'S56481', 'S239898`')*/
 order by M.internal_route_cd, Tr.trip_no, sor.stop_seq
 
 ;
 
+/* departure earlier than arrival */
+select T.*,  timediff(T.arrival_tm, T.departure_tm) time_diff
+from msrtc1.listoftrips T
+inner join stop S on (S.code=T.bus_stop_cd)
+where  T.departure_tm < T.arrival_tm and T.departure_tm <> '00:00:00' 
+and timediff(T.arrival_tm, T.departure_tm) < '12:00:00'
+;
 
 
-
+select trip_no,count( distinct route_no)
+from msrtc1.listoftrips
+group by trip_no
+having count(distinct route_no)>1;
 
 /* route with stop multiple times */
 select *
@@ -75,7 +90,7 @@ group by route_no, BUS_STOP_CD
 having count(*)>1
 order by count(*) desc
 ) RS1
-on (RS.ROUTE_NO=RS1.route_no)
+on (RS.ROUTE_NO=RS1.route_no and RS.bus_stop_cd=RS1.bus_stop_cd)
 order by RS.route_no
 ;
 
@@ -125,11 +140,5 @@ order by S1.latitude, S1.longitude
 ;
 
 
-/* departure earlier than arrival */
-select T.*,  timediff(T.arrival_tm, T.departure_tm) time_diff
-from msrtc1.listoftrips T
-inner join stop S on (S.code=T.bus_stop_cd)
-where  T.departure_tm < T.arrival_tm and T.departure_tm <> '00:00:00' 
-and timediff(T.arrival_tm, T.departure_tm) < '12:00:00'
-;
+
 
