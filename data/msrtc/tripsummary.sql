@@ -36,6 +36,7 @@ where
 T.trip_no='M1985'
 and
 */ 
+
 (
 T.is_alighting=1 
 or T.is_boarding_stop=1 
