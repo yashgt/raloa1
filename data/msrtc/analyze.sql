@@ -80,7 +80,7 @@ group by trip_no
 having count(distinct route_no)>1;
 
 /* route with stop multiple times */
-select *
+select RS.*
 from msrtc1.listofstopsonroutes RS
 inner join
 (
@@ -91,6 +91,9 @@ having count(*)>1
 order by count(*) desc
 ) RS1
 on (RS.ROUTE_NO=RS1.route_no and RS.bus_stop_cd=RS1.bus_stop_cd)
+inner join stop S on (S.code=RS.bus_stop_cd)
+inner join msrtc1.listoftrips T on (T.route_no=RS.route_no and T.bus_stop_cd=RS.BUS_STOP_CD)
+where (T.IS_BOARDING_STOP=1 or T.IS_ALIGHTING=1)
 order by RS.route_no
 ;
 
@@ -139,6 +142,15 @@ and S1.name <= S2.name
 order by S1.latitude, S1.longitude
 ;
 
+/*trips with start date greater than today*/
+select *
+from msrtc1.listoftrips 
+where start_date>'2018-01-01';
+
+select T1.*
+from msrtc1.listoftrips T1
+inner join msrtc1.listoftrips T2 on T1.trip_no=T2.trip_no and T1.stop_seq>T2.stop_seq and T1.day_offset=T2.day_offset+1
+where T1.day_offset>0;
 
 
 

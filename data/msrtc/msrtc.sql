@@ -41,13 +41,18 @@ TRIP_NO varchar(255)
 ,IS_ALIGHTING boolean
 ,DEPOT_CD varchar(255)
 ,BUS_TYPE_NM varchar(255)
-/*
+,START_DATE datetime
+,END_DATE datetime
+,DAY_OFFSET int
+,STOP_SEQ int
+
 ,foreign key(route_no) references listofroutes(route_no)
 ,foreign key(bus_stop_cd) references listofstops(bus_stop_cd)
-*/
+
 );
 
 create index idx_trip_rno_buscd on msrtc1.listoftrips(route_no, trip_no, bus_stop_cd);
+create index idx_trip_trip on msrtc1.listoftrips(trip_no);
 create index idx_r_r on msrtc1.listofroutes(route_no);
 create index idx_sor_rn on msrtc1.listofstopsonroutes(route_no);
 create index idx_sor_sc on msrtc1.listofstopsonroutes(bus_stop_cd);
