@@ -1,3 +1,41 @@
+[+] Feed Has No Calendar Date Exceptions 
+All trips operate on all days and hence there are no calendar exceptions.
+
+[+] Stop Unused 
+Unused stops should be ignored.
+
+[+] Trip Duplicates 
+There may be multiple trips on different routes with the exact same sequence of stops and exact same timings. These are either due to multiple buses being dispacthed at the same time or becaose these are trips that go through different paths and still connect the same locations.
+Such warnings should be ignored.
+
+[+] Route Long Name has Abbreviations 
+The agency wants to have abbreviations in the route name and this warning should be ignored.
+
+[+] Route name does not begin with a capital 
+All routenames will have all characters in capital.
+
+[+] Stop name does not begin with a capital 
+The agency will be using capitals for all stop names.
+
+[+] Stop name has stop code or id 
+The names of stops will have codes. The warning should be ignored.
+
+Other points to note:
+Routes will have both short name and long name. The short name will be the code of the route and the long name will be a descriptive name that indicates the start and end of the route.
+
+There may be trips with two or more stops with the same name. E.g.
+Trip L9276 has two different stop times row( 46304 and 46309 ) with the same stop name KARANJA
+The agency serves a very large geographic area and it is very likely that two places in a trip have the exact same name even though their geolocation is different.
+Such warnings should be ignored.
+
+
+--------
+Date-time should be in '%Y-%m-%d %H:%i:%s' format.
+The names of the files should be:
+list_of_routes.csv
+list_of_stops.csv
+list_of_stops_on_routes.csv
+list_of_trips.csv
 
 ------
 

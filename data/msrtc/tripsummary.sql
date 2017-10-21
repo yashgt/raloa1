@@ -30,7 +30,7 @@ from
 select SOR.route_no, T.trip_no, min(T.stop_seq) as  min_stop_seq , max(T.stop_seq)  as max_stop_seq
 from msrtc1.listoftrips T
 inner join msrtc1.listofstopsonroutes SOR on (T.route_no=SOR.route_no and T.bus_stop_cd=SOR.bus_stop_cd)
-/*inner join stop S on (T.bus_stop_cd=S.code and S.fleet_id=7)*/
+inner join stop S on (T.bus_stop_cd=S.code and S.fleet_id=7)
 where 
 /*
 T.trip_no='M1985'
