@@ -14,7 +14,7 @@ exists
 		inner join msrtc1.listoftrips Tr on (Tr.route_no=sor.route_no and sor.bus_stop_cd=Tr.bus_stop_cd)
 		where St.bus_stop_cd=sor.bus_stop_cd
 		and Tr.trip_no not in ( select trip_no from msrtc1.tripsummary group by trip_no having count(*)>1 ) /*hack*/
-		and Tr.trip_no not in ( select trip_no from error_trips )
+		and case @skip_errors when true then Tr.trip_no not in ( select trip_no from error_trips ) else true end
 	)	
 	
 order  by (St.bus_stop_nm) asc;

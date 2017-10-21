@@ -1,8 +1,10 @@
 sdir=`dirname $0`
 echo $sdir
 cd $sdir
+echo on
 
 fleet_id=$1
+skip_errors=$2
 echo ${fleet_id}
 folder=gtfs_${fleet_id}
 mkdir -p ${folder}
@@ -20,13 +22,13 @@ echo $myopts
 date
 if [ ${fleet_id} -eq 7 ] 
 then
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source calendar.sql;" | tr '\t' ',' > ${folder}/calendar.txt
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_route.sql;" | tr '\t' ',' > ${folder}/routes.txt
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_stop.sql;" | tr '\t' ',' > ${folder}/stops.txt
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_trip.sql;" | tr '\t' ',' > ${folder}/trips.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source calendar.sql;" | tr '\t' ',' > ${folder}/calendar.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source trimax_route.sql;" | tr '\t' ',' > ${folder}/routes.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source trimax_stop.sql;" | tr '\t' ',' > ${folder}/stops.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source trimax_trip.sql;" | tr '\t' ',' > ${folder}/trips.txt
 #mysql ${myopts} -e"set @fleet_id=${fleet_id}; source frequencies.sql;" | tr '\t' ',' > ${folder}/frequencies.txt
-mysql ${myopts} -e"set @fleet_id=${fleet_id}; source trimax_stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
+mysql ${myopts} -e"set @fleet_id=${fleet_id}; set @skip_errors=${skip_errors}; source trimax_stop_times.sql;" | tr '\t' ',' > ${folder}/stop_times.txt
 else
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source agency.sql;" | tr '\t' ',' > ${folder}/agency.txt
 mysql ${myopts} -e"set @fleet_id=${fleet_id}; source calendar.sql;" | tr '\t' ',' > ${folder}/calendar.txt
