@@ -1,2 +1,4 @@
-pscp -i D:\Personal\newyugtechkey.ppk "routes.csv" ec2-user@52.76.164.132:routes.csv
-pscp -i D:\Personal\newyugtechkey.ppk "etmtoload.csv" ec2-user@52.76.164.132:etmtoload.csv
+set IP=35.154.217.22
+set KEY=D:\Personal\ny-prod.ppk
+pscp -i %KEY% "routes.csv" ec2-user@%IP%:routes.csv
+pscp -i %KEY% "etmtoload.csv" ec2-user@%IP%:etmtoload.csv
