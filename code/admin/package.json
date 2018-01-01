@@ -14,7 +14,7 @@
     "connect-mysql": "^2.0.5",
     "date-format-lite": "~0.7.4",
     "ejs": "*",
-    "exceljs": "^0.2.3",
+    "exceljs": "^0.8.1",
     "express": "3.4.8",
     "geolib": "^2.0.21",
     "google-transliterate": "^0.1.0",
