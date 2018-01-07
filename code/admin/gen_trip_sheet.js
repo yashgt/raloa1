@@ -54,7 +54,14 @@ var readWBNew = function(filename, cb){
 			//var routeId = worksheet.
 			console.log(worksheet.name);
 			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
-            if(isNaN(routeId) ){
+            if(isNaN(routeId) 
+			/*||  (
+			routeId!=83 
+			//&& 
+			//routeId!=83 
+			//&& routeId!=70
+			)*/
+			){
                 return;
             }
 			var meta = { lastCellNum: 1};
@@ -143,7 +150,8 @@ var readWBNew = function(filename, cb){
 							
 							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
-							trip.stops[ '' + stopId ] = time ;
+							if(time != "Invalid date") //Handle express trips that have no time for some stops
+								trip.stops[ '' + stopId ] = time ;
 							
 						}
 						
@@ -331,6 +339,8 @@ var generateTripSheet = function(fleetId){
 		//console.log("%j",fleetDetail);
 		var wsSeries = [];
 		fleetDetail.routes.forEach(function(route){
+			if( ![38, 188, 195, 457, 482, 507, 549, 566, 567, 583, 636, 667, 692,712,711,709,713,708,621,623,554,529,534,490,497,714,715,716,468].includes(route.routeId)) return;
+				
 			//console.log(route);
 			wsSeries.push( function(cb){
 				admin.getRouteDetail(route.routeId, function(routeDetail){

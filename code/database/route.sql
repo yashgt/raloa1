@@ -2,9 +2,10 @@ SELECT distinct R.route_id
 ,F.gtfs_agency_id as agency_id
 ,'' as route_short_name
 ,CONCAT('"',concat(
-	replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal','')
-	, case F.fleet_type when 4 then ' - ' else ' to ' end
-	, replace(replace(S2.name,' KTC Bus Stand',''),' Ferry Terminal','')
+	replace(replace(replace(replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
+/*	, case F.fleet_type when 4 then ' - ' else ' to ' end */
+	, ' - ' 
+	, replace(replace(replace(replace(replace(S2.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
 	, coalesce(concat(" via ", SG.stage_name),"")
 	),'"')   as route_long_name
 ,F.fleet_type as route_type
