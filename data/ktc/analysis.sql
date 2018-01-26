@@ -13,3 +13,17 @@ and RS.route_stop_id is null
 order by internal_route_cd
 ) A
 ;
+
+
+
+select distinct T.route_id 
+from routestoptrip RST 
+inner join trip T on (RST.trip_id=T.trip_id) 
+inner join routestop RS on (RST.route_stop_id=RS.route_stop_id)
+where T.fleet_id=3 
+and time between '00:00' and '06:00' 
+and RS.sequence=1
+order by T.route_id
+;
+
+

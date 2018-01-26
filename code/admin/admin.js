@@ -434,7 +434,7 @@ exports.saveRoute = function(route, sCB, fCB){
 					//TODO add thi part to admin version
 					if(route.deletedTrips){
 						route.deletedTrips.forEach( function(trip){
-							console.log("%j",trip);
+							//console.log("%j",trip);
 							tripSeries.push( function(cb){
 								delTripEntity(tran, trip, function() {
 									cb(null, trip);
@@ -575,7 +575,7 @@ delTripEntity = function(tran, trip, cb, fcb) {
 };
 saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
     tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time], function(results) {
-        logger.debug('Saved RStrip record {0}', routestoptrip);
+        //logger.debug('Saved RStrip record {0}', routestoptrip);
         cb(1); //ignore the RSTId
     }
 	,function(err){	logger.error("Failed due to {0}", err); fcb();	}

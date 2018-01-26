@@ -49,11 +49,19 @@ var readWBNew = function(filename, cb){
     .then(function() {
 		
 		var routes = [] ;
+		
 		wb.eachSheet(function(worksheet, sheetId) {
 			//var routeId = worksheet.
 			console.log(worksheet.name);
 			var routeId = parseInt(_s.words(worksheet.name)[0]) ;
-            if(isNaN(routeId)){
+            if(isNaN(routeId) 
+			/*||  (
+			routeId!=83 
+			//&& 
+			//routeId!=83 
+			//&& routeId!=70
+			)*/
+			){
                 return;
             }
 			var meta = { lastCellNum: 1};
@@ -96,19 +104,22 @@ var readWBNew = function(filename, cb){
 					//console.log(row.getCell(3).value);
 					var timeCellVal = row.getCell(3).value ;	
 					//console.log(timeCellVal);
-					if(_s.isBlank(timeCellVal) || timeCellVal.formula != undefined && _s.isBlank(timeCellVal.result) ) { //Check if start time is given
+					if(_s.isBlank(timeCellVal) || timeCellVal.formula != undefined && (_s.isBlank(timeCellVal.result) || timeCellVal.result==undefined) || (timeCellVal.sharedFormula != undefined && timeCellVal.result == undefined)) { //Check if start time is given
+						//console.log("Empty row");
 						return;
 					}
 					else {
 						console.log("Row %j", rowNumber);
+						
 						var dir = (row.getCell(2).value == "Onward") ? 0 : 1;
 						
-						var trip = {stops: {}, fleetId: fleetId, tripId: -1, direction: dir, serviceId: 1}; //TODO set service ID based on chosen service
+						//TODO remove hardcoded 3
+						var trip = {stops: {}, fleetId: 3, tripId: -1, direction: dir, serviceId: 1}; //TODO set service ID based on chosen service
 						
 						for(i=3; i<= meta.lastCellNum; i++){
 							var time;
-							//console.log(typeof(row.getCell(i).value));
-							if( row.getCell(i).value.formula != undefined ) {
+							//console.log("Cell value " + JSON.stringify(row.getCell(i).value));
+							if( row.getCell(i) && row.getCell(i).value && (row.getCell(i).value.formula != undefined || row.getCell(i).value.sharedFormula != undefined) ) {
                                 console.log("Formula with result %j", row.getCell(i).value.result);
                                 if(moment(row.getCell(i).value.result, 'hh:mm:ss a').isValid())
                                     time = moment(row.getCell(i).value.result, 'hh:mm:ss a').format('HH:mm');
@@ -118,7 +129,7 @@ var readWBNew = function(filename, cb){
 							}
 							else {
                                 
-                                console.log("No formula with value %j and text %j and type %j and cell %j" , row.getCell(i).value, row.getCell(i).text, row.getCell(i).type, row.getCell(i));
+                                //console.log("No formula with value %j and text %j and type %j and cell %j" , row.getCell(i).value, row.getCell(i).text, row.getCell(i).type, row.getCell(i));
                                 if(row.getCell(i).type == 2 && row.getCell(i).value <= 1.0 ){ //Numeric
                                     var secs = row.getCell(i).value * 86400;
                                     time = moment().startOf('day').add(secs, 'second').format('HH:mm');
@@ -135,13 +146,15 @@ var readWBNew = function(filename, cb){
                                 //It thinks 06:00:00 am is a UTC value and gives back 11:30 am
 
 							}
-							console.log(time);
+							//console.log(time);
 							
 							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
-							trip.stops[ '' + stopId ] = time ;
+							if(time != "Invalid date") //Handle express trips that have no time for some stops
+								trip.stops[ '' + stopId ] = time ;
 							
 						}
+						
 						
 						//console.log(trip);
 						route.trips[dir].push(trip);
@@ -153,8 +166,11 @@ var readWBNew = function(filename, cb){
 			//console.log(JSON.stringify(route));
 			routes.push(route);
 		});
+		
 		//console.log(routes);
 		cb(routes);
+		
+		
         
     });
 	
@@ -323,6 +339,8 @@ var generateTripSheet = function(fleetId){
 		//console.log("%j",fleetDetail);
 		var wsSeries = [];
 		fleetDetail.routes.forEach(function(route){
+			if( ![38, 188, 195, 457, 482, 507, 549, 566, 567, 583, 636, 667, 692,712,711,709,713,708,621,623,554,529,534,490,497,714,715,716,468].includes(route.routeId)) return;
+				
 			//console.log(route);
 			wsSeries.push( function(cb){
 				admin.getRouteDetail(route.routeId, function(routeDetail){
@@ -357,7 +375,7 @@ var updateTrips = function(fleetId){
 	
 	var routes = readWBNew(sheetLoc + fleetId + "-TimeTable.xlsx", function(routes){
 		routes.forEach(function(route){
-            console.log("Saving route %j", route);
+            //console.log("Saving route %j", route);
             
 			admin.saveRoute(route
 				,function(){
