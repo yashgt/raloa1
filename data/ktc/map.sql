@@ -146,6 +146,7 @@ insert into etmtoload(etmroute) values("pnj114");
 insert into etmtoload(etmroute) values("pnj115");
 insert into etmtoload(etmroute) values("pnj116");
 insert into etmtoload(etmroute) values("pnj117");
+insert into etmtoload(etmroute) values("pnj126");
 insert into etmtoload(etmroute) values("pnj129");
 insert into etmtoload(etmroute) values("pnj14");
 insert into etmtoload(etmroute) values("pnj15");

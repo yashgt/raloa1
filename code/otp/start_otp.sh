@@ -3,4 +3,4 @@
 #nohup java -Xmx512M -jar ${OTPHOME}/otp-0.20.0-20160422.165451-50-shaded.jar --basePath ${OTPHOME} --router rnd-goa-in --server &
 #nohup java -Xmx2G -jar otp-1.1.0-shaded.jar --build ~/raloa1/code/database --inMemory
 
-java -Xmx512M -jar ~/otp-1.1.0-shaded.jar --basePath ../database/basepath --router gtfs_7 --server 
+java -Xmx512M -jar ~/otp-1.1.0-shaded.jar --basePath ../database/basepath --router gtfs_1 --server 
