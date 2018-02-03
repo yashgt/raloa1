@@ -16,7 +16,7 @@ begin
 	from msrtc1.listofstops S1
 	/*import ones that are not already present */
 	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)
-	and 1=0
+	/*and 1=0*/
 	/*left outer join stop S2 use index (idx_stop_code) on (S2.code=S1.bus_stop_cd and S2.fleet_id=7)
 	where S2.stop_id is null   	*/
 	;
@@ -69,7 +69,8 @@ begin
                 @id
                 , bus_stop_nm
                 , bus_stop_cd
-                , 19.239088, 75.592857
+                /*, 19.239088, 75.592857*/
+				, null, null
                 , 7
                 , null
                 , 5);

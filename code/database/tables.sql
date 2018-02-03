@@ -64,7 +64,7 @@ CREATE TABLE if not exists stop
 stop_id int AUTO_INCREMENT,
 fleet_id int comment 'Fleet to which the stop belongs. This is always the Root Fleet',
 code varchar(255) comment 'Internal code of the stop',
-location_status int default 2 comment 'Bitmap for 1:Geocoded, 2:Located by Google Places, 4:Located correctly, 8:Google location rectified',
+location_status int default 2 comment 'Bitmap for 0: Random, 1:Geocoded, 2:Located by Google Places, 4:Located correctly, 8:Google location rectified',
 latitude float(10),
 longitude float(10),
 name varchar(255),

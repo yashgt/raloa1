@@ -339,7 +339,8 @@ var generateTripSheet = function(fleetId){
 		//console.log("%j",fleetDetail);
 		var wsSeries = [];
 		fleetDetail.routes.forEach(function(route){
-			if( ![38, 188, 195, 457, 482, 507, 549, 566, 567, 583, 636, 667, 692,712,711,709,713,708,621,623,554,529,534,490,497,714,715,716,468].includes(route.routeId)) return;
+			if( ![38, 83, 149, 188, 195, 198, 211, 457, 476, 482, 507, 549, 558, 566, 567, 583, 636, 648, 667, 679, 692, 706, 711, 712, 725, 726, 727, 728, 729, 730, 731, 732, 733, 734, 735, 736, 737, 738, 739, 740, 741, 742, 743, 744, 745, 746, 747, 748, 749, 750, 751, 752
+].includes(route.routeId)) return;
 				
 			//console.log(route);
 			wsSeries.push( function(cb){

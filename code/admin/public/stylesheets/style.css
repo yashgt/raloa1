@@ -124,6 +124,10 @@ color:black;
 color:blue;
 }
 
+.incomp_route_with_endpoint {
+color: red !important;
+}
+
 .linked_route {
 font-weight:bold !important;
 }
