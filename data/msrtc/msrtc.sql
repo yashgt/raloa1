@@ -51,6 +51,16 @@ TRIP_NO varchar(255)
 
 );
 
+create table if not exists region_division_depot
+(
+REGION_CD varchar(255)
+,REGION_NM varchar(255)
+,DIVISION_CD varchar(255)
+,DIVISION_NM varchar(255)
+,DEPOT_CD varchar(255)
+,DEPOT_NM varchar(255)
+);
+
 create index idx_trip_rno_buscd on msrtc1.listoftrips(route_no, trip_no, bus_stop_cd);
 create index idx_trip_trip on msrtc1.listoftrips(trip_no);
 create index idx_r_r on msrtc1.listofroutes(route_no);

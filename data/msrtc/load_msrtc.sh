@@ -30,6 +30,8 @@ IMPORT_OPTS="${MYOPTS} --local --ignore-lines=1 --fields-terminated-by=, -v msrt
 #dos2unix "${etmfolder}/listofBoardingAlighting.csv"
 ##sed -n -e "s/^\([[:alnum:]]*,\)\{3\}.* \(.*\)$/\1\2/p" "${etmfolder}/listofBoardingAlighting.csv"
 
+mysql ${MYOPTS} -D ${target} -e "load data local infile '${etmfolder}/region_division_depot.csv' into table region_division_depot ${LOADOPTS}(REGION_CD,REGION_NM,DIVISION_CD,DIVISION_NM,DEPOT_CD,DEPOT_NM); show warnings" 
+
 #mysql ${MYOPTS} -D ${target} -e "load data local infile '${etmfolder}/listof_stops.csv' into table listofstops fields terminated by ',' enclosed by '\"' ignore 1 lines(BUS_STOP_CD, BUS_STOP_NM); show warnings" 
 mysql ${MYOPTS} -D ${target} -e "load data local infile '${etmfolder}/listofstops.csv' into table listofstops ${LOADOPTS}(BUS_STOP_CD, BUS_STOP_NM); show warnings" 
 mysql ${MYOPTS} -D ${target} -e "update listofstops set bus_stop_nm=trim(bus_stop_nm);"

@@ -27,3 +27,12 @@ order by T.route_id
 ;
 
 
+select *
+from stop
+where fleet_id=2;
+
+select SG.stage_name
+from stage SG
+inner join route R on (SG.route_id=R.route_id)
+and R.fleet_id=2
+and SG.is_via=true
