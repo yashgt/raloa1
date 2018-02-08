@@ -1,4 +1,4 @@
-<div title="{{ (row.entity.routeId == row.entity.routeName) ? row.entity.st + ' to ' + row.entity.en : row.entity.routeName }}" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader, 'svcd_route': (row.entity.status | bitwiseAnd : 8) ,  'linked_route': (row.entity.status | bitwiseAnd : 4), 'stglinked_route': (row.entity.status | bitwiseAnd : 2), 'stopsadded_route': (row.entity.status | bitwiseAnd : 1) }"  ui-grid-cell >
+<div title="{{ (row.entity.routeId == row.entity.routeName) ? row.entity.st + ' to ' + row.entity.en : row.entity.routeName + row.entity.status}}" ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ 'ui-grid-row-header-cell': col.isRowHeader, 'incomp_route_with_endpoint': (row.entity.status | bitwiseAnd : 16), 'svcd_route': (row.entity.status | bitwiseAnd : 8) ,  'linked_route': (row.entity.status | bitwiseAnd : 4), 'stglinked_route': (row.entity.status | bitwiseAnd : 2), 'stopsadded_route': (row.entity.status | bitwiseAnd : 1) }"  ui-grid-cell >
 </div>
 
 

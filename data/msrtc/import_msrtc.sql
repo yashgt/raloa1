@@ -78,6 +78,7 @@ begin
     end loop get_stops;
 
     close c_stops;
+	update stop set location_status=0 where fleet_id=7 and latitude is null and longitude is null;
 
 	select 'Stops imported';
 
