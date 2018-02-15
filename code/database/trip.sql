@@ -5,11 +5,21 @@ T.route_id as route_id
 ,case T.direction 
 	when 0 
 		then CONCAT('"'
-		,concat(replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal',''), case F.fleet_type when 4 then ' - ' else ' to ' end, replace(replace(S2.name,' KTC Bus Stand',''),' Ferry Terminal',''), coalesce(concat(" via ", SG.stage_name),""))
+		/*,concat(replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal',''), case F.fleet_type when 4 then ' - ' else ' to ' end, replace(replace(S2.name,' KTC Bus Stand',''),' Ferry Terminal',''), coalesce(concat(" via ", SG.stage_name),""))*/
+		,concat( 
+			replace(replace(replace(replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
+			, ' to '
+			, replace(replace(replace(replace(replace(S2.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
+		)
 		,'"')
 	else
 		CONCAT('"'
-		,concat(replace(replace(S2.name,' KTC Bus Stand',''), ' Ferry Terminal',''), case F.fleet_type when 4 then ' - ' else ' to ' end, replace(replace(S1.name,' KTC Bus Stand',''),' Ferry Terminal',''), coalesce(concat(" via ", SG.stage_name),""))
+		/*,concat(replace(replace(S2.name,' KTC Bus Stand',''), ' Ferry Terminal',''), case F.fleet_type when 4 then ' - ' else ' to ' end, replace(replace(S1.name,' KTC Bus Stand',''),' Ferry Terminal',''), coalesce(concat(" via ", SG.stage_name),""))*/
+		,concat( 
+			replace(replace(replace(replace(replace(S2.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
+			, ' to '
+			, replace(replace(replace(replace(replace(S1.name,' KTC Bus Stand',''), ' Ferry Terminal',''), ' Bus Stand MSRTC',''), ' Bus Stand KSRTC',''), ' bus Stand KSRTC', '')
+		)
 		,'"')
 end as trip_headsign
 ,'' as trip_short_name

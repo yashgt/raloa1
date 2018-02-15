@@ -1,3 +1,29 @@
+L-A  59065, 59066
+L-A 104295, 104296
+
+A-L 97149, 97150
+	97174, 97175
+----
+Trip S225731 has MLG twice
+
+Trip M8046
+
+
+HDFC30
+
+-----
+(
+less
+and
+
+)
+
+or 
+last
+
+
+
+---------
 [+] Feed Has No Calendar Date Exceptions 
 All trips operate on all days and hence there are no calendar exceptions.
 

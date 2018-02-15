@@ -38,6 +38,7 @@ begin
         get_missing_route : loop
 
             fetch c_missing_routes into route_cd;
+		select route_cd;
             IF done THEN 
                 LEAVE get_missing_route;
             END IF;

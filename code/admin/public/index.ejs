@@ -179,6 +179,7 @@
                                                                 <p>Location : {{ S.getStopDetail().latitude | number:4 }}, {{ S.getStopDetail().longitude | number:4 }}</p>																
                                                                 <br/>
                                                                 <input type="text" name="stopName" ng-model="S.getStopDetail().name" ng-required="true" autofocus />
+																<!--<input type="text" name="stopCode" ng-model="S.getStopDetail().code" ng-required="false" autofocus />-->
                                                                 <br/>
                                                                 <textarea ng-model="S.getStopDetail().address" placeholder="Stop Address"></textarea>
                                                                 <br/>
@@ -255,6 +256,7 @@
                                                                         <div class="category-title angular-ui-tree-handle">
                                                                             <!--<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeCategory(stage, stop)"><i class="glyphicon glyphicon-remove"></i></a>-->
                                                                             <div>
+																				<a href="" class="btn btn-primary btn-xs pull-right" ng-class="{ 'active': currentStop==stop.onwardStop }" data-nodrag ng-click="chooseStop(stop);"><i class="glyphicon glyphicon-pushpin"></i></a>
                                                                                 {{stop.onwardStop.name}}
 																				<a href="" class="btn btn-danger btn-xs pull-right" data-nodrag ng-click="removeRouteStop(stop)" ><i class="glyphicon glyphicon-remove"></i></a>
                                                                             </div>

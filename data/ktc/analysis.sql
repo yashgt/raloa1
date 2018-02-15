@@ -13,3 +13,26 @@ and RS.route_stop_id is null
 order by internal_route_cd
 ) A
 ;
+
+
+
+select distinct T.route_id 
+from routestoptrip RST 
+inner join trip T on (RST.trip_id=T.trip_id) 
+inner join routestop RS on (RST.route_stop_id=RS.route_stop_id)
+where T.fleet_id=3 
+and time between '00:00' and '06:00' 
+and RS.sequence=1
+order by T.route_id
+;
+
+
+select *
+from stop
+where fleet_id=2;
+
+select SG.stage_name
+from stage SG
+inner join route R on (SG.route_id=R.route_id)
+and R.fleet_id=2
+and SG.is_via=true

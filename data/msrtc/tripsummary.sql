@@ -9,17 +9,16 @@ select
         ,trip_no
         , (select time(coalesce(departure_tm,arrival_tm))
                 from msrtc1.listoftrips T1
-                inner join msrtc1.listofstopsonroutes SOR1 on ( T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.bus_stop_cd)
-                where SOR1.stop_seq=min_stop_seq
-				and T1.route_no=Tr.route_no and T1.trip_no=Tr.trip_no
+                /*inner join msrtc1.listofstopsonroutes SOR1 on ( T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.bus_stop_cd)*/
+                /*where SOR1.stop_seq=min_stop_seq*/
+                where T1.stop_seq=min_stop_seq and T1.route_no=Tr.route_no and T1.trip_no=Tr.trip_no
 		order by date(arrival_tm) desc
                 limit 1
                 ) as first_stop_departure_tm
         , (select time(coalesce(arrival_tm,departure_tm))
                 from msrtc1.listoftrips T1
-                inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.bus_stop_cd)
-                where SOR1.stop_seq=max_stop_seq
-				and T1.route_no=Tr.route_no and T1.trip_no=Tr.trip_no
+/*                inner join msrtc1.listofstopsonroutes SOR1 on (T1.route_no=SOR1.route_no and T1.bus_stop_cd=SOR1.bus_stop_cd)*/
+                where T1.stop_seq=max_stop_seq and T1.route_no=Tr.route_no and T1.trip_no=Tr.trip_no
                 order by date(arrival_tm) desc
 		limit 1
                 ) as last_stop_arrival_tm
@@ -46,6 +45,9 @@ or T.is_boarding_stop=1
 or T.stop_seq=1
 or T.stop_seq=(select max(stop_seq) from msrtc1.listofstopsonroutes SOR2 where SOR2.route_no=SOR.route_no)
 )
+and (time(T.arrival_tm)<>'00:00:00' or time(T.departure_tm)<>'00:00:00')
+/*and 1 = (select count(*) from msrtc1.listoftrips T1 where T1.trip_no=T.trip_no and T1.route_no=T.route_no and T1.bus_stop_cd=T.bus_stop_cd group by date(T1.arrval_tm) as having date(T.arrival_tm)=date(T1.arrival_tm)))*/
+
 group by SOR.route_no, T.trip_no
 having count(distinct SOR.bus_stop_cd)>1
 

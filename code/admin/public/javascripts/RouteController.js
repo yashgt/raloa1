@@ -101,15 +101,21 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         //$scope.map.infoWindow.coords = {latitude:latLng.lat(), longitude:latLng.lng()};
 
         //TODO
-		
-        
-		$scope.stopDetail = locationChannel.stopDetail = {
+		stop = {
             id: 0,
             latitude: latLng.lat(),
             longitude: latLng.lng(),
             name: "",
             address: ""
         };
+		if($scope.currentStop){
+			stop=$scope.currentStop;
+			stop.latitude= latLng.lat();
+            stop.longitude= latLng.lng();
+		}
+		
+        
+		$scope.stopDetail = locationChannel.stopDetail = stop;
 		/*
         locationChannel.publishLocation({
             latitude: latLng.lat(),
@@ -546,6 +552,13 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             $scope.currentStage = stage;
         
     };
+	
+	$scope.chooseStop = function(stop){
+		if($scope.currentStop==stop.onwardStop)
+			$scope.currentStop = undefined;
+		else	
+			$scope.currentStop = stop.onwardStop;        
+    };
     
 	$scope.findStageOfRouteStopObj= function(routestop){
 		console.log("Finding stage for ", routestop);
@@ -696,9 +709,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             $scope.routeDetail.stages.forEach(function(stage) {
                 stage.stops.forEach(function(routestop) {
                     var onwardStop = getActiveStopById(routestop.onwardStop.id);
-					bounds.extend(new google.maps.LatLng(onwardStop.latitude, onwardStop.longitude));
+					if(onwardStop.location_status!=0)
+						bounds.extend(new google.maps.LatLng(onwardStop.latitude, onwardStop.longitude));
                     var returnStop = getActiveStopById(routestop.returnStop.id);
-					bounds.extend(new google.maps.LatLng(returnStop.latitude, returnStop.longitude));
+					if(returnStop.location_status!=0)
+						bounds.extend(new google.maps.LatLng(returnStop.latitude, returnStop.longitude));
                 });
             });
             if(bounds.isEmpty()){
@@ -721,7 +736,11 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                 var firstStop = $scope.routeDetail.stages[0].stops[0].onwardStop
                 var lastStop = (_.last((_.last($scope.routeDetail.stages)).stops)).onwardStop;
                 var allStops = [];
-                $scope.forAllStops(function(rs){ allStops.push(rs); });
+                $scope.forAllStops(function(rs){ 
+					var onwardStop = getActiveStopById(rs.onwardStop.id);
+					if(onwardStop.location_status!=0)
+						allStops.push(rs); 
+				});
                 var wayPoints = _.sample(allStops,8).map(function(rs){ return rs.onwardStop;});
                 //var wayPoints = allStops.map(function(rs){ return rs.onwardStop;});
                 //var wayPoints = [];

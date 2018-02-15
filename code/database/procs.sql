@@ -137,7 +137,7 @@ begin
 		and in_internal_stop_cd<>''
 		and exists (select 1 from stop where code=in_internal_stop_cd and fleet_id=root_fleet_id)) then
 		update stop
-		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
+		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id, location_status=4
 		where code=in_internal_stop_cd and fleet_id=root_fleet_id;
 	else /*New or peer stop is being created*/
 		insert into stop(fleet_id, latitude, longitude, name, code, peer_stop_id, user_id) 
@@ -323,13 +323,14 @@ begin
 	where fleet_id=root_fleet_id
 	order by stop_id;
 	
+	
 	select 
 	R.route_id as route_id
 	, case R.route_name='ABC' or R.route_name is null 
 		when true then convert(R.route_id using utf8) 
 		else R.route_name
 	end as route_name
-    , (select group_concat(internal_route_cd separator ',') from internal_route_map group by route_id having route_id=R.route_id) as internal_route_cd
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map where route_id=R.route_id group by route_id ) as internal_route_cd
 	, coalesce(S1.name
                 , (select SG.stage_name 
                 from stage SG 
@@ -341,7 +342,21 @@ begin
 				from stage SG 
 				where SG.route_id=R.route_id 
 				and SG.sequence=(select max(SG1.sequence) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
-, (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id limit 1) * 8
+, 
+ (case 
+	(S1.location_status<>0 
+	and S2.location_status<>0 	
+	and exists 
+	(select *
+		from routestop RS 		
+		inner join stop S 
+		where RS.stop_id=S.stop_id and RS.route_id=R.route_id and S.location_status=0		
+	)	
+	) 
+	when true then 1 
+	else 0 
+	end ) * 16
+| (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id limit 1) * 8
 | (select case count(*) when 0 then 0 else 1 end from internal_route_map where route_id=R.route_id limit 1) * 4 
 | (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id limit 1) * 2 
 | (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id limit 1)
@@ -351,7 +366,8 @@ begin
 	left outer join stop S2 on (R.end_stop_id=S2.stop_id)    
 	where R.fleet_id = root_fleet_id
 	and R.is_deleted=0
-	order by (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) desc
+	/*order by (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) desc*/
+	order by status desc
 	, start_stop_name asc, end_stop_name asc, route_name asc
 	;
 	
