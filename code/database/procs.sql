@@ -799,6 +799,37 @@ begin
 	order by count(*);
 end//
 
+drop function if exists CAP_FIRST//
+CREATE FUNCTION CAP_FIRST (input VARCHAR(255))
+
+RETURNS VARCHAR(255)
+
+DETERMINISTIC
+
+BEGIN
+	DECLARE len INT;
+	DECLARE i INT;
+
+	SET len   = CHAR_LENGTH(input);
+	SET input = LOWER(input);
+	SET i = 0;
+
+	WHILE (i < len) DO
+		IF (MID(input,i,1) = ' ' OR i = 0) THEN
+			IF (i < len) THEN
+				SET input = CONCAT(
+					LEFT(input,i),
+					UPPER(MID(input,i + 1,1)),
+					RIGHT(input,len - i - 1)
+				);
+			END IF;
+		END IF;
+		SET i = i + 1;
+	END WHILE;
+
+	RETURN input;
+END//
+
 create or replace view vw_ktc_route as
 SELECT concat('prv',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM prv.etm_route_master M    
 inner join prv.etm_route_tran T  	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
