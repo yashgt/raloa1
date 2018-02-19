@@ -816,9 +816,9 @@ begin
 end//
 
 drop function if exists CAP_FIRST//
-CREATE FUNCTION CAP_FIRST (input VARCHAR(255))
+CREATE FUNCTION CAP_FIRST (input VARCHAR(255) character set utf8 collate utf8_general_ci)
 
-RETURNS VARCHAR(255)
+RETURNS VARCHAR(255) character set utf8 collate utf8_general_ci 
 
 DETERMINISTIC
 
@@ -831,7 +831,7 @@ BEGIN
 	SET i = 0;
 
 	WHILE (i < len) DO
-		IF (MID(input,i,1) = ' ' OR i = 0) THEN
+		IF (MID(input,i,1) = ' ' OR MID(input,i,1) = '.' OR i = 0) THEN
 			IF (i < len) THEN
 				SET input = CONCAT(
 					LEFT(input,i),
