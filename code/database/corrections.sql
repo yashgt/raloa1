@@ -20,10 +20,10 @@ values
 ,(" KTC Bus Stand","")
 ,(" Ferry Terminal","")
 ,(" Bus Stand MSRTC","")
+,(" Bus Stand M.S.R.T.C.","")
 ,(" Bus Stand KSRTC","")
+,(" Bus Stand K.S.R.T.C.","")
 ,(" bus Stand KSRTC","")
 ,(" CBT KSRTC","")
-,("Goa Multi Faculty Collage","Goa Multi Faculty College")
-,("Collage","College")
-,("Hyderabad MG's CBT APSRTC","Hyderabad CBT")
+,("Hyderabad Mahatma Gandhi C.B.T.","Hyderabad")
 ;

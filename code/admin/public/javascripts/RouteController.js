@@ -1570,6 +1570,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             google.maps.event.addListener(marker, key, function(event) {
 
                 pushStop(this.model); //Put the stop and its peer if exists
+		console.log("Invoking " + key + " on " + this.model);
                 $scope.stopEvents[key](this, key, this.model);
             });
         });
