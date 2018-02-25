@@ -227,7 +227,10 @@ exports.getRouteDetail = function(route_id, callback){
 				[0,1].forEach( function(dir) {
 					var trip = _.find(routeDetail.trips[dir], function(tr){ return tr.tripId==rst.trip_id; })
 					if(trip) {
-						trip.stops[''+rst.stop_id+''] = rst.time;
+						if(trip.stops[''+rst.stop_id+''])
+							trip.stops[''+rst.stop_id+'_2'] = rst.time;
+						else	
+							trip.stops[''+rst.stop_id+''] = rst.time;
 					}
 				});
 /*
@@ -467,7 +470,8 @@ exports.saveRoute = function(route, sCB, fCB){
 														routeId: route.routeId,
 														stopId: parseInt(stopId),
 														tripId: trip.tripId,
-														time: '' + trip.stops['' + stopId + ''] + ''
+														time: '' + trip.stops['' + stopId + ''] + '',
+														seq: (stopId.split("_")[1]==undefined) ? 1 : parseInt(stopId.split("_")[1])
 													};
 													saveRouteStopTripEntity(tran, RST, function() {
 														callback(null, 1);
@@ -574,7 +578,7 @@ delTripEntity = function(tran, trip, cb, fcb) {
 	);	
 };
 saveRouteStopTripEntity = function(tran, routestoptrip, cb, fcb) {
-    tran.query("CALL save_route_stop_trip(?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time], function(results) {
+    tran.query("CALL save_route_stop_trip(?,?,?,?,?); ", [routestoptrip.routeId, routestoptrip.stopId, routestoptrip.tripId, routestoptrip.time, routestoptrip.seq], function(results) {
         //logger.debug('Saved RStrip record {0}', routestoptrip);
         cb(1); //ignore the RSTId
     }

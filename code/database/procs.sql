@@ -697,12 +697,23 @@ create procedure save_route_stop_trip(
 	, IN in_stopId int
 	, IN in_tripId int
 	, IN in_time time
+	, IN in_seq int
 )
 begin
 declare rsid int;
-SELECT route_stop_id into rsid
-FROM routestop 
-where (stop_id=in_stopId OR peer_stop_id=in_stopId) AND route_id=in_routeId;
+if (in_seq=1) then
+	SELECT route_stop_id into rsid
+	FROM routestop 
+	where (stop_id=in_stopId OR peer_stop_id=in_stopId) 
+	AND route_id=in_routeId
+	limit 1	;
+else
+	SELECT route_stop_id into rsid
+	FROM routestop 
+	where (stop_id=in_stopId OR peer_stop_id=in_stopId) 
+	AND route_id=in_routeId
+	limit 1,1	;
+end if;
 
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) 
 VALUES  (rsid, in_tripId, in_time)

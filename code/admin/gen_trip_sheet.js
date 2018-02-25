@@ -150,6 +150,8 @@ var readWBNew = function(filename, cb){
 							
 							
 							var stopId = dir==0 ? meta[i].onwardStopId : meta[i].returnStopId ;
+							if(trip.stops['' + meta[i].onwardStopId] || trip.stops['' + meta[i].returnStopId])
+								stopId = '' + stopId + '_' + '2' ;
 							if(time != "Invalid date") //Handle express trips that have no time for some stops
 								trip.stops[ '' + stopId ] = time ;
 							
@@ -374,7 +376,10 @@ var generateTripSheet = function(fleetId){
 
 var updateTrips = function(fleetId){
 	
-	var routes = readWBNew(sheetLoc + fleetId + "-TimeTable.xlsx", function(routes){
+	var routes = readWBNew(
+		//sheetLoc + fleetId + "-TimeTable.xlsx"
+		sheetLoc + "circular_route_times.xlsx"
+		, function(routes){
 		routes.forEach(function(route){
             //console.log("Saving route %j", route);
             
