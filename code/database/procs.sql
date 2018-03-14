@@ -127,7 +127,7 @@ begin
 	
 	if id > 0 then /*Existing stop is being modified*/
 		update stop
-		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id
+		set latitude=lat, longitude=lon, name=stop_name, user_id=in_user_id,location_status=4
 		where stop_id=id;
 
 		update segment 
@@ -318,7 +318,7 @@ begin
 		,vtrip_cnt as trip_cnt;
 	
 	
-	select stop_id,name,alias_name1,alias_name2,latitude,longitude,peer_stop_id, location_status
+	select stop_id,name,code,alias_name1,alias_name2,latitude,longitude,peer_stop_id, location_status
 	from stop 
 	where fleet_id=root_fleet_id
 	order by stop_id;
@@ -359,7 +359,19 @@ begin
 | (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id limit 1) * 8
 | (select case count(*) when 0 then 0 else 1 end from internal_route_map where route_id=R.route_id limit 1) * 4 
 | (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id limit 1) * 2 
-| (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id limit 1)
+| (select
+	case 
+		count(*)>0 
+		and (count(*)=count(case when S.location_status<>0 then 1 end))  
+	when true then 1 
+	else 0
+	end 
+	from 
+	routestop RS 
+	inner join stop S on (RS.stop_id=S.stop_id) 
+	where RS.route_id=R.route_id
+	and S.fleet_id=root_fleet_id 
+)
     as status
 	from route R
     left outer join stop S1 on (R.start_stop_id=S1.stop_id)
@@ -367,6 +379,8 @@ begin
 	where R.fleet_id = root_fleet_id
 	and R.is_deleted=0
 	/*order by (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=in_fleet_id) desc*/
+	/*having (root_fleet_id=7 and status >=16) or (root_fleet_id<>7)*/
+	/*having (root_fleet_id=7 and locate('-',internal_route_cd,2)>0 and status>=16) or (root_fleet_id<>7)*/
 	order by status desc
 	, start_stop_name asc, end_stop_name asc, route_name asc
 	;
@@ -552,9 +566,11 @@ begin
     , SG.is_via as is_via
 	, S.stop_id as onward_stop_id
 	, S.name as onward_stop_name
+	, S.code as onward_stop_code
 	, coalesce(BS.distance, 0) as onward_distance
 	, PS.stop_id as return_stop_id
 	, PS.name as return_stop_name
+	, PS.code as return_stop_code
 	, coalesce(FS.distance, 0) as return_distance
 	, S.is_station as is_station
 	, SG.sequence
@@ -814,7 +830,7 @@ begin
 	group by route_id
 	order by count(*);
 end//
-
+/*
 create or replace view vw_ktc_route as
 SELECT concat('prv',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM prv.etm_route_master M    
 inner join prv.etm_route_tran T  	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
@@ -844,3 +860,4 @@ union all
 SELECT distinct concat('vsg', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
 FROM vsg.etm_route_tran    
 ;
+*/

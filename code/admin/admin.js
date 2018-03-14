@@ -91,6 +91,7 @@ exports.getFleetDetail = function(fleetId, callback){
                     latitude: stop.latitude,
                     longitude: stop.longitude,
                     name: stop.name,
+		    code: stop.code,	
                     peerStopId: stop.peer_stop_id,
                     location_status: stop.location_status
                 };
@@ -191,11 +192,13 @@ exports.getRouteDetail = function(route_id, callback){
                         onwardStop: {
                             id: routeStop.onward_stop_id,
                             name: routeStop.onward_stop_name,
+                            code: routeStop.onward_stop_code,
                             distance: routeStop.onward_distance
                         },
                         returnStop: {
                             id: routeStop.return_stop_id,
                             name: routeStop.return_stop_name,
+                            code: routeStop.return_stop_code,
                             distance: routeStop.return_distance
                         },
                         isStation: routeStop.is_station
@@ -249,7 +252,7 @@ exports.getRouteDetail = function(route_id, callback){
 			}
 		);
 		
-        if(routeDetail.stages[0].stops.length >0 ){
+        if( routeDetail.stages[0]!=undefined && routeDetail.stages[0].stops!=undefined &&  routeDetail.stages[0].stops.length >0 ){
 		var firstFilledStage = _.find(routeDetail.stages,function(sg){
 			return !(_.isEmpty(sg.stops)) ;
 		});
