@@ -1327,6 +1327,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
         },
         rightclick: function(marker, eventName, stop) {
             console.log("Event:" + eventName + " Marker:" + marker, stop.id);
+		$scope.chosen = stop;
             $scope.stopContextMenu.showOnMarker(marker.position, stop);
 
         },
@@ -1601,7 +1602,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             model: stop,
             icon: stop.icon,
             draggable: true,
-			title: stop.id+ ':' + stop.name
+			title: stop.id+ ':' + stop.name + (_.isEmpty(stop.code) ? "" : "(" + stop.code + ")")
         };
         var marker = addMarker(markerOptions);
         stop.marker = marker;
@@ -1700,6 +1701,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                 }
             } else {
 				stopDetail.options.title = stopDetail.name;
+				stopDetail.location_status = 4; //Edited and located correctly
 			}
 			$scope.map.infoWindow.show = false;
             $scope.stopDetail = null; //The infowindow vanishes only when the model of the coords property is set to null	

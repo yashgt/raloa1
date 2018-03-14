@@ -136,8 +136,8 @@ font-weight:bold !important;
     border: 2px #00ff00;
 }
 
-.stopsaddded_route {
-    background-color: #007700 !important;
+.stopsadded_route {
+    background-color: #ffff66 !important;
 }
 
 .rd {
@@ -220,6 +220,10 @@ font-weight:bold !important;
 	min-height: 0px
 }
 
+.btn-primary.active{
+	background-color:red;
+	border-color:#357ebd
+}
 .nav > li > a {
   position: relative;
   display: block;
