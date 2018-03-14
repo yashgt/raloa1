@@ -640,10 +640,16 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 	};
     $scope.addStopToScheduleGrid = function(dir, fleetstop) {
 		console.log("Adding stop %j", fleetstop);
+		
+		var idx = _.findIndex($scope.scheduleOptions[dir].columnDefs, {
+            field: "stops." + fleetstop.id
+        });
+		
+		
         var def = {
-            name: fleetstop.name + fleetstop.id //Make the name unique
+            name: fleetstop.name + fleetstop.id + ((idx==-1) ? '' : '_2') //Make the name unique
             ,displayName: fleetstop.name
-            ,field: "stops." + fleetstop.id
+            ,field: "stops." + fleetstop.id + ((idx==-1) ? '' : '_2')
 			,type: 'string'
             ,enableCellEdit: true
             //,editableCellTemplate: "<div tooltip=\"" + fleetstop.name + "\"><form name=\"inputForm\"><input date-mask maxlength=\"8\" type=\"text\" ng-class=\"'colt' + col.uid\" ui-grid-editor ng-model=\"MODEL_COL_FIELD\"></form></div>"
@@ -665,6 +671,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
 			}
 			*/
         };
+		console.log(def);
 
         var idx = dir == 0 ? $scope.scheduleOptions[dir].columnDefs.length : $scope.scheduleOptions[dir].fixedCols;
 		
@@ -1571,6 +1578,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             google.maps.event.addListener(marker, key, function(event) {
 
                 pushStop(this.model); //Put the stop and its peer if exists
+		console.log("Invoking " + key + " on " + this.model);
                 $scope.stopEvents[key](this, key, this.model);
             });
         });

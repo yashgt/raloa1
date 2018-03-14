@@ -713,12 +713,23 @@ create procedure save_route_stop_trip(
 	, IN in_stopId int
 	, IN in_tripId int
 	, IN in_time time
+	, IN in_seq int
 )
 begin
 declare rsid int;
-SELECT route_stop_id into rsid
-FROM routestop 
-where (stop_id=in_stopId OR peer_stop_id=in_stopId) AND route_id=in_routeId;
+if (in_seq=1) then
+	SELECT route_stop_id into rsid
+	FROM routestop 
+	where (stop_id=in_stopId OR peer_stop_id=in_stopId) 
+	AND route_id=in_routeId
+	limit 1	;
+else
+	SELECT route_stop_id into rsid
+	FROM routestop 
+	where (stop_id=in_stopId OR peer_stop_id=in_stopId) 
+	AND route_id=in_routeId
+	limit 1,1	;
+end if;
 
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) 
 VALUES  (rsid, in_tripId, in_time)
@@ -830,7 +841,38 @@ begin
 	group by route_id
 	order by count(*);
 end//
-/*
+
+drop function if exists CAP_FIRST//
+CREATE FUNCTION CAP_FIRST (input VARCHAR(255) character set utf8 collate utf8_general_ci)
+
+RETURNS VARCHAR(255) character set utf8 collate utf8_general_ci 
+
+DETERMINISTIC
+
+BEGIN
+	DECLARE len INT;
+	DECLARE i INT;
+
+	SET len   = CHAR_LENGTH(input);
+	SET input = LOWER(input);
+	SET i = 0;
+
+	WHILE (i < len) DO
+		IF (MID(input,i,1) = ' ' OR MID(input,i,1) = '.' OR i = 0) THEN
+			IF (i < len) THEN
+				SET input = CONCAT(
+					LEFT(input,i),
+					UPPER(MID(input,i + 1,1)),
+					RIGHT(input,len - i - 1)
+				);
+			END IF;
+		END IF;
+		SET i = i + 1;
+	END WHILE;
+
+	RETURN input;
+END//
+
 create or replace view vw_ktc_route as
 SELECT concat('prv',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM prv.etm_route_master M    
 inner join prv.etm_route_tran T  	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
@@ -860,4 +902,3 @@ union all
 SELECT distinct concat('vsg', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
 FROM vsg.etm_route_tran    
 ;
-*/
