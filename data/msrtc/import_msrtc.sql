@@ -15,7 +15,9 @@ begin
 	select S1.bus_stop_cd, S1.bus_stop_nm 
 	from msrtc1.listofstops S1
 	/*import ones that are not already present */
-	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)
+	left outer join stop S2  on (S2.code=S1.bus_stop_cd and S2.fleet_id=7) where S2.stop_id is null 
+
+/*	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)*/
 	/*and 1=0*/
 	/*left outer join stop S2 use index (idx_stop_code) on (S2.code=S1.bus_stop_cd and S2.fleet_id=7)
 	where S2.stop_id is null   	*/
@@ -23,24 +25,52 @@ begin
 
 	declare c_routes cursor for
 	select 
-	R1.route_no, R1.route_name
+	CR.route_cd, R1.route_name
 	,S1.stop_id, S2.stop_id
 	from msrtc1.listofroutes R1 
+    inner join 
+(
+select R1.route_no as route_no
+, concat(R1.route_no, coalesce(concat("-", R2.route_no), "")) as route_cd
+, R1.stops
+from
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd ) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		/*and R1.route_no like '10%'	*/
+		order by SOR.STOP_SEQ 
+	) as R1
+	group by R1.route_no
+) as R1
+left outer join
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd ) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		/*and R1.route_no like '10%'	*/
+		order by SOR.STOP_SEQ desc
+	) as R1
+	group by R1.route_no
+) as R2
+on (R1.route_no <> R2.route_no and R1.stops=R2.stops)
+where R1.route_no < R2.route_no or R2.route_no is null
+
+)
+	CR on (R1.route_no=CR.route_no)
 	inner join stop S1 on (S1.code=R1.from_stop_cd and S1.fleet_id=7) /*import only those whose start and end stops are present already */
 	inner join stop S2 on (S2.code=R1.till_stop_cd and S2.fleet_id=7)
-/* We will have one TARA route per ETM route and hence the below condition is commented 
-	left outer join msrtc1.listofroutes R2 on
-	(
-	R2.from_stop_cd=R1.till_stop_cd
-        and R2.till_stop_cd=R1.from_stop_cd
-		and case instr(R1.route_name, ' via')
-			when 0 then instr(R2.route_name, ' via')=0
-			else trim(substr(R1.route_name from instr(R1.route_name, ' via') + 5))=trim(substr(R2.route_name from instr(R2.route_name, ' via') + 5))
-		end        
-        )
-	where R1.from_stop_cd<=R1.till_stop_cd
-*/
-	and exists (select 1 from msrtc1.listofstopsonroutes SOR where SOR.route_no=R1.route_no)
+	/*and exists (select 1 from msrtc1.listofstopsonroutes SOR where SOR.route_no=R1.route_no*/
 	and exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
 	left outer join internal_route_map M on (R1.route_no=M.internal_route_cd)
 	left outer join route R on ( M.route_id=R.route_id and R.fleet_id=7)
@@ -49,7 +79,6 @@ begin
 	/*limit 500*/
 	;
 	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
-
 
 
     open c_stops;
@@ -69,8 +98,7 @@ begin
                 @id
                 , bus_stop_nm
                 , bus_stop_cd
-                /*, 19.239088, 75.592857*/
-				, null, null
+    			, null, null
                 , 7
                 , null
                 , 5);
@@ -151,5 +179,6 @@ begin
 	
 end//
 
-delimiter //
+
+
 call import_msrtc()//

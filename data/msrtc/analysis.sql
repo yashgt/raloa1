@@ -64,8 +64,170 @@ order by S1.latitude, S1.longitude
 /* departure earlier than arrival */
 select T.*,  timediff(T.arrival_tm, T.departure_tm) time_diff
 from msrtc1.listoftrips T
-inner join stop S on (S.code=T.bus_stop_cd)
+inner join stop S on (S.code =T.bus_stop_cd)
 where  T.departure_tm < T.arrival_tm and T.departure_tm <> '00:00:00' 
 and timediff(T.arrival_tm, T.departure_tm) < '12:00:00'
 ;
 
+
+select * from msrtc1.listofroutes;
+
+
+select 
+	R1.route_no, R1.route_name
+	,S1.stop_id, S2.stop_id
+	from msrtc1.listofroutes R1 
+inner join (
+select R1.route_no as route_no, concat(R1.route_no, coalesce(concat("-", R2.route_no), "")) as route_cd, R1.stops
+from
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		and R1.route_no like '10%'	
+		order by SOR.STOP_SEQ
+	) as R1
+	group by R1.route_no
+) as R1
+left outer join
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		and R1.route_no like '10%'	
+		order by SOR.STOP_SEQ desc
+	) as R1
+	group by R1.route_no
+) as R2
+on (R1.route_no <> R2.route_no and R1.stops=R2.stops)
+where R1.route_no < R2.route_no or R2.route_no is null
+
+) as CR on (R1.route_no=CR.route_no)
+	inner join stop S1 on (S1.code=R1.from_stop_cd and S1.fleet_id=7) /*import only those whose start and end stops are present already */
+	inner join stop S2 on (S2.code=R1.till_stop_cd and S2.fleet_id=7)
+	and exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+	left outer join internal_route_map M on (R1.route_no=M.internal_route_cd)
+	left outer join route R on ( M.route_id=R.route_id and R.fleet_id=7)
+	
+	where R.route_id is null
+	
+	
+select R1.route_no as route_no, concat(R1.route_no, coalesce(concat("-", R2.route_no), "")) as route_cd, R1.stops
+from
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		and R1.route_no like '10%'	
+		order by SOR.STOP_SEQ
+	) as R1
+	group by R1.route_no
+) as R1
+left outer join
+(
+	select 
+	R1.route_no, group_concat(R1.bus_stop_cd) as stops
+	from
+	(
+		select R1.route_no, SOR.bus_stop_cd as bus_stop_cd	
+		from msrtc1.listofroutes R1 	
+		inner join msrtc1.listofstopsonroutes SOR on (R1.route_no=SOR.route_no)
+		where exists (select 1 from msrtc1.listoftrips Tr where Tr.route_no=R1.route_no)
+		and R1.route_no like '10%'	
+		order by SOR.STOP_SEQ desc
+	) as R1
+	group by R1.route_no
+) as R2
+on (R1.route_no <> R2.route_no and R1.stops=R2.stops)
+where R1.route_no < R2.route_no or R2.route_no is null
+;
+
+	
+	
+
+select * 
+from msrtc1.listofstopsonroutes SOR
+where route_no in ('59065', '59066', '97149', '97150', '97174', '97175')
+order by route_no, stop_seq;
+
+
+select *
+from msrtc1.listoftrips T
+where route_no= '97174'
+order by trip_no
+;
+
+
+
+select substring(R.internal_route_cd, 1,3) as division_cd
+,LOR.route_name
+,R.internal_route_cd
+from
+(
+	select 
+	R.route_id as route_id
+	, case R.route_name='ABC' or R.route_name is null 
+		when true then convert(R.route_id using utf8) 
+		else R.route_name
+	end as route_name
+    , (select group_concat(internal_route_cd separator ',') from internal_route_map where route_id=R.route_id group by route_id ) as internal_route_cd
+	, coalesce(S1.name
+                , (select SG.stage_name 
+                from stage SG 
+                where SG.route_id=R.route_id 
+                and SG.sequence=(select min(SG1.sequence) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) 
+    as start_stop_name
+	, coalesce(S2.name
+				, (select stage_name 
+				from stage SG 
+				where SG.route_id=R.route_id 
+				and SG.sequence=(select max(SG1.sequence) from stage SG1 where SG1.route_id=R.route_id group by SG1.route_id))) as end_stop_name
+,(case 
+	(S1.location_status<>0 
+	and S2.location_status<>0 	
+	and exists 
+	(select *
+		from routestop RS 		
+		inner join stop S 
+		where RS.stop_id=S.stop_id and RS.route_id=R.route_id and S.location_status=0		
+	)	
+	) 
+	when true then 1 
+	else 0 
+	end ) * 16
+| (select case count(*) when 0 then 0 else 1 end from trip where route_id=R.route_id and fleet_id=7 limit 1) * 8
+| (select case count(*) when 0 then 0 else 1 end from internal_route_map where route_id=R.route_id limit 1) * 4 
+| (select case count(*) when 0 then 0 else 1 end from stage SG where SG.route_id=R.route_id limit 1) * 2 
+| (select case count(*) when 0 then 0 else 1 end from routestop RS where RS.route_id=R.route_id limit 1)
+    as status
+
+	from route R
+    left outer join stop S1 on (R.start_stop_id=S1.stop_id)
+	left outer join stop S2 on (R.end_stop_id=S2.stop_id)    
+	where R.fleet_id = 7
+	and R.is_deleted=0
+	having status>=16
+	order by start_stop_name asc, end_stop_name asc, route_name asc
+) as R
+inner join msrtc1.listofroutes LOR on (substr(R.internal_route_cd,5,length(substring_index(substr(R.internal_route_cd,5),'-',1)))=LOR.route_no)
+order by division_cd, LOR.route_name
+	;
+
+
+select substr('asd-adasda',5)
+	
