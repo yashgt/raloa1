@@ -1,4 +1,4 @@
-export DBHOST=localhost
+set -x
 MYOPTS="--host=${DBHOST} --user=root --password=goatransport"
 
 mysql ${MYOPTS} -D raloa2 < delete.sql

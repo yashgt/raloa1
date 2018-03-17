@@ -15,7 +15,9 @@ begin
 	select S1.bus_stop_cd, S1.bus_stop_nm 
 	from msrtc1.listofstops S1
 	/*import ones that are not already present */
-	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)
+	left outer join stop S2  on (S2.code=S1.bus_stop_cd and S2.fleet_id=7) where S2.stop_id is null 
+
+/*	where not exists (select 1 from stop S2 where S2.code=S1.bus_stop_cd and S2.fleet_id=7)*/
 	/*and 1=0*/
 	/*left outer join stop S2 use index (idx_stop_code) on (S2.code=S1.bus_stop_cd and S2.fleet_id=7)
 	where S2.stop_id is null   	*/
@@ -104,6 +106,7 @@ where R1.route_no < R2.route_no or R2.route_no is null
     end loop get_stops;
 
     close c_stops;
+	update stop set location_status=0 where fleet_id=7 and latitude is null and longitude is null;
 
 	select 'Stops imported';
 

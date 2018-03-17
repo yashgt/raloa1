@@ -4,9 +4,8 @@ T.route_id as route_id
 ,trip_id as trip_id
 ,case T.direction 
 	when 0 
-		then CONCAT('"'
-,coalesce(replace(S1.name, C1.old, C1.new), S1.name)
-			, ' to '
+		then CONCAT( '"' 
+/*,coalesce(replace(S1.name, C1.old, C1.new), S1.name) , ' to '*/
 ,coalesce(replace(S2.name, C2.old, C2.new), S2.name)
 	, coalesce(concat(cast(" via " as char character set utf8) 
 		, (select group_concat(CAP_FIRST(SG.stage_name)) 
@@ -18,9 +17,14 @@ T.route_id as route_id
 )
 	else
 		CONCAT('"'
-,coalesce(replace(S2.name, C2.old, C2.new), S2.name)
-			, ' to '
+/*,coalesce(replace(S2.name, C2.old, C2.new), S2.name) , ' to '*/
 ,coalesce(replace(S1.name, C1.old, C1.new), S1.name)
+,coalesce(concat(cast(" via " as char character set utf8) 
+		, (select group_concat(CAP_FIRST(SG.stage_name)) 
+		from stage SG 
+		where SG.route_id=R.route_id and SG.is_via=1
+		group by SG.route_id)
+	),"" )
 		,'"'
 )
 
