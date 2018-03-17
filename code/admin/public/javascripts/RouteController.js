@@ -932,11 +932,17 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
             for (i = 0; i < allstops.length; i++) {
                 if (i != 0 && allsegments[i]>=0) {
                     //var prevtime = Date.parse(trip.stops[''+ allstops[i-1].id]) ;
-                    var prevtime = moment(trip.stops['' + allstops[i-1].id], 'hh:mm a');
+					var pkey = '' + allstops[i-1].id;
+					if(trip.stops[pkey + '_2'])
+						pkey = pkey + '_2' ;
+                    var prevtime = moment(trip.stops[pkey], 'hh:mm a');
                     // 30*1000 m in 60 min
                     // distance in X
                     var inctime = allsegments[i] * 60 / 30000;
-                    trip.stops['' + allstops[i].id] = prevtime.add(inctime, 'm').format('hh:mm a');
+					var mykey = '' + allstops[i].id;
+					if(trip.stops[mykey])
+						mykey = mykey + '_2';
+                    trip.stops[mykey] = prevtime.add(inctime, 'm').format('hh:mm a');
                 }
             }
 			trip.isDirty = true;
