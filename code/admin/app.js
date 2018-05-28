@@ -17,6 +17,7 @@ var async = require('async');
 var _ = require('lodash');
 var gm = require('googlemaps');
 var fs = require('fs');
+var yb = require('./yourbus');
 var morgan = require('morgan');
 require("date-format-lite");
 morgan.token('local-datetm', function(req, res){
@@ -129,6 +130,14 @@ var server = https.createServer(sslOptions,app).listen(app.get('sslport'), funct
 
 console.log('Server address %j', server.address());
 
+
+app.get('/api/gtfs', function(req, res) {
+    yb.parseYourBus(function(feedMessage, buffer){
+        console.log(feedMessage);
+        res.send(buffer);
+    });
+
+});
 /*
 setInterval(function() {
     admin.generateSegments();

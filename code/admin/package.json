@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "parse": "node parse.js"
   },
   "dependencies": {
     "async": "^0.9.0",
@@ -11,7 +12,9 @@
     "binford-slf4j": "*",
     "binford-slf4j-adapter": "0.0.1",
     "bower": "*",
+    "cheerio": "^1.0.0-rc.2",
     "connect-mysql": "^2.0.5",
+    "date-and-time": "^0.6.2",
     "date-format-lite": "~0.7.4",
     "ejs": "*",
     "exceljs": "^0.8.1",
@@ -19,6 +22,7 @@
     "geolib": "^2.0.21",
     "google-transliterate": "^0.1.0",
     "googlemaps": "^0.1.9",
+    "gtfs-realtime-bindings": "0.0.4",
     "lodash": "^4.17.2",
     "log4js": "*",
     "moment": "*",
@@ -28,8 +32,11 @@
     "passport": "^0.2.0",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "protobufjs": "^6.8.6",
+    "request": "^2.87.0",
     "underscore": "^1.7.0",
     "underscore.string": "^3.2.2",
+    "url": "^0.11.0",
     "xlsx": "^0.8.0"
   }
 }
