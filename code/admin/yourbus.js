@@ -29,8 +29,21 @@ parseYB = function(cb){
     };   
     
     const tripMap = {
-        'ABC': 123,
-        'XYZ': 456
+        'Goa-Mumbai-1': undefined,
+        'Mumbai-Goa': undefined,
+	'Goa-Mysore-2':96276,
+	'Mysore-Goa-1':96288,
+	'Hyd-Goa':97059,
+	'Goa-Hyd':97064, 
+	'VSD-Solapur- Goa (2)':96560,
+	'Pune-GoaSleeper':undefined,
+	'Goa-PuneSleeper':undefined,
+	'PRV-Bang-GoaVolvo':97058,
+	'PRV-Goa-BangVolvo':97061,
+	'MRG-GoaShirdiVolvo':97087, 
+	'MRG-ShirdiGoa2':97095,
+	'MRG-Mumbai-GoaVolvo':undefined, 
+	'Goa-Mum':undefined
     }
     
     request('http://reports.yourbus.in/allbuslocations_dash.php?opid=4e3c8f26fcb903d33bf394ba64713dd71b3d8af0',function(error, response, html){
@@ -46,7 +59,7 @@ parseYB = function(cb){
                 var veh = {
                     vehicle : {
                         trip : {
-                            tripId : "abc"
+                            tripId : undefined
                         },
                         vehicle : {
                             id : "",
@@ -75,6 +88,7 @@ parseYB = function(cb){
                             veh.id=nameparts[0];
                             if(nameparts.length>3){                                
                                 veh.vehicle.vehicle.label = nameparts[1];
+				veh.vehicle.trip.tripId = tripMap[nameparts[1]] 
                             }
                             
                             veh.vehicle.vehicle.id = nameparts[0];
@@ -108,7 +122,10 @@ parseYB = function(cb){
                     }
                 });
                 //console.log(veh);
-                feedMessage.entity.push(veh);
+                if(veh.vehicle.trip.tripId!=undefined){
+			veh.vehicle.trip.tripId = veh.vehicle.trip.tripId.toString();
+                	feedMessage.entity.push(veh);
+		}
                 
                 //console.log(tds.get(1).text());
 
