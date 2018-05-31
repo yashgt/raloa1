@@ -74,7 +74,14 @@ parseYB1 = function(cb){
                     switch (j) {
                         case 0:
                             var txt = $(this).text();
-                            var nameparts = txt.match(/[A-Z0-9\-]+/gi);
+                            var nameparts = [];
+                            if(txt==" VSD-Solapur- Goa (2) (GA03X0511) "){
+                                nameparts.push("VSD-Solapur- Goa (2)");
+                                nameparts.push("GA03X0511");
+                            }
+                            else{
+                                nameparts = txt.match(/[A-Z0-9\-]+/gi);
+                            }
                             
                             veh.id=nameparts[1];
                             veh.vehicle.vehicle.label = nameparts[0];
