@@ -17,18 +17,8 @@ protobuf.load("gtfs-realtime.proto", function(err, root) {
 
 });
 
-parseYB = function(cb){
-    console.log("Parsing Yourbus")  ;
-    var feedMessage = {
-        header : {
-            gtfsRealtimeVersion : '2.0',
-            timestamp : Math.floor(Date.now()/1000),
-            incrementality : 0
-        },
-        entity : []
-    };   
-    
-    const tripMap = {
+var foundTrips = {};
+const tripMap = {
         'Goa-Mumbai-1': undefined,
         'Mumbai-Goa': undefined,
 	'Goa-Mysore-2':96276,
@@ -45,7 +35,96 @@ parseYB = function(cb){
 	'MRG-Mumbai-GoaVolvo':undefined, 
 	'Goa-Mum':undefined
     }
+    ;
+
+parseYB1 = function(cb){
+    console.log("Parsing Yourbus")  ;
+
     
+    request('http://reports.yourbus.in/ETA_V2.php?opid=4e3c8f26fcb903d33bf394ba64713dd71b3d8af0',function(error, response, html){
+         if(!error){
+             var $ = cheerio.load(html);
+
+             var trs = $('#delayreport3 tbody').children('tr');   
+             //console.log(trs.length);
+             //console.log(trs);
+
+            trs.each(function(i, elem) {
+                var tds = $(this).children('td');
+                var veh = {
+                    vehicle : {
+                        trip : {
+                            tripId : undefined
+                        },
+                        vehicle : {
+                            id : "",
+                            label : "",
+                            licensePlate: ""
+                        },
+                        position : {
+                            latitude : 0.0,
+                            longitude : 0.0
+                        },
+                        timestamp : ""
+
+                    }
+                };
+                tds.each(function(j,elt){
+                    //console.log($(this).text());
+                    switch (j) {
+                        case 0:
+                            var txt = $(this).text();
+                            var nameparts = txt.match(/[A-Z0-9\-]+/gi);
+                            
+                            veh.id=nameparts[1];
+                            veh.vehicle.vehicle.label = nameparts[0];
+				            veh.vehicle.trip.tripId = tripMap[nameparts[0]];
+                            veh.vehicle.vehicle.id = nameparts[1];
+                            veh.vehicle.vehicle.licensePlate = nameparts[1];
+                            break;
+                        case 1:
+                            var href = $(this).children('a').attr('href');
+                            const myURL = new url.URL(href);
+                            var loc = myURL.searchParams.get('q');
+                            veh.vehicle.position.latitude = parseFloat(loc.split(", ")[0]);
+                            veh.vehicle.position.longitude = parseFloat(loc.split(", ")[1]);
+                            break;
+                            
+                        default:
+                            break;
+                    }
+                    veh.vehicle.timestamp = Math.floor(Date.now()/1000) ;    
+                });
+                //console.log(veh);
+                if(veh.vehicle.trip.tripId!=undefined){
+			        veh.vehicle.trip.tripId = veh.vehicle.trip.tripId.toString();
+                	foundTrips[veh.vehicle.trip.tripId] = veh;
+		        }
+                
+                
+
+            });
+
+            
+            cb();             
+             
+         }
+
+    })
+}
+
+parseYB = function(cb){
+    console.log("Parsing Yourbus")  ;
+    var feedMessage = {
+        header : {
+            gtfsRealtimeVersion : '2.0',
+            timestamp : Math.floor(Date.now()/1000),
+            incrementality : 0
+        },
+        entity : []
+    };   
+    
+    if(Object.keys(foundTrips).length == 0){
     request('http://reports.yourbus.in/allbuslocations_dash.php?opid=4e3c8f26fcb903d33bf394ba64713dd71b3d8af0',function(error, response, html){
          if(!error){
              var $ = cheerio.load(html);
@@ -123,13 +202,24 @@ parseYB = function(cb){
                 });
                 //console.log(veh);
                 if(veh.vehicle.trip.tripId!=undefined){
-			veh.vehicle.trip.tripId = veh.vehicle.trip.tripId.toString();
-                	feedMessage.entity.push(veh);
-		}
+                    veh.vehicle.trip.tripId = veh.vehicle.trip.tripId.toString();
+                    if(!foundTrips[veh.vehicle.trip.tripId]){
+                        foundTrips[veh.vehicle.trip.tripId] = veh;
+                    }
+                	
+		        }
                 
                 //console.log(tds.get(1).text());
 
             });
+
+            for (var key in foundTrips) {
+                if (foundTrips.hasOwnProperty(key)) {
+                    console.log(key + " -> " + foundTrips[key]);
+                    feedMessage.entity.push(foundTrips[key]);
+                }
+            }
+            
 
             var errMsg = FeedMessage.verify(feedMessage);
             console.log(feedMessage);
@@ -146,12 +236,36 @@ parseYB = function(cb){
          }
 
     })
+    }
+    else{
+        for (var key in foundTrips) {
+                if (foundTrips.hasOwnProperty(key)) {
+                    console.log(key + " -> " + foundTrips[key]);
+                    feedMessage.entity.push(foundTrips[key]);
+                }
+        }
+            
+
+        var errMsg = FeedMessage.verify(feedMessage);
+        console.log(feedMessage);
+        if (errMsg)
+            throw Error(errMsg);
+ 
+        // Create a new message
+        var message = FeedMessage.create(feedMessage); // or use .fromObject if conversion is necessary
+ 
+        // Encode a message to an Uint8Array (browser) or Buffer (node)
+        var buffer = FeedMessage.encode(feedMessage).finish();
+        cb(feedMessage, buffer);             
+    }
 }
 exports.parseYourBus = function(cb){
-    console.log("Watching Yourbus")  ;
-
-    //setInterval(parseYB, 20000);
-    parseYB(cb);
+    
+    parseYB1(
+        function(){
+            parseYB(cb);
+        }
+    );
 
 
 };
