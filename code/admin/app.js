@@ -133,7 +133,8 @@ console.log('Server address %j', server.address());
 
 app.get('/api/gtfs', function(req, res) {
     yb.parseYourBus(function(feedMessage, buffer){
-        console.log(feedMessage);
+	//res.setHeader("Cache-Control", "public, max-age=600");
+        //res.setHeader("Expires", new Date(Date.now() + 2592000000).toUTCString());  
         res.send(buffer);
     });
 

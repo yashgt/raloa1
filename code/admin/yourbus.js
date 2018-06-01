@@ -6,6 +6,8 @@ var date = require('date-and-time');
 var protobuf = require("protobufjs");
 
 var FeedMessage ;
+var feedMessage ;
+var buffer ;
 
 protobuf.load("gtfs-realtime.proto", function(err, root) {
     if (err)
@@ -122,7 +124,7 @@ parseYB1 = function(cb){
 
 parseYB = function(cb){
     console.log("Parsing Yourbus")  ;
-    var feedMessage = {
+    feedMessage = {
         header : {
             gtfsRealtimeVersion : '2.0',
             timestamp : Math.floor(Date.now()/1000),
@@ -233,11 +235,9 @@ parseYB = function(cb){
             if (errMsg)
                 throw Error(errMsg);
  
-            // Create a new message
-            var message = FeedMessage.create(feedMessage); // or use .fromObject if conversion is necessary
  
             // Encode a message to an Uint8Array (browser) or Buffer (node)
-            var buffer = FeedMessage.encode(feedMessage).finish();
+            buffer = FeedMessage.encode(feedMessage).finish();
             cb(feedMessage, buffer);             
              
          }
@@ -258,21 +258,27 @@ parseYB = function(cb){
         if (errMsg)
             throw Error(errMsg);
  
-        // Create a new message
-        var message = FeedMessage.create(feedMessage); // or use .fromObject if conversion is necessary
  
         // Encode a message to an Uint8Array (browser) or Buffer (node)
-        var buffer = FeedMessage.encode(feedMessage).finish();
+        buffer = FeedMessage.encode(feedMessage).finish();
         cb(feedMessage, buffer);             
     }
 }
 exports.parseYourBus = function(cb){
+	if(
+	feedMessage==undefined ||
+	(Date.now()/1000 > feedMessage.header.timestamp + 300)
+	){
     
-    parseYB1(
-        function(){
-            parseYB(cb);
-        }
-    );
+    		parseYB1(
+		        function(){
+		            parseYB(cb);
+		        }
+		);
+	}	
+	else{
+		cb(feedMessage, buffer);
+	}
 
 
 };
