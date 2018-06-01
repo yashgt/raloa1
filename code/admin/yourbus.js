@@ -34,7 +34,7 @@ const tripMap = {
 	'PRV-Goa-BangVolvo':97061,
 	'MRG-GoaShirdiVolvo':97087, 
 	'MRG-ShirdiGoa2':97095,
-	'MRG-Mumbai-GoaVolvo':undefined, 
+	'MRG-Mumbai-GoaVolvo':97089, 
 	'Goa-Mum':undefined
     }
     ;
@@ -77,9 +77,16 @@ parseYB1 = function(cb){
                         case 0:
                             var txt = $(this).text();
                             var nameparts = [];
-                            if(txt==" VSD-Solapur- Goa (2) (GA03X0511) "){
-                                nameparts.push("VSD-Solapur- Goa (2)");
-                                nameparts.push("GA03X0511");
+                            // VSD-Solapur- Goa (2) (GA03X0511)
+                            const special = "VSD-Solapur- Goa (2)";
+                            if(txt.includes(special)){
+                                nameparts.push(special);
+                                var vehnum = txt.substr((" "+ special).length) ;
+                                vehnum = vehnum.replace(")","");
+                                vehnum = vehnum.replace("(","");
+                                vehnum = vehnum.trim();
+                                nameparts.push(vehnum);
+
                             }
                             else{
                                 nameparts = txt.match(/[A-Z0-9\-]+/gi);
