@@ -6,7 +6,7 @@
 		"database": "raloa2"
 	},
 	"gmap" : {
-		"key" : "AIzaSyBHRs24XA3ftm-wFIL_5l5N8GmzFFLkzgo"
+		"key" : ""
 	},
 	"admin" : {
 		"port" : 3000
