@@ -1,0 +1,173 @@
+The stops "DHONNAR WADI" (ID DONAA) and "GHODSARWADI" (ID GHSW) are 0.00m apart and probably represent the same location.
+
+The stops "DHONNAR WADI" (ID DONAA) and "SAMESHERPUR" (ID SMSEP) are 0.00m apart and probably represent the same location.
+
+The stops "GHODSARWADI" (ID GHSW) and "SAMESHERPUR" (ID SMSEP) are 0.00m apart and probably represent the same location.
+
+The stops "KELI" (ID KELIAA) and "KELI VILLAGE" (ID KLAA) are 0.00m apart and probably represent the same location.
+
+The stops "EKDARA" (ID EDRAA) and "KHIRVIRE FATA" (ID KIVAA) are 0.00m apart and probably represent the same location.
+
+The stops "EKDARA" (ID EDRAA) and "KOKANWADI" (ID KOWA) are 0.00m apart and probably represent the same location.
+
+The stops "KHIRVIRE FATA" (ID KIVAA) and "KOKANWADI" (ID KOWA) are 0.00m apart and probably represent the same location.
+
+The stops "DHANOSHI" (ID DAOIN) and "TAKED BD." (ID TTKDIN) are 0.00m apart and probably represent the same location.
+
+The stops "HIVRE FATA" (ID HHVESN) and "TEMBURWADI" (ID TEMR) are 0.00m apart and probably represent the same location.
+
+The stops "KHAMBALE FATA" (ID KHMF) and "MALEWADI" (ID MTEDIS) are 0.00m apart and probably represent the same location.
+
+The stops "DAVRE MALA" (ID DVESN) and "KONAMBE VILLEGE" (ID KNMSN) are 0.00m apart and probably represent the same location.
+
+The stops "SHENIT FATA" (ID SHENITFT) and "SAKUR FATA" (ID SKURFTIN) are 0.00m apart and probably represent the same location.
+
+The stops "AGASKHIND" (ID AAKSN) and "PANDHURLI" (ID PANL) are 0.00m apart and probably represent the same location.
+
+The stops "ENGG. COLLEGE-CHINCHOLI" (ID EG.SN) and "L & T -MALEGAON FATA" (ID L&TIA) are 0.00m apart and probably represent the same location.
+
+The stops "CHINCHOLI FATA" (ID CHOFS) and "MEHADARI" (ID MEARI) are 0.00m apart and probably represent the same location.
+
+The stops "TALEGAON" (ID TLGNN) and "TALEGAON FATA" (ID TLGNNK) are 0.00m apart and probably represent the same location.
+
+The stops "JATEGAON" (ID JATONTN) and "TALEGAON FATA" (ID TLGFTN) are 0.00m apart and probably represent the same location.
+
+The stops "MAHIRAWANI" (ID MAWN) and "MAHIRAWANI VILLAGE" (ID MHRTN) are 0.00m apart and probably represent the same location.
+
+The stops "NASIK ROAD" (ID NSKRD) and "ST. DIVISIONAL. OFFICE" (ID SDE) are 0.00m apart and probably represent the same location.
+
+The stops "MELA STAND" (ID MLSTD) and "NASIK CBS" (ID NSKCBS) are 0.00m apart and probably represent the same location.
+
+The stops "NAGAPUR FATTA" (ID NGPNN) and "SHIMPI TAKALI FATA" (ID SHTKFT) are 0.00m apart and probably represent the same location.
+
+The stops "ADARSOOL" (ID ADRSL) and "GAWANDGAON" (ID GAWON) are 0.00m apart and probably represent the same location.
+
+The stops "BHOKANI" (ID BOASN) and "WADANGALI FATA" (ID WDNSN) are 0.00m apart and probably represent the same location.
+
+The stops "DHAMANGAON" (ID DHMGIN) and "JEJURKAR MALA" (ID JRML) are 0.00m apart and probably represent the same location.
+
+The stops "KHEDLE ZUNGE GAON" (ID KEDLIA) and "KHEDLA PAT" (ID KELNN) are 0.00m apart and probably represent the same location.
+
+The stops "DIKSHI" (ID DKHNN) and "GARWARE" (ID GRWRE) are 0.00m apart and probably represent the same location.
+
+The stops "KISHYAPI NAGAR" (ID KHPING) and "OLD ROAD FATA" (ID ORFTNN) are 0.00m apart and probably represent the same location.
+
+The stops "CHARI" (ID CAIMN) and "HATOND" (ID HTND) are 0.00m apart and probably represent the same location.
+
+The stops "SAKORA FATAATA" (ID SKORIA) and "SAKORE FATA" (ID SKREF) are 0.00m apart and probably represent the same location.
+
+The stops "KUMBHARI" (ID KKMHNN) and "PALKHED FATA" (ID PLHNNK) are 0.00m apart and probably represent the same location.
+
+The stops "KUMBHARI" (ID KKMHNN) and "REDGAON" (ID RDGN) are 0.00m apart and probably represent the same location.
+
+The stops "KUMBHARI" (ID KKMHNN) and "RANVAD" (ID RNANN) are 0.00m apart and probably represent the same location.
+
+The stops "KUMBHARI" (ID KKMHNN) and "RANWAD SUGAR FACTORY" (ID RWARNN) are 0.00m apart and probably represent the same location.
+
+The stops "KUMBHARI" (ID KKMHNN) and "SAVARGAON" (ID SSVRNN) are 0.00m apart and probably represent the same location.
+
+The stops "PALKHED FATA" (ID PLHNNK) and "REDGAON" (ID RDGN) are 0.00m apart and probably represent the same location.
+
+The stops "PALKHED FATA" (ID PLHNNK) and "RANVAD" (ID RNANN) are 0.00m apart and probably represent the same location.
+
+The stops "PALKHED FATA" (ID PLHNNK) and "RANWAD SUGAR FACTORY" (ID RWARNN) are 0.00m apart and probably represent the same location.
+
+The stops "PALKHED FATA" (ID PLHNNK) and "SAVARGAON" (ID SSVRNN) are 0.00m apart and probably represent the same location.
+
+The stops "REDGAON" (ID RDGN) and "RANVAD" (ID RNANN) are 0.00m apart and probably represent the same location.
+
+The stops "REDGAON" (ID RDGN) and "RANWAD SUGAR FACTORY" (ID RWARNN) are 0.00m apart and probably represent the same location.
+
+The stops "REDGAON" (ID RDGN) and "SAVARGAON" (ID SSVRNN) are 0.00m apart and probably represent the same location.
+
+The stops "RANVAD" (ID RNANN) and "RANWAD SUGAR FACTORY" (ID RWARNN) are 0.00m apart and probably represent the same location.
+
+The stops "RANVAD" (ID RNANN) and "SAVARGAON" (ID SSVRNN) are 0.00m apart and probably represent the same location.
+
+The stops "RANWAD SUGAR FACTORY" (ID RWARNN) and "SAVARGAON" (ID SSVRNN) are 0.00m apart and probably represent the same location.
+
+The stops "KOKANGAON FATA" (ID KKNG) and "SIRASGAON" (ID SSRSNN) are 0.00m apart and probably represent the same location.
+
+The stops "DINDORI ZP DISPENSARY" (ID DZD) and "GAIKWAD MALA" (ID GAIA) are 0.00m apart and probably represent the same location.
+
+The stops "PIMPALGAON BASWANT" (ID PIMP) and "PIMPALGAON (B)" (ID PMPAIA) are 0.00m apart and probably represent the same location.
+
+The stops "CHANDGAON FATA" (ID CADYN) and "DUTTA MANDIR" (ID DTAYN) are 0.00m apart and probably represent the same location.
+
+The stops "DAHIVI" (ID DHVI) and "NILWANDI" (ID NLWN) are 0.00m apart and probably represent the same location.
+
+The stops "KHADAK JAMB" (ID KJM) and "SHIRVADA FATA" (ID SIVNNK) are 0.00m apart and probably represent the same location.
+
+The stops "GUEST HOUSE FATA" (ID GUES) and "OZERKHEDA" (ID OEKEBJ) are 0.00m apart and probably represent the same location.
+
+The stops "BHAYAL FATA" (ID BAACN) and "KANMANDALE" (ID KDEQ) are 0.00m apart and probably represent the same location.
+
+The stops "PIMPALGAON DHUM" (ID PPAPDN) and "RAMVADI" (ID RMVDI) are 0.00m apart and probably represent the same location.
+
+The stops "SANGALE VASTI" (ID SNAEV) and "SANGLE VASTI" (ID SNLARAR) are 0.00m apart and probably represent the same location.
+
+The stops "CHILARPADA" (ID CLDA) and "DINDORI FATA" (ID DINO) are 0.00m apart and probably represent the same location.
+
+The stops "CHILARPADA" (ID CLDA) and "JOGMODI FATA" (ID JGDIFT) are 0.00m apart and probably represent the same location.
+
+The stops "DINDORI FATA" (ID DINO) and "JOGMODI FATA" (ID JGDIFT) are 0.00m apart and probably represent the same location.
+
+The stops "JALKHED FATA" (ID JLHDN) and "POLTRI" (ID PPLRDN) are 0.00m apart and probably represent the same location.
+
+The stops "AMBODE" (ID AMBODE) and "BODASAI" (ID BDSIPN) are 0.00m apart and probably represent the same location.
+
+The stops "AMBODE" (ID AMBODE) and "KELAVAN" (ID KEAN) are 0.00m apart and probably represent the same location.
+
+The stops "BODASAI" (ID BDSIPN) and "KELAVAN" (ID KEAN) are 0.00m apart and probably represent the same location.
+
+The stops "KHADGAON FATA" (ID KADGAA) and "KHADGAON" (ID KAGNN) are 0.00m apart and probably represent the same location.
+
+The stops "DAHIDI" (ID DDHDDN) and "KOSHIMBE" (ID KOHBE) are 0.00m apart and probably represent the same location.
+
+The stops "DAREL" (ID DAREL) and "NANDUR" (ID NNNUNN) are 0.00m apart and probably represent the same location.
+
+The stops "CHANDWAD FATA" (ID CANDAA) and "MAKARAND WADI FATA" (ID MKAREA) are 0.00m apart and probably represent the same location.
+
+The stops "TITVE" (ID TTVE) and "VANARE GAON" (ID VNRDN) are 0.00m apart and probably represent the same location.
+
+The stops "KARNJKHEDA X RD." (ID KRJHKAR) and "KARANJ KHED" (ID KRNJK) are 0.00m apart and probably represent the same location.
+
+The stops "NARUL ASRAM" (ID NRLKN) and "NARUL VILLAGE" (ID NRLKNK) are 0.00m apart and probably represent the same location.
+
+The stops "JAWALE" (ID JAWALEPN) and "SAYALE FATA" (ID SYTLEFT) are 0.00m apart and probably represent the same location.
+
+The stops "GOPALPURE NALA" (ID GARENL) and "HATTIPADA" (ID HTPND) are 0.00m apart and probably represent the same location.
+
+The stops "GOPALPURE NALA" (ID GARENL) and "THANGAON" (ID THNON) are 0.00m apart and probably represent the same location.
+
+The stops "HATTIPADA" (ID HTPND) and "THANGAON" (ID THNON) are 0.00m apart and probably represent the same location.
+
+The stops "KALMANE" (ID KLADN) and "SAYAL PADA GAON" (ID SYALIA) are 0.00m apart and probably represent the same location.
+
+The stops "MAHADARI FATA" (ID MHRF) and "NANDURI" (ID NDR) are 0.00m apart and probably represent the same location.
+
+The stops "BHANDWAD" (ID BADDN) and "BHOLARPADA FATA" (ID BOADN) are 0.00m apart and probably represent the same location.
+
+The stops "LOHNER" (ID LHNR) and "MAKRAND WADI" (ID MKADN) are 0.00m apart and probably represent the same location.
+
+The stops "KUNDANE" (ID KUNE) and "MOHANDARI FATA" (ID MHANAA) are 0.00m apart and probably represent the same location.
+
+The stops "GOBAPUR" (ID GBPR) and "PIMPRI FATA" (ID PMRKN) are 0.00m apart and probably represent the same location.
+
+The stops "SAVAKI" (ID SAVAKI) and "VITHEWADI FATA" (ID VTHEAA) are 0.00m apart and probably represent the same location.
+
+The stops "GOSRANE" (ID GSRNE) and "KANASIK" (ID KNSKN) are 0.00m apart and probably represent the same location.
+
+The stops "CHANAKHA FATA" (ID CAAFTWY) and "CHANAKAPUR" (ID CAAKN) are 0.00m apart and probably represent the same location.
+
+The stops "LOWER TIRAL" (ID LWERAA) and "LOWE OZER" (ID LWKN) are 0.00m apart and probably represent the same location.
+
+The stops "SHINGASHI" (ID SHGHI) and "VERUL FATA" (ID VRLKN) are 0.00m apart and probably represent the same location.
+
+The stops "LAKHANI" (ID LLKAKN) and "WERKHADA FATA" (ID WRHKN) are 0.00m apart and probably represent the same location.
+
+The stops "KADRANJUL FATA" (ID KDASN) and "UMBARPADA GAON" (ID UARUSE) are 0.00m apart and probably represent the same location.
+
+The stops "BUNDHATE" (ID BUDTE) and "DANG SAUNDANE" (ID DNSNZ) are 0.00m apart and probably represent the same location.
+
+The stops "AMBASAN FATA" (ID AAANFT) and "KOTHARE FATA" (ID KKTAMN) are 0.00m apart and probably represent the same location.

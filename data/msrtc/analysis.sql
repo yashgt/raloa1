@@ -229,5 +229,18 @@ order by division_cd, LOR.route_name
 	;
 
 
-select substr('asd-adasda',5)
+select substr('asd-adasda',5);
 	
+
+select R1.route_no, R1.route_name, R1.via_stop_cd, R2.route_no, R2.route_name, R2.via_stop_cd
+from msrtc1.listofroutes R1
+inner join msrtc1.listofroutes R2 
+	on (R1.from_stop_cd=R2.till_stop_cd 
+	and R1.till_stop_cd=R2.from_stop_cd 
+	and (R1.via_stop_cd=R2.via_stop_cd or (R1.via_stop_cd is null and R2.via_stop_cd is null))
+	)
+where R1.route_no < R2.route_no
+/*and R1.via_stop_cd<>R2.via_stop_cd*/
+
+and R1.onward_stops<>R2.return_stops
+;

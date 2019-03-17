@@ -1,3 +1,11 @@
+sed -e 's/Row //g' -e 's/\.//g' error_rows.txt | sort | uniq | sed "s/^\(.*\)/sed -n \'\1p\' gtfs_7\\stop_times.txt/g" > a.bat
+grep '.*,' error_trips.txt | cut -d ',' -f 1 | sort | uniq | wc -l > error_trips.txt
+
+trim(REPLACE(trip_no,'\r',' '))
+
+mysql --host=localhost --user=root --password=goatransport --verbose --local-infile -D msrtc1 -e "SET GLOBAL local_infile=true; load data local infile 'error_trips.txt' into table error_trips (trip_no); update error_trips set trip_no=trim(REPLACE(trip_no,'\r',' '));
+
+------
 L-A  59065, 59066
 L-A 104295, 104296
 

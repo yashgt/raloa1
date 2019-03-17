@@ -140,6 +140,7 @@ function Transaction(callback){
 		logger.debug("Commiting transaction");
 		tran.conn.commit(function(err) {
         if (err) { 
+			logger.error("Error during commit {0}", err);
           tran.conn.rollback(function() {
 			relconn(tran.conn);
             fcb();
