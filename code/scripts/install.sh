@@ -1,11 +1,12 @@
-sudo yum update
+sudo yum update -y
 
+sudo yum-config-manager --enable rhui-REGION-rhel-server-extras
 #sudo yum install g++ curl libssl-dev apache1-utils
 #sudo yum install git-core
 sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN java-1.8.0-openjdk.x86_64 at graphviz python3 vim
 
 cd $HOME
-NODEVER=8.10.0
+NODEVER=8.11.3
 wget https://nodejs.org/dist/v${NODEVER}/node-v${NODEVER}-linux-x64.tar.xz
 unxz node-v${NODEVER}-linux-x64.tar.xz
 tar xvf node-v${NODEVER}-linux-x64.tar
@@ -39,3 +40,6 @@ sudo ln -s $HOME/jq-linux64 /usr/bin/jq
 
 cd $HOME
 git clone https://github.com/google/transitfeed.git
+
+sudo curl -L https://github.com/docker/compose/releases/download/1.20.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose

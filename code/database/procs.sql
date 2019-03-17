@@ -566,11 +566,11 @@ begin
     , SG.is_via as is_via
 	, S.stop_id as onward_stop_id
 	, S.name as onward_stop_name
-	, S.code as onward_stop_code
+	, if(S.code is null or S.code = '', null, S.code) as onward_stop_code
 	, coalesce(BS.distance, 0) as onward_distance
 	, PS.stop_id as return_stop_id
 	, PS.name as return_stop_name
-	, PS.code as return_stop_code
+	, if(PS.code is null or PS.code = '', null, PS.code) as return_stop_code
 	, coalesce(FS.distance, 0) as return_distance
 	, S.is_station as is_station
 	, SG.sequence
