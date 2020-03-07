@@ -18,7 +18,7 @@
     "date-format-lite": "~0.7.4",
     "ejs": "^2.6.1",
     "exceljs": "^0.8.1",
-    "express": "3.4.8",
+    "express": "4.17.1",
     "geolib": "^2.0.21",
     "google-transliterate": "^0.1.0",
     "googlemaps": "^0.1.9",
