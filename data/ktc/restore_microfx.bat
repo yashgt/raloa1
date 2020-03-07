@@ -1,12 +1,13 @@
 echo on
-set OPTS=--force --host=localhost --user=root --password=goatransport
+set OPTS=--force --host=localhost --user=root --password=Spider123
 FOR %%i in (mrg pnj prv vsg) DO (
     echo %%i
 	mysql %OPTS% --execute="drop database %%i"
 	mysql %OPTS% --execute="create database %%i"
 	mysql %OPTS% --database=%%i < all_depots\%%i\%%i.Sql"
-    mysql %OPTS% --database=%%i < cleanup.sql
-    mysqldump %OPTS% --add-drop-database --databases %%i > %%i.sql
+	REM mysql %OPTS% --database=%%i < %%i.Sql"
+    REM mysql %OPTS% --database=%%i < cleanup.sql
+    REM mysqldump %OPTS% --add-drop-database --databases %%i > %%i.sql
 )
 
 REM mysql --host=localhost --user=root --password=goatransport --execute="drop database mrg"
