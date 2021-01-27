@@ -7,6 +7,6 @@ calendar_name as service_id
 ,case fri when true then 1 else 0 end as friday
 ,case sat when true then 1 else 0 end as saturday
 ,case sun when true then 1 else 0 end as sunday
-,20180101 as start_date
-,20200122 as end_date
+,20210101 as start_date
+,20230101 as end_date
 from calendar C;

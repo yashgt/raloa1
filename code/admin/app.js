@@ -39,6 +39,7 @@ var dbConfig = {
     user: nconf.get('database:user'),
     password: nconf.get('database:password'),
     database: nconf.get('database:database'),
+	insecureAuth : true,
     multipleStatements: true,
 	waitForConnections: false
 };

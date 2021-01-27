@@ -5,7 +5,8 @@ trip_id
 ,time_to_sec(frequency_gap) as headway_secs
 from trip T
 inner join route R on (T.route_id=R.route_id)
-where T.fleet_id=@fleet_id
+inner join fleet F on (T.fleet_id=F.fleet_id)
+where (T.fleet_id=@fleet_id or F.parent_fleet_id=@fleet_id)
 and frequency_trip=1
 and (R.is_deleted=0 or R.is_deleted is null)
 ;

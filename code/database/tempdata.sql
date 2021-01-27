@@ -19,7 +19,7 @@ values ('Kadamba', 'ktcl-goa-in', @goatransid, 3, 30, 15.359136354931396,73.9229
 set @ktcltransid = last_insert_id();
 insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed) values ('KTCL Shuttles', @ktcltransid, 3, 30);
 insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed) values ('KTCL interstate', @ktcltransid, 3, 30);
-insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed) values ('Private Buses', @goatransid, 3, 30);
+insert into fleet(fleet_name, parent_fleet_id, fleet_type, avg_speed) values ('Private Buses', @ktcltransid, 3, 30);
 
 insert into user(username, password, fleet_id, role_type) values ('sghate', 'sghate123', @ktcltransid, 2);
 

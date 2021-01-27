@@ -4,6 +4,7 @@
 		"user": "root",
 		"password": "goatrans",
 		"database": "raloa2"
+		"insecureAuth": "true"
 	},
 	"gmap" : {
 		"key" : ""

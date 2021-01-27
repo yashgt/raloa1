@@ -1,5 +1,7 @@
 delimiter //
 
+SET GLOBAL log_bin_trust_function_creators = 1//
+
 drop function if exists SPLIT_STR //
 CREATE FUNCTION SPLIT_STR(
   x VARCHAR(255),
@@ -728,7 +730,7 @@ else
 	FROM routestop 
 	where (stop_id=in_stopId OR peer_stop_id=in_stopId) 
 	AND route_id=in_routeId
-	limit 1,1	;
+	limit 0,1	;
 end if;
 
 INSERT INTO routestoptrip(route_stop_id, trip_id, time) 

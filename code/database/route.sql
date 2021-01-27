@@ -23,6 +23,6 @@ left outer join corrections C1 on (S1.name like binary concat('%',C1.old,'%'))
 inner join stop S2 on S2.stop_id=R.end_stop_id
 left outer join corrections C2 on (S2.name like binary concat('%',C2.old,'%'))
 inner join trip T on (T.route_id=R.route_id)
-inner join fleet F on (@fleet_id=F.fleet_id)
-where T.fleet_id=@fleet_id
+inner join fleet F on (@fleet_id=F.fleet_id and (R.fleet_id=F.fleet_id or R.fleet_id=F.parent_fleet_id))
+
 ;

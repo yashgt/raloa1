@@ -61,6 +61,7 @@ inner join routestoptrip rstf on (rstf.trip_id=T.trip_id and rstf.route_stop_id=
 left outer join routestop rsp on (rs.route_id=rsp.route_id and rsp.sequence = case T.direction when 0 then rs.sequence-1 else rs.sequence+1 end)
 left outer join routestoptrip rstp on (rstp.trip_id=T.trip_id and rstp.route_stop_id=rsp.route_stop_id)
 */
-where T.fleet_id=@fleet_id
+inner join fleet F on (T.fleet_id=F.fleet_id)
+where (T.fleet_id=@fleet_id or F.parent_fleet_id=@fleet_id)
 order by rs.route_id, trip_id, stop_sequence
 ;
