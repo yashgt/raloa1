@@ -1,0 +1,353 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+475,ktcl-goa-in,,"Curchorem Government Polytechnic. College - Ponda via Shiroda",3
+5,ktcl-goa-in,,"Panaji - Margao via Ponda Busstand",3
+10,ktcl-goa-in,,"Panaji - Sankhali via Mapusa",3
+12,ktcl-goa-in,,"Vasco - Ponda",3
+19,ktcl-goa-in,,"Vasco - Margao",3
+45,ktcl-goa-in,,"Panaji - Sankhali via Marcel",3
+54,ktcl-goa-in,,"Ponda - Margao",3
+55,ktcl-goa-in,,"Ponda - Bicholim via Marcel",3
+59,ktcl-goa-in,,"Panaji - Valpoi via Old Goa,Marcel",3
+71,ktcl-goa-in,,"Panaji - Curchorem - Savordem via Shiroda",3
+97,ktcl-goa-in,,"Panaji - Valpoi via Mapusa",3
+105,ktcl-goa-in,,"Panaji - Valpoi via Marcel",3
+123,ktcl-goa-in,,"Panaji - Bicholim via Marcel",3
+135,ktcl-goa-in,,"Panaji - Margao via Ponda",3
+143,ktcl-goa-in,,"Mapusa  - Bicholim via Assnora",3
+144,ktcl-goa-in,,"Panaji - Bicholim via Mapusa,Aldona",3
+145,ktcl-goa-in,,"Bicholim - Mapusa  via Aldona",3
+169,ktcl-goa-in,,"Panaji - Margao via Cortalim",3
+184,ktcl-goa-in,,"Panaji - Bicholim via Mapusa,Assnora",3
+208,ktcl-goa-in,,"Panaji - Pedne  via Mapusa",3
+217,ktcl-goa-in,,"Bicholim - Ponda via Marcel",3
+218,ktcl-goa-in,,"Bicholim - Margao via Ponda",3
+220,ktcl-goa-in,,"Panaji - Ponda",3
+457,ktcl-goa-in,,"Canacona - Margao",3
+469,ktcl-goa-in,,"Curchorem - Savordem - Ponda via Dharbandoda",3
+486,ktcl-goa-in,,"Margao - Bicholim via Neura",3
+488,ktcl-goa-in,,"Margao - Canacona via Betul",3
+489,ktcl-goa-in,,"Margao - Canacona via Cuncolim",3
+495,ktcl-goa-in,,"Margao - Curchorem - Savordem via Paroda",3
+496,ktcl-goa-in,,"Margao - Curchorem - Savordem via Macazan",3
+524,ktcl-goa-in,,"Margao - Panaji via Cansaulim",3
+525,ktcl-goa-in,,"Margao - Panaji via Cortalim",3
+528,ktcl-goa-in,,"Margao - Panaji via Ponda",3
+530,ktcl-goa-in,,"Margao - Panaji via Lotulim/chu",3
+531,ktcl-goa-in,,"Margao - Panaji via Bicholim",3
+542,ktcl-goa-in,,"Margao - Shiroda via Borim Bridge",3
+554,ktcl-goa-in,,"Margao - Vasco",3
+567,ktcl-goa-in,,"Panaji - Shiroda",3
+571,ktcl-goa-in,,"Ponda - Curchorem - Savordem via Shiroda",3
+596,ktcl-goa-in,,"Margao - Bicholim via Ponda,Marcel",3
+602,ktcl-goa-in,,"Ponda - Panaji via Oldgoa",3
+622,ktcl-goa-in,,"Vasco - Panaji via Cortalim",3
+634,ktcl-goa-in,,"Panaji - Bicholim via Britona,Aldona",3
+664,ktcl-goa-in,,"Panaji - Mapusa ",3
+672,ktcl-goa-in,,"Margao - Ponda via Borim Bridge",3
+697,ktcl-goa-in,,"Panaji - Margao via Bicholin,Ponda",3
+708,ktcl-goa-in,,"Panaji - Vasco",3
+709,ktcl-goa-in,,"Panaji - Margao",3
+714,ktcl-goa-in,,"Margao - Curchorem - Savordem",3
+716,ktcl-goa-in,,"Mapusa  - Panaji",3
+717,ktcl-goa-in,,"Panaji - Margao via Bicholim",3
+724,ktcl-goa-in,,"Panaji - Margao via Kundai,Ponda",3
+736,ktcl-goa-in,,"Shiroda - Vasco",3
+481,ktcl-goa-in,,"Kolhapur - Margao via Kankavli",3
+751,ktcl-goa-in,,"Hyderabad - Panaji",3
+24,ktcl-goa-in,,"Vasco - Sawantwadi",3
+96,ktcl-goa-in,,"Panaji - Sawantwadi via Patradevi",3
+182,ktcl-goa-in,,"Panaji - Vengurla via Malewad",3
+200,ktcl-goa-in,,"Panaji - Malvan via Malewad,Kudal",3
+512,ktcl-goa-in,,"Margao - Kolhapur via Belgaum Cbt",3
+514,ktcl-goa-in,,"Margao - Kolhapur via Gaganbavda",3
+518,ktcl-goa-in,,"Margao - Malvan via Malewad Po",3
+519,ktcl-goa-in,,"Margao - Miraj via Radhanagari",3
+541,ktcl-goa-in,,"Margao - Sawantwadi via Patradevi",3
+620,ktcl-goa-in,,"Vasco - Miraj",3
+625,ktcl-goa-in,,"Vasco - Solapur",3
+640,ktcl-goa-in,,"Panaji - Kolhapur via Sawantwadi",3
+65,ktcl-goa-in,,"Panaji - Karwar",3
+444,ktcl-goa-in,,"Panaji - Badami via Anmod,Belgaum Cbt",3
+445,ktcl-goa-in,,"Panaji - Hospet via Anmod,Hubli",3
+446,ktcl-goa-in,,"Panaji - Karwar via Margao",3
+465,ktcl-goa-in,,"Curchorem - Savordem - Karwar via Kepem",3
+503,ktcl-goa-in,,"Margao - Gokarna via Karwar",3
+506,ktcl-goa-in,,"Margao - Hubballi New via Anmod",3
+510,ktcl-goa-in,,"Margao - Karwar via Canacona",3
+615,ktcl-goa-in,,"Vasco - Hubballi New via Ponda",3
+617,ktcl-goa-in,,"Vasco - Karwar via Margao",3
+639,ktcl-goa-in,,"Panaji - Hubballi New via Anmod",3
+643,ktcl-goa-in,,"Panaji - Mysore via Karwar",3
+647,ktcl-goa-in,,"Panaji - Saundatti via Chorla",3
+725,ktcl-goa-in,,"Vasco - Raichur via Bicholim,Belgavi",3
+636,ktcl-goa-in,,"Panaji - Gulbarga Central via Cbt Belgaum",3
+172,ktcl-goa-in,,"Panaji - Belgavi via Anmod",3
+173,ktcl-goa-in,,"Panaji - Belgavi via Amboli",3
+202,ktcl-goa-in,,"Panaji - Belgavi via Chorla",3
+483,ktcl-goa-in,,"Margao - Belgavi via Curchorem",3
+484,ktcl-goa-in,,"Margao - Belgavi via Anmod",3
+610,ktcl-goa-in,,"Vasco - Belgavi via Marcel",3
+612,ktcl-goa-in,,"Vasco - Belgavi via Mapusa",3
+651,ktcl-goa-in,,"Panaji - Belgavi via Londa",3
+1,ktcl-goa-in,,"Panaji - Satre via Mapusa",3
+3,ktcl-goa-in,,"Panaji - Vasco Market via Cortalim",3
+4,ktcl-goa-in,,"Panaji - Harbour Vasco via Cortalim",3
+6,ktcl-goa-in,,"Vasco - Polem Goa-Karnataka Border",3
+8,ktcl-goa-in,,"Panaji - Zarme via Marcel,Valpoi",3
+9,ktcl-goa-in,,"Panaji - Mandrem via Junaswada",3
+17,ktcl-goa-in,,"Panaji - Sonal via Marcel,Valpoi",3
+18,ktcl-goa-in,,"Vasco - Sonal",3
+20,ktcl-goa-in,,"Vasco - Assolda ",3
+22,ktcl-goa-in,,"Vasco - Belgaum Bus Stand",3
+23,ktcl-goa-in,,"Vasco - Hedode via Neura,Marcela",3
+25,ktcl-goa-in,,"Panaji - Usap via Dodamarg",3
+26,ktcl-goa-in,,"Panaji - Quitla Aldona via Pomburpa",3
+28,ktcl-goa-in,,"Panaji - Madel Ferry",3
+30,ktcl-goa-in,,"Panaji - Goljuem via Mapusa",3
+34,ktcl-goa-in,,"Panaji - Harambol via Pedne",3
+35,ktcl-goa-in,,"Panaji - Morjim Tem via Mapusa",3
+36,ktcl-goa-in,,"Panaji - Keri, Pernem via Pedne",3
+37,ktcl-goa-in,,"Panaji - Virdi via Marcel,Sankhali",3
+38,ktcl-goa-in,,"Mapusa  - Hivrem via Bicholim",3
+44,ktcl-goa-in,,"Panaji - Dhumashe via Mapusa",3
+46,ktcl-goa-in,,"Panaji - Morlem",3
+47,ktcl-goa-in,,"Panaji - Velguem via Mapusa",3
+51,ktcl-goa-in,,"Panaji - Hivrem via Marcel,Valpoi",3
+56,ktcl-goa-in,,"Panaji - Caranzol via Bicholim",3
+57,ktcl-goa-in,,"Panaji - Ibrampur via Suke Kulan",3
+60,ktcl-goa-in,,"Panaji - Nanora via Marcel,Valpoi",3
+61,ktcl-goa-in,,"Mapusa  - Fatorpa via Margao",3
+62,ktcl-goa-in,,"Panaji - Quitla Aldona via Mapusa,Aldona",3
+64,ktcl-goa-in,,"Mapusa  - Badem",3
+66,ktcl-goa-in,,"Panaji - Advoi via Marcel,Sankhali",3
+67,ktcl-goa-in,,"Panaji - Ashwem Beach via Arabo,Pernem",3
+68,ktcl-goa-in,,"Panaji - Betul Cross",3
+69,ktcl-goa-in,,"Ponda - Savoi",3
+70,ktcl-goa-in,,"Mapusa  - Baga Beach via Parra",3
+72,ktcl-goa-in,,"Panaji - Shiroda Market via Ponda",3
+73,ktcl-goa-in,,"Ponda - Kudchire via Marcel,Sankhali",3
+75,ktcl-goa-in,,"Panaji - Harambol via Pernem,Arabo",3
+76,ktcl-goa-in,,"Panaji - Vijaydurga Temple Village Stop via Ponda",3
+79,ktcl-goa-in,,"Panaji - Sinquirem",3
+81,ktcl-goa-in,,"Panaji - Saptakoteshwar, Narve",3
+84,ktcl-goa-in,,"Panaji - Badem via Assagao",3
+85,ktcl-goa-in,,"Panaji - Kumbharwada",3
+88,ktcl-goa-in,,"Panaji - Sal",3
+90,ktcl-goa-in,,"Panaji - Ker",3
+95,ktcl-goa-in,,"Panaji - Kalay via Ponda,Savordem",3
+99,ktcl-goa-in,,"Mapusa  - Calvi",3
+100,ktcl-goa-in,,"Panaji - Advoi via Marcel,Valpoi",3
+101,ktcl-goa-in,,"Panaji - Advoi via Mapusa,Sankhali",3
+104,ktcl-goa-in,,"Panaji - Mandrem via Siolim",3
+106,ktcl-goa-in,,"Mapusa  - Camurlim Khairat",3
+110,ktcl-goa-in,,"Bicholim - Poira",3
+111,ktcl-goa-in,,"Mapusa  - Amadi",3
+114,ktcl-goa-in,,"Bicholim - Madel Ferry via Vainguinim",3
+125,ktcl-goa-in,,"Valpoi - Caranzol",3
+126,ktcl-goa-in,,"Sankhali - Keri, Ponda via Marcel,Mardol",3
+127,ktcl-goa-in,,"Ponda - Verna Cipla",3
+128,ktcl-goa-in,,"Ponda - Volvoi",3
+130,ktcl-goa-in,,"Valpoi - Satre",3
+131,ktcl-goa-in,,"Valpoi - Hivrem",3
+132,ktcl-goa-in,,"Valpoi - Zarme via Mauxim",3
+133,ktcl-goa-in,,"Valpoi - Panaji Market",3
+134,ktcl-goa-in,,"Valpoi - Velguem",3
+138,ktcl-goa-in,,"Bicholim - Varpal via Mayem",3
+146,ktcl-goa-in,,"Mapusa  - Varpal",3
+148,ktcl-goa-in,,"Panaji - Madlamaz",3
+150,ktcl-goa-in,,"Panaji - Korgao via Pedne",3
+151,ktcl-goa-in,,"Panaji - Zarme",3
+152,ktcl-goa-in,,"Panaji - Vijaydurg via Sawantwadi",3
+153,ktcl-goa-in,,"Panaji - Shigne via Mapusa Tar",3
+175,ktcl-goa-in,,"Panaji - Shemecheadvan via Dadachiwadi",3
+176,ktcl-goa-in,,"Panaji - Harambol via Chopdem",3
+183,ktcl-goa-in,,"Panaji - Kudchire via Mapusa,Bicholim",3
+185,ktcl-goa-in,,"Panaji - Rivem via Mapusa,Valpoi",3
+186,ktcl-goa-in,,"Panaji - Harambol via Candolim,Calangute",3
+187,ktcl-goa-in,,"Panaji - Tiracol via Pedne,Malewad",3
+188,ktcl-goa-in,,"Panaji - Akhada",3
+190,ktcl-goa-in,,"Panaji - Calangute via Sangolda",3
+191,ktcl-goa-in,,"Panaji - Surla via Sakhali,Chorla",3
+192,ktcl-goa-in,,"Panaji - Volvoi",3
+194,ktcl-goa-in,,"Panaji - Vagurme",3
+196,ktcl-goa-in,,"Ponda - Codli Tisk",3
+197,ktcl-goa-in,,"Panaji - Pethecha Wada",3
+198,ktcl-goa-in,,"Panaji - Amthane via Bicholim",3
+199,ktcl-goa-in,,"Panaji - Virdi via Mapusa",3
+204,ktcl-goa-in,,"Panaji - Mopa via Pedne",3
+205,ktcl-goa-in,,"Panaji - Verna Titan via Cortalim",3
+206,ktcl-goa-in,,"Panaji - Rivem via Marcel,Valpoi",3
+207,ktcl-goa-in,,"Panaji - Tambdi Surla via Ponda,Udalshe",3
+210,ktcl-goa-in,,"Panaji - Malpon",3
+212,ktcl-goa-in,,"Panaji - Calangute via Betim,Pilerne",3
+214,ktcl-goa-in,,"Panaji - Keri, Pernem via Chopdem",3
+216,ktcl-goa-in,,"Ponda - Shirshire",3
+222,ktcl-goa-in,,"Ponda - Undir",3
+223,ktcl-goa-in,,"Curchorem - Savordem - Solye via Kakorda",3
+443,ktcl-goa-in,,"Panaji - Tambdi Surla via Ponda,Bolkarne",3
+448,ktcl-goa-in,,"Panaji - Virdi via Assnora",3
+451,ktcl-goa-in,,"Bicholim - Verna IDC via Marcel",3
+458,ktcl-goa-in,,"Canacona - Matimol via Parvem",3
+459,ktcl-goa-in,,"Canacona - Popaidando via Cajumol",3
+464,ktcl-goa-in,,"Cuncolim - Velim via Murida",3
+466,ktcl-goa-in,,"Curchorem - Savordem - Mollem via Collem",3
+471,ktcl-goa-in,,"Curchorem - Savordem - Vade Colony via Rivona",3
+485,ktcl-goa-in,,"Margao - Betul Cross via Cuncolim",3
+487,ktcl-goa-in,,"Margao - Cab de Ram via Balli",3
+492,ktcl-goa-in,,"Margao - Verna Cipla via Agnel Ashra",3
+493,ktcl-goa-in,,"Margao - Cotta via Curtorim",3
+500,ktcl-goa-in,,"Margao - Dramapur via Navelim",3
+502,ktcl-goa-in,,"Margao - Don Khuris via Navelim",3
+504,ktcl-goa-in,,"Margao - Harbour Vasco via Thana",3
+507,ktcl-goa-in,,"Margao - Kalay",3
+509,ktcl-goa-in,,"Margao - Kamorcond via Shiroda",3
+511,ktcl-goa-in,,"Margao - Khargal via Poiginim",3
+515,ktcl-goa-in,,"Margao - Kuskem via Canacona",3
+517,ktcl-goa-in,,"Margao - Macasana via Curtorim",3
+520,ktcl-goa-in,,"Margao - Molkopon via Kepem",3
+521,ktcl-goa-in,,"Margao - Mollem via Curchorem",3
+522,ktcl-goa-in,,"Margao - Neturlim via Curchorem",3
+532,ktcl-goa-in,,"Margao - Pirla via Kepem",3
+538,ktcl-goa-in,,"Margao - Sal via Usgao Tisk",3
+539,ktcl-goa-in,,"Margao - Saljini via Curchorem,Neturlim",3
+540,ktcl-goa-in,,"Margao - Sateribhat via Ponda",3
+543,ktcl-goa-in,,"Margao - Sulcorna via Kepem",3
+544,ktcl-goa-in,,"Margao - Tirvan via Canacona",3
+545,ktcl-goa-in,,"Margao - Tudol Gaodongri via Canacona",3
+546,ktcl-goa-in,,"Margao - Goa University Library via Cortalim",3
+547,ktcl-goa-in,,"Margao - Vade Colony via Rivona",3
+549,ktcl-goa-in,,"Margao - Val via Canacona",3
+556,ktcl-goa-in,,"Margao - Velim via Assolna",3
+557,ktcl-goa-in,,"Margao - Velsao via Majorda",3
+558,ktcl-goa-in,,"Margao - Colva Beach",3
+566,ktcl-goa-in,,"Panaji - Cuncoliem via Titan,Ponda",3
+568,ktcl-goa-in,,"Panaji - Goa University Library via G.M.C.",3
+569,ktcl-goa-in,,"Panaji - Zarme via Ponda,Valpoi",3
+572,ktcl-goa-in,,"Ponda - Goa Multi Faculty College (GMFC) Daya Nagar",3
+573,ktcl-goa-in,,"Ponda - Kamorcond via Shiroda",3
+577,ktcl-goa-in,,"Curchorem - Savordem - Saljini via Sanguem",3
+595,ktcl-goa-in,,"Margao - Kudchire via Ponda,Marcel",3
+599,ktcl-goa-in,,"Panaji - Rayeshwar College of Engineering via Ponda",3
+600,ktcl-goa-in,,"Panaji - Savarshe via Marcel,Honda",3
+611,ktcl-goa-in,,"Vasco - Bhatwadi",3
+614,ktcl-goa-in,,"Vasco - Cortalim Junction via Titan,Neura",3
+619,ktcl-goa-in,,"Vasco - Margao City via Cortalim",3
+626,ktcl-goa-in,,"Bicholim - Narve Ferry via Pilgao",3
+633,ktcl-goa-in,,"Panaji - Banda via Madura Devl",3
+637,ktcl-goa-in,,"Panaji - Halarna via Kulan",3
+638,ktcl-goa-in,,"Panaji - Hivrem via Mapusa,Pisurle",3
+641,ktcl-goa-in,,"Panaji - Korgao Wada via Tuem",3
+642,ktcl-goa-in,,"Panaji - Mhadai River Stop via Sanquelim",3
+644,ktcl-goa-in,,"Panaji - Nanachipani via Mapusa",3
+645,ktcl-goa-in,,"Panaji - Badem via Mapusa",3
+646,ktcl-goa-in,,"Panaji - Harambol via Pedne,Devasu",3
+649,ktcl-goa-in,,"Panaji - Usap via Mapusa,Assonora",3
+652,ktcl-goa-in,,"Panaji - Shirshire via Ponda",3
+654,ktcl-goa-in,,"Panaji - Old Bambolim via St. Cruz",3
+656,ktcl-goa-in,,"Panaji - GMC Colony, Bambolim via St. Cruz",3
+657,ktcl-goa-in,,"Panaji - Navshi, Old G.M.C. via St. Cruz",3
+659,ktcl-goa-in,,"Panaji - Morle via Dodamarg",3
+661,ktcl-goa-in,,"Panaji - Raj Bhavan via Miramer",3
+662,ktcl-goa-in,,"Panaji - Kudchire via Karaswada,Bicholim",3
+663,ktcl-goa-in,,"Panaji - Altinho via Market",3
+665,ktcl-goa-in,,"Panaji - Koparde Village Stop via Mapusa",3
+666,ktcl-goa-in,,"Panaji - GMC Bambolim via Santa Cruz",3
+667,ktcl-goa-in,,"Panaji - Goa Engineering College, Ponda via Banastari",3
+669,ktcl-goa-in,,"Panaji - Rayeshwar College of Engineering via Bicholim",3
+670,ktcl-goa-in,,"Ponda - Harbour Vasco via Vasco",3
+688,ktcl-goa-in,,"Panaji - Sinquirem via Mapusa,Bicholim",3
+689,ktcl-goa-in,,"Panaji - Satre via Mapusa,Valpoi",3
+690,ktcl-goa-in,,"Bicholim - Saptakoteshwar, Narve via Mayem Lake",3
+692,ktcl-goa-in,,"Bicholim - Madel Ferry via Narva",3
+695,ktcl-goa-in,,"Panaji - Madlamaz via Aroba",3
+699,ktcl-goa-in,,"Mapusa  - Mapusa Distict Hospital",3
+700,ktcl-goa-in,,"Mapusa  - Calvi via Aldona",3
+701,ktcl-goa-in,,"Panaji - Bambolim Cross via St Cruz",3
+702,ktcl-goa-in,,"Mapusa  - Goljuem via Aldona",3
+719,ktcl-goa-in,,"Panaji - Agarwada Titha via Mapusa,Aroba",3
+720,ktcl-goa-in,,"Mapusa  - Siolim Fish Market via Kucheli",3
+722,ktcl-goa-in,,"Mapusa  - Rayeshwar College of Engineering via Ponda",3
+723,ktcl-goa-in,,"Sankhali - Keri, Ponda via Amona,Gimone",3
+726,ktcl-goa-in,,"Margao - Dhobi Talao Mumbai",3
+727,ktcl-goa-in,,"Margao - Pune Railway Station via Ponda,Kolhapur",3
+728,ktcl-goa-in,,"Margao - Shirdi MSRTC Bus Stand via Kolapur,Ahmednagar",3
+729,ktcl-goa-in,,"Mapusa  - Mopa Pednekarwada",3
+735,ktcl-goa-in,,"Vasco - Agapur / Agastipur",3
+740,ktcl-goa-in,,"Sankhali - Tonca",3
+742,ktcl-goa-in,,"Sankhali - Surla Narayan Temple",3
+743,ktcl-goa-in,,"Panaji - Surla Narayan Temple",3
+745,ktcl-goa-in,,"Mapusa  - Junaswada / Mandrem Beach",3
+746,ktcl-goa-in,,"Mapusa  - Madkai Ozrim",3
+13,ktcl-goa-in,,"Harbour Vasco - Panaji via Cortalim Jn",3
+83,ktcl-goa-in,,"Panaji Market - Mapusa ",3
+142,ktcl-goa-in,,"Narve Ferry - Ponda via Sankhali,Marcel",3
+189,ktcl-goa-in,,"Harambol - Mapusa  via Chopdem",3
+195,ktcl-goa-in,,"Volvoi - Marcel",3
+209,ktcl-goa-in,,"Amthane - Panaji via Revora",3
+213,ktcl-goa-in,,"Calangute - Mapusa  via Saligao",3
+441,ktcl-goa-in,,"Codli Tisk - Panaji via Ponda",3
+450,ktcl-goa-in,,"Betul Cross - Cuncolim via Murida",3
+452,ktcl-goa-in,,"Cab de Ram - Canacona via Agonda",3
+453,ktcl-goa-in,,"Cab de Ram - Panaji via Margao",3
+463,ktcl-goa-in,,"Cotta - Panaji via Margao",3
+476,ktcl-goa-in,,"Verna IDC - Margao via Cortalim",3
+477,ktcl-goa-in,,"Kamorcond - Panaji via Margao",3
+480,ktcl-goa-in,,"Khargal - Margao via Canacona",3
+482,ktcl-goa-in,,"Kuskem - Margao via Mashem",3
+561,ktcl-goa-in,,"Mollem - Panaji via Margao",3
+562,ktcl-goa-in,,"Neturlim - Panaji via Margao",3
+570,ktcl-goa-in,,"Pirla - Panaji via Margao",3
+578,ktcl-goa-in,,"Tirvan - Panaji via Margao",3
+582,ktcl-goa-in,,"Vade Colony - Panaji",3
+583,ktcl-goa-in,,"Val - Panaji via Margao",3
+589,ktcl-goa-in,,"Velim - Margao via Murida",3
+591,ktcl-goa-in,,"Belgaum Bus Stand - Vasco via Sakhali",3
+592,ktcl-goa-in,,"Harbour Vasco - Ponda via Loutlim",3
+627,ktcl-goa-in,,"Bastora - Panaji via Mapusa",3
+671,ktcl-goa-in,,"Rayeshwar College of Engineering - Panaji via Ponda",3
+673,ktcl-goa-in,,"Panaji Market - Curchorem - Savordem via Ponda",3
+675,ktcl-goa-in,,"Siolim - Panaji",3
+686,ktcl-goa-in,,"Mary Immaculate Church - Panaji via Altinho",3
+687,ktcl-goa-in,,"Naneli - Panaji via Marcel",3
+704,ktcl-goa-in,,"Madel Ferry - Panaji via Mapusa",3
+721,ktcl-goa-in,,"Volvoi - Margao via Vagurme",3
+730,ktcl-goa-in,,"Siolim Fish Market - Panaji",3
+731,ktcl-goa-in,,"Gaune - Ponda",3
+732,ktcl-goa-in,,"Gaune - Panaji via Ponda",3
+733,ktcl-goa-in,,"Agapur / Agastipur - Ponda",3
+739,ktcl-goa-in,,"Tonca - Valpoi via Marcel,Sankhali",3
+741,ktcl-goa-in,,"Parcem - Panaji",3
+747,ktcl-goa-in,,"Chopdem - Panaji",3
+748,ktcl-goa-in,,"Popaidando - Panaji",3
+749,ktcl-goa-in,,"Rajbag - Margao",3
+750,ktcl-goa-in,,"Mencurem Temple - Panaji",3
+752,ktcl-goa-in,,"Bengaluru Majestic Bus Stand - Panaji",3
+606,ktcl-goa-in,,"Sada Vasco - Malvan via Malewad",3
+608,ktcl-goa-in,,"Sada Vasco - Vengurla via Panjim",3
+575,ktcl-goa-in,,"Rajbag - Karwar via Cancona",3
+584,ktcl-goa-in,,"Vasco KTC Bus Stop - Muddebihal",3
+11,ktcl-goa-in,,"Sada Vasco - Akhada",3
+14,ktcl-goa-in,,"Harbour Vasco - Devsu via Chopdem",3
+21,ktcl-goa-in,,"Harbour Vasco - Margao City via Zuarinagar",3
+52,ktcl-goa-in,,"Valpoi Bazaar - Ustem",3
+78,ktcl-goa-in,,"Kala Academy - Nanora via Bicholim",3
+86,ktcl-goa-in,,"Panaji Market - Naneli via Marcel,Valpoi",3
+87,ktcl-goa-in,,"Kala Academy - Surla via Chorla",3
+109,ktcl-goa-in,,"Panaji Market - Camurlim Khairat via Mapusa",3
+167,ktcl-goa-in,,"Calangute - Dabolim Airport via Panaji",3
+219,ktcl-goa-in,,"Raj Bhavan - Malpon",3
+449,ktcl-goa-in,,"Agonda - Cab de Ram via Matimol",3
+559,ktcl-goa-in,,"Molkopon - Donbosco via Rivona",3
+579,ktcl-goa-in,,"Verna IDC - Cuncoliem via Lotulim",3
+593,ktcl-goa-in,,"Harbour Vasco - Goa University Library via Cortalim",3
+603,ktcl-goa-in,,"Sada Vasco - Farmagudi via Ponda",3
+604,ktcl-goa-in,,"Harbour Vasco - Honnavar via Margao",3
+605,ktcl-goa-in,,"Sada Vasco - Korjai",3
+607,ktcl-goa-in,,"Harbour Vasco - Rayeshwar College of Engineering via Shiroda",3
+628,ktcl-goa-in,,"Panaji Market - Halarna via Kulan",3
+629,ktcl-goa-in,,"Panaji Market - Vijaydurga Temple Village Stop via Priyol",3
+630,ktcl-goa-in,,"Panaji Market - Ustem via Valpoi",3
+706,ktcl-goa-in,,"Madel Ferry - Madel Ferry",3
+737,ktcl-goa-in,,"St. Pedro Ferry - Vanxim Island Ferry",3
+738,ktcl-goa-in,,"Naroa Island Ferry - Old Goa Ferry",3
+744,ktcl-goa-in,,"City Market Stop - City Market Stop",3

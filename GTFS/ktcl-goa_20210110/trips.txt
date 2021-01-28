@@ -1,0 +1,1932 @@
+route_id,service_id,trip_id,trip_headsign,trip_short_name,direction_id
+475,FULLW,95710,"Curchorem Government Polytechnic. College via Shiroda",,1
+5,FULLW,95491,"Panaji via Ponda Busstand",,1
+10,FULLW,96338,"Sankhali via Mapusa",,0
+10,FULLW,96351,"Sankhali via Mapusa",,0
+10,FULLW,96363,"Sankhali via Mapusa",,0
+10,FULLW,96377,"Panaji via Mapusa",,1
+10,FULLW,96391,"Panaji via Mapusa",,1
+12,FULLW,95607,"Ponda",,0
+12,FULLW,95618,"Ponda",,0
+12,FULLW,95625,"Ponda",,0
+12,FULLW,95632,"Ponda",,0
+12,FULLW,95644,"Ponda",,0
+12,FULLW,95653,"Ponda",,0
+12,FULLW,95665,"Ponda",,0
+12,FULLW,95675,"Ponda",,0
+12,FULLW,95683,"Ponda",,0
+12,FULLW,95694,"Ponda",,0
+12,FULLW,95705,"Ponda",,0
+12,FULLW,95719,"Ponda",,0
+12,FULLW,95730,"Ponda",,0
+12,FULLW,95739,"Ponda",,0
+12,FULLW,95755,"Ponda",,0
+12,FULLW,95775,"Ponda",,0
+12,FULLW,95797,"Ponda",,0
+12,FULLW,95814,"Ponda",,0
+12,FULLW,95826,"Ponda",,0
+12,FULLW,95838,"Vasco",,1
+12,FULLW,95855,"Vasco",,1
+12,FULLW,95866,"Vasco",,1
+12,FULLW,95876,"Vasco",,1
+12,FULLW,95888,"Vasco",,1
+12,FULLW,95895,"Vasco",,1
+12,FULLW,95904,"Vasco",,1
+12,FULLW,95914,"Vasco",,1
+12,FULLW,95922,"Vasco",,1
+12,FULLW,95931,"Vasco",,1
+12,FULLW,95940,"Vasco",,1
+12,FULLW,95949,"Vasco",,1
+12,FULLW,95957,"Vasco",,1
+12,FULLW,95967,"Vasco",,1
+12,FULLW,95980,"Vasco",,1
+19,FULLW,95599,"Margao",,0
+19,FULLW,95606,"Margao",,0
+19,FULLW,95614,"Margao",,0
+19,FULLW,95622,"Margao",,0
+19,FULLW,95630,"Margao",,0
+19,FULLW,95638,"Margao",,0
+19,FULLW,95648,"Margao",,0
+19,FULLW,95658,"Margao",,0
+19,FULLW,95669,"Margao",,0
+19,FULLW,95679,"Margao",,0
+19,FULLW,95688,"Margao",,0
+19,FULLW,95698,"Margao",,0
+19,FULLW,95706,"Margao",,0
+19,FULLW,95720,"Margao",,0
+19,FULLW,95728,"Margao",,0
+19,FULLW,95738,"Margao",,0
+19,FULLW,95746,"Margao",,0
+19,FULLW,95764,"Margao",,0
+19,FULLW,95783,"Margao",,0
+19,FULLW,95803,"Margao",,0
+19,FULLW,95817,"Margao",,0
+19,FULLW,95827,"Margao",,0
+19,FULLW,95843,"Margao",,0
+19,FULLW,95854,"Margao",,0
+19,FULLW,95864,"Margao",,0
+19,FULLW,95873,"Margao",,0
+19,FULLW,95882,"Margao",,0
+19,FULLW,95893,"Margao",,0
+19,FULLW,95903,"Margao",,0
+19,FULLW,95910,"Margao",,0
+19,FULLW,95918,"Margao",,0
+19,FULLW,95927,"Margao",,0
+19,FULLW,95934,"Margao",,0
+19,FULLW,95942,"Margao",,0
+19,FULLW,95948,"Margao",,0
+19,FULLW,95956,"Margao",,0
+19,FULLW,95965,"Margao",,0
+19,FULLW,95973,"Vasco",,1
+19,FULLW,95985,"Vasco",,1
+19,FULLW,95996,"Vasco",,1
+19,FULLW,96008,"Vasco",,1
+19,FULLW,96021,"Vasco",,1
+19,FULLW,96036,"Vasco",,1
+19,FULLW,96046,"Vasco",,1
+19,FULLW,96058,"Vasco",,1
+19,FULLW,96069,"Vasco",,1
+19,FULLW,96082,"Vasco",,1
+19,FULLW,96096,"Vasco",,1
+19,FULLW,96112,"Vasco",,1
+19,FULLW,96128,"Vasco",,1
+19,FULLW,96143,"Vasco",,1
+19,FULLW,96152,"Vasco",,1
+19,FULLW,96160,"Vasco",,1
+19,FULLW,96168,"Vasco",,1
+19,FULLW,96175,"Vasco",,1
+19,FULLW,96184,"Vasco",,1
+19,FULLW,96193,"Vasco",,1
+19,FULLW,96204,"Vasco",,1
+19,FULLW,96210,"Vasco",,1
+19,FULLW,96218,"Vasco",,1
+19,FULLW,96228,"Vasco",,1
+19,FULLW,96243,"Vasco",,1
+45,FULLW,95499,"Sankhali via Marcel",,0
+45,FULLW,95507,"Sankhali via Marcel",,0
+45,FULLW,95511,"Sankhali via Marcel",,0
+45,FULLW,95518,"Sankhali via Marcel",,0
+45,FULLW,95524,"Sankhali via Marcel",,0
+45,FULLW,95529,"Sankhali via Marcel",,0
+45,FULLW,95537,"Sankhali via Marcel",,0
+45,FULLW,95543,"Sankhali via Marcel",,0
+45,FULLW,95553,"Sankhali via Marcel",,0
+45,FULLW,95562,"Sankhali via Marcel",,0
+45,FULLW,95575,"Sankhali via Marcel",,0
+45,FULLW,95586,"Sankhali via Marcel",,0
+45,FULLW,95602,"Panaji via Marcel",,1
+45,FULLW,95609,"Panaji via Marcel",,1
+45,FULLW,95617,"Panaji via Marcel",,1
+45,FULLW,95626,"Panaji via Marcel",,1
+45,FULLW,95631,"Panaji via Marcel",,1
+45,FULLW,95639,"Panaji via Marcel",,1
+45,FULLW,95655,"Panaji via Marcel",,1
+45,FULLW,95666,"Panaji via Marcel",,1
+45,FULLW,95674,"Panaji via Marcel",,1
+45,FULLW,95684,"Panaji via Marcel",,1
+45,FULLW,95695,"Panaji via Marcel",,1
+45,FULLW,95704,"Panaji via Marcel",,1
+54,FULLW,95550,"Margao",,0
+54,FULLW,95561,"Ponda",,1
+54,FULLW,95576,"Ponda",,1
+54,FULLW,95592,"Ponda",,1
+55,FULLW,95545,"Bicholim via Marcel",,0
+55,FULLW,95554,"Bicholim via Marcel",,0
+55,FULLW,95560,"Bicholim via Marcel",,0
+55,FULLW,95573,"Bicholim via Marcel",,0
+55,FULLW,95585,"Ponda via Marcel",,1
+55,FULLW,95600,"Ponda via Marcel",,1
+55,FULLW,95608,"Ponda via Marcel",,1
+55,FULLW,95615,"Ponda via Marcel",,1
+59,FULLW,96404,"Valpoi via Old Goa,Marcel",,0
+59,FULLW,96415,"Panaji via Old Goa,Marcel",,1
+59,FULLW,96426,"Panaji via Old Goa,Marcel",,1
+71,FULLW,96095,"Curchorem - Savordem via Shiroda",,0
+71,FULLW,96123,"Curchorem - Savordem via Shiroda",,0
+71,FULLW,96149,"Panaji via Shiroda",,1
+71,FULLW,96162,"Panaji via Shiroda",,1
+97,FULLW,96407,"Valpoi via Mapusa",,0
+97,FULLW,96416,"Valpoi via Mapusa",,0
+97,FULLW,96431,"Panaji via Mapusa",,1
+97,FULLW,96446,"Panaji via Mapusa",,1
+105,FULLW,95528,"Panaji via Marcel",,1
+123,FULLW,95437,"Bicholim via Marcel",,0
+123,FULLW,95449,"Panaji via Marcel",,1
+135,FULLW,95488,"Margao via Ponda",,0
+143,FULLW,95392,"Bicholim via Assnora",,0
+143,FULLW,95407,"Mapusa  via Assnora",,1
+144,FULLW,95442,"Bicholim via Mapusa,Aldona",,0
+144,FULLW,95452,"Bicholim via Mapusa,Aldona",,0
+144,FULLW,95463,"Panaji via Mapusa,Aldona",,1
+144,FULLW,95473,"Panaji via Mapusa,Aldona",,1
+145,FULLW,95312,"Mapusa  via Aldona",,0
+145,FULLW,95322,"Mapusa  via Aldona",,0
+145,FULLW,95328,"Mapusa  via Aldona",,0
+145,FULLW,95338,"Mapusa  via Aldona",,0
+145,FULLW,95351,"Mapusa  via Aldona",,0
+145,FULLW,95360,"Mapusa  via Aldona",,0
+145,FULLW,95370,"Mapusa  via Aldona",,0
+145,FULLW,95382,"Bicholim via Aldona",,1
+145,FULLW,95389,"Bicholim via Aldona",,1
+145,FULLW,95404,"Bicholim via Aldona",,1
+145,FULLW,95410,"Bicholim via Aldona",,1
+145,FULLW,95420,"Bicholim via Aldona",,1
+169,FULLW,96224,"Margao via Cortalim",,0
+169,FULLW,96226,"Margao via Cortalim",,0
+169,FULLW,96229,"Margao via Cortalim",,0
+169,FULLW,96231,"Margao via Cortalim",,0
+169,FULLW,96235,"Panaji via Cortalim",,1
+169,FULLW,96239,"Panaji via Cortalim",,1
+169,FULLW,96242,"Panaji via Cortalim",,1
+169,FULLW,96244,"Panaji via Cortalim",,1
+169,FULLW,96246,"Panaji via Cortalim",,1
+169,FULLW,96250,"Panaji via Cortalim",,1
+169,FULLW,96252,"Panaji via Cortalim",,1
+169,FULLW,96255,"Panaji via Cortalim",,1
+169,FULLW,96257,"Panaji via Cortalim",,1
+169,FULLW,96259,"Panaji via Cortalim",,1
+169,FULLW,96260,"Panaji via Cortalim",,1
+184,FULLW,96051,"Bicholim via Mapusa,Assnora",,0
+184,FULLW,96067,"Panaji via Mapusa,Assnora",,1
+184,FULLW,96088,"Panaji via Mapusa,Assnora",,1
+184,FULLW,96106,"Panaji via Mapusa,Assnora",,1
+208,FULLW,96297,"Pedne  via Mapusa",,0
+208,FULLW,96313,"Panaji via Mapusa",,1
+217,FULLW,95651,"Ponda via Marcel",,0
+217,FULLW,95662,"Ponda via Marcel",,0
+217,FULLW,95671,"Ponda via Marcel",,0
+217,FULLW,95680,"Ponda via Marcel",,0
+217,FULLW,95692,"Bicholim via Marcel",,1
+217,FULLW,95702,"Bicholim via Marcel",,1
+217,FULLW,95714,"Bicholim via Marcel",,1
+217,FULLW,95725,"Bicholim via Marcel",,1
+218,FULLW,95647,"Margao via Ponda",,0
+218,FULLW,95661,"Bicholim via Ponda",,1
+218,FULLW,95678,"Bicholim via Ponda",,1
+220,FULLW,96312,"Ponda",,0
+457,FULLW,97246,"Margao",,0
+469,FULLW,95703,"Ponda via Dharbandoda",,0
+469,FULLW,95718,"Curchorem - Savordem via Dharbandoda",,1
+469,FULLW,95727,"Curchorem - Savordem via Dharbandoda",,1
+469,FULLW,95735,"Curchorem - Savordem via Dharbandoda",,1
+486,FULLW,95793,"Bicholim via Neura",,0
+486,FULLW,95821,"Margao via Neura",,1
+488,FULLW,95819,"Margao via Betul",,1
+489,FULLW,95832,"Canacona via Cuncolim",,0
+495,FULLW,95834,"Margao via Paroda",,1
+496,FULLW,95835,"Curchorem - Savordem via Macazan",,0
+496,FULLW,95848,"Margao via Macazan",,1
+496,FULLW,95852,"Margao via Macazan",,1
+524,FULLW,95900,"Panaji via Cansaulim",,0
+524,FULLW,95909,"Margao via Cansaulim",,1
+524,FULLW,95920,"Margao via Cansaulim",,1
+524,FULLW,95928,"Margao via Cansaulim",,1
+525,FULLW,95902,"Panaji via Cortalim",,0
+525,FULLW,95912,"Panaji via Cortalim",,0
+525,FULLW,95926,"Panaji via Cortalim",,0
+525,FULLW,95936,"Panaji via Cortalim",,0
+525,FULLW,95945,"Panaji via Cortalim",,0
+525,FULLW,95955,"Panaji via Cortalim",,0
+525,FULLW,95966,"Panaji via Cortalim",,0
+525,FULLW,95978,"Panaji via Cortalim",,0
+525,FULLW,95989,"Panaji via Cortalim",,0
+525,FULLW,96003,"Panaji via Cortalim",,0
+525,FULLW,96018,"Panaji via Cortalim",,0
+525,FULLW,96035,"Panaji via Cortalim",,0
+525,FULLW,96049,"Panaji via Cortalim",,0
+525,FULLW,96063,"Panaji via Cortalim",,0
+525,FULLW,96078,"Panaji via Cortalim",,0
+525,FULLW,96094,"Panaji via Cortalim",,0
+525,FULLW,96114,"Panaji via Cortalim",,0
+525,FULLW,96137,"Panaji via Cortalim",,0
+525,FULLW,96151,"Panaji via Cortalim",,0
+525,FULLW,96161,"Panaji via Cortalim",,0
+525,FULLW,96172,"Panaji via Cortalim",,0
+525,FULLW,96182,"Panaji via Cortalim",,0
+525,FULLW,96190,"Panaji via Cortalim",,0
+525,FULLW,96199,"Panaji via Cortalim",,0
+525,FULLW,96209,"Panaji via Cortalim",,0
+525,FULLW,96220,"Panaji via Cortalim",,0
+525,FULLW,96233,"Panaji via Cortalim",,0
+525,FULLW,96248,"Panaji via Cortalim",,0
+525,FULLW,96262,"Panaji via Cortalim",,0
+525,FULLW,96272,"Panaji via Cortalim",,0
+525,FULLW,96284,"Panaji via Cortalim",,0
+525,FULLW,96295,"Panaji via Cortalim",,0
+525,FULLW,96310,"Panaji via Cortalim",,0
+525,FULLW,96327,"Panaji via Cortalim",,0
+525,FULLW,96342,"Panaji via Cortalim",,0
+525,FULLW,96350,"Panaji via Cortalim",,0
+525,FULLW,96359,"Panaji via Cortalim",,0
+525,FULLW,96368,"Panaji via Cortalim",,0
+525,FULLW,96378,"Panaji via Cortalim",,0
+525,FULLW,96389,"Panaji via Cortalim",,0
+525,FULLW,96399,"Panaji via Cortalim",,0
+525,FULLW,96406,"Panaji via Cortalim",,0
+525,FULLW,96410,"Panaji via Cortalim",,0
+525,FULLW,96421,"Panaji via Cortalim",,0
+525,FULLW,96427,"Panaji via Cortalim",,0
+525,FULLW,96436,"Panaji via Cortalim",,0
+525,FULLW,96448,"Panaji via Cortalim",,0
+525,FULLW,96454,"Panaji via Cortalim",,0
+525,FULLW,96466,"Panaji via Cortalim",,0
+525,FULLW,96475,"Panaji via Cortalim",,0
+525,FULLW,96491,"Panaji via Cortalim",,0
+525,FULLW,96505,"Panaji via Cortalim",,0
+525,FULLW,96512,"Panaji via Cortalim",,0
+525,FULLW,96522,"Panaji via Cortalim",,0
+525,FULLW,96528,"Panaji via Cortalim",,0
+525,FULLW,96537,"Panaji via Cortalim",,0
+525,FULLW,96543,"Panaji via Cortalim",,0
+525,FULLW,96554,"Panaji via Cortalim",,0
+525,FULLW,96563,"Panaji via Cortalim",,0
+525,FULLW,96575,"Panaji via Cortalim",,0
+525,FULLW,96580,"Panaji via Cortalim",,0
+525,FULLW,96586,"Panaji via Cortalim",,0
+525,FULLW,96592,"Panaji via Cortalim",,0
+525,FULLW,96596,"Panaji via Cortalim",,0
+525,FULLW,96600,"Panaji via Cortalim",,0
+525,FULLW,96604,"Panaji via Cortalim",,0
+525,FULLW,96607,"Panaji via Cortalim",,0
+525,FULLW,96610,"Panaji via Cortalim",,0
+525,FULLW,96613,"Panaji via Cortalim",,0
+525,FULLW,96616,"Panaji via Cortalim",,0
+525,FULLW,96619,"Panaji via Cortalim",,0
+525,FULLW,96622,"Panaji via Cortalim",,0
+525,FULLW,96626,"Panaji via Cortalim",,0
+525,FULLW,96629,"Panaji via Cortalim",,0
+525,FULLW,96632,"Panaji via Cortalim",,0
+525,FULLW,96635,"Panaji via Cortalim",,0
+525,FULLW,96638,"Panaji via Cortalim",,0
+525,FULLW,96641,"Panaji via Cortalim",,0
+525,FULLW,96644,"Panaji via Cortalim",,0
+525,FULLW,96647,"Panaji via Cortalim",,0
+525,FULLW,96650,"Panaji via Cortalim",,0
+525,FULLW,96653,"Panaji via Cortalim",,0
+525,FULLW,96656,"Panaji via Cortalim",,0
+525,FULLW,96659,"Panaji via Cortalim",,0
+525,FULLW,96662,"Panaji via Cortalim",,0
+525,FULLW,96667,"Panaji via Cortalim",,0
+525,FULLW,96670,"Panaji via Cortalim",,0
+525,FULLW,96673,"Panaji via Cortalim",,0
+525,FULLW,96676,"Panaji via Cortalim",,0
+525,FULLW,96679,"Panaji via Cortalim",,0
+525,FULLW,96682,"Panaji via Cortalim",,0
+525,FULLW,96685,"Panaji via Cortalim",,0
+525,FULLW,96688,"Panaji via Cortalim",,0
+525,FULLW,96691,"Panaji via Cortalim",,0
+525,FULLW,96694,"Panaji via Cortalim",,0
+525,FULLW,96697,"Panaji via Cortalim",,0
+525,FULLW,96700,"Panaji via Cortalim",,0
+525,FULLW,96703,"Panaji via Cortalim",,0
+525,FULLW,96706,"Panaji via Cortalim",,0
+525,FULLW,96709,"Panaji via Cortalim",,0
+525,FULLW,96713,"Panaji via Cortalim",,0
+525,FULLW,96716,"Panaji via Cortalim",,0
+525,FULLW,96719,"Panaji via Cortalim",,0
+525,FULLW,96722,"Panaji via Cortalim",,0
+525,FULLW,96725,"Panaji via Cortalim",,0
+525,FULLW,96728,"Panaji via Cortalim",,0
+525,FULLW,96731,"Panaji via Cortalim",,0
+525,FULLW,96734,"Panaji via Cortalim",,0
+525,FULLW,96738,"Panaji via Cortalim",,0
+525,FULLW,96741,"Panaji via Cortalim",,0
+525,FULLW,96745,"Panaji via Cortalim",,0
+525,FULLW,96748,"Panaji via Cortalim",,0
+525,FULLW,96751,"Panaji via Cortalim",,0
+525,FULLW,96752,"Panaji via Cortalim",,0
+525,FULLW,96756,"Panaji via Cortalim",,0
+525,FULLW,96758,"Panaji via Cortalim",,0
+525,FULLW,96760,"Panaji via Cortalim",,0
+525,FULLW,96763,"Panaji via Cortalim",,0
+525,FULLW,96765,"Panaji via Cortalim",,0
+525,FULLW,96767,"Panaji via Cortalim",,0
+525,FULLW,96769,"Panaji via Cortalim",,0
+525,FULLW,96770,"Panaji via Cortalim",,0
+525,FULLW,96772,"Panaji via Cortalim",,0
+525,FULLW,96774,"Panaji via Cortalim",,0
+525,FULLW,96776,"Panaji via Cortalim",,0
+525,FULLW,96778,"Panaji via Cortalim",,0
+525,FULLW,96781,"Panaji via Cortalim",,0
+525,FULLW,96783,"Panaji via Cortalim",,0
+525,FULLW,96785,"Panaji via Cortalim",,0
+525,FULLW,96787,"Panaji via Cortalim",,0
+525,FULLW,96789,"Panaji via Cortalim",,0
+525,FULLW,96791,"Panaji via Cortalim",,0
+525,FULLW,96793,"Panaji via Cortalim",,0
+525,FULLW,96795,"Panaji via Cortalim",,0
+525,FULLW,96797,"Margao via Cortalim",,1
+525,FULLW,96799,"Margao via Cortalim",,1
+525,FULLW,96801,"Margao via Cortalim",,1
+525,FULLW,96803,"Margao via Cortalim",,1
+525,FULLW,96805,"Margao via Cortalim",,1
+525,FULLW,96807,"Margao via Cortalim",,1
+525,FULLW,96809,"Margao via Cortalim",,1
+525,FULLW,96811,"Margao via Cortalim",,1
+525,FULLW,96817,"Margao via Cortalim",,1
+525,FULLW,96819,"Margao via Cortalim",,1
+525,FULLW,96821,"Margao via Cortalim",,1
+525,FULLW,96823,"Margao via Cortalim",,1
+525,FULLW,96825,"Margao via Cortalim",,1
+525,FULLW,96827,"Margao via Cortalim",,1
+525,FULLW,96830,"Margao via Cortalim",,1
+525,FULLW,96832,"Margao via Cortalim",,1
+525,FULLW,96834,"Margao via Cortalim",,1
+525,FULLW,96836,"Margao via Cortalim",,1
+525,FULLW,96838,"Margao via Cortalim",,1
+525,FULLW,96840,"Margao via Cortalim",,1
+525,FULLW,96842,"Margao via Cortalim",,1
+525,FULLW,96844,"Margao via Cortalim",,1
+525,FULLW,96846,"Margao via Cortalim",,1
+525,FULLW,96848,"Margao via Cortalim",,1
+525,FULLW,96850,"Margao via Cortalim",,1
+525,FULLW,96852,"Margao via Cortalim",,1
+525,FULLW,96854,"Margao via Cortalim",,1
+525,FULLW,96856,"Margao via Cortalim",,1
+525,FULLW,96858,"Margao via Cortalim",,1
+525,FULLW,96860,"Margao via Cortalim",,1
+525,FULLW,96862,"Margao via Cortalim",,1
+525,FULLW,96865,"Margao via Cortalim",,1
+525,FULLW,96867,"Margao via Cortalim",,1
+525,FULLW,96869,"Margao via Cortalim",,1
+525,FULLW,96871,"Margao via Cortalim",,1
+525,FULLW,96873,"Margao via Cortalim",,1
+525,FULLW,96875,"Margao via Cortalim",,1
+525,FULLW,96877,"Margao via Cortalim",,1
+525,FULLW,96879,"Margao via Cortalim",,1
+525,FULLW,96881,"Margao via Cortalim",,1
+525,FULLW,96883,"Margao via Cortalim",,1
+525,FULLW,96885,"Margao via Cortalim",,1
+525,FULLW,96888,"Margao via Cortalim",,1
+525,FULLW,96890,"Margao via Cortalim",,1
+525,FULLW,96892,"Margao via Cortalim",,1
+525,FULLW,96894,"Margao via Cortalim",,1
+525,FULLW,96896,"Margao via Cortalim",,1
+525,FULLW,96898,"Margao via Cortalim",,1
+525,FULLW,96900,"Margao via Cortalim",,1
+525,FULLW,96902,"Margao via Cortalim",,1
+525,FULLW,96904,"Margao via Cortalim",,1
+525,FULLW,96906,"Margao via Cortalim",,1
+525,FULLW,96908,"Margao via Cortalim",,1
+525,FULLW,96910,"Margao via Cortalim",,1
+525,FULLW,96913,"Margao via Cortalim",,1
+525,FULLW,96915,"Margao via Cortalim",,1
+525,FULLW,96917,"Margao via Cortalim",,1
+525,FULLW,96919,"Margao via Cortalim",,1
+525,FULLW,96921,"Margao via Cortalim",,1
+525,FULLW,96923,"Margao via Cortalim",,1
+525,FULLW,96925,"Margao via Cortalim",,1
+525,FULLW,96927,"Margao via Cortalim",,1
+525,FULLW,96929,"Margao via Cortalim",,1
+525,FULLW,96931,"Margao via Cortalim",,1
+525,FULLW,96933,"Margao via Cortalim",,1
+525,FULLW,96935,"Margao via Cortalim",,1
+525,FULLW,96937,"Margao via Cortalim",,1
+525,FULLW,96940,"Margao via Cortalim",,1
+525,FULLW,96942,"Margao via Cortalim",,1
+525,FULLW,96944,"Margao via Cortalim",,1
+525,FULLW,96946,"Margao via Cortalim",,1
+525,FULLW,96948,"Margao via Cortalim",,1
+525,FULLW,96951,"Margao via Cortalim",,1
+525,FULLW,96953,"Margao via Cortalim",,1
+525,FULLW,96956,"Margao via Cortalim",,1
+525,FULLW,96963,"Margao via Cortalim",,1
+525,FULLW,96964,"Margao via Cortalim",,1
+525,FULLW,96965,"Margao via Cortalim",,1
+525,FULLW,96966,"Margao via Cortalim",,1
+525,FULLW,96967,"Margao via Cortalim",,1
+525,FULLW,96968,"Margao via Cortalim",,1
+525,FULLW,96969,"Margao via Cortalim",,1
+525,FULLW,96970,"Margao via Cortalim",,1
+525,FULLW,96971,"Margao via Cortalim",,1
+525,FULLW,96972,"Margao via Cortalim",,1
+525,FULLW,96973,"Margao via Cortalim",,1
+525,FULLW,96974,"Margao via Cortalim",,1
+525,FULLW,96975,"Margao via Cortalim",,1
+525,FULLW,96976,"Margao via Cortalim",,1
+525,FULLW,96977,"Margao via Cortalim",,1
+525,FULLW,96978,"Margao via Cortalim",,1
+525,FULLW,96979,"Margao via Cortalim",,1
+525,FULLW,96980,"Margao via Cortalim",,1
+525,FULLW,96981,"Margao via Cortalim",,1
+525,FULLW,96982,"Margao via Cortalim",,1
+525,FULLW,96983,"Margao via Cortalim",,1
+525,FULLW,96984,"Margao via Cortalim",,1
+525,FULLW,96985,"Margao via Cortalim",,1
+525,FULLW,96986,"Margao via Cortalim",,1
+525,FULLW,96987,"Margao via Cortalim",,1
+525,FULLW,96988,"Margao via Cortalim",,1
+525,FULLW,96989,"Margao via Cortalim",,1
+525,FULLW,96990,"Margao via Cortalim",,1
+525,FULLW,96991,"Margao via Cortalim",,1
+525,FULLW,96992,"Margao via Cortalim",,1
+525,FULLW,96993,"Margao via Cortalim",,1
+525,FULLW,96994,"Margao via Cortalim",,1
+525,FULLW,96995,"Margao via Cortalim",,1
+525,FULLW,96996,"Margao via Cortalim",,1
+525,FULLW,96997,"Margao via Cortalim",,1
+525,FULLW,96998,"Margao via Cortalim",,1
+525,FULLW,96999,"Margao via Cortalim",,1
+525,FULLW,97000,"Margao via Cortalim",,1
+525,FULLW,97001,"Margao via Cortalim",,1
+525,FULLW,97002,"Margao via Cortalim",,1
+525,FULLW,97003,"Margao via Cortalim",,1
+525,FULLW,97004,"Margao via Cortalim",,1
+525,FULLW,97005,"Margao via Cortalim",,1
+525,FULLW,97006,"Margao via Cortalim",,1
+525,FULLW,97007,"Margao via Cortalim",,1
+525,FULLW,97008,"Margao via Cortalim",,1
+525,FULLW,97009,"Margao via Cortalim",,1
+525,FULLW,97010,"Margao via Cortalim",,1
+525,FULLW,97011,"Margao via Cortalim",,1
+525,FULLW,97012,"Margao via Cortalim",,1
+525,FULLW,97013,"Margao via Cortalim",,1
+525,FULLW,97014,"Margao via Cortalim",,1
+525,FULLW,97015,"Margao via Cortalim",,1
+525,FULLW,97016,"Margao via Cortalim",,1
+525,FULLW,97017,"Margao via Cortalim",,1
+525,FULLW,97018,"Margao via Cortalim",,1
+525,FULLW,97019,"Margao via Cortalim",,1
+525,FULLW,97020,"Margao via Cortalim",,1
+525,FULLW,97021,"Margao via Cortalim",,1
+525,FULLW,97022,"Margao via Cortalim",,1
+525,FULLW,97023,"Margao via Cortalim",,1
+525,FULLW,97024,"Margao via Cortalim",,1
+525,FULLW,97025,"Margao via Cortalim",,1
+525,FULLW,97026,"Margao via Cortalim",,1
+525,FULLW,97027,"Margao via Cortalim",,1
+525,FULLW,97028,"Margao via Cortalim",,1
+525,FULLW,97029,"Margao via Cortalim",,1
+525,FULLW,97030,"Margao via Cortalim",,1
+525,FULLW,97031,"Margao via Cortalim",,1
+525,FULLW,97032,"Margao via Cortalim",,1
+525,FULLW,97033,"Margao via Cortalim",,1
+525,FULLW,97034,"Margao via Cortalim",,1
+525,FULLW,97035,"Margao via Cortalim",,1
+525,FULLW,97036,"Margao via Cortalim",,1
+525,FULLW,97037,"Margao via Cortalim",,1
+528,FULLW,95905,"Panaji via Ponda",,0
+528,FULLW,95915,"Margao via Ponda",,1
+528,FULLW,95929,"Margao via Ponda",,1
+530,FULLW,95907,"Margao via Lotulim/chu",,1
+531,FULLW,95916,"Panaji via Bicholim",,0
+531,FULLW,95939,"Panaji via Bicholim",,0
+531,FULLW,95960,"Margao via Bicholim",,1
+542,FULLW,95950,"Shiroda via Borim Bridge",,0
+554,FULLW,97042,"Vasco",,0
+554,FULLW,97043,"Margao",,1
+567,FULLW,97112,"Shiroda",,0
+571,FULLW,96455,"Curchorem - Savordem via Shiroda",,0
+571,FULLW,96464,"Ponda via Shiroda",,1
+596,FULLW,95810,"Bicholim via Ponda,Marcel",,0
+596,FULLW,95831,"Margao via Ponda,Marcel",,1
+602,FULLW,96467,"Panaji via Oldgoa",,0
+602,FULLW,96473,"Panaji via Oldgoa",,0
+602,FULLW,96486,"Panaji via Oldgoa",,0
+602,FULLW,96497,"Panaji via Oldgoa",,0
+602,FULLW,96504,"Panaji via Oldgoa",,0
+602,FULLW,96509,"Panaji via Oldgoa",,0
+602,FULLW,96513,"Panaji via Oldgoa",,0
+602,FULLW,96523,"Ponda via Oldgoa",,1
+602,FULLW,96527,"Ponda via Oldgoa",,1
+602,FULLW,96533,"Ponda via Oldgoa",,1
+602,FULLW,96540,"Ponda via Oldgoa",,1
+602,FULLW,96549,"Ponda via Oldgoa",,1
+622,FULLW,96548,"Panaji via Cortalim",,0
+622,FULLW,96556,"Panaji via Cortalim",,0
+622,FULLW,96564,"Panaji via Cortalim",,0
+622,FULLW,96573,"Panaji via Cortalim",,0
+622,FULLW,96578,"Panaji via Cortalim",,0
+622,FULLW,96583,"Panaji via Cortalim",,0
+622,FULLW,96590,"Panaji via Cortalim",,0
+622,FULLW,96593,"Panaji via Cortalim",,0
+622,FULLW,96597,"Panaji via Cortalim",,0
+622,FULLW,96599,"Panaji via Cortalim",,0
+622,FULLW,96602,"Panaji via Cortalim",,0
+622,FULLW,96605,"Panaji via Cortalim",,0
+622,FULLW,96608,"Panaji via Cortalim",,0
+622,FULLW,96611,"Panaji via Cortalim",,0
+622,FULLW,96614,"Panaji via Cortalim",,0
+622,FULLW,96617,"Panaji via Cortalim",,0
+622,FULLW,96620,"Panaji via Cortalim",,0
+622,FULLW,96623,"Panaji via Cortalim",,0
+622,FULLW,96625,"Panaji via Cortalim",,0
+622,FULLW,96628,"Panaji via Cortalim",,0
+622,FULLW,96631,"Panaji via Cortalim",,0
+622,FULLW,96634,"Panaji via Cortalim",,0
+622,FULLW,96637,"Panaji via Cortalim",,0
+622,FULLW,96640,"Panaji via Cortalim",,0
+622,FULLW,96643,"Panaji via Cortalim",,0
+622,FULLW,96646,"Panaji via Cortalim",,0
+622,FULLW,96649,"Panaji via Cortalim",,0
+622,FULLW,96652,"Panaji via Cortalim",,0
+622,FULLW,96655,"Panaji via Cortalim",,0
+622,FULLW,96658,"Panaji via Cortalim",,0
+622,FULLW,96660,"Panaji via Cortalim",,0
+622,FULLW,96663,"Panaji via Cortalim",,0
+622,FULLW,96666,"Panaji via Cortalim",,0
+622,FULLW,96669,"Panaji via Cortalim",,0
+622,FULLW,96672,"Panaji via Cortalim",,0
+622,FULLW,96675,"Panaji via Cortalim",,0
+622,FULLW,96678,"Panaji via Cortalim",,0
+622,FULLW,96681,"Panaji via Cortalim",,0
+622,FULLW,96684,"Panaji via Cortalim",,0
+622,FULLW,96687,"Panaji via Cortalim",,0
+622,FULLW,96690,"Panaji via Cortalim",,0
+622,FULLW,96693,"Panaji via Cortalim",,0
+622,FULLW,96696,"Panaji via Cortalim",,0
+622,FULLW,96699,"Panaji via Cortalim",,0
+622,FULLW,96702,"Panaji via Cortalim",,0
+622,FULLW,96705,"Panaji via Cortalim",,0
+622,FULLW,96707,"Panaji via Cortalim",,0
+622,FULLW,96710,"Panaji via Cortalim",,0
+622,FULLW,96712,"Panaji via Cortalim",,0
+622,FULLW,96715,"Panaji via Cortalim",,0
+622,FULLW,96718,"Panaji via Cortalim",,0
+622,FULLW,96721,"Panaji via Cortalim",,0
+622,FULLW,96724,"Panaji via Cortalim",,0
+622,FULLW,96727,"Panaji via Cortalim",,0
+622,FULLW,96730,"Panaji via Cortalim",,0
+622,FULLW,96732,"Panaji via Cortalim",,0
+622,FULLW,96736,"Panaji via Cortalim",,0
+622,FULLW,96739,"Panaji via Cortalim",,0
+622,FULLW,96742,"Panaji via Cortalim",,0
+622,FULLW,96744,"Panaji via Cortalim",,0
+622,FULLW,96747,"Panaji via Cortalim",,0
+622,FULLW,96749,"Panaji via Cortalim",,0
+622,FULLW,96754,"Panaji via Cortalim",,0
+622,FULLW,96757,"Panaji via Cortalim",,0
+622,FULLW,96759,"Panaji via Cortalim",,0
+622,FULLW,96761,"Panaji via Cortalim",,0
+622,FULLW,96762,"Panaji via Cortalim",,0
+622,FULLW,96764,"Panaji via Cortalim",,0
+622,FULLW,96766,"Panaji via Cortalim",,0
+622,FULLW,96768,"Panaji via Cortalim",,0
+622,FULLW,96771,"Panaji via Cortalim",,0
+622,FULLW,96773,"Panaji via Cortalim",,0
+622,FULLW,96775,"Panaji via Cortalim",,0
+622,FULLW,96777,"Panaji via Cortalim",,0
+622,FULLW,96779,"Panaji via Cortalim",,0
+622,FULLW,96780,"Panaji via Cortalim",,0
+622,FULLW,96782,"Panaji via Cortalim",,0
+622,FULLW,96784,"Panaji via Cortalim",,0
+622,FULLW,96786,"Panaji via Cortalim",,0
+622,FULLW,96788,"Panaji via Cortalim",,0
+622,FULLW,96790,"Panaji via Cortalim",,0
+622,FULLW,96792,"Panaji via Cortalim",,0
+622,FULLW,96794,"Panaji via Cortalim",,0
+622,FULLW,96796,"Panaji via Cortalim",,0
+622,FULLW,96798,"Panaji via Cortalim",,0
+622,FULLW,96800,"Panaji via Cortalim",,0
+622,FULLW,96802,"Panaji via Cortalim",,0
+622,FULLW,96804,"Panaji via Cortalim",,0
+622,FULLW,96806,"Panaji via Cortalim",,0
+622,FULLW,96808,"Panaji via Cortalim",,0
+622,FULLW,96810,"Panaji via Cortalim",,0
+622,FULLW,96812,"Panaji via Cortalim",,0
+622,FULLW,96813,"Panaji via Cortalim",,0
+622,FULLW,96814,"Panaji via Cortalim",,0
+622,FULLW,96815,"Panaji via Cortalim",,0
+622,FULLW,96816,"Vasco via Cortalim",,1
+622,FULLW,96818,"Vasco via Cortalim",,1
+622,FULLW,96820,"Vasco via Cortalim",,1
+622,FULLW,96822,"Vasco via Cortalim",,1
+622,FULLW,96824,"Vasco via Cortalim",,1
+622,FULLW,96826,"Vasco via Cortalim",,1
+622,FULLW,96828,"Vasco via Cortalim",,1
+622,FULLW,96829,"Vasco via Cortalim",,1
+622,FULLW,96831,"Vasco via Cortalim",,1
+622,FULLW,96833,"Vasco via Cortalim",,1
+622,FULLW,96835,"Vasco via Cortalim",,1
+622,FULLW,96837,"Vasco via Cortalim",,1
+622,FULLW,96839,"Vasco via Cortalim",,1
+622,FULLW,96841,"Vasco via Cortalim",,1
+622,FULLW,96843,"Vasco via Cortalim",,1
+622,FULLW,96845,"Vasco via Cortalim",,1
+622,FULLW,96847,"Vasco via Cortalim",,1
+622,FULLW,96849,"Vasco via Cortalim",,1
+622,FULLW,96851,"Vasco via Cortalim",,1
+622,FULLW,96853,"Vasco via Cortalim",,1
+622,FULLW,96855,"Vasco via Cortalim",,1
+622,FULLW,96857,"Vasco via Cortalim",,1
+622,FULLW,96859,"Vasco via Cortalim",,1
+622,FULLW,96861,"Vasco via Cortalim",,1
+622,FULLW,96863,"Vasco via Cortalim",,1
+622,FULLW,96864,"Vasco via Cortalim",,1
+622,FULLW,96866,"Vasco via Cortalim",,1
+622,FULLW,96868,"Vasco via Cortalim",,1
+622,FULLW,96870,"Vasco via Cortalim",,1
+622,FULLW,96872,"Vasco via Cortalim",,1
+622,FULLW,96874,"Vasco via Cortalim",,1
+622,FULLW,96876,"Vasco via Cortalim",,1
+622,FULLW,96878,"Vasco via Cortalim",,1
+622,FULLW,96880,"Vasco via Cortalim",,1
+622,FULLW,96882,"Vasco via Cortalim",,1
+622,FULLW,96884,"Vasco via Cortalim",,1
+622,FULLW,96886,"Vasco via Cortalim",,1
+622,FULLW,96887,"Vasco via Cortalim",,1
+622,FULLW,96889,"Vasco via Cortalim",,1
+622,FULLW,96891,"Vasco via Cortalim",,1
+622,FULLW,96893,"Vasco via Cortalim",,1
+622,FULLW,96895,"Vasco via Cortalim",,1
+622,FULLW,96897,"Vasco via Cortalim",,1
+622,FULLW,96899,"Vasco via Cortalim",,1
+622,FULLW,96901,"Vasco via Cortalim",,1
+622,FULLW,96903,"Vasco via Cortalim",,1
+622,FULLW,96905,"Vasco via Cortalim",,1
+622,FULLW,96907,"Vasco via Cortalim",,1
+622,FULLW,96909,"Vasco via Cortalim",,1
+622,FULLW,96911,"Vasco via Cortalim",,1
+622,FULLW,96912,"Vasco via Cortalim",,1
+622,FULLW,96914,"Vasco via Cortalim",,1
+622,FULLW,96916,"Vasco via Cortalim",,1
+622,FULLW,96918,"Vasco via Cortalim",,1
+622,FULLW,96920,"Vasco via Cortalim",,1
+622,FULLW,96922,"Vasco via Cortalim",,1
+622,FULLW,96924,"Vasco via Cortalim",,1
+622,FULLW,96926,"Vasco via Cortalim",,1
+622,FULLW,96928,"Vasco via Cortalim",,1
+622,FULLW,96930,"Vasco via Cortalim",,1
+622,FULLW,96932,"Vasco via Cortalim",,1
+622,FULLW,96934,"Vasco via Cortalim",,1
+622,FULLW,96936,"Vasco via Cortalim",,1
+622,FULLW,96938,"Vasco via Cortalim",,1
+622,FULLW,96939,"Vasco via Cortalim",,1
+622,FULLW,96941,"Vasco via Cortalim",,1
+622,FULLW,96943,"Vasco via Cortalim",,1
+622,FULLW,96945,"Vasco via Cortalim",,1
+622,FULLW,96947,"Vasco via Cortalim",,1
+622,FULLW,96949,"Vasco via Cortalim",,1
+622,FULLW,96950,"Vasco via Cortalim",,1
+622,FULLW,96952,"Vasco via Cortalim",,1
+622,FULLW,96954,"Vasco via Cortalim",,1
+622,FULLW,96955,"Vasco via Cortalim",,1
+622,FULLW,96957,"Vasco via Cortalim",,1
+622,FULLW,96958,"Vasco via Cortalim",,1
+622,FULLW,96959,"Vasco via Cortalim",,1
+622,FULLW,96960,"Vasco via Cortalim",,1
+622,FULLW,96961,"Vasco via Cortalim",,1
+622,FULLW,96962,"Vasco via Cortalim",,1
+634,FULLW,96070,"Bicholim via Britona,Aldona",,0
+634,FULLW,96080,"Panaji via Britona,Aldona",,1
+634,FULLW,96091,"Panaji via Britona,Aldona",,1
+634,FULLW,96101,"Panaji via Britona,Aldona",,1
+634,FULLW,96117,"Panaji via Britona,Aldona",,1
+664,FULLW,96213,"Mapusa ",,0
+664,FULLW,96216,"Mapusa ",,0
+664,FULLW,96223,"Mapusa ",,0
+664,FULLW,96227,"Mapusa ",,0
+664,FULLW,96234,"Mapusa ",,0
+664,FULLW,96241,"Mapusa ",,0
+664,FULLW,96245,"Mapusa ",,0
+664,FULLW,96253,"Mapusa ",,0
+664,FULLW,96258,"Mapusa ",,0
+664,FULLW,96261,"Mapusa ",,0
+664,FULLW,96269,"Mapusa ",,0
+664,FULLW,96271,"Mapusa ",,0
+664,FULLW,96275,"Mapusa ",,0
+664,FULLW,96279,"Mapusa ",,0
+664,FULLW,96281,"Mapusa ",,0
+664,FULLW,96286,"Mapusa ",,0
+664,FULLW,96289,"Mapusa ",,0
+664,FULLW,96293,"Mapusa ",,0
+664,FULLW,96302,"Mapusa ",,0
+664,FULLW,96307,"Mapusa ",,0
+664,FULLW,96311,"Mapusa ",,0
+664,FULLW,96318,"Mapusa ",,0
+664,FULLW,96322,"Panaji",,1
+664,FULLW,96328,"Panaji",,1
+664,FULLW,96334,"Panaji",,1
+664,FULLW,96341,"Panaji",,1
+664,FULLW,96344,"Panaji",,1
+664,FULLW,96347,"Panaji",,1
+664,FULLW,96349,"Panaji",,1
+664,FULLW,96355,"Panaji",,1
+664,FULLW,96358,"Panaji",,1
+664,FULLW,96361,"Panaji",,1
+664,FULLW,96366,"Panaji",,1
+664,FULLW,96369,"Panaji",,1
+664,FULLW,96373,"Panaji",,1
+664,FULLW,96375,"Panaji",,1
+664,FULLW,96381,"Panaji",,1
+664,FULLW,96385,"Panaji",,1
+664,FULLW,96388,"Panaji",,1
+664,FULLW,96392,"Panaji",,1
+664,FULLW,96398,"Panaji",,1
+672,FULLW,95919,"Ponda via Borim Bridge",,0
+672,FULLW,95923,"Ponda via Borim Bridge",,0
+672,FULLW,95930,"Ponda via Borim Bridge",,0
+697,FULLW,96237,"Margao via Bicholin,Ponda",,0
+697,FULLW,96270,"Panaji via Bicholin,Ponda",,1
+708,FULLW,97038,"Vasco",,0
+708,FULLW,97039,"Panaji",,1
+709,FULLW,95303,"Margao",,0
+709,FULLW,95304,"Panaji",,1
+714,FULLW,95836,"Curchorem - Savordem",,0
+714,FULLW,95837,"Curchorem - Savordem",,0
+714,FULLW,95839,"Margao",,1
+714,FULLW,95840,"Margao",,1
+716,FULLW,97040,"Panaji",,0
+716,FULLW,97041,"Mapusa ",,1
+717,FULLW,96238,"Margao via Bicholim",,0
+717,FULLW,96274,"Panaji via Bicholim",,1
+717,FULLW,96303,"Panaji via Bicholim",,1
+724,FULLW,96240,"Margao via Kundai,Ponda",,0
+724,FULLW,96254,"Panaji via Kundai,Ponda",,1
+724,FULLW,96264,"Panaji via Kundai,Ponda",,1
+736,FULLW,97242,"Shiroda",,1
+481,FULLW,95740,"Margao via Kankavli",,0
+481,FULLW,95742,"Kolhapur via Kankavli",,1
+751,FULLW,97059,"Panaji",,0
+751,FULLW,97064,"Hyderabad",,1
+24,FULLW,95616,"Sawantwadi",,0
+24,FULLW,95636,"Sawantwadi",,0
+24,FULLW,95659,"Vasco",,1
+24,FULLW,95681,"Vasco",,1
+96,FULLW,95503,"Sawantwadi via Patradevi",,0
+96,FULLW,95513,"Sawantwadi via Patradevi",,0
+96,FULLW,95525,"Sawantwadi via Patradevi",,0
+96,FULLW,95536,"Sawantwadi via Patradevi",,0
+96,FULLW,95547,"Sawantwadi via Patradevi",,0
+96,FULLW,95558,"Sawantwadi via Patradevi",,0
+96,FULLW,95579,"Panaji via Patradevi",,1
+96,FULLW,95601,"Panaji via Patradevi",,1
+96,FULLW,95613,"Panaji via Patradevi",,1
+96,FULLW,95623,"Panaji via Patradevi",,1
+96,FULLW,95635,"Panaji via Patradevi",,1
+96,FULLW,95649,"Panaji via Patradevi",,1
+182,FULLW,96412,"Vengurla via Malewad",,0
+182,FULLW,96420,"Panaji via Malewad",,1
+200,FULLW,96207,"Malvan via Malewad,Kudal",,0
+200,FULLW,96217,"Panaji via Malewad,Kudal",,1
+512,FULLW,95861,"Kolhapur via Belgaum Cbt",,0
+512,FULLW,95868,"Margao via Belgaum Cbt",,1
+514,FULLW,95865,"Kolhapur via Gaganbavda",,0
+514,FULLW,95874,"Margao via Gaganbavda",,1
+518,FULLW,95880,"Malvan via Malewad Po",,0
+518,FULLW,95896,"Margao via Malewad Po",,1
+519,FULLW,95886,"Miraj via Radhanagari",,0
+519,FULLW,95894,"Margao via Radhanagari",,1
+541,FULLW,95944,"Margao via Patradevi",,1
+620,FULLW,96547,"Miraj",,0
+620,FULLW,96553,"Vasco",,1
+625,FULLW,96551,"Solapur",,0
+625,FULLW,96560,"Vasco",,1
+640,FULLW,96179,"Kolhapur via Sawantwadi",,0
+640,FULLW,96186,"Panaji via Sawantwadi",,1
+65,FULLW,95471,"Panaji",,1
+444,FULLW,95997,"Badami via Anmod,Belgaum Cbt",,0
+445,FULLW,96150,"Hospet via Anmod,Hubli",,0
+445,FULLW,96155,"Panaji via Anmod,Hubli",,1
+446,FULLW,96165,"Karwar via Margao",,0
+446,FULLW,96173,"Panaji via Margao",,1
+446,FULLW,96177,"Panaji via Margao",,1
+465,FULLW,95700,"Karwar via Kepem",,0
+503,FULLW,95849,"Gokarna via Karwar",,0
+503,FULLW,95858,"Margao via Karwar",,1
+506,FULLW,95851,"Hubballi New via Anmod",,0
+506,FULLW,95860,"Margao via Anmod",,1
+510,FULLW,95856,"Karwar via Canacona",,0
+510,FULLW,95870,"Karwar via Canacona",,0
+510,FULLW,95881,"Karwar via Canacona",,0
+510,FULLW,95898,"Karwar via Canacona",,0
+510,FULLW,95911,"Karwar via Canacona",,0
+510,FULLW,95924,"Karwar via Canacona",,0
+510,FULLW,95937,"Karwar via Canacona",,0
+510,FULLW,95951,"Karwar via Canacona",,0
+510,FULLW,95958,"Karwar via Canacona",,0
+510,FULLW,95968,"Karwar via Canacona",,0
+510,FULLW,95987,"Karwar via Canacona",,0
+510,FULLW,96001,"Karwar via Canacona",,0
+510,FULLW,96024,"Karwar via Canacona",,0
+510,FULLW,96038,"Karwar via Canacona",,0
+510,FULLW,96055,"Karwar via Canacona",,0
+510,FULLW,96071,"Margao via Canacona",,1
+510,FULLW,96090,"Margao via Canacona",,1
+510,FULLW,96113,"Margao via Canacona",,1
+510,FULLW,96139,"Margao via Canacona",,1
+510,FULLW,96154,"Margao via Canacona",,1
+510,FULLW,96166,"Margao via Canacona",,1
+510,FULLW,96181,"Margao via Canacona",,1
+510,FULLW,96192,"Margao via Canacona",,1
+510,FULLW,96206,"Margao via Canacona",,1
+510,FULLW,96219,"Margao via Canacona",,1
+510,FULLW,96236,"Margao via Canacona",,1
+510,FULLW,96251,"Margao via Canacona",,1
+510,FULLW,96267,"Margao via Canacona",,1
+510,FULLW,96280,"Margao via Canacona",,1
+615,FULLW,96532,"Hubballi New via Ponda",,0
+615,FULLW,96541,"Vasco via Ponda",,1
+617,FULLW,96535,"Karwar via Margao",,0
+617,FULLW,96545,"Karwar via Margao",,0
+617,FULLW,96559,"Vasco via Margao",,1
+617,FULLW,96572,"Vasco via Margao",,1
+639,FULLW,96156,"Hubballi New via Anmod",,0
+639,FULLW,96163,"Panaji via Anmod",,1
+643,FULLW,96276,"Mysore via Karwar",,0
+643,FULLW,96288,"Panaji via Karwar",,1
+647,FULLW,96353,"Saundatti via Chorla",,0
+647,FULLW,96365,"Panaji via Chorla",,1
+725,FULLW,97139,"Raichur via Bicholim,Belgavi",,0
+725,FULLW,97154,"Vasco via Bicholim,Belgavi",,1
+636,FULLW,97107,"Gulbarga Central via Cbt Belgaum",,0
+636,FULLW,97124,"Panaji via Cbt Belgaum",,1
+172,FULLW,96022,"Belgavi via Anmod",,0
+172,FULLW,96032,"Belgavi via Anmod",,0
+172,FULLW,96045,"Panaji via Anmod",,1
+172,FULLW,96057,"Panaji via Anmod",,1
+173,FULLW,96023,"Belgavi via Amboli",,0
+173,FULLW,96033,"Panaji via Amboli",,1
+202,FULLW,96030,"Belgavi via Chorla",,0
+202,FULLW,96042,"Belgavi via Chorla",,0
+202,FULLW,96056,"Belgavi via Chorla",,0
+202,FULLW,96068,"Belgavi via Chorla",,0
+202,FULLW,96085,"Belgavi via Chorla",,0
+202,FULLW,96098,"Panaji via Chorla",,1
+202,FULLW,96110,"Panaji via Chorla",,1
+202,FULLW,96130,"Panaji via Chorla",,1
+202,FULLW,96146,"Panaji via Chorla",,1
+483,FULLW,95772,"Belgavi via Curchorem",,0
+483,FULLW,95778,"Belgavi via Curchorem",,0
+483,FULLW,95784,"Margao via Curchorem",,1
+484,FULLW,95774,"Belgavi via Anmod",,0
+484,FULLW,95787,"Belgavi via Anmod",,0
+484,FULLW,95799,"Belgavi via Anmod",,0
+484,FULLW,95809,"Margao via Anmod",,1
+484,FULLW,95816,"Margao via Anmod",,1
+484,FULLW,95823,"Margao via Anmod",,1
+484,FULLW,95828,"Margao via Anmod",,1
+610,FULLW,96524,"Vasco via Marcel",,1
+610,FULLW,96536,"Vasco via Marcel",,1
+612,FULLW,96526,"Belgavi via Mapusa",,0
+612,FULLW,96531,"Belgavi via Mapusa",,0
+612,FULLW,96538,"Vasco via Mapusa",,1
+612,FULLW,96544,"Vasco via Mapusa",,1
+612,FULLW,96555,"Vasco via Mapusa",,1
+651,FULLW,96047,"Belgavi via Londa",,0
+651,FULLW,96061,"Panaji via Londa",,1
+1,FULLW,95501,"Satre via Mapusa",,0
+1,FULLW,95516,"Panaji via Mapusa",,1
+3,FULLW,95530,"Vasco Market via Cortalim",,0
+3,FULLW,95539,"Vasco Market via Cortalim",,0
+3,FULLW,95548,"Vasco Market via Cortalim",,0
+3,FULLW,95556,"Vasco Market via Cortalim",,0
+3,FULLW,95570,"Vasco Market via Cortalim",,0
+3,FULLW,95583,"Vasco Market via Cortalim",,0
+3,FULLW,95598,"Vasco Market via Cortalim",,0
+3,FULLW,95610,"Vasco Market via Cortalim",,0
+3,FULLW,95620,"Vasco Market via Cortalim",,0
+3,FULLW,95629,"Vasco Market via Cortalim",,0
+3,FULLW,95640,"Vasco Market via Cortalim",,0
+3,FULLW,95652,"Vasco Market via Cortalim",,0
+3,FULLW,95667,"Vasco Market via Cortalim",,0
+3,FULLW,95677,"Vasco Market via Cortalim",,0
+3,FULLW,95689,"Vasco Market via Cortalim",,0
+3,FULLW,95699,"Vasco Market via Cortalim",,0
+3,FULLW,95712,"Vasco Market via Cortalim",,0
+3,FULLW,95726,"Vasco Market via Cortalim",,0
+3,FULLW,95737,"Vasco Market via Cortalim",,0
+3,FULLW,95745,"Vasco Market via Cortalim",,0
+3,FULLW,95767,"Vasco Market via Cortalim",,0
+3,FULLW,95791,"Vasco Market via Cortalim",,0
+4,FULLW,96148,"Harbour Vasco via Cortalim",,0
+4,FULLW,96157,"Harbour Vasco via Cortalim",,0
+4,FULLW,96171,"Harbour Vasco via Cortalim",,0
+4,FULLW,96183,"Harbour Vasco via Cortalim",,0
+4,FULLW,96191,"Harbour Vasco via Cortalim",,0
+4,FULLW,96201,"Harbour Vasco via Cortalim",,0
+4,FULLW,96212,"Harbour Vasco via Cortalim",,0
+4,FULLW,96221,"Harbour Vasco via Cortalim",,0
+4,FULLW,96232,"Harbour Vasco via Cortalim",,0
+4,FULLW,96247,"Harbour Vasco via Cortalim",,0
+4,FULLW,96263,"Harbour Vasco via Cortalim",,0
+4,FULLW,96273,"Panaji via Cortalim",,1
+4,FULLW,96285,"Panaji via Cortalim",,1
+4,FULLW,96296,"Panaji via Cortalim",,1
+4,FULLW,96314,"Panaji via Cortalim",,1
+4,FULLW,96333,"Panaji via Cortalim",,1
+4,FULLW,96343,"Panaji via Cortalim",,1
+4,FULLW,96354,"Panaji via Cortalim",,1
+6,FULLW,95603,"Polem Goa-Karnataka Border",,0
+6,FULLW,95624,"Vasco",,1
+8,FULLW,95535,"Zarme via Marcel,Valpoi",,0
+8,FULLW,95546,"Panaji via Marcel,Valpoi",,1
+9,FULLW,96211,"Mandrem via Junaswada",,0
+9,FULLW,96222,"Panaji via Junaswada",,1
+17,FULLW,96380,"Sonal via Marcel,Valpoi",,0
+17,FULLW,96390,"Panaji via Marcel,Valpoi",,1
+18,FULLW,95621,"Sonal",,0
+18,FULLW,95637,"Vasco",,1
+20,FULLW,95593,"Assolda ",,0
+20,FULLW,95605,"Vasco",,1
+22,FULLW,95596,"Belgaum Bus Stand",,0
+22,FULLW,95604,"Belgaum Bus Stand",,0
+22,FULLW,95611,"Belgaum Bus Stand",,0
+22,FULLW,95619,"Vasco",,1
+22,FULLW,95627,"Vasco",,1
+22,FULLW,95634,"Vasco",,1
+23,FULLW,95597,"Hedode via Neura,Marcela",,0
+23,FULLW,95612,"Vasco via Neura,Marcela",,1
+25,FULLW,95517,"Usap via Dodamarg",,0
+25,FULLW,95526,"Panaji via Dodamarg",,1
+26,FULLW,96315,"Quitla Aldona via Pomburpa",,0
+26,FULLW,96323,"Quitla Aldona via Pomburpa",,0
+26,FULLW,96330,"Quitla Aldona via Pomburpa",,0
+26,FULLW,96335,"Panaji via Pomburpa",,1
+26,FULLW,96340,"Panaji via Pomburpa",,1
+28,FULLW,96196,"Panaji",,1
+30,FULLW,96126,"Panaji via Mapusa",,1
+34,FULLW,95459,"Harambol via Pedne",,0
+34,FULLW,95469,"Harambol via Pedne",,0
+34,FULLW,95480,"Panaji via Pedne",,1
+34,FULLW,95490,"Panaji via Pedne",,1
+35,FULLW,95493,"Morjim Tem via Mapusa",,0
+35,FULLW,95502,"Morjim Tem via Mapusa",,0
+35,FULLW,95512,"Panaji via Mapusa",,1
+35,FULLW,95522,"Panaji via Mapusa",,1
+36,FULLW,95478,"Keri, Pernem via Pedne",,0
+36,FULLW,95487,"Keri, Pernem via Pedne",,0
+36,FULLW,95495,"Panaji via Pedne",,1
+36,FULLW,95508,"Panaji via Pedne",,1
+37,FULLW,96425,"Virdi via Marcel,Sankhali",,0
+37,FULLW,96434,"Virdi via Marcel,Sankhali",,0
+38,FULLW,97053,"Hivrem via Bicholim",,0
+38,FULLW,97084,"Mapusa  via Bicholim",,1
+44,FULLW,95455,"Dhumashe via Mapusa",,0
+44,FULLW,95467,"Panaji via Mapusa",,1
+46,FULLW,95496,"Morlem",,0
+46,FULLW,95506,"Panaji",,1
+47,FULLW,96409,"Velguem via Mapusa",,0
+51,FULLW,95465,"Hivrem via Marcel,Valpoi",,0
+56,FULLW,95453,"Caranzol via Bicholim",,0
+56,FULLW,95475,"Panaji via Bicholim",,1
+57,FULLW,96158,"Ibrampur via Suke Kulan",,0
+57,FULLW,96167,"Ibrampur via Suke Kulan",,0
+57,FULLW,96176,"Panaji via Suke Kulan",,1
+57,FULLW,96185,"Panaji via Suke Kulan",,1
+60,FULLW,95497,"Nanora via Marcel,Valpoi",,0
+60,FULLW,95509,"Nanora via Marcel,Valpoi",,0
+60,FULLW,95519,"Panaji via Marcel,Valpoi",,1
+60,FULLW,95531,"Panaji via Marcel,Valpoi",,1
+61,FULLW,95398,"Fatorpa via Margao",,0
+61,FULLW,95402,"Mapusa  via Margao",,1
+62,FULLW,95498,"Panaji via Mapusa,Aldona",,1
+64,FULLW,95334,"Badem",,0
+64,FULLW,95339,"Badem",,0
+64,FULLW,95344,"Badem",,0
+64,FULLW,95348,"Badem",,0
+64,FULLW,95355,"Badem",,0
+64,FULLW,95358,"Badem",,0
+64,FULLW,95365,"Badem",,0
+64,FULLW,95368,"Badem",,0
+64,FULLW,95375,"Mapusa ",,1
+64,FULLW,95383,"Mapusa ",,1
+64,FULLW,95387,"Mapusa ",,1
+66,FULLW,95422,"Advoi via Marcel,Sankhali",,0
+66,FULLW,95433,"Advoi via Marcel,Sankhali",,0
+66,FULLW,95444,"Panaji via Marcel,Sankhali",,1
+66,FULLW,95456,"Panaji via Marcel,Sankhali",,1
+67,FULLW,95424,"Ashwem Beach via Arabo,Pernem",,0
+67,FULLW,95439,"Panaji via Arabo,Pernem",,1
+68,FULLW,95429,"Betul Cross",,0
+68,FULLW,95450,"Panaji",,1
+69,FULLW,96472,"Savoi",,0
+69,FULLW,96477,"Savoi",,0
+69,FULLW,96480,"Savoi",,0
+69,FULLW,96487,"Ponda",,1
+69,FULLW,96492,"Ponda",,1
+69,FULLW,96493,"Ponda",,1
+70,FULLW,95361,"Baga Beach via Parra",,0
+70,FULLW,95366,"Baga Beach via Parra",,0
+70,FULLW,95371,"Baga Beach via Parra",,0
+70,FULLW,95374,"Baga Beach via Parra",,0
+70,FULLW,95379,"Baga Beach via Parra",,0
+70,FULLW,95384,"Baga Beach via Parra",,0
+70,FULLW,95388,"Baga Beach via Parra",,0
+70,FULLW,95394,"Mapusa  via Parra",,1
+70,FULLW,95397,"Mapusa  via Parra",,1
+70,FULLW,95406,"Mapusa  via Parra",,1
+70,FULLW,95411,"Mapusa  via Parra",,1
+70,FULLW,95414,"Mapusa  via Parra",,1
+72,FULLW,96371,"Shiroda Market via Ponda",,0
+72,FULLW,96383,"Panaji via Ponda",,1
+73,FULLW,96465,"Kudchire via Marcel,Sankhali",,0
+75,FULLW,95462,"Harambol via Pernem,Arabo",,0
+75,FULLW,95472,"Panaji via Pernem,Arabo",,1
+76,FULLW,95533,"Vijaydurga Temple Village Stop via Ponda",,0
+76,FULLW,95542,"Panaji via Ponda",,1
+79,FULLW,95515,"Panaji",,1
+81,FULLW,96339,"Saptakoteshwar, Narve",,0
+84,FULLW,95425,"Badem via Assagao",,0
+84,FULLW,95432,"Badem via Assagao",,0
+84,FULLW,95440,"Panaji via Assagao",,1
+84,FULLW,95446,"Panaji via Assagao",,1
+84,FULLW,95458,"Panaji via Assagao",,1
+84,FULLW,95461,"Panaji via Assagao",,1
+85,FULLW,95481,"Kumbharwada",,0
+85,FULLW,95489,"Panaji",,1
+88,FULLW,95500,"Sal",,0
+88,FULLW,95510,"Sal",,0
+88,FULLW,95521,"Panaji",,1
+88,FULLW,95527,"Panaji",,1
+90,FULLW,95477,"Ker",,0
+90,FULLW,95486,"Panaji",,1
+95,FULLW,95468,"Kalay via Ponda,Savordem",,0
+95,FULLW,95483,"Panaji via Ponda,Savordem",,1
+99,FULLW,95393,"Calvi",,0
+99,FULLW,95401,"Calvi",,0
+99,FULLW,95412,"Calvi",,0
+99,FULLW,95419,"Calvi",,0
+99,FULLW,95427,"Calvi",,0
+99,FULLW,95430,"Calvi",,0
+99,FULLW,95435,"Mapusa ",,1
+99,FULLW,95441,"Mapusa ",,1
+99,FULLW,95445,"Mapusa ",,1
+99,FULLW,95448,"Mapusa ",,1
+99,FULLW,95454,"Mapusa ",,1
+100,FULLW,95416,"Advoi via Marcel,Valpoi",,0
+100,FULLW,95434,"Advoi via Marcel,Valpoi",,0
+101,FULLW,95986,"Advoi via Mapusa,Sankhali",,0
+101,FULLW,96006,"Panaji via Mapusa,Sankhali",,1
+104,FULLW,95484,"Mandrem via Siolim",,0
+104,FULLW,95492,"Panaji via Siolim",,1
+106,FULLW,95396,"Camurlim Khairat",,0
+106,FULLW,95409,"Camurlim Khairat",,0
+106,FULLW,95417,"Camurlim Khairat",,0
+106,FULLW,95426,"Camurlim Khairat",,0
+106,FULLW,95431,"Camurlim Khairat",,0
+106,FULLW,95438,"Camurlim Khairat",,0
+106,FULLW,95443,"Camurlim Khairat",,0
+106,FULLW,95447,"Mapusa ",,1
+106,FULLW,95457,"Mapusa ",,1
+106,FULLW,95460,"Mapusa ",,1
+106,FULLW,95466,"Mapusa ",,1
+106,FULLW,95470,"Mapusa ",,1
+106,FULLW,95474,"Mapusa ",,1
+110,FULLW,95313,"Poira",,0
+110,FULLW,95318,"Poira",,0
+110,FULLW,95323,"Poira",,0
+110,FULLW,95326,"Poira",,0
+110,FULLW,95329,"Poira",,0
+110,FULLW,95335,"Poira",,0
+110,FULLW,95340,"Poira",,0
+110,FULLW,95342,"Poira",,0
+110,FULLW,95347,"Poira",,0
+110,FULLW,95353,"Poira",,0
+110,FULLW,95357,"Bicholim",,1
+110,FULLW,95364,"Bicholim",,1
+110,FULLW,95367,"Bicholim",,1
+110,FULLW,95373,"Bicholim",,1
+110,FULLW,95381,"Bicholim",,1
+110,FULLW,95386,"Bicholim",,1
+110,FULLW,95391,"Bicholim",,1
+110,FULLW,95399,"Bicholim",,1
+110,FULLW,95408,"Bicholim",,1
+110,FULLW,95413,"Bicholim",,1
+110,FULLW,95418,"Bicholim",,1
+111,FULLW,95320,"Amadi",,0
+111,FULLW,95324,"Amadi",,0
+111,FULLW,95331,"Amadi",,0
+111,FULLW,95337,"Amadi",,0
+111,FULLW,95341,"Amadi",,0
+111,FULLW,95349,"Amadi",,0
+111,FULLW,95356,"Mapusa ",,1
+111,FULLW,95363,"Mapusa ",,1
+111,FULLW,95369,"Mapusa ",,1
+111,FULLW,95378,"Mapusa ",,1
+111,FULLW,95385,"Mapusa ",,1
+111,FULLW,95390,"Mapusa ",,1
+114,FULLW,95310,"Madel Ferry via Vainguinim",,0
+114,FULLW,95321,"Madel Ferry via Vainguinim",,0
+114,FULLW,95327,"Madel Ferry via Vainguinim",,0
+114,FULLW,95336,"Madel Ferry via Vainguinim",,0
+114,FULLW,95345,"Madel Ferry via Vainguinim",,0
+114,FULLW,95352,"Bicholim via Vainguinim",,1
+114,FULLW,95362,"Bicholim via Vainguinim",,1
+114,FULLW,95372,"Bicholim via Vainguinim",,1
+114,FULLW,95380,"Bicholim via Vainguinim",,1
+125,FULLW,95569,"Caranzol",,0
+125,FULLW,95577,"Valpoi",,1
+126,FULLW,95563,"Keri, Ponda via Marcel,Mardol",,0
+127,FULLW,95552,"Verna Cipla",,0
+127,FULLW,95559,"Ponda",,1
+128,FULLW,95557,"Volvoi",,0
+128,FULLW,95564,"Volvoi",,0
+128,FULLW,95567,"Ponda",,1
+128,FULLW,95574,"Ponda",,1
+130,FULLW,95580,"Satre",,0
+130,FULLW,95588,"Valpoi",,1
+131,FULLW,95571,"Hivrem",,0
+131,FULLW,95578,"Hivrem",,0
+131,FULLW,95581,"Hivrem",,0
+131,FULLW,95584,"Valpoi",,1
+131,FULLW,95591,"Valpoi",,1
+132,FULLW,95590,"Zarme via Mauxim",,0
+132,FULLW,95594,"Zarme via Mauxim",,0
+132,FULLW,95595,"Valpoi via Mauxim",,1
+133,FULLW,95572,"Panaji Market",,0
+134,FULLW,95582,"Velguem",,0
+134,FULLW,95587,"Valpoi",,1
+138,FULLW,95305,"Varpal via Mayem",,0
+138,FULLW,95319,"Bicholim via Mayem",,1
+138,FULLW,95325,"Bicholim via Mayem",,1
+146,FULLW,95403,"Varpal",,0
+148,FULLW,95482,"Madlamaz",,0
+150,FULLW,95479,"Panaji via Pedne",,1
+151,FULLW,95534,"Panaji",,1
+152,FULLW,96419,"Vijaydurg via Sawantwadi",,0
+152,FULLW,96435,"Panaji via Sawantwadi",,1
+153,FULLW,95505,"Shigne via Mapusa Tar",,0
+153,FULLW,95520,"Panaji via Mapusa Tar",,1
+175,FULLW,96364,"Shemecheadvan via Dadachiwadi",,0
+175,FULLW,96370,"Shemecheadvan via Dadachiwadi",,0
+175,FULLW,96376,"Panaji via Dadachiwadi",,1
+175,FULLW,96387,"Panaji via Dadachiwadi",,1
+176,FULLW,96135,"Harambol via Chopdem",,0
+176,FULLW,96145,"Panaji via Chopdem",,1
+183,FULLW,96189,"Kudchire via Mapusa,Bicholim",,0
+183,FULLW,96200,"Panaji via Mapusa,Bicholim",,1
+185,FULLW,96336,"Rivem via Mapusa,Valpoi",,0
+185,FULLW,96357,"Panaji via Mapusa,Valpoi",,1
+186,FULLW,96136,"Harambol via Candolim,Calangute",,0
+187,FULLW,96396,"Tiracol via Pedne,Malewad",,0
+187,FULLW,96405,"Panaji via Pedne,Malewad",,1
+188,FULLW,97101,"Akhada",,0
+188,FULLW,97114,"Panaji",,1
+190,FULLW,96073,"Calangute via Sangolda",,0
+190,FULLW,96077,"Calangute via Sangolda",,0
+191,FULLW,96384,"Surla via Sakhali,Chorla",,0
+191,FULLW,96397,"Panaji via Sakhali,Chorla",,1
+192,FULLW,96430,"Volvoi",,0
+192,FULLW,96438,"Volvoi",,0
+192,FULLW,96447,"Volvoi",,0
+192,FULLW,96453,"Panaji",,1
+192,FULLW,96461,"Panaji",,1
+192,FULLW,96470,"Panaji",,1
+194,FULLW,96403,"Vagurme",,0
+194,FULLW,96414,"Panaji",,1
+196,FULLW,96451,"Codli Tisk",,0
+197,FULLW,96298,"Pethecha Wada",,0
+197,FULLW,96320,"Panaji",,1
+198,FULLW,97282,"Amthane via Bicholim",,0
+198,FULLW,97283,"Amthane via Bicholim",,0
+198,FULLW,97284,"Panaji via Bicholim",,1
+199,FULLW,96423,"Panaji via Mapusa",,1
+204,FULLW,96266,"Mopa via Pedne",,0
+204,FULLW,96277,"Mopa via Pedne",,0
+204,FULLW,96287,"Panaji via Pedne",,1
+204,FULLW,96300,"Panaji via Pedne",,1
+205,FULLW,96413,"Verna Titan via Cortalim",,0
+205,FULLW,96418,"Verna Titan via Cortalim",,0
+205,FULLW,96424,"Verna Titan via Cortalim",,0
+205,FULLW,96432,"Panaji via Cortalim",,1
+205,FULLW,96437,"Panaji via Cortalim",,1
+205,FULLW,96443,"Panaji via Cortalim",,1
+206,FULLW,96337,"Rivem via Marcel,Valpoi",,0
+206,FULLW,96348,"Panaji via Marcel,Valpoi",,1
+207,FULLW,96393,"Tambdi Surla via Ponda,Udalshe",,0
+207,FULLW,96408,"Panaji via Ponda,Udalshe",,1
+207,FULLW,96417,"Panaji via Ponda,Udalshe",,1
+210,FULLW,96202,"Malpon",,0
+210,FULLW,96215,"Malpon",,0
+210,FULLW,96230,"Panaji",,1
+210,FULLW,96249,"Panaji",,1
+212,FULLW,96076,"Panaji via Betim,Pilerne",,1
+212,FULLW,96081,"Panaji via Betim,Pilerne",,1
+214,FULLW,96170,"Keri, Pernem via Chopdem",,0
+214,FULLW,96178,"Keri, Pernem via Chopdem",,0
+214,FULLW,96188,"Keri, Pernem via Chopdem",,0
+214,FULLW,96197,"Panaji via Chopdem",,1
+214,FULLW,96205,"Panaji via Chopdem",,1
+214,FULLW,96214,"Panaji via Chopdem",,1
+214,FULLW,96225,"Panaji via Chopdem",,1
+216,FULLW,96476,"Shirshire",,0
+216,FULLW,96478,"Shirshire",,0
+216,FULLW,96482,"Shirshire",,0
+216,FULLW,96488,"Shirshire",,0
+216,FULLW,96490,"Ponda",,1
+216,FULLW,96498,"Ponda",,1
+222,FULLW,96481,"Undir",,0
+222,FULLW,96489,"Ponda",,1
+223,FULLW,95708,"Solye via Kakorda",,0
+223,FULLW,95711,"Curchorem - Savordem via Kakorda",,1
+443,FULLW,96395,"Tambdi Surla via Ponda,Bolkarne",,0
+448,FULLW,96428,"Panaji via Assnora",,1
+451,FULLW,95660,"Verna IDC via Marcel",,0
+451,FULLW,95673,"Bicholim via Marcel",,1
+458,FULLW,95685,"Matimol via Parvem",,0
+458,FULLW,95691,"Canacona via Parvem",,1
+459,FULLW,95690,"Popaidando via Cajumol",,0
+464,FULLW,95697,"Velim via Murida",,0
+466,FULLW,95701,"Mollem via Collem",,0
+471,FULLW,95709,"Vade Colony via Rivona",,0
+471,FULLW,95713,"Curchorem - Savordem via Rivona",,1
+485,FULLW,95785,"Betul Cross via Cuncolim",,0
+485,FULLW,95804,"Betul Cross via Cuncolim",,0
+485,FULLW,95820,"Margao via Cuncolim",,1
+485,FULLW,95830,"Margao via Cuncolim",,1
+487,FULLW,95813,"Cab de Ram via Balli",,0
+487,FULLW,95824,"Margao via Balli",,1
+492,FULLW,95970,"Verna Cipla via Agnel Ashra",,0
+492,FULLW,95976,"Verna Cipla via Agnel Ashra",,0
+492,FULLW,95981,"Verna Cipla via Agnel Ashra",,0
+492,FULLW,95984,"Margao via Agnel Ashra",,1
+492,FULLW,95988,"Margao via Agnel Ashra",,1
+492,FULLW,95990,"Margao via Agnel Ashra",,1
+493,FULLW,95833,"Cotta via Curtorim",,0
+493,FULLW,95844,"Margao via Curtorim",,1
+500,FULLW,95841,"Dramapur via Navelim",,0
+500,FULLW,95846,"Margao via Navelim",,1
+502,FULLW,95842,"Don Khuris via Navelim",,0
+502,FULLW,95847,"Margao via Navelim",,1
+504,FULLW,95850,"Harbour Vasco via Thana",,0
+504,FULLW,95863,"Harbour Vasco via Thana",,0
+504,FULLW,95877,"Harbour Vasco via Thana",,0
+504,FULLW,95890,"Harbour Vasco via Thana",,0
+504,FULLW,95901,"Harbour Vasco via Thana",,0
+504,FULLW,95913,"Margao via Thana",,1
+504,FULLW,95921,"Margao via Thana",,1
+504,FULLW,95932,"Margao via Thana",,1
+504,FULLW,95941,"Margao via Thana",,1
+507,FULLW,97083,"Kalay",,0
+509,FULLW,95853,"Kamorcond via Shiroda",,0
+509,FULLW,95862,"Kamorcond via Shiroda",,0
+509,FULLW,95872,"Margao via Shiroda",,1
+509,FULLW,95878,"Margao via Shiroda",,1
+511,FULLW,95857,"Khargal via Poiginim",,0
+511,FULLW,95871,"Margao via Poiginim",,1
+515,FULLW,95875,"Kuskem via Canacona",,0
+515,FULLW,95884,"Margao via Canacona",,1
+517,FULLW,95879,"Macasana via Curtorim",,0
+517,FULLW,95885,"Macasana via Curtorim",,0
+517,FULLW,95889,"Margao via Curtorim",,1
+517,FULLW,95892,"Margao via Curtorim",,1
+520,FULLW,95887,"Molkopon via Kepem",,0
+520,FULLW,95891,"Margao via Kepem",,1
+521,FULLW,95897,"Mollem via Curchorem",,0
+521,FULLW,95908,"Margao via Curchorem",,1
+522,FULLW,95899,"Neturlim via Curchorem",,0
+522,FULLW,95906,"Margao via Curchorem",,1
+532,FULLW,95917,"Pirla via Kepem",,0
+532,FULLW,95925,"Pirla via Kepem",,0
+532,FULLW,95933,"Margao via Kepem",,1
+538,FULLW,95935,"Sal via Usgao Tisk",,0
+538,FULLW,95946,"Margao via Usgao Tisk",,1
+539,FULLW,95938,"Margao via Curchorem,Neturlim",,1
+540,FULLW,95943,"Sateribhat via Ponda",,0
+540,FULLW,95947,"Sateribhat via Ponda",,0
+540,FULLW,95954,"Margao via Ponda",,1
+540,FULLW,95961,"Margao via Ponda",,1
+543,FULLW,95952,"Margao via Kepem",,1
+544,FULLW,95953,"Tirvan via Canacona",,0
+544,FULLW,95963,"Tirvan via Canacona",,0
+544,FULLW,95979,"Margao via Canacona",,1
+545,FULLW,95959,"Tudol Gaodongri via Canacona",,0
+546,FULLW,95845,"Goa University Library via Cortalim",,0
+546,FULLW,95859,"Margao via Cortalim",,1
+546,FULLW,95869,"Margao via Cortalim",,1
+547,FULLW,95962,"Margao via Rivona",,1
+549,FULLW,97091,"Val via Canacona",,0
+556,FULLW,95964,"Margao via Assolna",,1
+557,FULLW,95969,"Velsao via Majorda",,0
+557,FULLW,95974,"Margao via Majorda",,1
+558,FULLW,97070,"Colva Beach",,0
+558,FULLW,97075,"Colva Beach",,0
+558,FULLW,97076,"Margao",,1
+558,FULLW,97079,"Margao",,1
+566,FULLW,97247,"Cuncoliem via Titan,Ponda",,0
+566,FULLW,97258,"Panaji via Titan,Ponda",,1
+568,FULLW,96124,"Goa University Library via G.M.C.",,0
+568,FULLW,96127,"Goa University Library via G.M.C.",,0
+568,FULLW,96131,"Goa University Library via G.M.C.",,0
+568,FULLW,96134,"Goa University Library via G.M.C.",,0
+568,FULLW,96138,"Panaji via G.M.C.",,1
+568,FULLW,96140,"Panaji via G.M.C.",,1
+568,FULLW,96142,"Panaji via G.M.C.",,1
+568,FULLW,96144,"Panaji via G.M.C.",,1
+569,FULLW,96433,"Zarme via Ponda,Valpoi",,0
+569,FULLW,96444,"Panaji via Ponda,Valpoi",,1
+572,FULLW,96457,"Goa Multi Faculty College (GMFC) Daya Nagar",,0
+572,FULLW,96463,"Ponda",,1
+573,FULLW,96462,"Kamorcond via Shiroda",,0
+573,FULLW,96471,"Kamorcond via Shiroda",,0
+573,FULLW,96479,"Ponda via Shiroda",,1
+577,FULLW,95707,"Saljini via Sanguem",,0
+577,FULLW,95715,"Curchorem - Savordem via Sanguem",,1
+595,FULLW,95867,"Kudchire via Ponda,Marcel",,0
+595,FULLW,95883,"Margao via Ponda,Marcel",,1
+599,FULLW,96326,"Rayeshwar College of Engineering via Ponda",,0
+599,FULLW,96346,"Rayeshwar College of Engineering via Ponda",,0
+599,FULLW,96356,"Panaji via Ponda",,1
+599,FULLW,96367,"Panaji via Ponda",,1
+600,FULLW,96362,"Savarshe via Marcel,Honda",,0
+600,FULLW,96372,"Panaji via Marcel,Honda",,1
+611,FULLW,96529,"Bhatwadi",,0
+614,FULLW,96530,"Cortalim Junction via Titan,Neura",,0
+614,FULLW,96546,"Vasco via Titan,Neura",,1
+619,FULLW,96539,"Margao City via Cortalim",,0
+619,FULLW,96550,"Margao City via Cortalim",,0
+619,FULLW,96557,"Margao City via Cortalim",,0
+619,FULLW,96566,"Margao City via Cortalim",,0
+619,FULLW,96574,"Margao City via Cortalim",,0
+619,FULLW,96579,"Margao City via Cortalim",,0
+619,FULLW,96585,"Margao City via Cortalim",,0
+619,FULLW,96589,"Margao City via Cortalim",,0
+619,FULLW,96594,"Margao City via Cortalim",,0
+619,FULLW,96598,"Margao City via Cortalim",,0
+619,FULLW,96601,"Margao City via Cortalim",,0
+619,FULLW,96603,"Margao City via Cortalim",,0
+619,FULLW,96606,"Margao City via Cortalim",,0
+619,FULLW,96609,"Margao City via Cortalim",,0
+619,FULLW,96612,"Margao City via Cortalim",,0
+619,FULLW,96615,"Margao City via Cortalim",,0
+619,FULLW,96618,"Margao City via Cortalim",,0
+619,FULLW,96621,"Margao City via Cortalim",,0
+619,FULLW,96624,"Margao City via Cortalim",,0
+619,FULLW,96627,"Margao City via Cortalim",,0
+619,FULLW,96630,"Margao City via Cortalim",,0
+619,FULLW,96633,"Margao City via Cortalim",,0
+619,FULLW,96636,"Margao City via Cortalim",,0
+619,FULLW,96639,"Margao City via Cortalim",,0
+619,FULLW,96642,"Margao City via Cortalim",,0
+619,FULLW,96645,"Margao City via Cortalim",,0
+619,FULLW,96648,"Margao City via Cortalim",,0
+619,FULLW,96651,"Margao City via Cortalim",,0
+619,FULLW,96654,"Margao City via Cortalim",,0
+619,FULLW,96657,"Margao City via Cortalim",,0
+619,FULLW,96661,"Margao City via Cortalim",,0
+619,FULLW,96664,"Margao City via Cortalim",,0
+619,FULLW,96665,"Margao City via Cortalim",,0
+619,FULLW,96668,"Vasco via Cortalim",,1
+619,FULLW,96671,"Vasco via Cortalim",,1
+619,FULLW,96674,"Vasco via Cortalim",,1
+619,FULLW,96677,"Vasco via Cortalim",,1
+619,FULLW,96680,"Vasco via Cortalim",,1
+619,FULLW,96683,"Vasco via Cortalim",,1
+619,FULLW,96686,"Vasco via Cortalim",,1
+619,FULLW,96689,"Vasco via Cortalim",,1
+619,FULLW,96692,"Vasco via Cortalim",,1
+619,FULLW,96695,"Vasco via Cortalim",,1
+619,FULLW,96698,"Vasco via Cortalim",,1
+619,FULLW,96701,"Vasco via Cortalim",,1
+619,FULLW,96704,"Vasco via Cortalim",,1
+619,FULLW,96708,"Vasco via Cortalim",,1
+619,FULLW,96711,"Vasco via Cortalim",,1
+619,FULLW,96714,"Vasco via Cortalim",,1
+619,FULLW,96717,"Vasco via Cortalim",,1
+619,FULLW,96720,"Vasco via Cortalim",,1
+619,FULLW,96723,"Vasco via Cortalim",,1
+619,FULLW,96726,"Vasco via Cortalim",,1
+619,FULLW,96729,"Vasco via Cortalim",,1
+619,FULLW,96733,"Vasco via Cortalim",,1
+619,FULLW,96735,"Vasco via Cortalim",,1
+619,FULLW,96737,"Vasco via Cortalim",,1
+619,FULLW,96740,"Vasco via Cortalim",,1
+619,FULLW,96743,"Vasco via Cortalim",,1
+619,FULLW,96746,"Vasco via Cortalim",,1
+619,FULLW,96750,"Vasco via Cortalim",,1
+619,FULLW,96753,"Vasco via Cortalim",,1
+619,FULLW,96755,"Vasco via Cortalim",,1
+626,FULLW,95650,"Narve Ferry via Pilgao",,0
+626,FULLW,95654,"Narve Ferry via Pilgao",,0
+626,FULLW,95657,"Narve Ferry via Pilgao",,0
+626,FULLW,95663,"Bicholim via Pilgao",,1
+626,FULLW,95668,"Bicholim via Pilgao",,1
+633,FULLW,96012,"Banda via Madura Devl",,0
+633,FULLW,96027,"Banda via Madura Devl",,0
+633,FULLW,96043,"Panaji via Madura Devl",,1
+633,FULLW,96060,"Panaji via Madura Devl",,1
+637,FULLW,96132,"Halarna via Kulan",,0
+637,FULLW,96147,"Halarna via Kulan",,0
+637,FULLW,96159,"Panaji via Kulan",,1
+637,FULLW,96169,"Panaji via Kulan",,1
+638,FULLW,96084,"Panaji via Mapusa,Pisurle",,1
+641,FULLW,96187,"Korgao Wada via Tuem",,0
+641,FULLW,96195,"Panaji via Tuem",,1
+642,FULLW,96256,"Mhadai River Stop via Sanquelim",,0
+642,FULLW,96265,"Panaji via Sanquelim",,1
+644,FULLW,96278,"Nanachipani via Mapusa",,0
+644,FULLW,96283,"Nanachipani via Mapusa",,0
+644,FULLW,96290,"Panaji via Mapusa",,1
+644,FULLW,96304,"Panaji via Mapusa",,1
+645,FULLW,96002,"Badem via Mapusa",,0
+645,FULLW,96013,"Badem via Mapusa",,0
+645,FULLW,96020,"Badem via Mapusa",,0
+645,FULLW,96029,"Badem via Mapusa",,0
+645,FULLW,96040,"Panaji via Mapusa",,1
+645,FULLW,96048,"Panaji via Mapusa",,1
+645,FULLW,96054,"Panaji via Mapusa",,1
+645,FULLW,96065,"Panaji via Mapusa",,1
+645,FULLW,96074,"Panaji via Mapusa",,1
+645,FULLW,96086,"Panaji via Mapusa",,1
+646,FULLW,96141,"Harambol via Pedne,Devasu",,0
+646,FULLW,96153,"Harambol via Pedne,Devasu",,0
+646,FULLW,96164,"Panaji via Pedne,Devasu",,1
+646,FULLW,96174,"Panaji via Pedne,Devasu",,1
+649,FULLW,96401,"Usap via Mapusa,Assonora",,0
+649,FULLW,96411,"Usap via Mapusa,Assonora",,0
+649,FULLW,96422,"Panaji via Mapusa,Assonora",,1
+649,FULLW,96429,"Panaji via Mapusa,Assonora",,1
+652,FULLW,96374,"Shirshire via Ponda",,0
+652,FULLW,96386,"Panaji via Ponda",,1
+652,FULLW,96394,"Panaji via Ponda",,1
+652,FULLW,96402,"Panaji via Ponda",,1
+654,FULLW,96292,"Old Bambolim via St. Cruz",,0
+654,FULLW,96301,"Old Bambolim via St. Cruz",,0
+654,FULLW,96305,"Old Bambolim via St. Cruz",,0
+654,FULLW,96309,"Old Bambolim via St. Cruz",,0
+654,FULLW,96316,"Panaji via St. Cruz",,1
+654,FULLW,96319,"Panaji via St. Cruz",,1
+654,FULLW,96324,"Panaji via St. Cruz",,1
+654,FULLW,96332,"Panaji via St. Cruz",,1
+656,FULLW,96102,"GMC Colony, Bambolim via St. Cruz",,0
+656,FULLW,96104,"GMC Colony, Bambolim via St. Cruz",,0
+656,FULLW,96109,"GMC Colony, Bambolim via St. Cruz",,0
+656,FULLW,96116,"Panaji via St. Cruz",,1
+656,FULLW,96119,"Panaji via St. Cruz",,1
+656,FULLW,96121,"Panaji via St. Cruz",,1
+657,FULLW,96291,"Navshi, Old G.M.C. via St. Cruz",,0
+657,FULLW,96294,"Navshi, Old G.M.C. via St. Cruz",,0
+657,FULLW,96299,"Navshi, Old G.M.C. via St. Cruz",,0
+657,FULLW,96306,"Panaji via St. Cruz",,1
+657,FULLW,96308,"Panaji via St. Cruz",,1
+659,FULLW,96268,"Morle via Dodamarg",,0
+659,FULLW,96282,"Panaji via Dodamarg",,1
+661,FULLW,96317,"Raj Bhavan via Miramer",,0
+661,FULLW,96321,"Raj Bhavan via Miramer",,0
+661,FULLW,96325,"Panaji via Miramer",,1
+661,FULLW,96331,"Panaji via Miramer",,1
+662,FULLW,96194,"Kudchire via Karaswada,Bicholim",,0
+662,FULLW,96203,"Panaji via Karaswada,Bicholim",,1
+663,FULLW,95992,"Altinho via Market",,0
+663,FULLW,95994,"Altinho via Market",,0
+663,FULLW,95999,"Altinho via Market",,0
+663,FULLW,96000,"Altinho via Market",,0
+663,FULLW,96005,"Altinho via Market",,0
+663,FULLW,96009,"Altinho via Market",,0
+663,FULLW,96011,"Altinho via Market",,0
+663,FULLW,96015,"Altinho via Market",,0
+663,FULLW,96019,"Altinho via Market",,0
+663,FULLW,96025,"Altinho via Market",,0
+663,FULLW,96026,"Altinho via Market",,0
+663,FULLW,96028,"Altinho via Market",,0
+663,FULLW,96031,"Altinho via Market",,0
+663,FULLW,96037,"Altinho via Market",,0
+663,FULLW,96039,"Altinho via Market",,0
+663,FULLW,96041,"Altinho via Market",,0
+663,FULLW,96044,"Panaji via Market",,1
+663,FULLW,96050,"Panaji via Market",,1
+663,FULLW,96052,"Panaji via Market",,1
+663,FULLW,96053,"Panaji via Market",,1
+663,FULLW,96059,"Panaji via Market",,1
+663,FULLW,96062,"Panaji via Market",,1
+663,FULLW,96064,"Panaji via Market",,1
+663,FULLW,96066,"Panaji via Market",,1
+663,FULLW,96072,"Panaji via Market",,1
+663,FULLW,96075,"Panaji via Market",,1
+663,FULLW,96079,"Panaji via Market",,1
+663,FULLW,96083,"Panaji via Market",,1
+663,FULLW,96087,"Panaji via Market",,1
+663,FULLW,96092,"Panaji via Market",,1
+663,FULLW,96093,"Panaji via Market",,1
+663,FULLW,96097,"Panaji via Market",,1
+665,FULLW,96180,"Panaji via Mapusa",,1
+666,FULLW,96099,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96100,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96103,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96105,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96107,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96108,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96111,"GMC Bambolim via Santa Cruz",,0
+666,FULLW,96115,"Panaji via Santa Cruz",,1
+666,FULLW,96118,"Panaji via Santa Cruz",,1
+666,FULLW,96120,"Panaji via Santa Cruz",,1
+666,FULLW,96122,"Panaji via Santa Cruz",,1
+666,FULLW,96125,"Panaji via Santa Cruz",,1
+666,FULLW,96129,"Panaji via Santa Cruz",,1
+666,FULLW,96133,"Panaji via Santa Cruz",,1
+667,FULLW,97105,"Goa Engineering College, Ponda via Banastari",,0
+667,FULLW,97119,"Panaji via Banastari",,1
+669,FULLW,96329,"Rayeshwar College of Engineering via Bicholim",,0
+669,FULLW,96352,"Panaji via Bicholim",,1
+670,FULLW,96458,"Harbour Vasco via Vasco",,0
+670,FULLW,96468,"Harbour Vasco via Vasco",,0
+670,FULLW,96483,"Ponda via Vasco",,1
+670,FULLW,96499,"Ponda via Vasco",,1
+670,FULLW,96510,"Ponda via Vasco",,1
+688,FULLW,96379,"Panaji via Mapusa,Bicholim",,1
+689,FULLW,96345,"Satre via Mapusa,Valpoi",,0
+689,FULLW,96360,"Satre via Mapusa,Valpoi",,0
+689,FULLW,96382,"Panaji via Mapusa,Valpoi",,1
+689,FULLW,96400,"Panaji via Mapusa,Valpoi",,1
+690,FULLW,95656,"Saptakoteshwar, Narve via Mayem Lake",,0
+692,FULLW,97055,"Madel Ferry via Narva",,0
+692,FULLW,97065,"Madel Ferry via Narva",,0
+692,FULLW,97073,"Bicholim via Narva",,1
+692,FULLW,97081,"Bicholim via Narva",,1
+695,FULLW,96198,"Madlamaz via Aroba",,0
+695,FULLW,96208,"Panaji via Aroba",,1
+699,FULLW,95750,"Mapusa Distict Hospital",,0
+699,FULLW,95751,"Mapusa Distict Hospital",,0
+699,FULLW,95753,"Mapusa Distict Hospital",,0
+699,FULLW,95756,"Mapusa Distict Hospital",,0
+699,FULLW,95758,"Mapusa Distict Hospital",,0
+699,FULLW,95760,"Mapusa Distict Hospital",,0
+699,FULLW,95763,"Mapusa Distict Hospital",,0
+699,FULLW,95765,"Mapusa Distict Hospital",,0
+699,FULLW,95770,"Mapusa Distict Hospital",,0
+699,FULLW,95771,"Mapusa Distict Hospital",,0
+699,FULLW,95773,"Mapusa Distict Hospital",,0
+699,FULLW,95777,"Mapusa ",,1
+699,FULLW,95780,"Mapusa ",,1
+699,FULLW,95782,"Mapusa ",,1
+699,FULLW,95786,"Mapusa ",,1
+699,FULLW,95789,"Mapusa ",,1
+699,FULLW,95792,"Mapusa ",,1
+699,FULLW,95794,"Mapusa ",,1
+699,FULLW,95796,"Mapusa ",,1
+699,FULLW,95800,"Mapusa ",,1
+699,FULLW,95802,"Mapusa ",,1
+699,FULLW,95805,"Mapusa ",,1
+699,FULLW,95807,"Mapusa ",,1
+700,FULLW,95747,"Calvi via Aldona",,0
+700,FULLW,95752,"Calvi via Aldona",,0
+700,FULLW,95759,"Calvi via Aldona",,0
+700,FULLW,95768,"Calvi via Aldona",,0
+700,FULLW,95776,"Calvi via Aldona",,0
+700,FULLW,95781,"Mapusa  via Aldona",,1
+700,FULLW,95790,"Mapusa  via Aldona",,1
+700,FULLW,95798,"Mapusa  via Aldona",,1
+700,FULLW,95806,"Mapusa  via Aldona",,1
+700,FULLW,95811,"Mapusa  via Aldona",,1
+701,FULLW,96007,"Bambolim Cross via St Cruz",,0
+701,FULLW,96010,"Bambolim Cross via St Cruz",,0
+701,FULLW,96014,"Panaji via St Cruz",,1
+701,FULLW,96017,"Panaji via St Cruz",,1
+702,FULLW,95749,"Goljuem via Aldona",,0
+702,FULLW,95754,"Goljuem via Aldona",,0
+702,FULLW,95761,"Goljuem via Aldona",,0
+702,FULLW,95769,"Goljuem via Aldona",,0
+702,FULLW,95779,"Goljuem via Aldona",,0
+702,FULLW,95788,"Goljuem via Aldona",,0
+702,FULLW,95801,"Goljuem via Aldona",,0
+702,FULLW,95808,"Mapusa  via Aldona",,1
+702,FULLW,95812,"Mapusa  via Aldona",,1
+702,FULLW,95818,"Mapusa  via Aldona",,1
+702,FULLW,95822,"Mapusa  via Aldona",,1
+702,FULLW,95825,"Mapusa  via Aldona",,1
+702,FULLW,95829,"Mapusa  via Aldona",,1
+719,FULLW,95991,"Agarwada Titha via Mapusa,Aroba",,0
+719,FULLW,96004,"Panaji via Mapusa,Aroba",,1
+720,FULLW,95762,"Siolim Fish Market via Kucheli",,0
+722,FULLW,95757,"Rayeshwar College of Engineering via Ponda",,0
+723,FULLW,96514,"Keri, Ponda via Amona,Gimone",,0
+726,FULLW,97080,"Dhobi Talao Mumbai",,0
+726,FULLW,97089,"Margao",,1
+727,FULLW,97086,"Pune Railway Station via Ponda,Kolhapur",,0
+727,FULLW,97090,"Pune Railway Station via Ponda,Kolhapur",,0
+727,FULLW,97098,"Margao via Ponda,Kolhapur",,1
+727,FULLW,97110,"Margao via Ponda,Kolhapur",,1
+728,FULLW,97087,"Shirdi MSRTC Bus Stand via Kolapur,Ahmednagar",,0
+728,FULLW,97095,"Margao via Kolapur,Ahmednagar",,1
+729,FULLW,97069,"Mopa Pednekarwada",,0
+729,FULLW,97082,"Mopa Pednekarwada",,0
+729,FULLW,97093,"Mapusa ",,1
+729,FULLW,97106,"Mapusa ",,1
+735,FULLW,97243,"Agapur / Agastipur",,0
+740,FULLW,97127,"Tonca",,0
+742,FULLW,97123,"Surla Narayan Temple",,0
+742,FULLW,97128,"Surla Narayan Temple",,0
+742,FULLW,97136,"Surla Narayan Temple",,0
+742,FULLW,97143,"Surla Narayan Temple",,0
+742,FULLW,97152,"Surla Narayan Temple",,0
+742,FULLW,97160,"Sankhali",,1
+742,FULLW,97166,"Sankhali",,1
+742,FULLW,97171,"Sankhali",,1
+742,FULLW,97178,"Sankhali",,1
+742,FULLW,97184,"Sankhali",,1
+743,FULLW,97248,"Surla Narayan Temple",,0
+743,FULLW,97257,"Panaji",,1
+745,FULLW,97067,"Junaswada / Mandrem Beach",,0
+745,FULLW,97078,"Mapusa ",,1
+746,FULLW,97066,"Madkai Ozrim",,0
+746,FULLW,97072,"Mapusa ",,1
+13,FULLW,95314,"Panaji via Cortalim Jn",,0
+13,FULLW,95332,"Panaji via Cortalim Jn",,0
+13,FULLW,95354,"Panaji via Cortalim Jn",,0
+13,FULLW,95376,"Panaji via Cortalim Jn",,0
+13,FULLW,95400,"Panaji via Cortalim Jn",,0
+13,FULLW,95421,"Panaji via Cortalim Jn",,0
+13,FULLW,95436,"Panaji via Cortalim Jn",,0
+13,FULLW,95451,"Panaji via Cortalim Jn",,0
+13,FULLW,95464,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95476,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95485,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95494,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95504,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95514,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95523,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95532,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95541,"Harbour Vasco via Cortalim Jn",,1
+13,FULLW,95549,"Harbour Vasco via Cortalim Jn",,1
+83,FULLW,97150,"Mapusa ",,0
+83,FULLW,97157,"Mapusa ",,0
+83,FULLW,97164,"Mapusa ",,0
+83,FULLW,97169,"Mapusa ",,0
+83,FULLW,97175,"Mapusa ",,0
+83,FULLW,97180,"Panaji Market",,1
+83,FULLW,97183,"Panaji Market",,1
+83,FULLW,97187,"Panaji Market",,1
+83,FULLW,97189,"Panaji Market",,1
+83,FULLW,97192,"Panaji Market",,1
+83,FULLW,97195,"Panaji Market",,1
+142,FULLW,95405,"Ponda via Sankhali,Marcel",,0
+142,FULLW,95423,"Ponda via Sankhali,Marcel",,0
+189,FULLW,95716,"Mapusa  via Chopdem",,0
+195,FULLW,97144,"Marcel",,0
+195,FULLW,97149,"Volvoi",,1
+209,FULLW,95633,"Panaji via Revora",,0
+213,FULLW,95682,"Mapusa  via Saligao",,0
+213,FULLW,95686,"Calangute via Saligao",,1
+441,FULLW,95693,"Panaji via Ponda",,0
+450,FULLW,95643,"Cuncolim via Murida",,0
+452,FULLW,95664,"Canacona via Agonda",,0
+452,FULLW,95670,"Canacona via Agonda",,0
+452,FULLW,95676,"Cab de Ram via Agonda",,1
+453,FULLW,95672,"Panaji via Margao",,0
+453,FULLW,95687,"Cab de Ram via Margao",,1
+463,FULLW,95696,"Panaji via Margao",,0
+476,FULLW,97244,"Margao via Cortalim",,0
+476,FULLW,97252,"Margao via Cortalim",,0
+476,FULLW,97260,"Margao via Cortalim",,0
+476,FULLW,97263,"Verna IDC via Cortalim",,1
+476,FULLW,97266,"Verna IDC via Cortalim",,1
+476,FULLW,97268,"Verna IDC via Cortalim",,1
+477,FULLW,95731,"Panaji via Margao",,0
+480,FULLW,95736,"Margao via Canacona",,0
+480,FULLW,95748,"Khargal via Canacona",,1
+482,FULLW,97056,"Kuskem via Mashem",,1
+561,FULLW,95975,"Panaji via Margao",,0
+562,FULLW,95983,"Panaji via Margao",,0
+562,FULLW,95993,"Neturlim via Margao",,1
+570,FULLW,96449,"Panaji via Margao",,0
+578,FULLW,96520,"Panaji via Margao",,0
+582,FULLW,96521,"Panaji",,0
+583,FULLW,97137,"Panaji via Margao",,0
+589,FULLW,96561,"Margao via Murida",,0
+589,FULLW,96569,"Margao via Murida",,0
+589,FULLW,96577,"Margao via Murida",,0
+589,FULLW,96581,"Margao via Murida",,0
+589,FULLW,96584,"Velim via Murida",,1
+589,FULLW,96588,"Velim via Murida",,1
+589,FULLW,96591,"Velim via Murida",,1
+589,FULLW,96595,"Velim via Murida",,1
+591,FULLW,95642,"Vasco via Sakhali",,0
+591,FULLW,95645,"Belgaum Bus Stand via Sakhali",,1
+592,FULLW,95722,"Ponda via Loutlim",,0
+592,FULLW,95733,"Ponda via Loutlim",,0
+592,FULLW,95744,"Ponda via Loutlim",,0
+592,FULLW,95766,"Harbour Vasco via Loutlim",,1
+592,FULLW,95795,"Harbour Vasco via Loutlim",,1
+592,FULLW,95815,"Harbour Vasco via Loutlim",,1
+627,FULLW,95641,"Panaji via Mapusa",,0
+627,FULLW,95646,"Bastora via Mapusa",,1
+671,FULLW,96494,"Panaji via Ponda",,0
+671,FULLW,96507,"Panaji via Ponda",,0
+671,FULLW,96516,"Rayeshwar College of Engineering via Ponda",,1
+673,FULLW,96439,"Curchorem - Savordem via Ponda",,0
+673,FULLW,96456,"Curchorem - Savordem via Ponda",,0
+673,FULLW,96474,"Panaji Market via Ponda",,1
+673,FULLW,96502,"Panaji Market via Ponda",,1
+675,FULLW,96519,"Panaji",,0
+686,FULLW,95972,"Panaji via Altinho",,0
+686,FULLW,95977,"Mary Immaculate Church via Altinho",,1
+687,FULLW,95982,"Panaji via Marcel",,0
+687,FULLW,95998,"Panaji via Marcel",,0
+687,FULLW,96016,"Naneli via Marcel",,1
+687,FULLW,96034,"Naneli via Marcel",,1
+704,FULLW,95743,"Panaji via Mapusa",,0
+721,FULLW,96568,"Margao via Vagurme",,0
+721,FULLW,96576,"Margao via Vagurme",,0
+721,FULLW,96582,"Volvoi via Vagurme",,1
+721,FULLW,96587,"Volvoi via Vagurme",,1
+730,FULLW,97132,"Panaji",,0
+730,FULLW,97147,"Panaji",,0
+730,FULLW,97162,"Siolim Fish Market",,1
+730,FULLW,97173,"Siolim Fish Market",,1
+731,FULLW,97052,"Ponda",,0
+731,FULLW,97063,"Ponda",,0
+731,FULLW,97068,"Ponda",,0
+731,FULLW,97074,"Ponda",,0
+731,FULLW,97077,"Ponda",,0
+731,FULLW,97085,"Gaune",,1
+731,FULLW,97088,"Gaune",,1
+731,FULLW,97096,"Gaune",,1
+731,FULLW,97100,"Gaune",,1
+731,FULLW,97108,"Gaune",,1
+732,FULLW,97057,"Panaji via Ponda",,0
+732,FULLW,97071,"Gaune via Ponda",,1
+733,FULLW,97060,"Ponda",,0
+733,FULLW,97062,"Agapur / Agastipur",,1
+739,FULLW,97135,"Valpoi via Marcel,Sankhali",,0
+741,FULLW,97115,"Panaji",,0
+741,FULLW,97130,"Parcem",,1
+747,FULLW,97054,"Chopdem",,1
+748,FULLW,97245,"Panaji",,0
+749,FULLW,97120,"Margao",,0
+750,FULLW,97092,"Panaji",,0
+750,FULLW,97103,"Panaji",,0
+750,FULLW,97116,"Mencurem Temple",,1
+750,FULLW,97122,"Mencurem Temple",,1
+752,FULLW,97058,"Panaji",,0
+752,FULLW,97061,"Bengaluru Majestic Bus Stand",,1
+606,FULLW,96501,"Malvan via Malewad",,0
+606,FULLW,96511,"Sada Vasco via Malewad",,1
+608,FULLW,96503,"Vengurla via Panjim",,0
+608,FULLW,96517,"Sada Vasco via Panjim",,1
+575,FULLW,96485,"Rajbag via Cancona",,1
+584,FULLW,96558,"Muddebihal",,0
+584,FULLW,96571,"Vasco KTC Bus Stop",,1
+11,FULLW,96495,"Akhada",,0
+11,FULLW,96506,"Sada Vasco",,1
+14,FULLW,95311,"Devsu via Chopdem",,0
+14,FULLW,95346,"Harbour Vasco via Chopdem",,1
+21,FULLW,95306,"Margao City via Zuarinagar",,0
+21,FULLW,95330,"Margao City via Zuarinagar",,0
+21,FULLW,95343,"Margao City via Zuarinagar",,0
+21,FULLW,95359,"Margao City via Zuarinagar",,0
+21,FULLW,95377,"Margao City via Zuarinagar",,0
+21,FULLW,95395,"Harbour Vasco via Zuarinagar",,1
+21,FULLW,95415,"Harbour Vasco via Zuarinagar",,1
+21,FULLW,95428,"Harbour Vasco via Zuarinagar",,1
+52,FULLW,95565,"Ustem",,0
+52,FULLW,95566,"Valpoi Bazaar",,1
+78,FULLW,95309,"Nanora via Bicholim",,0
+78,FULLW,95350,"Kala Academy via Bicholim",,1
+86,FULLW,95540,"Naneli via Marcel,Valpoi",,0
+86,FULLW,95555,"Naneli via Marcel,Valpoi",,0
+86,FULLW,95568,"Panaji Market via Marcel,Valpoi",,1
+86,FULLW,95589,"Panaji Market via Marcel,Valpoi",,1
+87,FULLW,95307,"Surla via Chorla",,0
+87,FULLW,95333,"Kala Academy via Chorla",,1
+109,FULLW,95538,"Camurlim Khairat via Mapusa",,0
+109,FULLW,95544,"Panaji Market via Mapusa",,1
+109,FULLW,95551,"Panaji Market via Mapusa",,1
+167,FULLW,95308,"Dabolim Airport via Panaji",,0
+167,FULLW,95315,"Dabolim Airport via Panaji",,0
+167,FULLW,95316,"Calangute via Panaji",,1
+167,FULLW,95317,"Calangute via Panaji",,1
+167,FULLW,97044,"Dabolim Airport via Panaji",,0
+167,FULLW,97045,"Dabolim Airport via Panaji",,0
+167,FULLW,97046,"Dabolim Airport via Panaji",,0
+167,FULLW,97047,"Dabolim Airport via Panaji",,0
+167,FULLW,97048,"Calangute via Panaji",,1
+167,FULLW,97049,"Calangute via Panaji",,1
+167,FULLW,97050,"Calangute via Panaji",,1
+167,FULLW,97051,"Calangute via Panaji",,1
+219,FULLW,96484,"Malpon",,0
+449,FULLW,95628,"Cab de Ram via Matimol",,0
+559,FULLW,95971,"Donbosco via Rivona",,0
+579,FULLW,96562,"Cuncoliem via Lotulim",,0
+579,FULLW,96570,"Verna IDC via Lotulim",,1
+593,FULLW,95717,"Goa University Library via Cortalim",,0
+593,FULLW,95729,"Harbour Vasco via Cortalim",,1
+603,FULLW,96496,"Farmagudi via Ponda",,0
+603,FULLW,96508,"Farmagudi via Ponda",,0
+603,FULLW,96515,"Farmagudi via Ponda",,0
+603,FULLW,96525,"Farmagudi via Ponda",,0
+603,FULLW,96534,"Sada Vasco via Ponda",,1
+603,FULLW,96542,"Sada Vasco via Ponda",,1
+603,FULLW,96552,"Sada Vasco via Ponda",,1
+603,FULLW,96565,"Sada Vasco via Ponda",,1
+604,FULLW,95721,"Honnavar via Margao",,0
+604,FULLW,95734,"Harbour Vasco via Margao",,1
+605,FULLW,96500,"Korjai",,0
+605,FULLW,96518,"Sada Vasco",,1
+607,FULLW,95723,"Rayeshwar College of Engineering via Shiroda",,0
+607,FULLW,95732,"Rayeshwar College of Engineering via Shiroda",,0
+607,FULLW,95741,"Harbour Vasco via Shiroda",,1
+628,FULLW,96440,"Halarna via Kulan",,0
+628,FULLW,96450,"Halarna via Kulan",,0
+628,FULLW,96459,"Panaji Market via Kulan",,1
+628,FULLW,96469,"Panaji Market via Kulan",,1
+629,FULLW,96445,"Vijaydurga Temple Village Stop via Priyol",,0
+629,FULLW,96452,"Panaji Market via Priyol",,1
+630,FULLW,96442,"Ustem via Valpoi",,0
+630,FULLW,96460,"Panaji Market via Valpoi",,1
+706,FULLW,97272,"Madel Ferry",,0
+706,FULLW,97273,"Madel Ferry",,0
+706,FULLW,97274,"Madel Ferry",,1
+706,FULLW,97275,"Madel Ferry",,1
+737,FULLW,97133,"Vanxim Island Ferry",,0
+737,FULLW,97138,"Vanxim Island Ferry",,0
+737,FULLW,97142,"Vanxim Island Ferry",,0
+737,FULLW,97146,"Vanxim Island Ferry",,0
+737,FULLW,97151,"Vanxim Island Ferry",,0
+737,FULLW,97156,"Vanxim Island Ferry",,0
+737,FULLW,97159,"Vanxim Island Ferry",,0
+737,FULLW,97163,"Vanxim Island Ferry",,0
+737,FULLW,97167,"Vanxim Island Ferry",,0
+737,FULLW,97170,"Vanxim Island Ferry",,0
+737,FULLW,97174,"Vanxim Island Ferry",,0
+737,FULLW,97179,"Vanxim Island Ferry",,0
+737,FULLW,97182,"Vanxim Island Ferry",,0
+737,FULLW,97185,"Vanxim Island Ferry",,0
+737,FULLW,97186,"Vanxim Island Ferry",,0
+737,FULLW,97188,"Vanxim Island Ferry",,0
+737,FULLW,97190,"Vanxim Island Ferry",,0
+737,FULLW,97191,"Vanxim Island Ferry",,0
+737,FULLW,97193,"St. Pedro Ferry",,1
+737,FULLW,97194,"St. Pedro Ferry",,1
+737,FULLW,97196,"St. Pedro Ferry",,1
+737,FULLW,97197,"St. Pedro Ferry",,1
+737,FULLW,97198,"St. Pedro Ferry",,1
+737,FULLW,97199,"St. Pedro Ferry",,1
+737,FULLW,97200,"St. Pedro Ferry",,1
+737,FULLW,97201,"St. Pedro Ferry",,1
+737,FULLW,97202,"St. Pedro Ferry",,1
+737,FULLW,97203,"St. Pedro Ferry",,1
+737,FULLW,97204,"St. Pedro Ferry",,1
+737,FULLW,97205,"St. Pedro Ferry",,1
+737,FULLW,97206,"St. Pedro Ferry",,1
+737,FULLW,97207,"St. Pedro Ferry",,1
+737,FULLW,97208,"St. Pedro Ferry",,1
+737,FULLW,97209,"St. Pedro Ferry",,1
+738,FULLW,97094,"Old Goa Ferry",,0
+738,FULLW,97097,"Old Goa Ferry",,0
+738,FULLW,97099,"Old Goa Ferry",,0
+738,FULLW,97102,"Old Goa Ferry",,0
+738,FULLW,97104,"Old Goa Ferry",,0
+738,FULLW,97109,"Old Goa Ferry",,0
+738,FULLW,97111,"Old Goa Ferry",,0
+738,FULLW,97113,"Old Goa Ferry",,0
+738,FULLW,97117,"Old Goa Ferry",,0
+738,FULLW,97118,"Old Goa Ferry",,0
+738,FULLW,97121,"Old Goa Ferry",,0
+738,FULLW,97125,"Old Goa Ferry",,0
+738,FULLW,97126,"Old Goa Ferry",,0
+738,FULLW,97129,"Old Goa Ferry",,0
+738,FULLW,97131,"Old Goa Ferry",,0
+738,FULLW,97134,"Naroa Island Ferry",,1
+738,FULLW,97140,"Naroa Island Ferry",,1
+738,FULLW,97141,"Naroa Island Ferry",,1
+738,FULLW,97145,"Naroa Island Ferry",,1
+738,FULLW,97148,"Naroa Island Ferry",,1
+738,FULLW,97153,"Naroa Island Ferry",,1
+738,FULLW,97155,"Naroa Island Ferry",,1
+738,FULLW,97158,"Naroa Island Ferry",,1
+738,FULLW,97161,"Naroa Island Ferry",,1
+738,FULLW,97165,"Naroa Island Ferry",,1
+738,FULLW,97168,"Naroa Island Ferry",,1
+738,FULLW,97172,"Naroa Island Ferry",,1
+738,FULLW,97176,"Naroa Island Ferry",,1
+738,FULLW,97177,"Naroa Island Ferry",,1
+738,FULLW,97181,"Naroa Island Ferry",,1
+744,FULLW,97240,"City Market Stop",,0
+744,FULLW,97250,"City Market Stop",,0
+744,FULLW,97253,"City Market Stop",,0
+744,FULLW,97255,"City Market Stop",,0
+744,FULLW,97259,"City Market Stop",,0
+744,FULLW,97261,"City Market Stop",,0
+744,FULLW,97262,"City Market Stop",,0
+744,FULLW,97265,"City Market Stop",,0

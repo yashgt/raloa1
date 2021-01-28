@@ -1,0 +1,19 @@
+route_id,agency_id,route_short_name,route_long_name,route_type
+50,rnd-goa-in,,"Madkai - Cortalim",4
+117,rnd-goa-in,,"Panaji - Betim",4
+118,rnd-goa-in,,"St. Pedro - Diwar",4
+160,rnd-goa-in,,"Adpai - Rassaim",4
+121,rnd-goa-in,,"Chorao - Pomburpa",4
+165,rnd-goa-in,,"Volvoi - Surla",4
+119,rnd-goa-in,,"Naroa - Diwar",4
+162,rnd-goa-in,,"Piedade - Old Goa",4
+157,rnd-goa-in,,"Sarmanas - Tonca",4
+122,rnd-goa-in,,"Shiroda - Raia",4
+158,rnd-goa-in,,"Cumbharjua - Gaundalim",4
+156,rnd-goa-in,,"Querim - Tiracol",4
+161,rnd-goa-in,,"Rassaim - Durbhat",4
+164,rnd-goa-in,,"Dhauji - Tolto",4
+163,rnd-goa-in,,"Vanxim - Amboi",4
+159,rnd-goa-in,,"Tuem - Camurlim",4
+120,rnd-goa-in,,"Volvoi - Maina",4
+155,rnd-goa-in,,"Raibandar - Chorao",4
