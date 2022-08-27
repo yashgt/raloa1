@@ -5,6 +5,8 @@ sudo yum-config-manager --enable rhui-REGION-rhel-server-extras
 #sudo yum install git-core
 sudo yum install -y git-all wget gcc zip xz mysql ruby bundler capistrano capistrano-node-deploy unzip perl-devel perl-CPAN java-1.8.0-openjdk.x86_64 at graphviz python3 vim
 
+curl -LsS https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/master/bootstrap-gruntwork-installer.sh | bash /dev/stdin --version v0.0.22
+
 cd $HOME
 NODEVER=8.11.3
 wget https://nodejs.org/dist/v${NODEVER}/node-v${NODEVER}-linux-x64.tar.xz
@@ -43,3 +45,7 @@ git clone https://github.com/google/transitfeed.git
 
 sudo curl -L https://github.com/docker/compose/releases/download/1.20.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+
+gruntwork-install --repo https://github.com/gruntwork-io/bash-commons --module-name bash-commons --tag v.0.1.9
+  
+gruntwork-install --module-name ip-lockdown --tag <MODULE_SECURITY_VERSION> --repo https://github.com/gruntwork-io/module-security  

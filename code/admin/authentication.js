@@ -21,6 +21,7 @@ module.exports = {
 					, role: results[0].role_type
 					}; //This object will be stored in the session
 				logger.info("Found user %j",user);
+				console.log(user);
 				return done(null, user);
 		}
 		else {

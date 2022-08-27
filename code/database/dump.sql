@@ -531,21 +531,6 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `ins_stop` AFTER INSERT ON `stop` FOR EACH ROW begin
-	declare p varchar(255);
-	set p=concat('POINT(', CAST(NEW.latitude as CHAR),' ',CAST(NEW.longitude as CHAR),')') ; 
-	
-	insert into stop_loc(
-	stop_id
-	, location
-	, loc_text
-	) 
-	values(
-	NEW.stop_id
-	, ST_PointFromText(p)
-	, p
-	);
-end */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
