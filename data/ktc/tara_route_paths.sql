@@ -1,11 +1,24 @@
+SET SESSION group_concat_max_len=10000;
+select R.route_id
+, group_concat( distinct SG.internal_stage_cd order by SG.sequence separator '-') onw
+, group_concat( distinct SG.internal_stage_cd order by SG.sequence desc separator '-') ret
+, group_concat( distinct S.name order by RS.sequence separator '-') onward_stops
+, group_concat( distinct S.name order by RS.sequence desc separator '-') return_stops
+from stage SG
+inner join route R on ( SG.route_id=R.route_id)
+inner join routestop RS on (RS.route_id=R.route_id and RS.stage_id=SG.stage_id)	
+inner join stop S on (RS.stop_id=S.stop_id)		
+where R.fleet_id = 2
+and internal_stage_cd is not null
+group by R.route_id;
+
+
 	select
-	R.route_id
-	, SG.stage_id as stage_id
+	R.route_id as tara_route_id
+    , RS.sequence	
 	, SG.stage_name as stage_name
-    , SG.is_via as is_via
-	, S.stop_id as onward_stop_id
-	, S.name as onward_stop_name
-	, RS.sequence
+    , SG.internal_stage_cd as tara_stage_cd
+    , S.name as onward_stop_name	
 	from route R
 	left outer join routestop RS on (RS.route_id=R.route_id )	
 	left outer join stop S on (RS.stop_id=S.stop_id)	
