@@ -51,7 +51,7 @@ group by R.route_id, S1.name, S2.name
 order by R.route_id
 
 
-call get_route_detail(135);
+call get_route_detail(1);
 
 select * from stop
 where name like '%Shiroda%'
@@ -88,6 +88,7 @@ where R.route_id in
 (
 order by R.route_id, RS.sequence;
 
+/* Get stop locations of selected routes */
 select R.route_id, RS.sequence, S.name, S.latitude lat1, S.longitude lon1, PS.latitude lat2, PS.longitude lon2
 from route R
 inner join routestop RS on (RS.route_id=R.route_id)
@@ -99,7 +100,8 @@ left outer join stop PS on
         route_id=R.route_id and sequence=RS.sequence+1 ))
 where R.route_id in 
 /*(525)*/
-(736, 528, 113, 127, 476, 59)
+(19,510,522,607,648,682)
+/*(736, 528, 113, 127, 476, 59)*/
 /*
 (select R.route_id
 from route R
