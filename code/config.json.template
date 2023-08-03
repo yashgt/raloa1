@@ -1,0 +1,23 @@
+{
+	"database" : {
+		"host": "localhost",
+		"user": "root",
+		"password": "Spider123",
+		"database": "raloa2"
+		"insecureAuth": "true"
+	},
+	"gmap" : {
+		"key" : ""
+	},
+	"admin" : {
+		"port" : 3000
+		,"sslport": 4000
+	},
+	"mobapp" : {
+		"port" : 8000
+	},
+	"txtapp" : {
+		"port" : 5000
+	}
+	
+}

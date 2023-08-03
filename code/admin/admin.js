@@ -505,17 +505,20 @@ exports.saveRoute = function(route, sCB, fCB){
             async.waterfall(routesWF, function(err, result) {
 		if(!err){
                 	tran.commit(function() {                    
-				//sCB();
+					sCB();
+				/*
 					exports.generateSegments(
 						route.routeId, 
 						function(){
 							sCB();	
 						}
 					);
+					*/
 
                 			}, function() {
                     				fCB();
                 			});
+							
 		}
 		else{
 			tran.rollback();
