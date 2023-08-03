@@ -14,11 +14,16 @@ group by R.route_id;
 
 
 	select
-	R.route_id as tara_route_id
+	R.route_cd as route_cd
     , RS.sequence	
 	, SG.stage_name as stage_name
     , SG.internal_stage_cd as tara_stage_cd
     , S.name as onward_stop_name	
+    , S.latitude as onward_stop_lat
+    , S.longitude as onward_stop_lon
+    , PS.name as return_stop_name
+    , PS.latitude as return_stop_lat
+    , PS.longitude as return_stop_lon
 	from route R
 	left outer join routestop RS on (RS.route_id=R.route_id )	
 	left outer join stop S on (RS.stop_id=S.stop_id)	
@@ -31,4 +36,5 @@ group by R.route_id;
 	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
 	
 	where R.fleet_id=2
+    and RS.sequence is not null
 	order by R.route_id, SG.stage_id*1000 + coalesce(RS.sequence, 0);
