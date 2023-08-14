@@ -767,6 +767,7 @@ function RouteController($scope, $timeout, $log, $sce, getthereAdminService, sto
                 var routestage = {
                     title: stage.title,
                     stageId: stage.stageId,
+					stageCode: stage.stageCode,
                     stops: []
                 };
                 $scope.routeDetail.stages.push(routestage);

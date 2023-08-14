@@ -128,6 +128,7 @@ inner join temp.route TR on (SG.route_cd=TR.route_cd)
 inner join route R on (TR.route_cd=R.route_cd and R.fleet_id=2)
 ;
 
+select *, length(internal_stage_cd) from temp.stage where route_cd='MRG176';
 select 
 SG.*
 /*

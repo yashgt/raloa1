@@ -1,6 +1,6 @@
 delimiter //
 
-GRANT SYSTEM_VARIABLES_ADMIN ON *.* TO 'root'@'%'//
+/* GRANT SYSTEM_VARIABLES_ADMIN ON *.* TO 'root'@'%'// */
 
 SET GLOBAL log_bin_trust_function_creators = 1//
 
@@ -579,6 +579,7 @@ begin
 	, S.is_station as is_station
 	, SG.sequence
 	, RS.sequence
+	, SG.internal_stage_cd
 	from route R
 	inner join stage SG on (
 		SG.route_id=R.route_id
@@ -877,6 +878,80 @@ BEGIN
 	RETURN input;
 END//
 
+create or replace view vw_matching_routes_seq
+as
+select M.route_cd,
+substring_index(group_concat( base_route_cd order by match_count desc),',',1) as matching_route_cd
+from
+(
+select R1.route_id as route_id
+, R1.route_cd as route_cd
+, R1.route_name as route_name
+, R2.route_id as base_route_id
+, R2.route_cd as base_route_cd
+, count(*) as match_count
+from route R1 /*empty route*/
+inner join stage SG1 on (SG1.route_id=R1.route_id)
+inner join route R2 /*completed route*/
+inner join stage SG2 on (SG2.route_id=R2.route_id)
+where R1.route_id<>R2.route_id 
+and R1.fleet_id=2 and R2.fleet_id=2
+and 0=(select count(*) from routestop where route_id=R1.route_id)
+and (select count(*) from routestop where route_id=R2.route_id)>0
+and SG1.internal_stage_cd=SG2.internal_stage_cd and SG1.sequence=SG2.sequence
+group by R1.route_id, R1.route_cd, R1.route_name
+, R2.route_id, R2.route_cd, R2.route_name
+having count(*)>=4 
+order by R1.route_name, count(*) desc
+
+) as M
+group by M.route_cd
+order by M.route_cd
+//
+
+create or replace view vw_route_segments
+as
+select R.route_id as route_id
+, R.route_cd as route_cd
+, SN.num as start_sequence
+, EN.num as end_sequence
+, group_concat( SG1.internal_stage_cd order by SG1.sequence separator '-') as stage_codes
+from stage SG1
+inner join route R on (R.route_id=SG1.route_id)
+inner join numbers SN on (SG1.sequence>=SN.num)
+inner join numbers EN on (SN.num < EN.num and SG1.sequence <= EN.num)
+where EN.num<= (select max(sequence) from stage where route_id=SG1.route_id)
+and R.fleet_id=2
+and (EN.num-SN.num) > 5
+-- and R.route_id in (5909,5982,6400)
+group by SG1.route_id, SN.num, EN.num
+//
+
+create or replace view vw_matching_routes_seg
+as
+select 
+VR1.route_id, VR1.route_cd
+, convert(substring_index(group_concat( convert(VR1.start_sequence,char) order by length(VR2.stage_codes) desc),',',1), unsigned) as start_sequence
+, convert(substring_index(group_concat( convert(VR1.end_sequence,char) order by length(VR2.stage_codes) desc),',',1), unsigned) as end_sequence
+, convert(substring_index(group_concat( convert(VR2.route_id,char) order by length(VR2.stage_codes) desc),',',1), unsigned) as matching_route_id
+, substring_index(group_concat( VR2.route_cd order by length(VR2.stage_codes) desc),',',1) as matching_route_cd
+, convert(substring_index(group_concat( convert(VR2.start_sequence,char) order by length(VR2.stage_codes) desc),',',1), unsigned) as matching_start_sequence
+, convert(substring_index(group_concat( convert(VR2.end_sequence,char) order by length(VR2.stage_codes) desc),',',1), unsigned) as matching_end_sequence
+, substring_index(group_concat( VR2.stage_codes order by length(VR2.stage_codes) desc),',',1) as matching_stage_codes
+from vw_route_segments as VR1
+inner join vw_route_segments as VR2 on (VR1.stage_codes=VR2.stage_codes and VR1.route_id<>VR2.route_id)
+
+where
+    0=(select count(*) from routestop where route_id=VR1.route_id)
+    and (select count(*) from routestop where route_id=VR2.route_id)>0
+	and VR1.start_sequence=1 and VR2.start_sequence=1
+
+group by VR1.route_id, VR1.route_cd
+order by VR1.route_id, VR1.route_cd
+//
+
+
+/*
 create or replace view vw_ktc_route as
 SELECT concat('prv',M.erm_route_no) as erm_route_no , M.erm_start_stage , T.ert_route_via as ert_route_via , M.erm_end_stage , M.erm_no_of_stages ,  M.erm_route_type as erm_route_type, T.ert_route_type as ert_route_type , ST.est_bus_type   FROM prv.etm_route_master M    
 inner join prv.etm_route_tran T  	on (T.ert_route_no=M.erm_route_no and T.ert_stage_no=1)   
@@ -906,3 +981,4 @@ union all
 SELECT distinct concat('vsg', ert_route_no) as ert_route_no, ert_stage_no, ert_stage_code, ert_stage_name   
 FROM vsg.etm_route_tran    
 ;
+*/
