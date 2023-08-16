@@ -452,6 +452,7 @@ create procedure save_stage(
 	, IN in_stage_name varchar(255)
     , in in_is_via int
 	, in in_sequence int
+	, in in_stage_code varchar(255)
 )
 begin
 if id > 0 then
@@ -465,13 +466,15 @@ if id > 0 then
 
 	if exists (select * from stage where stage_id=id) then
 		update stage
-		set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence
+		set stage_name=in_stage_name, is_via=in_is_via, sequence=in_sequence, internal_stage_cd=in_stage_code
 		where stage_id=id;
 	else
-		INSERT INTO stage(stage_id,stage_name, route_id,sequence) VALUES (id,in_stage_name, in_route_id, in_sequence);
+		INSERT INTO stage(stage_id,stage_name, route_id,sequence, internal_stage_cd) 
+        VALUES (id,in_stage_name, in_route_id, in_sequence, in_stage_code);
 	end if;
 else
-	INSERT INTO stage(stage_name, route_id,sequence) VALUES (in_stage_name, in_route_id, in_sequence);
+	INSERT INTO stage(stage_name, route_id,sequence, internal_stage_cd) 
+    VALUES (in_stage_name, in_route_id, in_sequence, in_stage_code);
 	set id = LAST_INSERT_ID() ;
 end if;
 end//
