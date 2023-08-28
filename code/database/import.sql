@@ -28,6 +28,22 @@ internal_stage_cd varchar(255),
 stage_type varchar(255)
 );
 
+create table if not exists temp.shortcodes
+(name varchar(255),
+code varchar(3)
+);
+load data local 
+infile 'D:\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.shortcodes.csv' 
+into table temp.shortcodes
+FIELDS TERMINATED BY ','
+IGNORE 1 LINES 
+;
+select count(*) from temp.shortcodes;
+
+select * from temp.shortcodes;
+
+
+
 load data local 
 infile 'D:\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.route.csv' 
 into table temp.route
