@@ -881,6 +881,7 @@ BEGIN
 	RETURN input;
 END//
 
+delimiter //
 create or replace view vw_matching_routes_seq
 as
 select M.route_cd,
@@ -919,13 +920,14 @@ select R.route_id as route_id
 , SN.num as start_sequence
 , EN.num as end_sequence
 , group_concat( SG1.internal_stage_cd order by SG1.sequence separator '-') as stage_codes
+, group_concat( SG1.internal_stage_cd order by SG1.sequence separator '-') as reverse_stage_codes
 from stage SG1
 inner join route R on (R.route_id=SG1.route_id)
 inner join numbers SN on (SG1.sequence>=SN.num)
 inner join numbers EN on (SN.num < EN.num and SG1.sequence <= EN.num)
 where EN.num<= (select max(sequence) from stage where route_id=SG1.route_id)
 and R.fleet_id=2
-and (EN.num-SN.num) > 5
+and (EN.num-SN.num) >= 3
 -- and R.route_id in (5909,5982,6400)
 group by SG1.route_id, SN.num, EN.num
 //
@@ -952,6 +954,176 @@ where
 group by VR1.route_id, VR1.route_cd
 order by VR1.route_id, VR1.route_cd
 //
+
+drop procedure if exists get_tara_route_stops//
+create procedure get_tara_route_stops()
+begin
+	select
+	R.route_cd as route_cd
+    , RS.sequence	
+    , (select max(sequence) from routestop where routestop.route_id=RS.route_id) - RS.sequence + 1 as return_sequence
+	, SG.stage_name as stage_name
+    , SG.sequence as stage_sequence
+    -- , 1 as status -- first stage is 1, last stage is 2
+    , SG.internal_stage_cd as tara_stage_cd
+    , S.stop_id as onward_stop_id
+    , S.name as onward_stop_name	
+    , S.latitude as onward_stop_lat
+    , S.longitude as onward_stop_lon
+    /* , ( select coalesce(RS.stop_id, RS.peer_stop_id)
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence limit 1)=S.stop_id as is_onward_first */
+    , PS.stop_id as return_stop_id
+    , PS.name as return_stop_name
+    , PS.latitude as return_stop_lat
+    , PS.longitude as return_stop_lon
+    /* , ( select coalesce(RS.peer_stop_id, RS.stop_id) 
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence desc limit 1)=PS.stop_id as is_return_first */
+	from route R
+	left outer join routestop RS on (RS.route_id=R.route_id )	
+	left outer join stop S on (RS.stop_id=S.stop_id)	
+	inner join stage SG on (SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
+	
+	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
+	left outer join segment BS on (BS.from_stop_id=PRS.stop_id and BS.to_stop_id=S.stop_id) 
+	left outer join routestop NRS on (NRS.route_id=R.route_id and RS.sequence + 1 = NRS.sequence)/* last routestop does not have an NRS*/
+	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
+	
+	where R.fleet_id=2
+    and RS.sequence is not null
+    -- and R.route_cd='PRV79'
+	order by 
+    R.route_cd
+    , RS.sequence
+    ;
+    -- , SG.stage_id*1000 + coalesce(RS.sequence, 0)
+end//
+call get_tara_route_stops()//
+
+delimiter //
+drop procedure if exists get_tara_route_stops_full//
+create procedure get_tara_route_stops_full()
+begin
+	select
+	IRM.internal_route_cd as route_cd
+    , RS.sequence	
+    , (select max(sequence) from routestop where routestop.route_id=RS.route_id) - RS.sequence + 1 as return_sequence
+	, SG.stage_name as stage_name
+    , SG.sequence as stage_sequence
+    -- , 1 as status -- first stage is 1, last stage is 2
+    , SG.internal_stage_cd as tara_stage_cd
+    , S.stop_id as onward_stop_id
+    , S.name as onward_stop_name	
+    , S.latitude as onward_stop_lat
+    , S.longitude as onward_stop_lon
+    /* , ( select coalesce(RS.stop_id, RS.peer_stop_id)
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence limit 1)=S.stop_id as is_onward_first */
+    , PS.stop_id as return_stop_id
+    , PS.name as return_stop_name
+    , PS.latitude as return_stop_lat
+    , PS.longitude as return_stop_lon
+    /* , ( select coalesce(RS.peer_stop_id, RS.stop_id) 
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence desc limit 1)=PS.stop_id as is_return_first */
+	from route R
+    inner join internal_route_map IRM on (IRM.route_id=R.route_id)
+	left outer join routestop RS on (RS.route_id=R.route_id )	
+	left outer join stop S on (RS.stop_id=S.stop_id)	
+	inner join stage SG on (SG.route_id=R.route_id and ((RS.stop_id is null) or (RS.stage_id=SG.stage_id)))
+	left outer join stop PS on (PS.stop_id=coalesce(RS.peer_stop_id,RS.stop_id))	
+	
+	left outer join routestop PRS on (PRS.route_id=R.route_id and RS.sequence = PRS.sequence+1)/* first routestop does not have a PRS*/
+	left outer join segment BS on (BS.from_stop_id=PRS.stop_id and BS.to_stop_id=S.stop_id) 
+	left outer join routestop NRS on (NRS.route_id=R.route_id and RS.sequence + 1 = NRS.sequence)/* last routestop does not have an NRS*/
+	left outer join segment FS on (FS.from_stop_id=NRS.peer_stop_id and FS.to_stop_id=PS.stop_id) 	
+	
+	where R.fleet_id=2
+    and RS.sequence is not null
+    -- and R.route_cd='PRV79'
+	order by 
+    IRM.internal_route_cd
+    , RS.sequence
+    ;
+    -- , SG.stage_id*1000 + coalesce(RS.sequence, 0)
+end//
+call get_tara_route_stops_full()//
+    
+delimiter //    
+drop procedure if exists get_tara_route_stages//
+create procedure get_tara_route_stages()
+begin    
+select R.route_cd, SG.internal_stage_cd, SG.sequence,
+( select coalesce(RS.stop_id, RS.peer_stop_id)
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence limit 1) as onward_first_stop_id
+,  (select coalesce(RS.stop_id, RS.peer_stop_id)
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence desc limit 1) as onward_last_stop_id
+, ( select coalesce(RS.peer_stop_id, RS.stop_id) 
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence desc limit 1) as return_first_stop_id
+, ( select coalesce(RS.peer_stop_id, RS.stop_id) 
+from routestop RS 
+where RS.stage_id=SG.stage_id 
+order by RS.sequence limit 1) as return_last_stop_id
+from route R
+inner join stage SG on (SG.route_id=R.route_id)
+where R.fleet_id=2
+-- and R.route_cd='PRV79'
+order by R.route_cd, SG.sequence
+;
+end//
+
+call get_tara_route_stages()//
+
+delimiter //    
+drop procedure if exists get_tara_routes//
+create procedure get_tara_routes(IN in_fleet_id int)
+begin
+SELECT 
+R.route_cd
+,F.gtfs_agency_id as agency_id
+,'' as route_short_name
+,concat( 
+case when locate("EV ",SG1.stage_name)=1 then replace(SG1.stage_name, "EV ", "") else SG1.stage_name end
+, " - "
+,case when locate("EV ",SG2.stage_name)=1 then replace(SG2.stage_name, "EV ", "") else SG2.stage_name end 
+) as route_name
+/*
+,CONCAT('"'
+,coalesce(replace(S1.name, C1.old, C1.new), S1.name)
+	, ' - ' 
+,coalesce(replace(S2.name, C2.old, C2.new), S2.name)
+	, coalesce(concat(cast(" via " as char character set utf8) 
+		, (select group_concat(CAP_FIRST(SG.stage_name)) 
+		from stage SG 
+		where SG.route_id=R.route_id and SG.is_via=1
+		group by SG.route_id)
+	),"" )
+	,'"')   as route_long_name
+*/
+,F.fleet_type as route_type
+from route R
+inner join stage SG1 on SG1.stage_id=(select SG.stage_id from stage SG where SG.route_id=R.route_id order by SG.sequence limit 1)
+inner join stage SG2 on SG2.stage_id=(select SG.stage_id from stage SG where SG.route_id=R.route_id order by SG.sequence desc limit 1)
+/*left outer join stage SG on (SG.route_id=R.route_id and SG.is_via=1)*/
+-- inner join stop S1 on S1.stop_id=(select RS.stop_id from routestop RS where RS.route_id=R.route_id order by RS.sequence limit 1) 
+-- left outer join corrections C1 on (S1.name like binary concat('%',C1.old,'%'))
+-- inner join stop S2 on S2.stop_id=(select RS.stop_id from routestop RS where RS.route_id=R.route_id order by RS.sequence desc limit 1)
+-- left outer join corrections C2 on (S2.name like binary concat('%',C2.old,'%'))
+inner join fleet F on (in_fleet_id=F.fleet_id and (R.fleet_id=F.fleet_id or R.fleet_id=F.parent_fleet_id))
+;
+end//
 
 
 /*
