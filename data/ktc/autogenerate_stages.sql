@@ -18,6 +18,9 @@ from vw_route_segments;
 select count(*) from temp.mv_route_segments;
 select * from temp.mv_route_segments;
 
+select *
+from temp.mv_matching_route_seg
+where route_cd='PNJ161';
 
 -- Step 2
 rename table temp.mv_matching_route_seg to temp.mv_matching_route_seg2;

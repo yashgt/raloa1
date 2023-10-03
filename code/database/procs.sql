@@ -1002,7 +1002,7 @@ order by RS.sequence desc limit 1)=PS.stop_id as is_return_first */
     ;
     -- , SG.stage_id*1000 + coalesce(RS.sequence, 0)
 end//
-call get_tara_route_stops()//
+-- call get_tara_route_stops()//
 
 delimiter //
 drop procedure if exists get_tara_route_stops_full//
@@ -1053,7 +1053,7 @@ order by RS.sequence desc limit 1)=PS.stop_id as is_return_first */
     ;
     -- , SG.stage_id*1000 + coalesce(RS.sequence, 0)
 end//
-call get_tara_route_stops_full()//
+-- call get_tara_route_stops_full()//
     
 delimiter //    
 drop procedure if exists get_tara_route_stages//
@@ -1084,7 +1084,9 @@ order by R.route_cd, SG.sequence
 ;
 end//
 
-call get_tara_route_stages()//
+-- n
+
+-- call get_tara_route_stages()//
 
 delimiter //    
 drop procedure if exists get_tara_routes//

@@ -48,9 +48,19 @@ load data local
 infile 'D:\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.route.csv' 
 into table temp.route
 FIELDS TERMINATED BY ','
+LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES 
+(@depot, @route_no, @route_cd, @route_name)
+set depot=@depot
+, route_no=@route_no
+, route_cd=@route_cd
+, route_name=@route_name
 ;
-select count(*) from temp.route;
+
+select 
+-- count(*) 
+*
+from temp.route;
 
 load data local 
 infile 'D:\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.internal_route_map.csv' 
@@ -116,18 +126,37 @@ where R.fleet_id=2
 ;
 
 delete from route where fleet_id=2;
-
+--  START
 insert into route(fleet_id, route_name, route_cd)
 select 2, route_name, route_cd
-from temp.route;
+from temp.route
+where route_cd not in (select route_cd from route where fleet_id=2) 
+order by route_cd;
+
+select *
+from route
+where fleet_id=2
+and route_cd in ( 'PRV150' ,'PRV154' ,'PRV160' ,'PRV161','PRV197' ,'PRV226' ,'VSD70')
+;
+
+select *
+from internal_route_map IRM
+inner join route R on (IRM.route_id=R.route_id)
+where internal_route_cd in ( 'PRV150' ,'PRV154' ,'PRV160' ,'PRV161','PRV197' ,'PRV226' ,'VSD70')
+;
 
 select * from temp.route;
+select *
+from temp.internal_route_map IRM
+where internal_route_cd in ('MRG301');
 
 insert into internal_route_map(route_id, internal_route_cd)
 select R.route_id, RM.internal_route_cd
 from route R
 inner join temp.internal_route_map RM on (R.route_cd=RM.route_cd)
 where R.fleet_id=2
+and (RM.internal_route_cd not in (select internal_route_cd from internal_route_map))
+and RM.internal_route_cd<>R.route_cd
 ;
 
 insert into stage(stage_name, route_id, internal_stage_cd, is_via, sequence)
