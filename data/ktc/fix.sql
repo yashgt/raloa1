@@ -29,8 +29,9 @@ from
 route R
 inner join
 (
-select route_id, stage_id, count(*)
-from routestop
+select R.route_id, R.route_cd, RS.stage_id, count(*)
+from routestop RS
+inner join route R on (R.route_id=RS.route_id)
 group by route_id, stage_id
 having count(*) > 5
 order by count(*) desc
