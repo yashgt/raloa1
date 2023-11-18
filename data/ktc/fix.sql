@@ -87,7 +87,13 @@ where stage_name in ('EV PANAJI','EV BAMB GMC','GOAUNVERSIT','CAB.DE.RAM','OLD G
 and internal_stage_cd is null
 
 ;
-
+-- Stages with too many stops
+select RS.route_id, R.route_cd, RS.stage_id, count(*)
+from routestop RS
+inner join route R on (R.route_id=RS.route_id)
+group by RS.route_id, R.route_cd, RS.stage_id
+order by count(*) desc
+;
 
 select *
 from stage
