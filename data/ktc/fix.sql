@@ -1,3 +1,66 @@
+
+
+-- fix VSD26 and 62
+
+-- Update route name
+
+update route R 
+inner join 
+(
+select route_id
+, trim( 
+concat( (select stage_name from stage where route_id=R.route_id and sequence=1), "-",
+(select stage_name 
+		from stage 
+        where route_id=R.route_id 
+		and sequence=(select max(sequence) from stage where stage.route_id=R.route_id group by route_id having route_id=R.route_id)
+) 
+, coalesce( (select concat(' VIA ', group_concat(stage_name)) from stage where stage.route_id=R.route_id and stage.is_via=1 group by route_id having route_id=R.route_id), '') 
+)) as route_name
+from route R
+where fleet_id=2
+) as CR on CR.route_id=R.route_id 
+set R.route_name=CR.route_name;
+;
+
+select route_id
+, concat( (select stage_name from stage where route_id=R.route_id and sequence=1), "-",
+(select stage_name 
+		from stage 
+        where route_id=R.route_id 
+		and sequence=(select max(sequence) from stage group by route_id having route_id=R.route_id)
+) 
+, coalesce( (select concat(' VIA ', group_concat(stage_name)) from stage where is_via=1 group by route_id having route_id=R.route_id), '') 
+) as route_name
+from route R
+where fleet_id=2
+-- and R.route_id=6278
+;
+
+
+-- Panaji city bus
+select *
+from stop 
+where name like '%city%' or name like '%Panaji%';
+
+select route_id, route_name
+from route R ;
+
+select R.route_id, R.route_name , R.route_cd
+from routestop RS
+inner join route R on (R.route_id=RS.route_id)
+where stop_id=2759
+order by route_cd;
+
+update routestop RS
+inner join route R on (RS.route_id=R.route_id)
+set RS.stop_id=1
+where RS.stop_id=2759
+and R.route_cd not in ()
+;
+
+
+-- --------
 update stage
 set internal_stage_cd=case 
 	when stage_name='VELIM' then 'VLM' 
@@ -101,82 +164,13 @@ where stage_name like '%MUXER%'
 ;
 
 
-create table if not exists temp.purgeroutes
-(
-route_cd varchar(255)
-);
-
-delete from temp.purgeroutes;
-
-SET GLOBAL local_infile = 1;
-load data local 
-infile 'D:\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.purgeroutes.csv' 
-into table temp.purgeroutes
-FIELDS TERMINATED BY ','
-IGNORE 1 LINES 
-;
-
-select *
-from temp.purgeroutes;
-
-create table temp.mv_purgeroutes
-as
-select R.route_id
-,R.route_cd ,RM.internal_route_cd as purged_internal_route_cd
--- ,IRM.internal_route_cd as new_internal_route_cd
-from
-temp.purgeroutes P 
-inner join internal_route_map RM on (RM.internal_route_cd=P.route_cd)
-inner join route R on (R.route_id=RM.route_id)
-/*
-left outer join internal_route_map IRM 
-	on (IRM.route_id=R.route_id and IRM.internal_route_cd<>P.route_cd and IRM.internal_route_cd not in (select route_cd from temp.purgeroutes))
-*/
-order by P.route_cd
-;
-select * from temp.mv_purgeroutes; 
-
--- Delete R, IRM, RS, SG
-delete RS
-from route R
-inner join routestop RS on (RS.route_id=R.route_id)
-inner join temp.mv_purgeroutes P on (R.route_cd=P.purged_internal_route_cd)
-where P.new_internal_route_cd is null
-;
-
-delete SG
-from route R
-inner join stage SG on (SG.route_id=R.route_id)
-inner join temp.mv_purgeroutes P on (R.route_cd=P.purged_internal_route_cd)
-where P.new_internal_route_cd is null
-;
-
+--  ------------- 
 
 
 select R.route_id, R.route_cd, P.purged_internal_route_cd
 from route R
 inner join temp.mv_purgeroutes P on (P.route_id=R.route_id)
 ;
-
-delete IRM
-from internal_route_map IRM
-inner join temp.mv_purgeroutes P on (IRM.internal_route_cd=P.purged_internal_route_cd)
--- where P.new_internal_route_cd is null
-;
-
-delete R
-from route R
-inner join temp.mv_purgeroutes P on (R.route_cd=P.purged_internal_route_cd)
-where P.new_internal_route_cd is null
-;
-
--- If Purged route is Rep of someone else, set the Rep as something else
-update route R
-inner join temp.mv_purgeroutes P on (P.purged_internal_route_cd=R.route_cd)
-set R.route_cd=P.new_internal_route_cd
-where P.new_internal_route_cd is not null -- replace only where substitute are available
-;
---  ------------- 
 
 -- select *
 update stage SG
