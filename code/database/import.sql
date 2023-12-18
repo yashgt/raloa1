@@ -94,6 +94,7 @@ select count(*) from temp.stage;
 select * from fleet;
 select distinct fleet_id from route;
 
+/*
 delete RM
 from internal_route_map RM
 inner join route R on (R.route_id=RM.route_id )
@@ -149,6 +150,7 @@ select * from temp.route;
 select *
 from temp.internal_route_map IRM
 where internal_route_cd in ('MRG301');
+*/
 
 insert into internal_route_map(route_id, internal_route_cd)
 select R.route_id, RM.internal_route_cd

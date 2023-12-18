@@ -3,7 +3,6 @@
 -- fix VSD26 and 62
 
 -- Update route name
-
 update route R 
 inner join 
 (
@@ -46,7 +45,7 @@ where name like '%city%' or name like '%Panaji%';
 select route_id, route_name
 from route R ;
 
-select R.route_id, R.route_name , R.route_cd
+select R.route_id, R.route_name , R.route_cd, RS.stop_id, RS.peer_stop_id
 from routestop RS
 inner join route R on (R.route_id=RS.route_id)
 where stop_id=2759
@@ -54,9 +53,9 @@ order by route_cd;
 
 update routestop RS
 inner join route R on (RS.route_id=R.route_id)
-set RS.stop_id=1
+set RS.stop_id=1, RS.peer_stop_id=1
 where RS.stop_id=2759
-and R.route_cd not in ()
+and R.route_cd not in ('PNJ110','PNJ93')
 ;
 
 
