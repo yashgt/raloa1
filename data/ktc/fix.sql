@@ -1,3 +1,23 @@
+-- fix MRG176
+select *
+from route R
+inner join stage SG on (SG.route_id=R.route_id)
+-- inner join temp.stage TSG on (SG.internal_stage_cd=TSG.internal_stage_cd and TSG.route_cd=R.route_cd)
+where R.route_cd in ('PRV190','PRV191')
+/*
+('MRG176' -- ZAN
+,'MRG199' -- CUR
+,'MRG58','PNJ170','PNJ3','PNJ44','PNJ111','PRV123','PRV151','PRV163','PRV164','PRV190','PRV191','PRV49','PRV83','PRV84','PRV85','VSD50','VSD63')*/
+order by R.route_cd, SG.sequence;
+
+delete SG
+-- delete RS
+from stage SG
+-- inner join routestop RS on (RS.stage_id=SG.stage_id)
+inner join route R on (SG.route_id=R.route_id and R.fleet_id=2)
+where 
+(R.route_cd='MRG176' and SG.sequence=10) or (R.route_cd='MRG199' and SG.sequence=40)
+
 
 
 -- fix VSD26 and 62

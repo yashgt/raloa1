@@ -70,8 +70,6 @@ inner join temp.mv_purgeroutes P on (R.route_cd=P.purged_internal_route_cd)
 where P.new_internal_route_cd is null
 ;
 
-
-
 delete IRM
 from internal_route_map IRM
 inner join temp.mv_purgeroutes P on (IRM.internal_route_cd=P.purged_internal_route_cd)

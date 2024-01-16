@@ -1124,6 +1124,7 @@ inner join stage SG2 on SG2.stage_id=(select SG.stage_id from stage SG where SG.
 -- inner join stop S2 on S2.stop_id=(select RS.stop_id from routestop RS where RS.route_id=R.route_id order by RS.sequence desc limit 1)
 -- left outer join corrections C2 on (S2.name like binary concat('%',C2.old,'%'))
 inner join fleet F on (in_fleet_id=F.fleet_id and (R.fleet_id=F.fleet_id or R.fleet_id=F.parent_fleet_id))
+where (select count(*) from route Rx inner join stage SGx on (SGx.route_id=R.route_id) left outer join routestop RSx on (RSx.stage_id=Sgx.stage_id) where RSx.route_id is null) = 0
 ;
 end//
 
@@ -1159,3 +1160,9 @@ SELECT distinct concat('vsg', ert_route_no) as ert_route_no, ert_stage_no, ert_s
 FROM vsg.etm_route_tran    
 ;
 */
+
+grant select on *.* to 'report'@'%' ;
+grant execute on procedure get_tara_route_stops to 'report'@'%';
+grant execute on procedure get_tara_route_stops_full to 'report'@'%';
+grant execute on procedure get_tara_route_stages to 'report'@'%';
+grant execute on procedure get_tara_routes to 'report'@'%';
