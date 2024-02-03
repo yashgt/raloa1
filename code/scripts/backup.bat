@@ -1,0 +1,1 @@
+mysqldump --ignore-table=raloa2.sessions  --host=localhost --user=root --password=Spider123 --add-drop-database --databases raloa2 > ..\database\dump.sql
