@@ -23,7 +23,7 @@ from temp.mv_matching_route_seg
 where route_cd='PNJ161';
 
 -- Step 2
-rename table temp.mv_matching_route_seg to temp.mv_matching_route_seg2;
+rename table temp.mv_matching_route_seg to temp.mv_matching_route_seg3;
 drop table temp.mv_matching_route_seg;
 create table temp.mv_matching_route_seg as 
 select 
@@ -151,6 +151,7 @@ inner join temp.mv_matching_route_seg MV on (MV.route_cd=R.route_cd)
 ;
 
 update routestop RS
+-- select * from routestop RS
 inner join temp.rsid T on (RS.route_stop_id=T.route_stop_id)
 set RS.sequence=T.new_stop_seq
 where RS.sequence<>T.new_stop_seq
