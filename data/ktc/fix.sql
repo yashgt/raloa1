@@ -1,3 +1,12 @@
+-- Fix bus stands
+select name, min(stop_id), count(*)
+from stop S
+where name like '%stand%' 
+group by name having 
+count(*)>1
+and name not in ('Katraj Bus Stand MSRTC')
+order by name;
+
 -- fix MRG176
 select *
 from route R
