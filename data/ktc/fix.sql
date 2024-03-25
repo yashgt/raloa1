@@ -1,3 +1,8 @@
+select *
+from internal_route_map IRM
+inner join route R on (IRM.route_id=R.route_id)
+where internal_route_cd in ('MRG45', 'MRG55', 'MRG56', 'MRG112', 'MRG117');
+
 -- Fix bus stands
 select name, min(stop_id), count(*)
 from stop S
