@@ -4,6 +4,7 @@ SHOW GLOBAL VARIABLES LIKE 'local_infile';
 drop table temp.route ;
 drop table temp.internal_route_map ;
 drop table temp.stage ;
+
 CREATE TABLE if not exists temp.route
 (
 depot varchar(255),
@@ -46,12 +47,14 @@ into table temp.route
 FIELDS TERMINATED BY ','
 LINES TERMINATED BY '\r\n'
 IGNORE 1 LINES 
-(@depot, @route_no, @route_cd, @route_name)
+(@depot, @route_no, @route_cd,  @route_name)
 set depot=@depot
 , route_no=@route_no
 , route_cd=@route_cd
 , route_name=@route_name
 ;
+
+select * from temp.route;
 
 load data local 
 infile 'C:\\mydata\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.internal_route_map.csv' 
@@ -64,6 +67,8 @@ set route_cd=@route_cd
 , internal_route_cd=@internal_route_cd
 ;
 
+select * from temp.internal_route_map;
+
 load data local 
 infile 'C:\\mydata\\Projects\\NewYug\\raloa1\\data\\ktc\\temp.stage.csv' 
 into table temp.stage
@@ -73,11 +78,8 @@ IGNORE 1 LINES
 set route_cd=@route_cd
 , stage_name=@stage_name, sequence=@sequence, internal_stage_cd=@internal_stage_cd, stage_type=@stage_type;
 
+select * from temp.stage;
 
-select 
--- count(*) 
-*
-from temp.route;
 
 -- Find purged routes
 select *
