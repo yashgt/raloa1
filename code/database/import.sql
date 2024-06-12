@@ -78,97 +78,13 @@ IGNORE 1 LINES
 set route_cd=@route_cd
 , stage_name=@stage_name, sequence=@sequence, internal_stage_cd=@internal_stage_cd, stage_type=@stage_type;
 
-select * from temp.stage;
-
-
--- Find purged routes
-select *
-from route R
-where R.route_cd not in (select route_cd from temp.route)
-;
-
-
-select IRM.internal_route_cd, R.route_cd, TIRM.internal_route_cd, TIRM.route_cd
-from internal_route_map IRM 
-inner join route R on (IRM.route_id=R.route_id)
-inner join temp.internal_route_map TIRM on (TIRM.internal_route_cd=IRM.internal_route_cd)
--- where TIRM.route_cd<>R.route_cd
-;
-
-select *
-from internal_route_map IRM
-where IRM.internal_route_cd not in (select internal_route_cd from temp.internal_route_map)
-;
-
-
-
-select * 
-from temp.internal_route_map
-where route_name like '%AIRPORT%';
-
-
-/*
-delete RM
-from internal_route_map RM
-inner join route R on (R.route_id=RM.route_id )
-where R.fleet_id=2 
-;
-
-delete RST
-from route R 
-inner join routestop RS on (R.route_id = RS.route_id )
-inner join routestoptrip RST on (RST.route_stop_id=RS.route_stop_id)
-where R.fleet_id=2
-;
-
-delete RS
-from route R 
-inner join routestop RS on (R.route_id = RS.route_id )
-where R.fleet_id=2
-;
-
-delete SG
-from route R 
-inner join stage SG on (R.route_id = SG.route_id )
-where R.fleet_id=2
-;
-
-delete T
-from route R 
-inner join trip T on (R.route_id = T.route_id )
-where R.fleet_id=2
-;
-
-delete from route where fleet_id=2;
---  START
-
-
-select *
-from route
-where fleet_id=2
-and route_cd in ( 'PRV150' ,'PRV154' ,'PRV160' ,'PRV161','PRV197' ,'PRV226' ,'VSD70')
-;
-
-select *
-from internal_route_map IRM
-inner join route R on (IRM.route_id=R.route_id)
-where internal_route_cd in ( 'PRV150' ,'PRV154' ,'PRV160' ,'PRV161','PRV197' ,'PRV226' ,'VSD70')
-;
-
-select * from temp.route;
-select *
-from temp.internal_route_map IRM
-where internal_route_cd in ('MRG301');
-*/
-select *
-from internal_route_map IRM;
 
 insert into route(fleet_id, route_name, route_cd)
 select 2, route_name, route_cd
 from temp.route
 where 
 route_cd not in (select route_cd from route where fleet_id=2) 
-and route_cd not like 'MRG3__' -- Keep Majhi bus out
+-- and route_cd not like 'MRG3__' -- Keep Majhi bus out
 order by route_cd;
 
 -- first update
@@ -179,7 +95,7 @@ inner join route R on (TIRM.route_cd=R.route_cd)
 set IRM.route_id=R.route_id
 where R.fleet_id=2
 and IRM.route_id<>R.route_id
-and TIRM.internal_route_cd not like 'MRG3__' -- Keep Majhi bus out
+-- and TIRM.internal_route_cd not like 'MRG3__' -- Keep Majhi bus out
 ;
 
 insert into internal_route_map(route_id, internal_route_cd)
@@ -188,10 +104,11 @@ from route R
 inner join temp.internal_route_map RM on (R.route_cd=RM.route_cd)
 where R.fleet_id=2
 and (RM.internal_route_cd not in (select internal_route_cd from internal_route_map))
-and RM.internal_route_cd not like 'MRG3__' -- Keep Majhi bus out
+-- and RM.internal_route_cd not like 'MRG3__' -- Keep Majhi bus out
 -- and RM.internal_route_cd<>R.route_cd
 ;
 
+-- Current sequence of each stage
 drop table temp.latest_stage;
 create table temp.latest_stage
 as 
@@ -236,30 +153,6 @@ select SGS.stage_id, SGS.internal_stage_cd, SGS.sequence as old_sequence, TSGS.s
 	order by SGS.route_cd, SGS.sequence
 ;
 
-select 
--- SG.*
-R.route_cd, SG.internal_stage_cd, count(*)
-from stage SG
-inner join route R on (SG.route_id=R.route_id and R.fleet_id=2)
-/*
-where R.route_cd in 
-('MRG176' -- ZAN
-,'MRG199' -- CUR
-,'MRG58','PNJ170','PNJ3','PNJ44','PNJ111','PRV123','PRV151','PRV163','PRV164','PRV190','PRV191','PRV49','PRV83','PRV84','PRV85','VSD50','VSD63')
-*/
-group by R.route_cd, SG.internal_stage_cd
-having count(*) > 1
-order by R.route_cd,SG.sequence
-;
-
-select *
-from temp.latest_stage SGM
-where route_cd in
-('PRV7','MRG202','VSD23')
--- ('MRG176' -- ZAN,'MRG199' -- CUR,'MRG58','PNJ170','PNJ3','PNJ44','PNJ111','PRV123','PRV151','PRV163','PRV164','PRV190','PRV191','PRV49','PRV83','PRV84','PRV85','VSD50','VSD63')
-and old_sequence<>new_sequence
-order by route_cd, old_sequence
-;
 
 -- delete removed stages of routes --190
 delete RS
@@ -273,6 +166,7 @@ left outer join temp.latest_stage LSG on (SG.stage_id=LSG.stage_id)
 where 
 LSG.stage_id is null
 -- TSG.route_cd is null
+
 ;
 
 -- 128
@@ -283,17 +177,9 @@ from stage SG
 inner join route R on (R.route_id=SG.route_id and R.fleet_id=2)
 -- left outer join temp.stage TSG on (SG.internal_stage_cd=TSG.internal_stage_cd and R.route_cd=TSG.route_cd) where TSG.route_cd is null
 left outer join temp.latest_stage LSG on (SG.stage_id=LSG.stage_id) where LSG.route_cd is null
--- and R.route_cd='MRG58'
+
 ;
 
-select *
-from temp.latest_stage
-where route_cd='MRG58';
-
-select *
-from stage SG
-inner join route R on (SG.route_id=R.route_id and R.fleet_id=2 and R.route_cd='MRG58')
-where route_cd='MRG58';
 
 -- update stages --228
 update stage SG
@@ -342,10 +228,6 @@ where SGM.old_sequence <> SGM.new_sequence
 	(SG.internal_stage_cd=SGM.internal_stage_cd and R.route_cd=SGM.route_cd and SG.sequence=SGM.old_sequence and SGM.stage_id=SG.stage_id)
 */
 
-select *
-from temp.stage TSG
-where route_cd in ('PRV7','MRG202','VSD23')
-;
 insert into stage(stage_name, route_id, internal_stage_cd, is_via, sequence)
 select TSG.stage_name
 , R.route_id
@@ -385,16 +267,40 @@ SG.route_id is null and
 R.fleet_id=2
 ;
 
-and R.route_cd in ('VSD23', 'PRV7', 'MRG202') -- These wre previously there but now are not rep routes.
+-- and R.route_cd in ('VSD23', 'PRV7', 'MRG202') -- These wre previously there but now are not rep routes.
 
-
-
+/*
 delete R
 from route R
 inner join temp.mv_purgeroutes P on (R.route_cd=P.purged_internal_route_cd)
 where P.new_internal_route_cd is null
 ;
--- 
+*/
+-- --------- FINISH 
+select 
+-- SG.*
+R.route_cd, SG.internal_stage_cd, count(*)
+from stage SG
+inner join route R on (SG.route_id=R.route_id and R.fleet_id=2)
+/*
+where R.route_cd in 
+('MRG176' -- ZAN
+,'MRG199' -- CUR
+,'MRG58','PNJ170','PNJ3','PNJ44','PNJ111','PRV123','PRV151','PRV163','PRV164','PRV190','PRV191','PRV49','PRV83','PRV84','PRV85','VSD50','VSD63')
+*/
+group by R.route_cd, SG.internal_stage_cd
+having count(*) > 1
+order by R.route_cd,SG.sequence
+;
+
+select *
+from temp.latest_stage SGM
+where route_cd in
+('PRV7','MRG202','VSD23')
+-- ('MRG176' -- ZAN,'MRG199' -- CUR,'MRG58','PNJ170','PNJ3','PNJ44','PNJ111','PRV123','PRV151','PRV163','PRV164','PRV190','PRV191','PRV49','PRV83','PRV84','PRV85','VSD50','VSD63')
+and old_sequence<>new_sequence
+order by route_cd, old_sequence
+;
 
 select *
 from
@@ -422,6 +328,31 @@ order by R.route_id, SG.sequence
 
 
 -- ----------
+
+select * from temp.stage;
+
+
+-- Find purged routes
+select *
+from route R
+where R.route_cd not in (select route_cd from temp.route)
+;
+
+
+select IRM.internal_route_cd, R.route_cd, TIRM.internal_route_cd, TIRM.route_cd
+from internal_route_map IRM 
+inner join route R on (IRM.route_id=R.route_id)
+inner join temp.internal_route_map TIRM on (TIRM.internal_route_cd=IRM.internal_route_cd)
+-- where TIRM.route_cd<>R.route_cd
+;
+
+select *
+from internal_route_map IRM
+where IRM.internal_route_cd not in (select internal_route_cd from temp.internal_route_map)
+;
+
+
+
 
 select *, length(internal_stage_cd) from temp.stage where route_cd='MRG176';
 select 
