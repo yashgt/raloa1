@@ -18,9 +18,6 @@ from vw_route_segments;
 select count(*) from temp.mv_route_segments;
 select * from temp.mv_route_segments;
 
-select *
-from temp.mv_matching_route_seg
-where route_cd='PNJ161';
 
 -- Step 2
 rename table temp.mv_matching_route_seg to temp.mv_matching_route_seg3;
@@ -79,9 +76,9 @@ select *
 from temp.mv_matching_route_seg
 -- where route_id=5895
 -- where route_cd in ('VSD81', 'VSD82')
-where route_cd in ('PRV164') or matching_route_cd in ('PRV164')
+-- where route_cd in ('PRV164') or matching_route_cd in ('PRV164')
 -- where end_sequence-start_sequence <>matching_end_sequence-matching_start_sequence
-order by matching_end_sequence-matching_start_sequence ;
+order by matching_end_sequence-matching_start_sequence desc ;
 
 -- Step 3
 -- any segment

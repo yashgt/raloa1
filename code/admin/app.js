@@ -41,8 +41,10 @@ var dbConfig = {
     database: nconf.get('database:database'),
 	insecureAuth : true,
     multipleStatements: true,
-	waitForConnections: false
+	waitForConnections: false,
+	//acquireTimeout: 10000000
 };
+console.log(dbConfig);
 /*
 var db = mysql.createConnection({
     host: nconf.get('database:host'),
