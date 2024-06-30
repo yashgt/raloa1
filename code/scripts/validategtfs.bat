@@ -1,4 +1,4 @@
-set basedir=C:\mydata\Projects\NewYug\raloa1\data\ktc\feed
+set basedir=C:\mydata\Projects\NewYug\raloa1\data\ktc\feednow
 cd %basedir%
 REM more +1 fare_rules_2.txt >> fare_rules.txt
 tail -n +2 fare_rules_2.txt >> fare_rules.txt
